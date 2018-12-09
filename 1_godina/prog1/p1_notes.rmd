@@ -1,0 +1,1468 @@
+---
+title: Programiranje 1 - beleske
+author: Andrija Urosevic
+output: pdf_document
+header-includes: 
+    - \usepackage{tikz}
+---
+
+# Racunarstvo i racunarski sistemi
+
+* Racunarski sistem - masina koja moze da se programira i izvrsava razlicite 
+  zadatke svodjenjem na elementarne operacije nad brojevima
+* bitovi (*binary digit*) - nule i jedinice nad kojima se operise
+* Racunarstvo - izucava teorijske i prakticne procese racunanje i primene 
+  racunara u razlicitim oblastima nauke
+* *programabilni* - mogu da se programiraju da vrse razicite zadatke
+* *hardver* - tehnicki sistem racunara
+  * fizicke komponente racunara
+    * procesor, memorija, maticna ploca ...
+* *softver* - programski sistem racunara
+  * racunarski programi i prateci podaci
+
+## Rana istorija racunarskih sistema
+
+**Mehanicke masine**
+
+**Elektromehanicke masine**
+
+**Elektronski racunari**
+
+## Racunari fon Nojmanove arhitekture
+
+* *Racunar sa skladistenim programima*
+  * Jasna podela izmedju hardvera i softvera
+* Osnovni elementi fon Nojmanove arhitekture su:
+  * *procesor*
+    * aritmeticko-logicka jedinica, kontrolna jedinica, registri
+  * *glavna memorija*
+
+**I generacija racunara**
+
+**II generacija racunara**
+
+**III generacija racunara**
+
+**IV generacija racunara**
+
+## Oblasti savremenog racunarstva
+
+* *Algoritmika* - procesi izracunavanja i njihova slozenost
+* *Strukture podataka* - reprezentovanje i obrada podataka
+* *Programski jezici* - dizajn i analiza svojstava formalnih jezika za 
+  opisivanje algoritama
+* *Programiranje* - proces zapisavanja algoritma u nekom programskom jeziku
+* *Softversko inzenjerstvo* - proces dizajniranja, razvoja i testiranja 
+  programa
+* *Prevodjenje programskih jezika* - efikasno prevodjenje visih programskih 
+  jezika, obicno na masinski jezik
+* *Operativni sistemi* - sistemi za upravljanje racunarom i programima
+* *Mrezno racunarstvo* - algoritmi i protokoli za komunikaciju izmednju 
+  racunara 
+* *Primene* - dizajn i razvoj softvera za svakodnevnu upotrebu
+* *Istrazivanje podataka* - pronalazenje relevantnih informacija u velikim 
+  skupovima podataka
+* *Vestacka inteligencija* - resavanje problema u kojima se javlja 
+  kombinatorna eksplozija
+* *Robotika* - algoritmi za kontrolu ponasanja robota
+* *Racunarska grafika* - analiza i sinteza slika i animacija
+* *Kriptografija* - algoritmi za zastitu privatnosti
+* *Teorijsko racunarstvo* - teorijske osnove izracunavanja, racunarska 
+  matematika, verifikacija softvera
+
+## Hardver savremenih racunara
+
+* Hardver - fizicke komponente racunara
+* Podela hardvera:
+  * *procesor* ili *centralna procesorksa jedinica* (CPU)
+    * obradjuje podatke
+  * *glavna memorija* (main memory)
+    * cuvaju se podaci koji se trenutno obradjuju i pokrenuti programi
+  * *periferijski uredjaji* ili *ulazno-izlazne jedinice* (IO devices)
+    * mis, tastatura, ekran, stampac, diskovi
+* *magistrale* (*bus*) - povezuju hardverske komponente
+* *kontrolori* - svi periferijski uredjaji sa memorijom, procesorom i 
+  magistralama
+* *Maticna ploca* (*motherboard*) - stampana poloca na kojoj se povezuju 
+  procesor, memorija i periferijski uredjaji
+
+![Shema racunara fon Nojmanove arhitekture](img/fon_nojman.png){width=400}
+
+**Procesori** - CPU 
+
+* *kontrolna jedinica* (*Control Unit*)
+  * upravlja radom procesora
+* *aritmeticko-logicka jedinica* (*Arithmetic Logic Unit*)
+  * aritmeticke operacije (sabiranje, oduzimanje, mnozenje,...)
+  * logicke operacije (konjukcija, negacije,...)
+* *registri* - privremeno cuvaju podatke
+* *jezgro* - istovremeno izvrsavaju instrukcije (paralelno izracunavanje)
+
+
+**Memorijska hijerarhija**
+
+* *glavna memorija* - skladisti podatke i programe
+  * linearno uredjeni niz registara, gde svaki ima svoju adresu
+  * *memorija sa slobodnim pristupom* (*Random Access Memory* - RAM)
+    * *kapacitet* - meri su GB
+    * *vreme pristupa* - brzina citanja/pisanja podataka
+    * *protok* - kolicina podataka koja se prenosi GBps
+* *hijerarhija memorija*
+    * *unutrasnje memorije*
+      * vezane su za rad procesora
+      * zahtevaju napajanje
+      * brze
+      * manjeg kapaciteta
+    * *spoljne momorije*
+      * cuvaju podatke
+      * ne zahtevaju napajanje
+      * spore
+      * veceg kapaciteta
+* *Registri procesora*
+  * najbrza memorija jer se sve aritmeticke i logicke operacije izvode upravo 
+    nad podacima koji se nalaze u njima
+* *Kes* (cache) 
+  * je mala kolicina brze memorije 
+  * nalazi se izmedju procesora i glavne momorije i ubrzava rad racunara
+* *glavna memorija*
+  * cuva podatke i programe koje procesor izvrsava
+* *spoljne memorije*
+  * cuvaju trajno podatke
+  * pr. *hard disk*, *SSD uredjaj*, *flesh memorija* i *opticki diskovi*
+
+![Memorijska hijerarhija](img/memory.png){width=450}
+
+**Ulazni uredaji**
+
+* *Tastatura* i *mis/touchpad/truckpoint*
+* Povezuju se kablom (PS/2 ili USB) ili bezicno (BlueTooth)
+* *Skener*
+
+**Izlazni uredjaji**
+
+* *Monitor*
+  * tanki i ravan ektran (flat panel display)
+    * tehnologija tecnih kristala (Liquid Crystal Display - LCD)
+    * tehnologija katodnim cevima (Cathode Ray Tube - CRT)
+* *Laserski i inkdzet stampaci*
+* *3D stampaci*
+
+## Softver savremenih racunara
+
+* Racunarsi programi i prateci podaci koji odredjuju izracunavanje koje vrsi 
+  racunara
+* *Masinski programski jezici* - jezici koje razume masina
+* *Visi programski jezici* - jezici koji su jednostavni za onoga ko pise 
+  program, tj. coveka
+  * Oni se prevode na masinski jezik koji se kasnije izvrsava
+
+### Masinski programi
+
+* Vezani su za procesor racunara na kome se izvrsavaju
+* Sadrzi elementarne operacije koje procesor izvrsava
+
+**Asemblerski jezici**
+
+* Asemblerski/simbolicki jezici - jezici koji su veoma bliski masinskom 
+  jeziku racunara
+* Koriste simbolicke oznake instrukcija
+  * Olaksava programiranje
+* Prevodi se na masinski jezik 
+  * Jednoznacno i brzo pomocu *asemblera*
+* *proceskorksa instrukcija* - svaka instrukcija kaze procesoru da izvrsi 
+  odredjenu operaciju
+* *skup instrukcija* - unapref fiksiran, konacan skup koji procesor podrzava
+
+**Masinski jezik**
+
+* potrebno je svaku instrukciju iz niza instrukcija oznaciti nulama i 
+  jedinicama koje procesor moze da razume
+* Primer
+  * ``mov = 001``; ``add = 010``; ``mul = 011``;...
+
+### Klasifikacija savremenog softvera
+
+* Softver racunara se deli na *aplikativni* i *sistemski*
+* Granica izmednju njih nije stroga 
+* **Aplikativni softver**
+  * kontrolise ga krajnji korisnik
+  * Pr. pregledaci web-a, klijenti, kancelarijski softver, video igre, 
+    multimedijalni softver
+* **Sistemski softver**
+  * kontrolise hardver i pruza usluge aplikativnom softveru
+  * *operativni sistem* (OS)
+    * *korisnicki interfejs* (*User Interface* - UI)
+    * *skoljka* (*Kernel*)
+      * rasporedjuje memoriju, singronizuje rad vise programa
+    * Najznacajniji su GNU/Linux (Ubuntu, Arch (+ i3wm unixporn), Fedora, Debian, RedHat, 
+      Suse...), Microsoft Windows, Mac OS X
+    * *programski interfejs za pisanje aplikacija* (*Aplication Programming 
+      Interface* - API)
+      * skup funkcija koje OS pruza programeru da bi on mogao da koristi 
+        funkcionalnost hardvera
+  * *uslizni programi*
+    * editori teksta, alati za programiranje
+* *biblioteke* - funkcije koje pruza programski jezik
+* *rantajm biblioteke* (*runtime library*) - koristi se za izvrsavanje 
+  programa koja onda koristi funkcionalnost operativnog sisteme dok on 
+  koristi funkcionalnost hardvera
+
+# Reprezentacija podataka u racunarima
+
+* *Digitalni racunari* - svi podaci su zapisani kao nizovi celih brojeva
+  * ako postoji napon visi od odredjenog onda je to 1, inace je 0
+  * ako je namagnetisanje vise od odredjenog onda je to 1, inace 0
+  * ako postoji rupa onda je to 1, inace 0
+
+## Analogni i digitalni podaci i digitalni racunari
+
+**Kontinualna prirada signala**
+
+* Signala u prirodu se mogu predstaviti neprekidnim funkcijama
+  * Zvuk - promena pritiska vazduha
+
+**Analogni zapis**
+
+* kontinualne promene signala koje se zapisuje opisu kontinualnim promena 
+  odredjenog svojstva medijuma na kojem se zapisuje
+  * promene pritiska vazduha promena nivoa namagnetisanja na magnetnoj traci
+  * kolicina boje na papiru direktno odgovara intenzitetu svetlosti
+* *Analogija* izmedju signala koji je zapisan i odredjenog svojstva medijuma 
+  na kome je signal zapisan
+* Jednostavna tehnologija niskog kvaliteta
+* Tesko je cuvanje zapisa
+* Tesko je umnozavanje zapisa
+* Ostecenje medijuma tokom vremena
+* Obrada je veoma komplikovana
+
+**Digitalni zapis**
+
+* Vrednost signala se mere u odredjenim vremenskim trenucima i onda se na 
+  medijumu zapise izmerena vrednost
+  * *semplovi* (sample) - niz brojeve koji predstavljaju digitalni zapis 
+    signala
+* diskretna aproksimacija polaznog signala
+* Teorema o odabiranju (Najkvist-Senonova teorema)
+  * Signal je doboljno meriti dva puta cesce od najvise frekvencije koja se u 
+    njemu javlja
+* Tehnologija visokog kvaliteta
+* Lako je cuvanje zapisa
+* Jednostavno je umnozavanje zapisa
+* Ostecenja medijuma tokom vremena su zanemarljiva
+* Obrada je jednostavna
+* Potrebna je veoma razvijena tehnologija
+
+# Algoritmi i izracunljivost
+
+* *Algoritam* je precizan opis postupka za resavanje nekog problema u konacno
+  mnogo koraka
+
+## Formalizacija pojma algoritam
+
+* Postoje nekoliko formalizacije pojma algoritam koje su nastale nezavisno 
+  jedan od druge.
+  * *Tjuringove masine* (Tjuring)
+  * *rekuzivne funkcije* (Gebel i Klini)
+  * *$\lambda$ - racun* (Cerc)
+  * *Postove masine* (Post)
+  * *Markobljevi algoritmi* (Markov)
+  * *masine sa beskonacno mnogo registara* (*Unlimited Register Machines* - 
+    URM)
+* Navedeni sistemi nastali su pre savremenih racunara
+* *savremeni programski jezici* - predstavljaju precizne opise algoritama
+* *Blok dijagrami* - poluformalni nacin opisa algoritama
+* *Izracunljiva* u nekom formalizmu - ako se neka funkcija moze izracunati u 
+  nekom od navedenih formalizama
+* *Tjuring potpuna* (Turing complete) - sistem koji moze da simulira 
+  Tjuringovu masinu i izvrsi sva izracunavanja koja moze da izvrsi 
+  Tjuringova masina
+* *Tjuring ekvivalentana* - sistem koji izracunava identicnu klasu funkcija 
+  kao Tjuringova masina
+* Svi navedeni formalizmi su Tjuring ekvivalentni
+* Navedeni formalizmi podrazumevaju beskonacnu raspolozivu memoriju
+
+## Cerc-Tjuringova teza
+
+* Da li je moguce efektivno izvrsiti sva izracunavanja definisana nakom od 
+  formalizacija izracunljvosti
+* Obratno, da li sva izracunavanja koja intuitivno umemo da izvrsimo zaista 
+  mogu da budu opisana koriscenjem bilo kog od precizno definisanih 
+  formalizama izracunavanja
+
+**Cerc-Tjuringova teza**: *Klasa intuivno izracunljivih funkcija identicna je 
+sa klasom formalno izracunljvih funkcija*
+
+## UR masine
+
+* URM sadrzi:
+  * Beskonacnu traku sa *registrima* ($R_1, R_2, R_3, ...$)
+    * Stanje registra u nekom trenutku naziva *konfiguracija*
+    * Vrednosti u nekom registu $R_k$ je $r_k$
+* URM program $P$ je konacno numerisan niz URM instrukcija
+* Pocetna konfiguracija je niz prirodnih brojeva $a_1, a_2,...$ koji su 
+  upisani u register $R_1, R_2, ...$.
+* Ako se racuna funkcija $f(x_1, x_2, ... , x_n)$ onda su vrednosti 
+  $x_1, x_2, ... , x_n$ smestene u prvih $n$ registra
+* Ako URM program $P$ sa pocetnom konfiguracijom $a_1, a_2, ... , a_n$ ne 
+  staje sa radom, onda pisemo $P (a_1, a_2, ... , a_n) \uparrow$
+* Inace u prvom registru je rezultat, vrednost $b$, onda pisemo 
+  $P(a_1, a_2, ... , a_n) \downarrow b$
+* URM program izracunava funkciju $f : \mathbb{N}^n \mapsto \mathbb{N}$ ako 
+  za svaku $n$-torku argumenata $a_1, a_2, ... , a_n$ za koju je funkciju 
+  $f$ definisana i vazi $f(a_1, a_2, ... , a_n) = b$ istovremeno vazi i 
+  $P (a_1, a_2, ... , a_n) \downarrow b$ kazemo da je *izracunljiva*
+
+
+ oznaka       | naziv                  | efekat
+ -------------|------------------------|------------------
+ $Z(m)$       | nula-instrukcija       | $R_m \leftarrow 0$
+ $S(m)$       | instrukcija sledbenika | $R_m \leftarrow r_m + 1$
+ $T(m, n)$    | instrukcija prenosa    | $R_n \leftarrow r_m$
+ $J(m, n, p)$ | instrukcija skoka      | ako je $r_m = r_n$ idi na $p$-tu; inace idi na sldecu instrukciju
+
+## Enumeracija urm programa
+
+**Kardinalnost**
+
+* Za dva skupa kaze se da *imaju istu kardinalnost* akko je izmedju njih 
+  moguce uspostaviti bijektivno preslikavanje
+* Za skupove koji imaju istu kardinalnost kao skup prirodnih brojeva kaze 
+  se da su *prebrojivi*
+* Za skupove koji su ili konacni ili prebrojivi, kaze se da su 
+  *najvise prebrojivi*
+
+**Lema**: *Uredjenih parova prirodnih brojeva ima prebrojivo mnogo.*
+
+**Lema**: *Dekartov proizvod konacno mnogo prebrojivih skupova je prebrojiv.*
+
+**Lema**: *Najvise prebrojiva unija prebrojivih skupava je prebrojiv skup.*
+
+**Lema**: *Postoji prebrojivo mnogo razlicitih URM instrukcija*
+
+**Teorema**: *Razlicitih URM programa ima prebrojivo mnogo*
+
+## Neizracunljivost i neodlucnost
+
+1. Neka su data dva konacna skupa reci. Pitanje je da li je moguce 
+   nadovezati nekoliko reci prvog skupa i nekoliko reci drugog skupa tako 
+   da se dobije ista rec. Pr. za skupove $\{a, ab, bba\}$ i $\{baa, aa, bb\}$ 
+   jedno resenje je 
+   $bba \cdot ab \cdot bba \cdot a = bb \cdot aa \cdot bb \cdot baa$. 
+   Pr. za skupove $\{ab, bba\}$ resenje ne postoji
+
+2. Diofantske jednacina je jednacina oblika $p(x_1, ... , x_n) = 0$, gde je 
+   $p$ polinom sa celobrojnim koeficijentima. Zadatak je konstruisati opsti 
+   algoritam kojim se odredjuje da li proizvoljna zadata diofantska jednacina 
+   ima racionalnih resenja
+
+3. Zadatak je konstruisati opsti algoritam koji proverava da li se 
+   proizvoljni zadati program $P$ zaustavlja za data ulazne parametre
+
+4. Zadatak je konstruisati opsti algoritam koji za proizvoljan zadati skup 
+   aksioma i zadato tvrdjenje preverava da li je tvrdjenje posledica aksioma
+
+* Cetiri navedena problema pokazano je da su *algoritamski neresivi* 
+  ili *neodlucivi*
+
+**Problem ispitivanja zaustavljanja programa (halting problem)**
+
+*Da li postoji URM program koji na ulazu dobija drugi URM program P i neki 
+broj $x$ i ispituje da li se program $P$ zaustavlja za ulazni parametar $x$?*
+
+**Teorema**: *Neka je funkcija $h$ definisana na sledeci nacin:
+$$ h(x,y) = \{ 1, \text{ ako se program } P_x \text{ zaustavlja za ulaz } y;\ 
+0, \text{ inace}$$
+Ne postoji program koji izracunava funkciju $h$, tj. ne postoji program koji 
+za proizvoljne zadata vrednosti $x$ i $y$ moze da proveri da li se program 
+$P_x$ zaustavlja za ulazni argumet $y$.*
+
+**Dokaz**: Pretpostavimo da postoji program $H$ koji izracunava funkciju $h$. 
+Onda postoji i program $H'$ sa jednim argumentom $x$, koji vraca rezultat 
+isti rezultat kao i program $H(x, x)$, tj. koji vraca rezultat 1 ako se 
+program $P_x$ zaustavlja za ulaz $x$, a rezultat 0 ako se program $P_x$ ne 
+zaustavlja za ulaz $x$. Dakle postoji program $Q$ koji za argument $x$ vraca 
+rezultat 0 ako se sa $P_x$ ne zaustalja $x$ ($h(x, x) = 1$). Za program $Q$ 
+vazi:
+$$Q(x) \downarrow 0 \text{ako je} P_x(x) \uparrow$$
+$$Q(x) \uparrow \text{ako je} P_x(x) \downarrow$$
+Ako postoji takav program $Q$, onda se on nalazi u nizu svih programa, tj. 
+postoji redni broj $k$ koji ga jedinstveno identifikuje, pa vazi:
+$$P_k(x) \downarrow 0 \text{ako je} P_x(x) \uparrow$$
+$$P_k(x) \uparrow \text{ako je} P_x(x) \downarrow$$
+Ako je $x$ jednako upraco *k*, pokazuje se da je definicija ponasanja program 
+$Q$ (programa $P_k$) kontradiktorna: program $Q$ (program $P_k$) za ulaznu 
+vrednost $k$ vraca 0 ako se $P_k$ ne zaustavlja za $k$, a izvrsava beskonacnu 
+petlju ako se $P_k$ zaustavlja za $k$:
+$$P_k(k) \downarrow 0 \text{ako je} P_k(k) \uparrow$$
+$$P_k(k) \uparrow \text{ako je} P_k(k) \downarrow$$
+Dakle, polazna pretpostavka je bila pogresna i ne postoji program $H$, tj. 
+funkcija $h$ nije izracunljiva. Posto funkcija $h$, karakteristicna funkcija 
+halting problema, nije izracunljva, halting problem nije odluciv.
+
+## Vremenska i prostorna slozenost
+
+* Koliko je potrebno vremena i prostora za izracunavanje nekog 
+  izracunljivog problema
+
+# Visi programski jezici
+
+* Visi programski jezici su namenjeni ljudima
+* Specijalni programi na osnovu specifikacije zadate na visem nivou mogu 
+  automatski da proizvedu masinski kod
+  * *jezicki procesori*
+  * *programski prevodioci*
+  * *kompilatori*
+  * *interpretatori*
+* Omogucava se prenos programa na razlicitim racunarima
+* Omogucava lakocu programiranjam povecavajucu nivo apstrakcije
+* Razvojni ciklus programiranja:
+  1. Faza *pisanja* - unosenje programa na visem programskom jeziku 
+     * izvorni kod - source code
+  2. Faza *prevodjenja* - na osnovu izvornog koda na visem programskom jeziku
+     dobije prevedeni kod na asemblerskom/masinskom jeziku 
+     * objektni kod - object code
+     * Radi se pomocu nekog prevodioca
+  3. Faza *povezivanja* - vise objektnih kodova se povezuje sa kodom iz 
+     standardne biblioteke
+     * *izvrsni kod* - executable program
+     * Radi se pomocu *povezivaca* (linker)
+
+## Klasifikacije programskih jezika
+
+* Po nacinu programiranja, programski jezici se klasifikuju u 
+  *programske paradigme*
+* **Imperativni programski jezici**
+  * C, Pascal, Fortran, Basic,...
+  * stanje programa karakterisu *promenljive* 
+    * predstavljaju podatke
+  * *naredbe* vrse odredjene transformacije promenljivih
+* **Objektno-orijentisani jezici** 
+  * C++, Java, C#,...
+* **Funkcionalni jezici**
+  * Lisp, Haskell, ML,...
+* **Logicki jezici**
+  * Prolog
+* Podela nije striktna jer se u mnogim jezicima mestaju paradigme
+* *Proceduralni jezici* - zadatak programera je da opise nacin (proceduru) 
+  kojom se dolazi do resenja
+* *Deklarativni* - od programera zahtevaju da precizno pise problem, dok se 
+  mehanizam programskog jezika bavi pronalazenjem resenja
+
+## Leksika, sintaksa, semantika programskih jezika
+
+**Leksika** - identifikuje *reci* u recinici i svrstava ih u odgovarajuce
+kategorije
+* Leksiha jezika UR masina razlikuje rezervisane reci (Z, S, J, T) i 
+  brojevne konstante
+
+```
+if (a < 3)
+    x1 = 3 + 4 * a;
+```
+
+kljucna rec | zagrada | identifikator |  operator   | celobrojni literal | interpunkcija
+-----------:|:-------:|:-------------:|:-----------:|:------------------:|:-------------
+``if``      | ``( )`` | ``a x1``      | ``< = + *`` | ``3 4 a``          | ``;``
+
+* *Leksicki analizator* - bavi se leksikom programa
+
+**Sintaksa** - definise nacine na koji pojedinacne reci mogu da kreiraju 
+ispravne recenice
+
+* Sintaksicka struktura recenica ili programa moze da se predstavi u obliku 
+  *stabla*:
+
+\begin{tikzpicture}
+every node/.style = {shape=rectangle,draw, align=center}]]
+  \node {if - then}
+    child { node {<} 
+      child { node {a} }
+      child { node {3} } }
+    child [ missing ]
+    child { node {=} 
+      child { node {x1} }
+      child { node {+} 
+        child { node {3} }
+        child { node {*} 
+          child { node {4} }
+          child { node {a} } } } };
+\end{tikzpicture}
+
+* *Sintaksicki analizator* - deo programskog prevodioca koji se bavi 
+  sintaksom programa
+
+**Semantika** - pridruzuje znacenje sitaksicki ispravnim niskama jezika
+
+* Opisuje koje je izracunavanje opisano tim programom
+  * ``if (a < 3) x1 = 3 + 4 * a;``
+  * "Ako je tekuca vrednost promenljive a manja od 3, tada promenljiva 
+    ``x1`` dobija vrednost zbira brojeva 3 i cetvorostruke vrednosti 
+    promenljive ``a``"
+* Staticka i dinamicka semantika - u zavisnosti kada se sta prevodi
+
+## Pragmatika programskih jezika
+
+* Lakoca programiranja, efikasnost u primenama i metodologiji programiranja?
+* **Promenljive i tipovi podataka**
+  * *promenljive* - apstraktni pregled na podatake
+  * *tipovi* karakterisu:
+    * vrste podataka koje opisuju
+      * pr. celi brojevi
+    * skup operacija koje se mogu primeniti nad podacima tog tipa
+      * pr. sabiranje, oduzimanje, mnozenje
+    * nacin reprezentacije i detalji implementacije
+      * pr. zapis u obliku potpunog komplementa sirine 8 bita
+  * *Staticki tipizirani jezici* - zahtevaju od programera da definise tip 
+    svake promenljive
+  * *Dinamicki tipizirani jezici* - promenljiva moze da sadrzi podatke 
+    razlicitog tipa tokom faza izvrsavanja programa
+* **Kontrola toka izvrsavanja**
+  * *naredba dodele* - vrednost neke promenljive postavlja na vrednost   
+    nekog *izraza* (definisanog nad konstantama i definisanim promenljivim)
+* **Potprogrami**
+  * *Potprogrami* - su *funkcije, procedure, sabrutine* ili *metode*
+  * potprogrami primaju ulazne *parametre* (*argumente*)
+    * *prenos po vrednosti*
+    * *prenos po adresi*
+  * *sporedni efekat*
+* **Modularnost**
+  * *Biblioteke* (library) - celine koje sadrze definicije srodnih podataka i 
+    funkcija
+  * *Standardne biblioteke* (standard library) - sadrze funkcije cesto 
+    potrebne programeru
+  * *Rantajm biblioteka* (runtime library) - predstavlja sponu izmedju 
+    komilatora i operativnog sistema
+* **Upravljanje memorijom**
+  * C, C++ zahtevaju od programera da eksplicitno rukuje memorijom
+  * Java, C# oslobadjaju programera ove duznosti i koriste *sakupljace otpada*
+    (garbage collector)
+
+### Jezicki procesori
+
+**Kompilatori** - faza prevodjenja i faza izvrsavanja programa su potpuno 
+razdvojene
+
+* Izvrsavanje je moguce neograniceno mnogo puta, bez potrebe za 
+  ponovnim prevodjenjem
+* Krajnji korisnik nije potrebno da ima izvorni kod vec samo izvrsni.
+* Svaka izmena u izvornom kodu zahteva ponovno prevodjenje
+* Efikasni su pri izvrsavanju
+
+**Interpretatori** - faza prevodjenja i faza izvrsavanja su isprepletane
+
+* Analiziraju deo po deo izvrsnog koda programa i odmah nako analize vrse i 
+  njegovo izvrsavanje
+* Rezultat prevodjenja se ne smesta u izvrsne datoteke, vec je odmah izvrsava
+* Obicno zahtevaju vise vremena za izvrsavanje
+* Razvoj ciklusa je kraci ukoliko se koriste interpretatori
+    * prilikom malih izmena programa nije potrebno iznova vrsiti alalizu 
+      celokupnog koda  
+
+# Osnovno o programskom jeziku C
+
+* Programski jezik C (1972. godine, Denis Rici)
+* Imperativni, proceduralni programski jezik
+* Nudi pristum memoriji i jednostavno se prevodi na masiniski jezik
+* Minimalisticki duh (minimalism bitches)
+
+## Standardizacija jezika
+
+**K&R C.** (1978. Brajan Karningen i Denis Rici)
+
+**ANSI C i ISO C.** (1980.)
+
+**C99.** (1999.)
+
+**C11.** (2007.)
+
+## Prvi programi
+
+```
+#include <stdio.h>
+
+int main() {
+    printf("Zdravo!\n");
+    return 0;
+}
+```
+
+* ``#include <stdio.h>`` - ukljucuje standardnu biblioteku
+* ``main()`` - glavna funkcija koja se prva poziva
+* ``printf("Zdravo!\n");`` - poziva se funkcija ``printf`` iz standardne 
+  biblioteke koja ispisuje ``Zdravo!`` na standardnom izlazu
+* ``return 0;`` - vraca vrednost ``0`` sistemu i zavrsava program zavrsava sa 
+  radom
+
+# Predstabljanje podataka i operacije nad njima
+
+**Promenljive i konstante** - osnovni oblici podataka kojima se operise
+
+**Tipovi promenljivih** - vrsta podataka koje promenljive mogu da sadrze, 
+nacin reprezentacije i skup vrednosti, kao i skup operacije koje sa na njima 
+mogu primenjivati
+
+**Deklaracija** - uvode spisak promenljivih koje ce se koristiti, odredjuju 
+kog su tipa i koje se im pocetne vrednosti
+
+**Operatori** - odgovaraju operacijama koje su definisane nad podacima 
+odredjene vrste
+
+**Izrazi** - kombinuju promenljive i konstante, dajuci nove vrednosti
+
+## Promenljive i deklaracije
+
+### Promenljive i imena promenljibih
+
+* Promenljiva - objekat kojem je pridruzen prostor u memoriji i u svakom 
+  trenutku ima vrednost kojoj se moze pristupiti i koristiti
+* Imena promenljivih odredjena su identifikatorima
+* Identifikatori mogu da sadrze:
+  * slova (mala i velika)
+  * simbole
+  * cifre (ali ne i na prvom mestu)
+* Zbog citljivosti bolje je koristiti vise reci za ime promenljive
+* Za promenljive sa vise reci:
+  * ``broj_studenta``
+  * ``brojStudenta``
+
+### Deklaracije
+
+* ```
+  int broj;   // deklaracja celog broja
+  int a, b;   // deklaracija vise celih brojeva
+  ```
+* ```
+  int vrednost = 5;       // deklaracija sa inicijalizacijom
+  int a = 3, b, c = 5;    // deklaracija sa inicijalizacijom
+  ```
+* Konstantne promenljive
+* ``const double GRAVITY = 9.81; // ovu promenljivu nije moguce menjati``
+* Postoje razlicita mesta na kojima je moguce deklarisati promenljivu:
+  * *lokalne* - deklarisu deklarisu se i koriste unutar neke funkcije
+  * *globalne* - deklarisu se na pocetku programa i mogu da se koriste u 
+    svim funkcijama
+
+## Osnovni tipovi podataka
+
+* Podaci se organizovani u *tipove*
+* Omogucava rad na skupovima bitova i bajtova
+* Karakteristike
+  * vrsta podataka
+  * nacin reprezentacije
+  * skup operacija
+  * broj bitova
+
+### Tip ``int``
+
+* Integer - ``int`` (celi brojevi)
+* Operacije:
+  * Aritmeticke operacije (``+, -, *, /, %``)
+  * Relacije (``<, >=``...)
+* Velicina bitova koje int korisit nije definisana nego zavisi od masine na 
+  kojoj se izvrsava
+* Postoje kvalifikatori za povecavanje i smanjivanje velicine
+  * ``short`` - smanjuje velicinu $[-2^{15}, 2^{15} - 1]$
+  * ``long`` - povecava velicinu $[-2^{31}, 2^{31} - 1]$
+  * ``long long`` - povecava povecava velicinu $[-2^{63}, 2^{63} - 1]$
+* *Prekoracenje*
+* ``int a = 2000000000, b = 2000000000; a + b == -294967296 // prekoracenje``
+
+### Tip ``char``
+
+* Character - ``char`` (karakteri)
+* Operacije:
+  * Aritmeticke operacije (``+, -, *, /, %``)
+  * Relacije (``<, >=``...)
+* Tip ``char`` zauzima samo jedan bajt
+  * Vrednosti su u zavisnosti od toga da li je ``unsigned`` ili ``singned``:
+    * $[0,  2^8] = [0, 256]$
+    * $[-128, 127]$
+* ``<ctype.h>`` - biblioteka
+  * ``isalpha(), isdigit(), toupper(), tolower()`` - neke od funkcija
+
+### Tipovi ``float``, ``double`` i ``long double``
+
+* Brojevi u pokretnom zarezu - ``float, double, long double``
+  * ``float`` - jednostruka tacnost
+  * ``double`` - dvostruka tacnost
+  * ``long double`` - prosirena tacnost
+* ``double`` zauzima bar koliko i ``float``
+* ``long double`` zauzima bar koliko i ``double``
+* Zapis brojeva u pokretnom zarezu - IEEE754 sandard
+* ``<math.h>`` - biblioteka
+
+### Ligicki tip podataka
+
+* 0 - netacno
+* svi drugi - tacno
+* Tip ``bool``
+  * ``true`` - tacno
+  * ``false`` - netacno
+
+## Konstante i konstantni izrazi
+
+### Celobrojne konstante
+
+* Celobrojne konstante u teksu programa su ``123`` ili ``2131``...
+* Predstavljene su tipom ``int``, ``long``, ``unsigned logn``...
+  * u zavisnosti od velicine 
+  * Eksplicitno ``123ul`` je ``unsigned long``
+
+### Konstante u pokretnom zarezu
+
+* Konstante u pokretnom zarezu sadrze decimalnu tacku ``123.4`` ili 
+  eksponent (``1e-2``), ili oba
+* Predstavljene su tipom ``double``
+  * ``float`` ako se u zapisu nalazi ``f`` (``1.23f``)
+  * ``long double`` ako se u zapisu nalazi ``l`` (``1.23l``)
+
+### Karakterske konstante
+
+```
+char c = 'a';
+char c = 97;    // ekvivalentno prethodnom (na ASCII masinama)
+```
+* Karakterske konstante u tekstu programa su izmedju ``''`` (navodika) 
+  ``'a'`` ili u ASCII kodu ``97``  
+* Specijalni karakteri se navode koriscenjem specijalnih sekvenci karaktera
+  (escape sequances)
+  * pocinju sa ``\``
+  
+Specijalne sekvence | Uloga
+-------------------:|:------------
+``\a``              | alert (bell) character
+``\b``              | backspace
+``\f``              | formfeed
+``\n``              | newline
+``\r``              | carriage return
+``\t``              | horizontal tab
+``\v``              | vertical tab
+``\\``              | backslash
+``\?``              | question mark
+``\'``              | single quote 
+``\"``              | double quote
+``\ooo``            | octal number
+``\xhh``            | hexadecimal number
+
+### Konstantni izrazi
+
+* konstantni izrazi se sadrze samo konstante
+  * ``1 + 2 * 3``
+* Izracunaju se u fazi prevodjenja te se kasnije koriste kao jedna konstanta
+
+## Operatori i izrazi
+
+* Izrazi se sastoje od:
+  * konstanti
+  * promenljivih
+  * operatora
+* Operatori predstavljaju:
+  * Aritmeticke operacije
+  * Relacije
+  * Logicke operacije
+* *Arnost* operatora
+  * *unarni* - deluju samo na jedan operand
+    * *prefiksni* - operator se navodi ispred operanda
+    * *postfiksni* - operator se navodi nakon operanda
+  * *binarni* - deluju na dva operanda
+    * *infiksni* - operator se nalazi izmedju dva operanda
+  * *ternarni* - deluje na tri operanda
+* Vrednost izraza odredjena je na osnovu operatora i pod izraza
+* Neka pravila izracunavanja vrednosti nisu propisana standardom 
+  * ``f() + g()`` - ne znamo da li se prvo izracunava ``f`` ili ``g``
+
+### Prioritet i asocijativnost operatora
+
+* *Prioritet operatora* - konvencija prioriteta izracunavanja
+  1. Unarni operatori imaju visi prioritet u odnosu na binarne
+     * ``-x + 3 == (-x) + 3`` - prvo se izracunava ``-x`` pa onda ``+3``
+  2. Postfiksni unarni operatori imaju visi prioritet u odnosu na prefiksne 
+     unarne operatore
+     * ``-point.getX() == -(point.getX())`` - prvo se onda izracunava 
+       ``point.getX()`` pa se izracunava ``-point.getX()``
+  3. Aritmeticki operatori imaju visi prioritet u odnosu na relacijske koji 
+     imaju visi prioritet u odnosu na logicke operatore
+     * ``x + 3 > 4 == (x + 3) > 4`` - prvo se izracunava ``x + 3`` pa se 
+       izracunava ``x + 3 > 4``
+  4. Operatori dodele imaju veoma nizak prioritet
+     * ``x = 3 + x`` - prvo se izracunava ``3 + x`` pa se zbir dodeljuje u 
+       ``x``
+* *Asocijativnost operatora* - kojim redosledom se izracunavaju dva ista 
+  operatora ili operatora istog prioriteta
+  * *Leva asocijativnost*
+  * *Desna asocijativnost*
+  * ``(INT_MIN + INT_MAX) + 1 == 0`` dok ``INT_MIN + (INT_MAX + 1) == nan``
+    (Dolazi do prekoracenja)
+
+### Operator dodele
+
+* Operator dodele pridruzuje neku vrednost datoj promenljivoj
+  * Zapisuje se sa ``=``
+* ```
+  broj_studenta = 80;
+  broj_grupa    =  2;
+  ```
+* *Sporedni efekat*
+  * ``x = y = z = 0;`` - dodeljuje se na ``z`` nula (``0``) pa je vrednost 
+    izraza ``z = 0`` ustvari nula (``0``) pa se onda nula dodeljuje 
+    promenljivoj ``y``, repspektivno dodeljuje se nula (``0``) i 
+    promenljivoj ``x``.
+
+### Aritmeticki operatori
+
+Zapis | Znacenje operatora
+-----:|:-----------------
+``+`` | binarni operator sabiranja
+``-`` | binarni operator oduzimanja
+``*`` | binarni operator mnozenja
+``/`` | binarni operator (celobrojnog) deljenja
+``%`` | binarni operator ostatka pri deljenju
+``-`` | unarni operator promene znaka
+``+`` | unarni operator
+
+**Inkrementiranje i dekrementiranje**
+
+* Uvecanje ili umanjenje za 1
+* ```
+  ++ \\ (prefiskno i postfiksno) inkrementiranje;
+  -- \\ (prefiksno i postfiksno) dekrementiranje;
+  ```
+* Primeljuje se samo na promenljive (``5++`` nije validno)
+* ```
+  x = n++; // dedeljuje promenljivoj x vrednost n, pa onda uvecava n;
+  x = ++n; // uvecava promenljivu n, pa dodeljuje uvecanu vrednost promenljivi x
+  ```
+
+### Relacijski i logicki operatori
+
+**Relacijski operatori**
+
+* ``==, !=, >, >=, <, <=`` - jednako, razlicito, vece ...
+
+**Logicki operatori**
+
+* ``!, &&, ||`` - logicka negacija, konjukcija i disjunkcija
+
+**Lenjo izracunavanje**
+
+* Samo se izracunava ono sto je neophodno sa desne strane
+* ``2 < 1 && a++`` - kako je ``2 < 1 == 0`` vrednost celog izraza je ``0`` 
+  pa se ne izvrsava ``a++``.
+* Sporedni efekat
+
+### Slozeni operatori dodele
+
+* Skracenice
+* ```
+  izraz1 op= izraz2;          // ekvivalentno je sa
+  izraz1 = izraz1 op izraz2;
+  ```
+* Dobija se na citljivosti i brzini pisanja
+
+### Operator uslova
+
+* ``izraz1 ? izraz2 : izraz3;``
+* ``izraz1`` se izracunava i ako je tacan izracunava se ``izraz2`` u 
+  suprtnom ``izraz3``
+* postoji lenjo izracunavanje
+
+### Operator zarez
+
+* glupi operator
+* ```
+  x = 3, y = 5;  // ekvivalentno je sa   
+  x = 3;
+  y = 5;
+  ```
+
+### Operator sizeof
+
+* koristi se za odredjivanje velicine koju zauzima neki tip ili neka 
+  promenljiva
+* ``sizeof(int)`` ili ``sizeof(x)``
+
+## Konverzija tipova
+
+* Promena *vrednosti* jednog tipa u vrednost drugog tipa
+
+### Vreste konverzije
+
+* *promocija* (*napredovanje*) - promena vrednosti iz nizeg tipa u visi tip
+  * ``float a = 4; // 4 se konvertuje u 4.0``
+  * ``float f 16777217;`` - ``f == 16777216`` zbog tacnosti
+* *democija* (*nazadovanje*) - promena vrednost iz viseg tipa u nizi tip
+  * ```
+    int b = 7.0f;   // 7.0f se konvertuje u 7
+    int c = 7.7f;   // 7.7f se konvertuje u 7, pri cemu se gubi informacija
+    ```
+
+### Eksplicitne konverzije
+
+* Kastovanje - konverzija 
+* ``(tip) izraz``
+* ```
+  int a = 13, b = 4;
+  a / b == 3 i (double) a / (double) b == 3.25
+  ```
+
+### Implicitne konverzije
+
+* vrsenje konverzije bez zahteva programera
+* ```
+  int a;
+  double b = (a = 3.5);
+  ```
+* promenljiva ``b`` dobija vrednost ``3.0`` zbog toga sto je ``a = 3.5 == 3``
+* ``int x=7; 42/21.0f + (double) x/2 + 5/2``
+  * Eksplicitne konverzije: 1
+  * Implicitne konverzije: 4
+* ```
+  unsighned char rez, c1, c2, c3;
+  c1 = 100;
+  c2 = 3;
+  c3 = 4;
+  rez = c1 * c2 / c3;
+  ```
+  * kod aritmetickih operacija nad ``char`` on se konverzuje u ``int``
+* Konverzije uvek idu u bogatiji tip!
+
+## Nizovi i niske
+
+* Nizovi imaju strukturu podataka
+* Struktura podataka - nacini za cuvanje podataka u racunara, koji 
+  omogucavaju efikasnije izracunavanje nad tim podacima
+  * Razlicite prednosti i mane u odnosu na problem
+
+### Primer koriscenja nizova
+
+* ```
+  int b[10], i;
+  for (int i = 0; i < 10, i++) scanf("%d", &b[i]);
+  for (int i = 9; i >= 0, i--) printf("%d", b[i]);
+  ```
+
+### Deklaracija niza
+
+* ``tip ime_niza[dimenzija];``
+* ``tip ime_niza[dimenzija] = {vrednost1, vrednost2,..., vrednost[dimenzija]};``
+
+a[0] | a[1] | 1[2] | ... | a[dimenzija]
+-----|------|------|-----|-------------     
+800  | 804  | 808  | ... | 800 + sizeof(tip) * dimenzija 
+
+* ``int b[];`` - nije moguce!
+* ``int b[] = {1, 2, 3};`` - jeste moguce!
+
+```
+int a[3] = {5, 3, 7};
+int b[3];
+b = a;      // Neispravno - nizovi se ne mogu dodeljivati
+a++;        // Neispravno
+```
+
+### Niske
+
+* niz karaktera - *string*
+  * Pr. ``"ja sam nisak"``
+* ``printf("Zdravo svete");
+* ```
+  char c1[] = {'Z', 'd', 'r', 'a', 'v', 'o'};
+  char c2[] = {'Z', 'd', 'r', 'a', 'v', 'o', '\0'};
+  char c3[] = "Zdravo";
+  ```
+* ``c1``
+
+0 | 1 | 2 | 3 | 4 | 5
+--|---|---|---|---|---
+Z | d | r | a | v | o
+
+* ``c2 == c3``
+
+0 | 1 | 2 | 3 | 4 | 5 | 6
+--|---|---|---|---|---|---
+Z | d | r | a | v | o | \0
+
+* ``<string.h>`` - zaglavlje za string funkcije nad stringom
+  * ``strlen`` - duzina string
+  * ``strcpy`` - kopira niz (nesigurna funkcija)
+
+### Vise dimenzioni nizovi
+
+* niz nizova
+* ``tip ime_niza[dimenzija_1]...[demenzija_2];`` - deklaracija
+* ```
+  char a[2][3] = {{1, 2, 3}, 
+                  {4, 5, 6}};
+  ```
+
+a[0][0] | a[0][1] | a[0][2] | a[1][0] | a[1][1] | a[1][2] | a[i][j]
+--------|---------|---------|---------|---------|---------|---------
+800     |   804   |  808    |  812    | 816     | 820     | 800 + i * sizeof(int) * dimenzija_1 + j * sizeof(int)
+
+## Korisnicki definisani tipovi
+
+### Strukture
+
+* Struktura objedinjuju jednu ili vise promenljivih koji ne moraju da budu 
+  istog tipa
+
+```
+struct razlomak {
+  int brojilac;
+  int imenilac;
+}
+```
+
+```
+struc dvojni_razloma {
+  struct razlomak gore;
+  struct razlomak dole;
+}
+```
+
+* Deklaracija strukture
+  * ``struct razlomak a, b, c;``
+* Deklaracija strukture sa inicijalizacijom
+  * ``struct razlomak a = {1, 2};``
+* Pristupanje clanova strukture (operator (``.``) je najviseg prioriteta)
+  * ``a.imenilac`` ili ``a.brojilac``
+* Ne postoji konflikt izmedju imana polja strukture i istoimenih promenljivih
+
+**Nizovi struktura**
+
+```
+struct student {
+  char ime[50];
+  float prosek;
+}
+```
+
+* ``struct studenti student[10];`` - niz strukture student
+
+### Unija
+
+* Unija cuva prostor za jednu promenljivu
+
+```
+union vreme {
+    int obicno;
+    float precizno;
+}
+```
+
+* U nekim slucajevima se koristi ``int``, a u nekim ``float``
+* Jedan memorijski proster se interpretira na razlicite nacine
+
+### Polja bitova
+
+* Nije bitno
+
+### Nabrojivi tipovi (``enum``)
+
+* Definisanje tipova (zbog citljivosti)
+```
+enum znak_karte {
+    KARO,
+    PIK,
+    HERC,
+    TREF
+};
+
+enum znak_karte znak = KARO;
+``` 
+
+```
+struc karta {
+    unsigned char broj;
+    enum znak_karte znak;
+} mala_dvojka = {2, TREF};
+```
+
+### Typedef
+
+* Definisanje tipova
+```
+typedef int Length;
+Length len, maxlen;
+```
+
+# Naredbe i kontrola toka
+
+* *Naredbe* - osnovni elementi kojima se opisuju izracunavanja u programu
+* *Kontrola toka* - naredbe koje omogucavaju razlicite nacine izvrsavanja 
+  programa u zavisnosti od vrednosti promenljivih
+
+## Naredba izraza
+
+* Svaki izraz koji ima (``;``) na kraju jeste naredba
+* Naredba izraza je korisna ako ima sporedni efekat
+
+## Slozene naredbe (blokovi)
+
+* Koristi viticaste zagrade (``{`` i ``}``)
+  * unutar njih se upisuju nove naredbe
+
+## Naredbe grananja
+
+### Naredba ``if-else``
+
+```
+if (izraz)
+    naredba1
+else
+    naredba2
+```
+
+### Naredba ``else-if``
+
+```
+if (izraz1)
+    naredba1
+else if (izraz2)
+    naredba2
+else if (izraz3)
+    naredba 3
+else
+    naredba4
+```
+
+### Operator uslova
+
+```
+x = (izraz1) ? a : b;
+```
+
+### Naredba ``switch``
+
+```
+switch (izraz) {
+    case konstantan_izraz1 : narede1
+    case konstantan_izraz2 : narede2
+    ...
+    default:                 naredbe_n
+}
+```
+
+## Petlje
+
+### Petlja ``while``
+
+```
+while (izraz)
+    naredba
+```
+
+### Petlja ``for``
+
+```
+for (izraz1; izraz2; izraz3)
+    naredba
+```
+
+### Petlja ``do-while``
+
+```
+do {
+    naredbe
+} while (izraz)
+```
+
+### Naredbe ``break`` i ``continue``
+
+* ``break`` - zaustavlja petlju
+* ``continue`` - preskace ostale naredbe i ide u sledecu iteraciju u petlji
+
+# Funkcije
+
+* Funkcija je neka vrsta podprograma
+* Zasto se koriste:
+  1. Ako se neki problem pojavljuje vise puta
+  2. Ako je funkcija progresna jednostavnije je izmeniti je na jednom mestu
+  3. Citljivost
+  4. Podela poslova
+  5. Enkapsulacija
+
+## Definisanja i definicija funkcije
+
+```
+// Deklaracija
+int kvadrat (int n);
+// Definicija
+int kvadrat (int n) {
+    return n*n;
+}
+```
+
+## Parametri funkcije
+
+* *Parametri funkcije* - promenljive u deklaraciji/definiciji
+* *Argumenti funkcije* - promenljive u pozivu
+  * ```
+    int kvadrat(int n); // n - parametar
+    kvadrat(5);         // 5 - argument
+    ```
+* ``void`` - kljucna rec koja se koristi u funkciji koja nema argumente
+
+## Prenos argumenata
+
+```
+int f (int x) 
+{
+    x = 6;
+    return x;
+}
+
+int main (void) 
+{
+    int x = 5;
+    f(x);
+    printf("%d", x);
+}
+```
+* Vrednost ``x`` nakon izvrsavanja ovog programa je idalje ``5``
+* Prenos po vrednosti
+  * Novi memorijski prostor za parametre
+* Prenos po referenci
+  * Veza 
+
+## Konverzije tipova argumenata funkcije
+
+* Priliko poziva vrsi se implicitna konverzija tipova argumenata u tipove 
+  parametara
+* Prilokom vracanja vrednosti funkcije vrsi se konverzija vrednosti koja se 
+  vraca u tip povratne vrednosti funkcije
+* ```
+  void f(int a) {
+    printf("%d", a);
+  }
+  
+  int main(){
+    f(3.5);
+  }
+  ```
+
+## Povratna vrednost funkcije
+
+* Funkcija *vraca* rezultat tipa koji oznacava tip funkcije
+* Za vracanje funkcije koristi se naredba ``return r;`` gde je ``r`` izrazi 
+  zadatog tipa
+* Ako funkcija ne vraca nista ona je tipa ``void``
+
+## Rekuzivne funkcije
+
+* Funkcije koje pozivaju samu sebe
+* ```
+  double stepen(double x, unsigned n) {
+    if (n == 0)
+      return 1.0;
+    else
+      return x * stepen(x, n - 1);
+  }
+  ```
+
+## Nizovi i funkcije
+
+* Prenos po referenci
+
+## Korisnicki definisani tipovi i funkcije
+
+## Funkcije sa promenljivim brojevima argumenata
+
+# Operacija izvornog i izvrsivog programa
+
+## Od izvornog do izvrsivog programa
+
+* *pretpocesiranje*
+  * omogucava pisanje u vise datoteka
+  * prolazi kroz tekst i menja ga
+    * ``#include<datoteka.h>`` menja u cod iz te datoteka
+* *kompilacija*
+  * prevodi linije koda u masinski jezik
+    * *leksicka analiza*
+    * *sintaksicka analiza*
+    * *semanticka analiza*
+    * *generisanje medjukoda*
+    * *optimizacija medjukoda*
+    * *generisanje koda na masinskom jeziku*
+* *povezivanje*
+  * omogucava pisanje koda u vise datoteka
+  * *staticko povezivanje*
+  * *dinamicko povezivanje*
+    * *biblioteka sa dinamickim povezivanjem* (dynamic link library)
+
+**Odvojena kompilacija i povezivanje**
+
+```
+gcc -c program1.c                       // samo prevodjenje
+gcc -c program2.c                       // samo prevodjenje
+gcc -o program program1.o program2.o    // povezivanje
+```
+
+**Program ``make``**
+
+Datoteka ``Makefile``:
+```
+program: program1.o program2.o biblio.o
+    gcc -o program program1.o program2.0 biblio.0
+
+program1.o : program1.c biblio.h
+    gcc -c program1.c
+
+program2.o : program2.c biblio.h
+    gcc -c program2.c
+```
+
+## Organizacija izvornog programa
+
+* Podeliti program na celini
+* *funkcionalna dekompozicija*
+  * podeliti probleme na podprobleme
+  * napisite funkcije za podprobleme
+  * objedini funkciju podprobleme
+* *moduli* - datoteka za funkcije podproblema
+* *dosek identifikatora* (scope)
+* *zivotni vek promenljivih* (lifetime)
+* *povezanost identifikatora*
+
+### Pretprocesor
+
+* pretprocesor vrsi tekstualne zamene
+* ``#include "ime_datoteke"`` - lokalna datoteke
+* ``#include <ime_datoteke>`` - globalne datoteke
+
+**Makro zamene**
+
+* ``#define originalni_teskt nove_text``
+* ``#define max(A, B) ((A) > (B) ? (A) : (B))`` - max macro
+
+**Uslovi prevodjenja**
+
+* U zavisnosti od vrednosti uslova koji se racuna u fazi pretprocesuiranja kod iskljucuje delove koji nisu relevantni
+
+```
+#ifdef SRPSKI
+    printf("Zdravo svete")
+#else
+    printf("hello world")
+#endif
+```
+
+### Doseg identifikatora
+
+* neke promenljive se vide u okviru blokova koje su definisane
+  * *globalne*
+  * *lokalne*
+* Klase
+  * *doseg nivao datoteke* - podrazumevaju da ime vazi od tecke uvodjenja do 
+    kraja datoteke (globalne promenljive, funkcije)
+  * *doseg nivoa bloka* - nesto je vidljivo samo u bloku u kome se nalazi
+    (lokalne promenljive)
+  * *doseg nivao funkcije* - podrazumeva da ime vazi u celoj funkciji u kojoj
+    je uvedeno
+  * *doseg nivoa protitipa funkcije* - podrazumeva da ima vazi u okviru 
+    prototipa (deklaracije) funkcije
+
+```
+int a;                  // globalna promenljiva 
+
+// globalna funkcija
+void f(int c) {         // c - lokalna promenljiva
+    int d;              // lokalna promenljiva
+    void g()            // lokalna funkcija
+
+    for (d = 0; d < 3; d++) {
+        int e;          // lokalna promenljiva bloka 
+    }
+    
+    kraj:               // labela kraj
+}
+```
+
+### Zivotni vek objekata i kvalifikatori ``statis`` i ``auto``
+
+* duzina vremena postojanja neke funkcije
+* Vrste zivotnog veka:
+  * *staticki* - objekat dostupan tokom celog izvrsavanja programa
+  * *automatski* - promeljive koje se automatski stvaraju i uklanjaju 
+    prilikom pozivanja funkcija
+  * *dinamicki* - alociraju i dealociraju na eksplicitan zahtev programera
+* Lokalne promenljive su automatske promenljive
+* Globalne promenljive i funkcije su staticke
+* Lokalne promenljive mogu da budu i staticke
+
+```
+void f() {
+    int a = 0;
+    a++;
+}
+
+void g() {
+    static int a = 0;
+    a++;
+}
+
+f(); f(); a == 0,
+g(); g(); a == 1
+```
+
+### Povezanost identifikatora i kvalifikatora ``static`` i ``extern``
+
+* Dve razlicite datoteka imaju po jednu globalnu promenljivu ``x``
+* Tri vrste povezanosti:
+  * *bez povezanosti* (lokalne, argumenti, labele,...)
+  * *spoljasnja povezanost* - dva ``x``-a su ustvari jedni te isti
+  * *unutrasnja povezanost* - dva ``x``-a nemaju veze jedni sa drugim
+
+**Spoljasnja povezanost i kvalifikator ``extern``**
+
+* Za globalne promenljive podrazumeva se da su povezane
+* Za lokalne promenljive dodaje se ``extern``
+
+```
+file1.c
+
+int a;
+int b = 3;
+
+void f() {
+    printf("a = %d\n", a);
+}
+
+##############################
+file2.c
+
+int a;
+
+int g() {
+    extern int b;
+    f();
+}
+```
+
+**Unutrasnja povezanost i kvalifikator ``static``**
+
+```
+file1.c:
+
+static int a = 3; // samo moje a
+int b = 5;
+
+static int f() { // samo moje f()
+    
+}
+
+int g() {
+    f();
+}
+
+##############################
+file2.c:
+
+int g();
+int a, b;
+
+int main() {
+    g(); // g() poziva f()
+    return 0;
+}
+```
