@@ -1,0 +1,251 @@
+\documentclass[12p,a4paper]{article}
+
+\usepackage[serbian]{babel}
+\usepackage[T2A]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{multicol} 
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts} 
+
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\sgn}{sgn}
+
+\title{Linearna Algebra Cheat Sheet}
+\author{Andrija Urosevic}
+
+\begin{document}
+
+\maketitle
+
+\begin{multicols}{2}
+
+\section{Uvod}
+
+\subsection{Grupe. Prsten. Polja}
+
+    Svaki uređeni par $(S, *)$ skupa $S$ i bilo koje od binarnih operacija $*$ 
+    u tom skupu zovemo i jednim \textit{grupoidom}. Ako je ta operacija 
+    asocijativna, tj važi $(a * b) * c = a * (b * c)$ kažemo da je taj grupoid 
+    \textit{asocijativan}. Asocijativne grupide zovemo i \textit{polugrupama}.
+
+    Za element $e \in M$ kažemo da je \textit{neutral} polugrupe $(M, *)$ ili 
+    same operacije $*$, ako za svako $a \in M$ važi $a * e = e * a = a$. 
+    Polugrupe sa neutralom zovemo i \textit{monoid}.
+
+    Element $a$ je \textit{invertibilan} ako postoji bar jedno $a^- \in M$ za 
+    koje važi $a * a^- = e$ i $a^- * a = e$.
+
+    Monoid u kojima su svi elementi inverzibilni zovemo i \textit{grupom}. 
+    Ako je ona i komutativna nazivamo je \textit{abelovom grupom}.
+
+    Za preslikavanje $f : G \mapsto K$ kažemo da je \textit{homomorfizam} 
+    grupoida $(G, *)$ u grupoid $(K, \circ)$ ako za svako $a, b \in G$ važi 
+    $f(a * b) = f(a) \circ f(b)$
+
+    Strukturu $(K, +, \cdot)$ nazivamo \textit{prstenom} ako je:
+    \begin{enumerate}
+        \itemsep0em
+        \item $(K, +)$ je komutativna/Abelova grupa 
+        \item $(K, \cdot)$ je monoid
+        \item Operacija $\cdot$ je distrbutivna na operaciju $+$
+    \end{enumerate}
+
+    Strukturu $F = (F, +, \cdot)$ nazivamo \textit{polje} ako je:
+    \begin{enumerate}
+        \itemsep0em
+        \item $(F, +)$ je Abelova grupa
+        \item $(F \backslash \{0\}, \cdot)$ je Abelova grupa
+        \item Operacija $\cdot$ je distributivana na operaciju $+$
+    \end{enumerate}
+
+    Polje racionalnih brojeva $\mathbb{Q} = \{ \frac{n}{m} | n \in \mathbb{Z} 
+    \text{ i } m \in \mathbb{N}\}$.
+
+    Polje realnih brojeva $\mathbb{R}$.
+
+    Polje kompleksnih brojeva $\mathbb{C} = \{ a + ib | a,b \in \mathbb{R} \}$.
+
+\section{Vektorski Prostori}
+    
+    \textit{Vektorski prostor nad nad poljem $F$} je uređena trojka 
+    $V = (V, +, \cdot)$ koja sadrži skup $V$ i dve binarne operacije 
+    (sabiranje i množenje skalarom respektivno)
+    \[+ : V \times V \mapsto V, (x, y) \mapsto x + y\]
+    \[\cdot : F \times V \mapsto V, (a, x) \mapsto ax\]
+    tako da za svako $u,v \in V$ i svako $a, b \in F$ važi:
+    \begin{enumerate}
+    \itemsep0em
+    \item [V.1] $(V, +)$ je Abelova grupa
+    \item [V.2] $a(u + v) = au + av$
+    \item [V.3] $(a + b)u = au + bu$
+    \item [V.4] $a(bu) = (ab)u$
+    \item [V.5] $1u = u$
+    \end{enumerate}
+
+\subsection{Vektorski potprostor}
+    
+    Neka je $V$ vektorski prostor nad poljem $F$ i neka je $V' \subset V$. 
+    Ako je $V'$ vektorski prostor zatvoren za sabiranje i množenje skalarom 
+    nad $V$, onda kažemo da je $V'$ \textit{potprostor vektorskog prostora} $V$
+
+    Ako su $U$ i $W$ potprostori vektorskog prostora V, onda je 
+    $U + W$ \textit{suma} vektorskih potprostora $U$ i $W$:
+    \[U + W = \{ u + w | u \in U \text{ i } w \in W \}\]
+
+    Kažemo da je suma \textit{direktran} i obeležavamo je sa $U \oplus W$, 
+    ako važi da je
+    \[U + W = V \text{  i  } U \cap W = \{0\}\]
+
+\subsection{Linearna kombinacija}
+
+    Neka je $V$ vektorski prostor nad poljem $F$ i neka su 
+    $v_1, v_2, \ldots ,v_n$ vektori iz $V$. Onda kažemo da je $v \in V$ 
+    \textit{linearna kombinacija vektora} $v_1, v_2, \ldots ,v_n$ ako postoje 
+    $a_1, a_2, \ldots , a_n \in F$ takvi da:
+    \[v = a_1 v_1 + a_2 v_2 + \cdots + a_n v_n\]
+
+    Neka je $S$ podskup vektorskog prostora $V$. Skup svih linearnih 
+    kombinacija vektora $v_1, v_2, \ldots ,v_n \in S$ naziva se 
+    \textit{linearni omotač} vektorskog prostora $V$, tj. 
+    $S$ \textit{razapinje} $V$, formalno:
+    \[V = \mathcal{L} (S) = \{ \sum_{i=1}^n a_i v_i | 
+    a_i \in F, v_i \in S, i = 1, 2 \ldots n \}\]
+
+\subsection{Baza i Dimenzija}
+
+    Neka je dat skup $S = \{ v_1, v_2, \ldots, v_n \}$ koji je podskup 
+    vektorskog prostora $V$. Kažemo da su vektori iz $S$ 
+    \textit{linearno nezavisni} ako jednačina:
+    \[a_1 v_1 + a_2 v_2 + \cdots + a_n v_n = 0, 
+    \\ a_i \in F, i = 1, 2, \ldots, n\]
+    ima trivijalno rešenje, tj.\ da je $a_1 = a_2 = \cdots = a_n = 0$. 
+    Vektori su \textit{linearno zavisni} ako nisu linearno nezavisni.
+
+    Konačan skup vektora, $\{e_1, \ldots, e_n\}$ je \textit{baza} vektorskog 
+    prostora $V$ ako je $\mathcal{L} (\{e_1, \ldots, e_n\}) = V$ i ako su 
+    $e_1, \dots, e_n$ linearno nezavisni.
+
+    Neka je $V$ vektorski prostor nad poljem $F$. I neka su $e_1, \ldots, e_n$ 
+    baze tog vektorskog prostora, kažemo da je \textit{dimenzija} vektorskog 
+    prostora kardinalni broj neke njegove baze, tj.\ $\dim U = n$.
+
+    Neka su $U$ i $W$ neki potprostori vektorskog prostora $V$ dimenzije $n$. 
+    Tada važi:
+    \[\dim U + \dim W = \dim(U + W) + \dim(U \cap W)\]
+
+\subsection{Rang}
+
+    Neka su $v_1, v_2, \ldots, v_m$ konačnodimenzionalni sistem vektora nekog 
+    vektorskog prostora $V$. Kažemo da je \textit{rang} sistema vektora 
+    $r$, tj.\ $ rang (v_1, v_2, \ldots, v_m) = r$ ako važi:
+    \begin{enumerate}
+        \itemsep0em
+        \item Postoji linearno nezavisan podskup od 
+            $\{v_1, v_2, \ldots, v_m \}$ koji sadrži tacno $r$ vektora
+        \item Svaki podskup od $\{v_1, v_2, \ldots, v_m \}$, koji se sadrži 
+            od $r + 1$ vektor je linearno zavisan
+    \end{enumerate}
+
+\section{Linearno Preslikavanje}
+
+    Neka su $U$ i $W$ vektorski prostori nad poljem $F$. Onda je preslikavanje 
+    $L: U \mapsto W$ \textit{linearno}, ako za svako $u, v \in U$ i svako 
+    $\lambda \in F$ važi:
+    \[ L(u + v) = L(u) + L(v) \text{  i  } L(\lambda u) = \lambda L(u)\]
+
+    Linearno preslikavanje $L : U \mapsto W$, 
+    koje je injektivno zovemo \textit{monomorfizam}, 
+    sujektivno preslikavanje zovemo \textit{epimorfizam}, 
+    i bijektivno preslikavanje \textit{homomorfizam}. 
+    Ako je $U = W$ onda kažemo da je linearno preslikavanje 
+    \textit{endomorfno}, bijekcije ednomorfizma su \textit{automorfizmi}.
+
+\subsection{Izomorfizmi Vektorskih Prostora}
+
+    Neka su $U$ i $W$ dva vektorska prostora nad poljem $F$. Kažemo da je $U$ 
+    \textit{izomorfno} na $W$ ako postoji izomorfizam $f : U \mapsto W$. 
+    Ako su $U$ i $W$ izomorfni pišemo $U \cong W$
+
+\subsection{Teorema o Rangu i Defektu}
+
+    Neka su $U$ i $W$ dva vektorska prostora nad $F$ i neka je 
+    $L : U \mapsto W$. Onda je \textit{jezgro} od $L$:\ 
+    $\Ker L= \{v \in U | L(v) = 0 \}$, \textit{slika} od $L$:\ 
+    $\Ima L = \{ L(v) | v \in U\}$, \textit{rang} linearnog preslikavanja je 
+    $\rho (L) = \dim \Ima L$, i \textit{defekt} linearnog preslikavanja 
+    $\delta(L) = \dim \Ker L$.
+
+    Neka su $U$ i $W$ dva vektorska prostora nad nekim poljem $F$. 
+    Pretpostavimo da je $U$ konačno-dimenzionalan i neka je 
+    $L : U \mapsto W$ linearno preslikavanja. Onda je $\Ker L$ i $\Ima L$ 
+    konačnodimenzionalni potprostori od $U$ i $W$, i imamo jednakost:
+    \[\rho (L) + \delta (L) = \dim U \]
+
+\subsection{Vektorski prostor $\Hom_F (U, W)$}
+
+    Neka su $U$ i $W$ dva vektorska prostora nad poljem $F$. Uređena četvorka 
+    $\Hom(U, W) = (\Hom_F(U, W), F, +, \cdot)$, gde je
+    \[ (A + B) (x) = A(x) + B(x), \text{ za } A, B \in Hom(U, V), 
+    \text { i } \forall x \in U\]
+    \[ (\lambda A) (x) = \lambda A(x), \text{ za } A \in Hom(U, V), 
+    \lambda \in F, \text { i } \forall x \in U\]
+    vektorski porprostor nad poljem $F$ svih linearnih preslikavanja 
+    iz $U$ u $W$.
+
+\subsection{Opšta Linearna Grupa}
+
+    Grupa svih inverzibilnih elemenata endomorfizma vektorskog prostora $V$ 
+    nad poljem $F$ zove se \textit{opsta linearna grupa} vektorskog 
+    prostora $V$ nad poljem $F$ i opise se $\GL_F(V)$. 
+    Dodatno, $\GL_F(V) \cong \GL_n(F)$
+
+    Neka je matrica $A \in \mathbb{M}_n (F)$, onda je $A$ \textit{regularna} 
+    ako je inverzibilna, tj.\ $A \in \GL_n(F)$, ako nije inverzibilna onda 
+    je \textit{singularna}.
+
+    Skup matrica koje se razlikuju od jediničnih matrica samo na 
+    jednom elementu nazivaju se \textit{elementarne matrice}.
+
+\section{Determinante}
+
+    Neka je dato jedinstveno linearno preslikavanje 
+    $\det : \mathbb{M}_n (F) \mapsto F$, ako je $A \in \mathbb{M}_n(F)$ onda 
+    $\det(A)$ nazivamo \textit{determinanta} matrice $A$. Determinante se 
+    može zapisati kao:
+
+    \[
+        \det(A) = 
+        \begin{vmatrix}
+            a_{11} & \cdots & a_{1n} \\
+            \vdots & &        \vdots \\
+            a_{n1} & \cdots & a_{nn} 
+        \end{vmatrix}
+    \]
+    \[ 
+        \det(A) = \sum_{\sigma \in S_n} 
+        \left( 
+        \sgn(\sigma) \prod_{i=0} a_{i,\sigma(i)} 
+        \right) 
+    \]
+
+\section{Skalarni proizvodi i Ortogonalnost}
+
+    Neka je $V$ vektorski prostor nad poljem $F$. \textit{Skalarni proizvod}  
+    nad $V$ je dodela koja paru elementata $v, w \in V$ dodeljuje skalar.
+    Obelezava se sa $v \cdot w$ ili sa $<v, w>$ i zadovoljava svojstva:
+    \begin{enumerate}
+        \itemsep0em
+        \item $v \cdot w$ = $w \cdot v$ za svaki $v, w \in V$
+        \item $u \cdot (v + w) = u \cdot v + u \cdot w$, za $u,v,w \in V$
+        \item $\lambda u \cdot v = \lambda (u \cdot v)$ i 
+            $u \cdot \lambda v = \lambda (u \cdot v)$, za $\lambda \in F$
+    \end{enumerate}
+ 
+\end{multicols}
+
+
+\end{document}
