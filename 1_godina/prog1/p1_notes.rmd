@@ -1466,3 +1466,79 @@ int main() {
     return 0;
 }
 ```
+
+## Organizacija izvrsivog programa
+
+### Organizacija memorije
+
+* *segmenti*
+  * *segmetni koda* ( code segmet ili text segment)
+    * masinski prevod programa
+  * *segmetni podataka* (data segment)
+    * cuvaju se podaci sa odredjene vrste promenljivih
+      * glebalne i staticne promenljive
+  * *stek segmet* (stack segment)
+    * stek // todo
+      * zasniva se na LIFO (last in - first out)
+    * *stek poziva* - cuvaju se svi podaci koji karakterisu izvrsavanje 
+      funkcije
+    * *stek okvir*
+      * argumente funkcije
+      * lokalne promenljive
+      * medjurezultate izracunavanja
+      * adresu povratka
+      * adresu stek okvira funkcije pozivaoca  
+  * *hip segmet* (heap segment)
+    * odredjena kolicina memorije koju program ima na raspolaganju kada mu na 
+      zahtevu treba dovoljan prostor
+
+**Prenos arg u funkciju preko steka**
+
+// todo dodaj slike
+
+# Pokazivaci i dinamicka alokacija memorije
+
+## Pokazivaci i adrese
+
+* *Pokazivaci* predstavljaju tip podataku u C-u cuje su vrednosti memorijske 
+  adrese
+* Adrese
+  * 32-bitne adrese
+    * $2^{32} = 4GB$
+  * 64-bitne adrese
+* Adrese su jednake velicine
+* ```
+  int *p1;
+  int* p2;
+  int* p3, p4;
+  ```
+  * ``p1``, ``p2``, ``p3`` su pokazivaci, ``p4`` je promenljiva tipa ``int``
+* *Operator referenciranja* ili *adresni operator* - ``&``
+* *Operator dereferenciranja* - ``*``
+* ```
+  int a = 10;
+  int *p = &a; // deklaracija i inicijalizacija 
+  *p = 5;      // ekvivalnentno sa a = 5;
+  ```
+* ```
+  int *p;
+  char *q;
+  void *x;
+  ```
+  * tipovi uticu na duzinu koju zauzimaju u memoriji
+
+## Pokazivaci i argumenti funkcija
+
+## Pokazivaci i nizovi
+
+## Pokazivacka aritmetika
+
+## Pokazivaci i niske
+
+## Nizovi pokazivaca i visedimenzioni nizovi
+
+## Pokazivaci i strukture
+
+## Pokazivaci na funkcije
+
+## Dinamicka alokacije memorije

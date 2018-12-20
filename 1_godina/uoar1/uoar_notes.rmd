@@ -22,7 +22,8 @@ output: pdf_document
     * Hemijski modeli
 * Posle otkica pisma najznacajnija informaciona tehnologija je bila stampa
 * Dok je to danas digitalna informaciona tehnologija
-* Nezamislivo je efikasno poslovati i funkcionisati bez podrske informacionih tehnologija
+* Nezamislivo je efikasno poslovati i funkcionisati bez podrske informacionih 
+  tehnologija
 
 ### Informacioni sistemi
 
@@ -36,7 +37,8 @@ output: pdf_document
 **Pojava globalne ekonomije**
 
 * Veliki broj preduzeca u svetu zavisi na uvozu i izvozu
-* Globalizacija svetske industrijske ekonomije povecava vredost informacija i nudi nove mogucnosti za poslovanje
+* Globalizacija svetske industrijske ekonomije povecava vredost informacija i 
+  nudi nove mogucnosti za poslovanje
   * Komunikacione i analiticke mogucnosti
 * Preduzeca su prinudjena da se takmice na svetskom trzistu
   * Da bi u tome uspeli potrebne su im kvalitetne informacije
@@ -49,7 +51,8 @@ output: pdf_document
   * distrubucijom ili
   * radom sa novim saznanjima i informacijama
 * Dve trecine dohotka donosi rad u ovim oblastima
-* Ukoliko rukovotsktvo nije obuceno informacionim tehnologijama preduzece ima manje sanse da uspe na trzistu
+* Ukoliko rukovotsktvo nije obuceno informacionim tehnologijama preduzece ima 
+  manje sanse da uspe na trzistu
 
 **Transfromacija poslovanja preduzeca**
 
@@ -64,19 +67,23 @@ output: pdf_document
 
 #### Sta je informacioni sistem?
 
-* !Skup medjusobno povezanih komponenti koje prikupljaju, objedinjuju, cuvaju i distribuiraju informacije.
+* !Skup medjusobno povezanih komponenti koje prikupljaju, objedinjuju, cuvaju 
+  i distribuiraju informacije.
 * Informacioni sistemi sadrze:
   * informacije o ljudima
   * mestima
   * stvarima unutar neke organizacije
-* !*Informacija* - formalna reprezentacija saznanja prihvatljivog za zive organizme i masine.
-* !*Podatak* - re-interpretabilna reprezentacija cinjenice ili ideja na formalni nacin pogodan za komunikaciju, interpretaciju ili obradu
+* !*Informacija* - formalna reprezentacija saznanja prihvatljivog za zive 
+  organizme i masine.
+* !*Podatak* - re-interpretabilna reprezentacija cinjenice ili ideja na 
+  formalni nacin pogodan za komunikaciju, interpretaciju ili obradu
   * Operacije nad podacima mogu da vrse ljudi ili masine
 
 #### Racunarski sistem kao deo informacionog sistema
 
 * !Racunarski sistem predstavlja *tehnolosku podrsku* informacionim sistemima
-* Aktivnosti racunarskih sistema se mogu smatrati kao komponente informacionih sistema:
+* Aktivnosti racunarskih sistema se mogu smatrati kao komponente 
+  informacionih sistema:
   * upotreba racunaskih sistema u:
     * instrazivackim centrima
     * skolama
@@ -85,8 +92,10 @@ output: pdf_document
 
 ### Racunarski sistemi
 
-* !*Sistem* - skup ljudi, masina i metoda organizovanih radi ostvarivanja funkcija.
-* !*Racunaski sistem* - skup masina i pridruzenih metoda (u obliku softvera) organizovanih radi vrsenja automatske obrade podataka
+* !*Sistem* - skup ljudi, masina i metoda organizovanih radi ostvarivanja 
+  funkcija.
+* !*Racunaski sistem* - skup masina i pridruzenih metoda (u obliku softvera) 
+  organizovanih radi vrsenja automatske obrade podataka
 * Slozeni sistem sa hijerarhijskom strukturom
   * cine ga hijerarhijski podsistemi
   * na dnu se nalaze elektronske komponente
@@ -122,9 +131,11 @@ output: pdf_document
   * !*Unutrasnja i spoljasnja memorija*
     * cuvanje podataka
   * !*Ulazno/izlazni uredjanji*
-    * prenos podataka izmedju racunarskog sistema i njegovog operatovno okruzenja
+    * prenos podataka izmedju racunarskog sistema i njegovog operatovno 
+      okruzenja
   * !*Kanali veze* ili *magistrale*
-    * prenos instrukcija i podataka izmedju procesora, ulazno/izlaznih i komunikacionih uredjaja i memorije
+    * prenos instrukcija i podataka izmedju procesora, ulazno/izlaznih i 
+      komunikacionih uredjaja i memorije
   * !*Softver*
     * nadzor nad resursima sistema
     * interfejs izmedju korisnika i racunarskog sistema
@@ -132,11 +143,13 @@ output: pdf_document
 
 ### Organizacija i arhitektura racunaskog sistema
 
-* !*Arhitektura* racunarskog sistema - atributi sistema koji su vidljivi za korisnika i koji direktno uticnu na logiku programa koji pise korisnik
+* !*Arhitektura* racunarskog sistema - atributi sistema koji su vidljivi za 
+  korisnika i koji direktno uticnu na logiku programa koji pise korisnik
   * skup instrukcija
   * format masinske reci
   * nacin predstavljanja podataka
-* !*Organizacija* racunarskog sistema - veza izmedju operativnih delova sistema
+* !*Organizacija* racunarskog sistema - veza izmedju operativnih delova 
+  sistema
   * nivo tehnologije
   * nacin komunikacije
   * algoritmi testiranja ispravnosti
@@ -159,27 +172,36 @@ output: pdf_document
 
 ### Kontinualna i diskretna racunska sredstva
 
-* !*Racunsko stedstvo* - pomagalo izradjeno u cilju izvrsavanja racunskih operacija
+* !*Racunsko stedstvo* - pomagalo izradjeno u cilju izvrsavanja racunskih 
+  operacija
 * Nacini izvrsavanja operacija:
   1. **Rucni**
-     * Kada covek rucno pokrece racunsko sredstvo i po zavrsetku ocitava rezultat (siber)
+     * Kada covek rucno pokrece racunsko sredstvo i po zavrsetku ocitava 
+       rezultat (siber)
   2. **Poluatomatski**
-     * Kada se za zadate ulazne podatake automatski izvrsava pojedinacna operacija
+     * Kada se za zadate ulazne podatake automatski izvrsava pojedinacna 
+       operacija
      * Podatke i operacije zadaje covek
      * Ocitava rezultate i odredjuje narednu operaciju
-     * Razlicite vrste mehanickih ili lektronski kalkulatora (kase, stoni kalkulatori)
+     * Razlicite vrste mehanickih ili lektronski kalkulatora 
+       (kase, stoni kalkulatori)
   3. **Automatski**
      * kada masina izvrsava niz operacija koje su zadate programom
-     * covek pise porgram i unosi ga u racunarsko sredstvo, koje automatski izvrsava potreban broj operacija
+     * covek pise porgram i unosi ga u racunarsko sredstvo, koje automatski 
+       izvrsava potreban broj operacija
      * Racunar
-* U zavisnosti od fizickij princima racunarska sredstva se dele na *kontinualna* i *diskretna*.
+* U zavisnosti od fizickij princima racunarska sredstva se dele na 
+  *kontinualna* i *diskretna*.
 
 #### Kontinualna racunska sredstva
 
 * Ideja:
-  * !Potrebno je konstroisati racunarsko sredstvo ciji je matematicki model ekvivalentan matematickom modelu problema koji se resava.
-    * Komponente kontinualnog racunskog sredstva se medjusobno povezuju na nacin analogan nekom realnom sistemu. (*analogna* sredstva)
-    * Ulazno/izlazni podaci su predstavljeni preko (neprekidnih) fizickih velicina
+  * !Potrebno je konstroisati racunarsko sredstvo ciji je matematicki model 
+    ekvivalentan matematickom modelu problema koji se resava.
+    * Komponente kontinualnog racunskog sredstva se medjusobno povezuju na 
+      nacin analogan nekom realnom sistemu. (*analogna* sredstva)
+    * Ulazno/izlazni podaci su predstavljeni preko (neprekidnih) fizickih 
+      velicina
     * Operacije se izvode obradom tih velicina
 * Kontinualno racunsko sredstvo moze biti:
   * *mehanicko*
@@ -199,19 +221,23 @@ output: pdf_document
    * Ulazni podaci su ucitavani preko busenih kartica
    * 100 tona, 2000 vakuumskih cevi, 360km zice, 150 motora i 1000 releja
    * Resava opste diferencijalne jednacine sedmog reda
-* Izvode matematike operacije nad kontinualnim promenljivim umesto koriscenja cifara 
+* Izvode matematike operacije nad kontinualnim promenljivim umesto koriscenja 
+  cifara 
 * Vrednost ulaznih promenljivih se izracunavala preko voltaze
-  * od $-100V$ do $+100V$ (negativna voltaza su negativno, pozitivna su pozitivni brojevi)
+  * od $-100V$ do $+100V$ 
+    (negativna voltaza su negativno, pozitivna su pozitivni brojevi)
 * Blokovi koji obavljaju osnovne aritmeticke operacije:
   * sabiranje, oduzimanje, mozenje, deljenje, inverzovanje i integracija
   * povezivanjem nastaju matematicke jednacine 
 * Paralelna masina (istovremeno resava 1, 2 ili 1000 jednacina)
 * Izlazni uredjaji su obivno voltmetar, osciloskop ili ploter
 * !Opste karakteristike:
-  1. Matematicke velicine predstavljaju odredjene fizicke velicine i preciznost zavisi od mogucnosti merenja fizickih velicina
+  1. Matematicke velicine predstavljaju odredjene fizicke velicine i 
+     preciznost zavisi od mogucnosti merenja fizickih velicina
   2. Tacnost rezultata zavisi od preciznosti izrade racunskog sredstva
   3. Ne mogu da resavaju opste probleme, nisu *programibilna*
-     * Napravljena su samo da resavaju opseg problema koji zadovoljavaju neki matematicki model
+     * Napravljena su samo da resavaju opseg problema koji zadovoljavaju neki 
+       matematicki model
   4. Slozenost matematickog modela ne utice na brzinu dobijanja rezultata
      * paralelne masine kod kojih rezultat zavisi samo od fizickih zakona
 
@@ -219,24 +245,32 @@ output: pdf_document
 
 * !Obavljaju operacije iskljucivo sa diskretnim podacima
 * Sve vrednosti predstavljene su u obliku brojeva
-* Izracunavanja se vrse prema pravilima za operacije sa brojevima (cifarska/*digitalna*)
+* Izracunavanja se vrse prema pravilima za operacije sa brojevima 
+  (cifarska/*digitalna*)
 * !Osobine diskretnih racunskih sistema:
-  1. Svaka cifra se registruje u odvojenom objektu kao jedno od njegovih stanja (celija)
+  1. Svaka cifra se registruje u odvojenom objektu kao jedno od njegovih 
+     stanja (celija)
      * Diskretna stanja moraju da budu *stabilna* i da se medjusobno razlikuju
-       * stabilno - ako je prenos na drugo stranje rezultat spoljasnjeg uticaja
+       * stabilno - ako je prenos na drugo stranje rezultat spoljasnjeg 
+         uticaja
        * kod digitalnih racunara celija poseduje dva stabilna stanja
-  2. Tacnost dobijenog rezultata ne zavisi od preciznosti izrade racunarskog sredstva
-     * rezultat sabiranja dva broja bice isti na abakusu i na naj savremenijem elektronskom racunaru
+  2. Tacnost dobijenog rezultata ne zavisi od preciznosti izrade racunarskog 
+     sredstva
+     * rezultat sabiranja dva broja bice isti na abakusu i na naj 
+       savremenijem elektronskom racunaru
   3. Resavaju opste probleme, mogu da se programiraju.
-  4. Brzina izracunavanja rezultata zavisi od slozenosti problema koji se resava.
-     * Ako je broj promena diskretnog stanja veci, i vreme potrebno za dobijanje rezultata ce biti duze
+  4. Brzina izracunavanja rezultata zavisi od slozenosti problema koji se 
+     resava.
+     * Ako je broj promena diskretnog stanja veci, i vreme potrebno za 
+       dobijanje rezultata ce biti duze
 
 ### Premehanicki period (3000. p.n.e - 1450. n.e)
 
 #### Pisanje i alfabet
 
 * Sistem za pisanje (Sumeri, Mesapotamija, 3000 p.n.e)
-  * urezivanje znakova na glinanim plocicama koji su odgovarali govornom jeziku
+  * urezivanje znakova na glinanim plocicama koji su odgovarali govornom 
+    jeziku
   * *klinasto pismo* do danas nije desifrovano
 * Prvi alfabet (Fenicani, 2000 p.n.e)
   * simboli koji su odgovarali pojedinim slogovima i suglasnicima
@@ -284,7 +318,8 @@ output: pdf_document
 * Paskalova masina (Blez Paskal, 1642.)
   * Sabiranje i oduzimanje osmocifrenih brojeva
 * Lajbnicova masina (Lajbnic, 1673.)
-  * Sabiranje, oduzimanje, mnozenje, deljenje brojeva koji imaju izmedju 5 i 12 cifara, dok je njihov proizvod mogao da ima 16 cifara
+  * Sabiranje, oduzimanje, mnozenje, deljenje brojeva koji imaju izmedju 5 i 
+    12 cifara, dok je njihov proizvod mogao da ima 16 cifara
 * Zakardov automatski razvoj (Zakard, 1801.)
   * busene kartice za kontrolu smene na tkanini
 * Aritmometar (Carls Havijer Tomas, 1820.)
@@ -331,48 +366,65 @@ output: pdf_document
 * **MARK I** - prvi elektromehanicki programibilni kalkulator (Hauard Ejken, 1944.)
   * duzina oko $17m$ i visina ok $2.5m$
   * $800km$ zice, $750 000$ delova, $3$ miliona elktricnih spojeva
-  * 72 akumulatora sa svojim posebnim aritmetickim jedinicama kao i mehanicke registre sa kapacitetom od 23 cifre plus znak
-  * Brojace za cuvanje brojeva i elektromehanicke releje kao pomoc u belezenju rezultata.
+  * 72 akumulatora sa svojim posebnim aritmetickim jedinicama kao i mehanicke 
+    registre sa kapacitetom od 23 cifre plus znak
+  * Brojace za cuvanje brojeva i elektromehanicke releje kao pomoc u 
+    belezenju rezultata.
   * Aritmeticke operacije su obaljanje u fuksnom zarezu
     * Sabiranje $1/3$ sekunde, a mnozenje $1$ sekunde
-  * Instrukcije za izvsavanje se ucitavane sa papirne trake, a podaci sa druge papirne trake, busenih kartica ili registra.
-  * Izlaz se mogao dobiti na busenim karticama ili na papiru, preko pisanje masine
+  * Instrukcije za izvsavanje se ucitavane sa papirne trake, a podaci sa 
+    druge papirne trake, busenih kartica ili registra.
+  * Izlaz se mogao dobiti na busenim karticama ili na papiru, preko pisanje 
+    masine
 
 ### Elektronski period (od 1939. godine do danas)
 
-* Elektronsko logicko kolo nazvano prekidac ili vrata (Nikola Tesla 1903. godine)
-* Elktronska vakuumska cev i dizajn prvog flip-flop elektronskog kola (Le de Forest 1906. i 1919.)
+* Elektronsko logicko kolo nazvano prekidac ili vrata 
+  (Nikola Tesla 1903. godine)
+* Elktronska vakuumska cev i dizajn prvog flip-flop elektronskog kola 
+  (Le de Forest 1906. i 1919.)
 * Televizija (1927. godina)
 * Ekran sa katodnom cevi (Vladimir Zvorikin 1928.)
-* Prvi 16-bitni sabirac sa vakuumskim cevima (Dzon Atanasof i Kliford Beri 1939.)
+* Prvi 16-bitni sabirac sa vakuumskim cevima 
+  (Dzon Atanasof i Kliford Beri 1939.)
 * **ABC** (*Atanasoff-Berry-Computer*, 1941.)
   * kalkulator za resavanja sistema simultanih linearnih jednacina
   * koriscen isti princip kao kod prethodno konstruisanog sabiraca
   * sezdeset 50-bitnih reci koje su se nalazile na dva rotirajuca dobosa
   * ucestanost casovnika $60Hz$
-  * sabiranje vrseno za 1 sekundu nije zahtevao mnozenje (pa ova operacije nije bila ni realizovana)
+  * sabiranje vrseno za 1 sekundu nije zahtevao mnozenje 
+    (pa ova operacije nije bila ni realizovana)
   * oko $300$ vakuumskih cevi
 * **Kolos** (UK, 1943. godina)
   * koriscena je za dekriptovanje numerickih sifrovanih poruka
   * $2400$ vakuumskih cevi
   * $5$ citaca papirne trake brzine od po $5000$ karaktera u sekundi
-  * samo postojanje Kalosa je bilo tajna do 1970. godine, dok su algoritmi dekriptovanja predstavljali tajnu i do 1995. godine.
-* **ENIAC** (*Electronic Numerical Integrator and Calculator*) (Ekert i Musil, 1946.)
-  * 'The Use of High Speed Vacuum Tube Devices for Calculating' (Dzon Musli, 1942.)
-  * tezina $30$ tona, duzina preko $30m$, visina oko $3m$ i sirina nesto manje od metra
-  * $17648$ vekuumskih cevi, potrosnja izmedju $130W$ i $174W$ elektricne energije
+  * samo postojanje Kalosa je bilo tajna do 1970. godine, dok su algoritmi 
+    dekriptovanja predstavljali tajnu i do 1995. godine.
+* **ENIAC** (*Electronic Numerical Integrator and Calculator*) 
+  (Ekert i Musil, 1946.)
+  * 'The Use of High Speed Vacuum Tube Devices for Calculating' 
+    (Dzon Musli, 1942.)
+  * tezina $30$ tona, duzina preko $30m$, visina oko $3m$ i sirina nesto 
+    manje od metra
+  * $17648$ vekuumskih cevi, potrosnja izmedju $130W$ i $174W$ elektricne 
+    energije
   * $5000$ sabiranja u sekundi, mnozenje je trajalo oko $3ms$
   * Koristio je dekadni sistem
-  * memorija od $2020$ akumulatora koji su mogli da cuvaju $10$-cifrene brojeve
+  * memorija od $2020$ akumulatora koji su mogli da cuvaju $10$-cifrene 
+    brojeve
   * ucestanost ENIAC-ovog casovnika je bila $100KHz$
 * **EDVAC** (*Electronic Discrete Variable Automatic Computer*)
-  * Dzon fon Nojman 1945. ideja za konstukciju racunara koji bi imao mogucnost cuvanja programa i njegovog kasnijeg izvrsavanja
+  * Dzon fon Nojman 1945. ideja za konstukciju racunara koji bi imao 
+    mogucnost cuvanja programa i njegovog kasnijeg izvrsavanja
 * **EDSAC** (*Electronic Delay Storage Automatic Computer*)
   * Moris Vilkis, Kembridz univerzitet, UK, 1949. godina
   * prvi operativni racunar koji je mogao da cuva program u memoriji
   * I/O je obavljan pomocu citaca/busaca papirne trake
-  * $256$ reci duzine $35$ bita unutrasnje memorije napravljene od ultra-sonicnih odlozenih linija
-  * memorija sa konstantnim sadrzajem koja je sluzila za inicijalno pokretanje racunara
+  * $256$ reci duzine $35$ bita unutrasnje memorije napravljene od ultra-
+    sonicnih odlozenih linija
+  * memorija sa konstantnim sadrzajem koja je sluzila za inicijalno 
+    pokretanje racunara
   * brzina cosovnika oko $500KHz$
   * izvrsavanje najveceg broja instrukcija je trajalo oko $1500ms$
 * **Mancester MARK I** (Maks Njumen i Fredi Vilijams, univerzitet u Mancesteru, 1949.)
@@ -380,8 +432,10 @@ output: pdf_document
   * memorija sa katodnim cevima ('Vilijamsove cevi')
   * mogucnost unosenja programa u binarnom obliku preko tastature
   * izlaz je ispisivan u binarnom obliku na katodnoj cevi
-  * u kasnijoj fazi je Tjuring razvio primitivni asemblerski jezik za ovu masinu
-* **MESM** ('mala elektronska racunarska masina') (Sergej Lebedivim, institu u Kijevi, 1947.)
+  * u kasnijoj fazi je Tjuring razvio primitivni asemblerski jezik za ovu 
+    masinu
+* **MESM** ('mala elektronska racunarska masina') 
+  (Sergej Lebedivim, institu u Kijevi, 1947.)
   * originalni principi
   * zapis brojeva u fiksom zarezu i instrukcije sa troadresnim formatom
   * $6000$ vakuumskih cevi i izvrsavao oko $50$ instrukcija u sekundi
@@ -394,7 +448,8 @@ output: pdf_document
   * Fon Nojman, Prinston univerzitet, 1952.
 * **BINAC** (*Binary Automatic Computer*) (Ekert i Musli, 1949.)
   * prvi racunar sa dualnim procesorom
-  * drugi procesor redundantan i sluzio je da preuzme rad i slucaju otkaza prvog
+  * drugi procesor redundantan i sluzio je da preuzme rad i slucaju otkaza 
+    prvog
   * $700$ vakuumskih cevi
   * $512$ reci duzine $31$ bit
   * $3500$ sabiranja ili $1000$ mnozenja u sekundi
@@ -409,7 +464,9 @@ output: pdf_document
 #### Generacije elktronskih racunara
 
 * Cetiri faza koje zovemo *generacije racunara*
-* pripadnost se utvrdjuje na osnovu tehnologije upotrebljene za izradu osnovnih elektrnoskih komponenti koje se koriste za cuvanje i obradu informacija - *logicki elementi*
+* pripadnost se utvrdjuje na osnovu tehnologije upotrebljene za izradu 
+  osnovnih elektrnoskih komponenti koje se koriste za cuvanje i obradu 
+  informacija - *logicki elementi*
 
 **Prva generacija racunara (1939 - 1958)**
 
@@ -444,15 +501,18 @@ output: pdf_document
     * pored assemblera kreiraju se i prevodioci/interpreteri za vise programske jezike
       * FORTRAN, Lisp, Algol-60, Cobol
   * $18 000$ racunara
-  * *Multiplekser* - nadgleda pristup od strane CPU-a i kanala, sto im omogucava da rede nezavisno jedan od drugog.
+  * *Multiplekser* - nadgleda pristup od strane CPU-a i kanala, sto im 
+    omogucava da rede nezavisno jedan od drugog.
 * **BESM-6** (institu za preciznu mehaniku i racunarske tehnologije, SSSR)
-  * Jednoadresni sa unatrasnjom memorijom velicine $32K$ sastavljen od magnetnih jezgara
+  * Jednoadresni sa unatrasnjom memorijom velicine $32K$ sastavljen od 
+    magnetnih jezgara
   * Procesor - napravljen u tranzistrorskoj tehnologiji
     * $60000$ tranzistora i $170000$ dioda, frekvencije $9MHz$
   * Duzina reci je bila $50$ bita
   * Racunar je imao $15$ indeks registra
   * kes za podatke $16$ redi velicine $48$ bita
-  * Maksimalna velicina adresnog prostora je bila $32K$ reci, odnosno ok $192KB$
+  * Maksimalna velicina adresnog prostora je bila $32K$ reci, odnosno 
+    oko $192KB$
   * Moguznost izvrsavanja do 14 instrukcija istovremeno
   * Virtualno adresiranje
   * Nominalna snaga od $1M$ aritmetickih instrukcija u sekundi
@@ -462,7 +522,8 @@ output: pdf_document
   * rec $64$ bira za aritmetiu i $8$ bira za I/O operacije
   * rec u memoriji $72$ bitova, od toga $8$ bita za ECC
   * magnetni diskovi umesto dobosa
-  * podela unutrasnje memorije koja omogucava istovremeno izvrsavanje vise programa
+  * podela unutrasnje memorije koja omogucava istovremeno izvrsavanje vise 
+    programa
   * faza dohvatanja, dekodiranja i izrsavanja istrukcije
 
 **Treca generacija racunara (1965 - 1971)**
@@ -481,7 +542,8 @@ output: pdf_document
     2. identican ili slican operativni sistem
     3. svaki od jacih modela je u odnosu na slavije za vecu cenu nudio
        * vecu brzinu, zbog vece vrzine izvrsavanja instrukcija
-       * veci broj kanala na koje je moglo da se prikljuc veci broj I/O jedinica
+       * veci broj kanala na koje je moglo da se prikljuc veci broj 
+         I/O jedinica
        * vecu kolicinu unutrasnje memorije
 * **PDP-8** (*Programmed Data Procesor - 8*) (1964.)
   * proizvod kompanije *Digital Equipment Corparation*
@@ -516,7 +578,8 @@ output: pdf_document
 
 * Pravila koja se odnose na:
   * Nenumericke informacije su definisane preko *azbuke* i *pravopisa*
-  * Numericke informacije su definisane preko *brojcanih sistema* i njihovih pravila
+  * Numericke informacije su definisane preko *brojcanih sistema* i njihovih 
+    pravila
 
 **Azbuka**
 
@@ -527,13 +590,16 @@ output: pdf_document
 * *Prazna rec* $\lambda$ - pripada $V^{*}$
 * *Jezik* $L$ - proizvoljan skup $V^{*}$
 * *Duzina reci* $|P|$ - broj slova reci $P$, $|\lambda| = 0$
-* Za neko $i$ i neku rec $P$ sa $P^{i}$ oznacava se $i$ puta dopisana rec $P$, $P^{0} = \lambda$
+* Za neko $i$ i neku rec $P$ sa $P^{i}$ oznacava se $i$ puta dopisana 
+  rec $P$, $P^{0} = \lambda$
 * Primeri azbuka i jezika su:
   1. Neki jezici nad azbukom $V_1 = \{a, b\}$
      * $L_1 = \{a, b, \lambda\}$ - jezik sa recima duzine $\leq 1$
      * $L_2 = \{a^i b^i | i \in \{0, 1\}\}$ - jezik sa recima duzine $\leq 2$
-  2. Za azbuku $V_2 = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ redi nad $V_2^+$ su brojevi u dekadnom brojcanom sistemu (sa eventualno vodecim nulama)
-  3. Za azbuku $V_3 = \{0, 1\}$ reci nad $V_3^+$ su brojevi u binarnom brojcanom sistemu (sa eventualno vodecim nulama)
+  2. Za azbuku $V_2 = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ redi nad $V_2^+$ su 
+     brojevi u dekadnom brojcanom sistemu (sa eventualno vodecim nulama)
+  3. Za azbuku $V_3 = \{0, 1\}$ reci nad $V_3^+$ su brojevi u binarnom 
+     brojcanom sistemu (sa eventualno vodecim nulama)
 
 ### Kodovi
 
@@ -544,15 +610,23 @@ output: pdf_document
   * $L_1 \subset V_1^{*}, L_1 = \{p_1, p_2, ... , p_r\} r \geq 1,$
   * $L_2 \subset V_2^{*}, L_2 = \{q_1, q_2, ... , q_s\} s \geq 1,$
 * Tada vazi:
-  1. **Funkcija kodiranja** je svaka funkcija $f$ definisana sa $f:L_1 \mapsto L_2$
-  2. **Funkcija dekodiranja** je funkcija $g:L_2 \mapsto L_1, g = f^{-1}$, ako $f^{-1}$ postoji
-  3. Kod jezika $L_1$ u azbuci $V_2$ je skup vrednosti $K \subseteq L_2, K = \{q_j | \exists i : f(p_i)  = q_j\}$. 
+  1. **Funkcija kodiranja** je svaka funkcija $f$ definisana sa 
+     $f:L_1 \mapsto L_2$
+  2. **Funkcija dekodiranja** je funkcija 
+     $g:L_2 \mapsto L_1, g = f^{-1}$, ako $f^{-1}$ postoji
+  3. Kod jezika $L_1$ u azbuci $V_2$ je skup vrednosti 
+     $K \subseteq L_2, K = \{q_j | \exists i : f(p_i)  = q_j\}$. 
      * *Kodiranje* predstavlja izracunavanje vrednosti $f(p_i)$.
      * *Dekodiranje* predstavlja izracunavanje vrednosti $g(q_j)$
-  4. Kod je *jednoznacan* akko je funkcija $f$ '1-1'. U suprotnom je *viseznacan*
-  5. *Osnova koda* - broj simbola u azbuci $V_2$ se naziva. *kodna rec* - rec $q_i$ iz jezika $L_2$
+  4. Kod je *jednoznacan* akko je funkcija $f$ '1-1'. U suprotnom je 
+     *viseznacan*
+  5. *Osnova koda* - broj simbola u azbuci $V_2$ se naziva. *kodna rec* - rec 
+     $q_i$ iz jezika $L_2$
   6. Kod je *potpun* kada obuhvata sve reci odredjene duzine u jeziku $L_2$
-  7. Kod je *ravnomeran* ako $\exists l \forall j : |q_j| = l$, tj. ako je duzina svih kodiranih reci jezika $L_2$ ista. U suprotnom kod je *neravnomeran*. Za kod duzine $d$ reci $P$, ako vazi $|P| = n^d$ on je *potpuno ravnomeran kod*
+  7. Kod je *ravnomeran* ako $\exists l \forall j : |q_j| = l$, tj. ako je 
+     duzina svih kodiranih reci jezika $L_2$ ista. U suprotnom kod je *
+     neravnomeran*. Za kod duzine $d$ reci $P$, ako vazi $|P| = n^d$ on je *
+     potpuno ravnomeran kod*
 * Primer:
   * Neka azvuka $V_1 = \{+, -, *, /\}$ sadrzi oznake aritmetickih operacija.
     Moguca kodiranja:
@@ -572,18 +646,27 @@ output: pdf_document
   * Pogodan je za aritmeticke operacije
 * Dve glavne grupe brojcanih sistem:
   * **Nepozicioni**
-    * Simbol koji oznacava cifru ima istu vrednost bez obzira na poziciju u zapisu broja
+    * Simbol koji oznacava cifru ima istu vrednost bez obzira na poziciju u 
+      zapisu broja
     * Pr. egipatski i rimski
   * **Pozicioni**
-    * Vrednost simbola koji predstavlja cifru zavisi i od izgleda i od pozicije cufre u zapisu broja
+    * Vrednost simbola koji predstavlja cifru zavisi i od izgleda i od 
+      pozicije cufre u zapisu broja
     * Pr. arapski (dekadni) i indijski (sistem sa devet cifara, bez nule)
 
 
-* Broj razlicitih cifara pozicionog brojcanog sistema se naziva *osnova brojcanog sistema*
-* Neka skup $S$ sadrzi $N > 1$ cifara. Brojcana vrednost $X$ u pozicionom sistemu sa osnovom $N$ pise se u obliku neski i to:
-  1. Vrednost broja $X$ u sistemu sa osnovom $N$ je $$(X)_N = \sum_{i=-m}^n V(x_i),$$ gde su $x_i$ cifre brojcanog sistema, $V(x_i)$ vrednost cifre $x_i$ u zapisanoj nisci cifara, i $i$ mesto cifre u zapisanoj nisci cifara
-  2. Brojcana vrednost cifre zavisi od vrednosti i pozicije pa jei $V(x_i) = x_i \dot N^i$. Zamenom dobijamo:
-     $$(X)_N = \sum_{i = -m}^n x_i \dot N^i = x_n N^n + ... + x_0 N^0 + x_{-1} N^{-1} + ... + x_{-m} N^{-m}$$
+* Broj razlicitih cifara pozicionog brojcanog sistema se naziva 
+  *osnova brojcanog sistema*
+* Neka skup $S$ sadrzi $N > 1$ cifara. Brojcana vrednost $X$ u pozicionom 
+  sistemu sa osnovom $N$ pise se u obliku neski i to:
+  1. Vrednost broja $X$ u sistemu sa osnovom $N$ je 
+     $$(X)_N = \sum_{i=-m}^n V(x_i)$$, 
+     gde su $x_i$ cifre brojcanog sistema, $V(x_i)$ vrednost cifre $x_i$ u 
+     zapisanoj nisci cifara, i $i$ mesto cifre u zapisanoj nisci cifara
+  2. Brojcana vrednost cifre zavisi od vrednosti i pozicije pa je 
+     $V(x_i) = x_i \dot N^i$. Zamenom dobijamo:
+     $$(X)_N = \sum_{i = -m}^n x_i \dot N^i = x_n N^n + ... + x_0 N^0 + 
+     x_{-1} N^{-1} + ... + x_{-m} N^{-m}$$
 * Po konvenciji ne pisu se osnove i stepeni: 
   $$(X)_N = x_n x_{n-1}...x_0 x_{-1}...x_{-m}$$
 * *Pozicija cifre* - mesto cifre u zapisu broja
@@ -603,31 +686,49 @@ output: pdf_document
 
 * !Osobine konvencionih pozicionih brojcanih sistema sa fiksnom osnovom:
   1. Povecanjem osnove brojcanog sistema smanjuje se duzina zapisa
-  2. U svim brojcanim sistemima se osnova zapisuje kao $10$ (jedan, nula), dok je $0$ (nula) najmanja cifra u svim sistemima.
+  2. U svim brojcanim sistemima se osnova zapisuje kao $10$ (jedan, nula), 
+     dok je $0$ (nula) najmanja cifra u svim sistemima.
      
 ### Zapis mesovitih brojeva
 
-1. Zapisuju u ubliku sa tackom osnove (*radix point*) izmedju celobrojnog i razlomljenog dela.
-2. Zapisuju se pomocu $n$ cifara, pri cemu se sa $m \leq n$ cifara zapisuje razlomljeni deo, a sa $n - m$ cifara celobrojni deo broja. 
-   * Ako je broj cifara u celobrojnom delu broja $> n - m$ javlja se greska pri zapisu
-   * Ako je broj cifara u razlomljenom delu $< m$ preostale pozicije se popunjavaju nulama
-   * Ako je broj cifara u razlomljenom delu $> m$ tada se zapis broja skracuje na $m$ cifara u razlomljenom delu
+1. Zapisuju u ubliku sa tackom osnove (*radix point*) izmedju celobrojnog i 
+   razlomljenog dela.
+2. Zapisuju se pomocu $n$ cifara, pri cemu se sa $m \leq n$ cifara zapisuje 
+   razlomljeni deo, a sa $n - m$ cifara celobrojni deo broja. 
+   * Ako je broj cifara u celobrojnom delu broja $> n - m$ javlja se greska 
+     pri zapisu
+   * Ako je broj cifara u razlomljenom delu $< m$ preostale pozicije se 
+     popunjavaju nulama
+   * Ako je broj cifara u razlomljenom delu $> m$ tada se zapis broja 
+     skracuje na $m$ cifara u razlomljenom delu
      * visak se ili odsece ili zaokruzi
-   * *Zapis u fiksnom zarezu* - broj cifara u razlomljenom delu uvek fiksiran bez obzira na velicinu broja
-3. *Zapis u pokretnom zarezu*: Svaki mesovit broj u osnovi $N$ moze da se zapise kao uredjen para $(F,E)$ ciji su elementi znacajan deo broja $(F)$ i eksponent $(E)$ koji su predstavljeni kao brojevi u fiksnom zarezu. Vrednost tog broja je $F \times N^E$.
-   * Pr. $(0.13543, +2)$ gde su znacajni deo i eksponent zapisani u sistemu sa osnovim $10$ zapisuje se kao $0.13543 \times 10^{+2}$
-4. *Zapis u logaritamskom brojcanom sistemu*: Neoznacen broj $X$ zapisan u osnovi $N$ se moze predstaviti izracunavanjem $log_N X$
-5. *Zapis sa pokretnom crtom*: Svaki mesoviti broj $X$ se moze predstaviti kao neskrativ razlomak i kao verizni razlomak: $X = a/b = [c_1/c_2/.../c_m]$, gde su $c_i$ pozitivni celi brojevi
+   * *Zapis u fiksnom zarezu* - broj cifara u razlomljenom delu uvek fiksiran 
+     bez obzira na velicinu broja
+3. *Zapis u pokretnom zarezu*: Svaki mesovit broj u osnovi $N$ moze da se 
+   zapise kao uredjen para $(F,E)$ ciji su elementi znacajan deo broja $(F)$ 
+   i eksponent $(E)$ koji su predstavljeni kao brojevi u fiksnom zarezu. 
+   Vrednost tog broja je $F \times N^E$.
+   * Pr. $(0.13543, +2)$ gde su znacajni deo i eksponent zapisani u sistemu 
+     sa osnovim $10$ zapisuje se kao $0.13543 \times 10^{+2}$
+4. *Zapis u logaritamskom brojcanom sistemu*: Neoznacen broj $X$ zapisan u 
+   osnovi $N$ se moze predstaviti izracunavanjem $log_N X$
+5. *Zapis sa pokretnom crtom*: Svaki mesoviti broj $X$ se moze predstaviti 
+   kao neskrativ razlomak i kao verizni razlomak: 
+   $X = a/b = [c_1/c_2/.../c_m]$, gde su $c_i$ pozitivni celi brojevi
 
 ## Prevodjenje brojeva izmedju razlicitih brojcanih sistema
 
 ### Opsta pravila
 
 * *Prevodjenje broja $X$ iz sistema sa osnovom $N$ u sistem sa osnovom $M$*:
-  * Neka je broj $X$ zapisan u pozicionom brojcanom sistemu sa osnovom $N$, postupak odredjivanje njegove vrednosti u pozicionom brojcanom sistemu sa osnovim $M$ je prevodjenje
+  * Neka je broj $X$ zapisan u pozicionom brojcanom sistemu sa osnovom $N$, 
+    postupak odredjivanje njegove vrednosti u pozicionom brojcanom sistemu sa
+    osnovim $M$ je prevodjenje
 * Zapis
-  * $(X)_N \equiv x_n x_{n-1}...x_0 x_{-1}...x_{-m}$ - broj $X$ zapisan u sistemu sa osnovom $N$
-  * $(X)_M \equiv y_p y_{p-1}...y_0 y_{-1}...y_{-q}$ - broj $X$ zapisan u sistemu sa osnovom $M$
+  * $(X)_N \equiv x_n x_{n-1}...x_0 x_{-1}...x_{-m}$ - broj $X$ zapisan u 
+    sistemu sa osnovom $N$
+  * $(X)_M \equiv y_p y_{p-1}...y_0 y_{-1}...y_{-q}$ - broj $X$ zapisan u 
+    sistemu sa osnovom $M$
 
 ### Prevodjenje celih brojeva
 
@@ -637,7 +738,9 @@ output: pdf_document
   $$(X)_M \equiv y_p y_{p-1}...y_0 = \sum_{i=0}^p y_i M^i$$
 * Kako vazi da je $(X)_N = (X)_M$ deljenjem sa $M$ dobijamo:
   $$\frac{(X)_N}{M} = \frac{y_0}{M} + \sum_{i=1}^p y_i M^{i-1}$$
-* Dobija se celobrojni deo kolicnika: $X_1 = \sum_{i=1}^p y_i M^{i-1}$ i ostatak deljanja $y_0$ koji predstavlja cifru na jedinicnom mestu u broju $X$ predstavljenom u sistemu sa osnovom $M$
+* Dobija se celobrojni deo kolicnika: $X_1 = \sum_{i=1}^p y_i M^{i-1}$ i 
+  ostatak deljanja $y_0$ koji predstavlja cifru na jedinicnom mestu u broju 
+  $X$ predstavljenom u sistemu sa osnovom $M$
 * Rekurentna formula za odredjivanje cifara je:
   $$X_i / M = X_{i+1} + y_i / M$$
   $$X_0 = X$$
@@ -660,7 +763,8 @@ output: pdf_document
   $$(X)_M \equiv 0.y_{-1} y_{-2}... = y_{-1}M^{-1} + y_{-2}M^{-2} + ... $$
 * Kako vazi da je $(X)_N = (X)_M$ mnozenjem sa $M$ dobijamo:
   $$(X)_N \times M = y_{-1} + y_{-2}M^{-1} + ...$$
-* Dobije se zbir cifre $y_{-1}$ i razlomljenog dela $X_{-1} = y_{-2}M^{-1} +y_{-3}M^{-2} + ...$
+* Dobije se zbir cifre $y_{-1}$ i razlomljenog dela 
+  $X_{-1} = y_{-2}M^{-1} +y_{-3}M^{-2} + ...$
 * Rekurentna formula za odredjivanje cifara je:
   $$X_i \times M = y_{-(i+1)} + X_{-(i+1)}$$
   $$X_{-0} = X$$
@@ -674,23 +778,33 @@ output: pdf_document
 
 ### Specijalni slucaj kodiranja
 
-* Svojstvo kodiranja izmedju dva brojcana sistema sa osnovama $N$ i $M$ za koje vazi $N = M^s, s > 1$
-* !Tvrdjenje: *Vrednost broja $X$ u sistemu sa osnovom $N$ zapisana u sistemu sa osnovom $M$ je identicna zapisu koji se dobija kodiranjem cifara broja $X$ u sistemu sa osnovom $M$. Prevodjenje mesovitih brojeva se vrsi tako sto se posebno prevedu celobrojni i razlomljeni deo i od dobijenih prevoda formira zeljeni prevod.*
+* Svojstvo kodiranja izmedju dva brojcana sistema sa osnovama $N$ i $M$ za 
+  koje vazi $N = M^s, s > 1$
+* !Tvrdjenje: *Vrednost broja $X$ u sistemu sa osnovom $N$ zapisana u sistemu 
+  sa osnovom $M$ je identicna zapisu koji se dobija kodiranjem cifara broja 
+  $X$ u sistemu sa osnovom $M$. Prevodjenje mesovitih brojeva se vrsi tako 
+  sto se posebno prevedu celobrojni i razlomljeni deo i od dobijenih prevoda 
+  formira zeljeni prevod.*
 
 ## Predstavljanje oznacenih brojeva
 
-* Neka je $(X)_N \equiv x_{n-2}...x_0$ neoznacen broj zapisan u brojvanom sistemu sa osnovom $N$.
-* !*Oznaceni* broj se predstavlja pomocu dodatne cifre na mestu najvece tezine i to kao:
+* Neka je $(X)_N \equiv x_{n-2}...x_0$ neoznacen broj zapisan u brojvanom
+  sistemu sa osnovom $N$.
+* !*Oznaceni* broj se predstavlja pomocu dodatne cifre na mestu najvece 
+  tezine i to kao:
   $$Y = \pm X \equiv y_{n-1}y_{n-2}...y_0$$
-* !Vrednost cifara $y_i$ se izracunava na osnovu cifara $x_i$ u zavisnosti od nacina predstavljanja oznacenog broja, koji moze biti
+* !Vrednost cifara $y_i$ se izracunava na osnovu cifara $x_i$ u zavisnosti od 
+  nacina predstavljanja oznacenog broja, koji moze biti
   1. znak i apsolutna vrednost
   2. komplement broja
   3. sa uvecanjem
-* Uz svaki nacin zapisa brojeva navedene su i velicine intervala koje mogu da uzimaju vrednosti brojeva zapisanih pomocu $n$ cifara
+* Uz svaki nacin zapisa brojeva navedene su i velicine intervala koje mogu da 
+  uzimaju vrednosti brojeva zapisanih pomocu $n$ cifara
 
 ### Zapis pomocu znaka i apsolutne vrednosti
 
-* !Cifra najvece tezine predstavlja znak, dok ostale cifre predstavljaju apsolutnu vrednost.
+* !Cifra najvece tezine predstavlja znak, dok ostale cifre predstavljaju 
+  apsolutnu vrednost.
   * Najmanja cifra oznacava ($+$) pozitivne
   * Najveca cifra oznacava ($-$) negativne
 * Formalno
@@ -698,56 +812,78 @@ output: pdf_document
   pri cemu je $y_i = x_i$ za $i \in [0, n-2]$
    * $0$ (nula) kada se predstavlja pozitivan broj $+X \land i = n-1$,
    * i $N-1$ kada se predstavlja negativan broj $-X \land i = n-1$
-* **Vrednost intervala** za *neoznacen* broj $X$ koji je zapisan pomocu $m-1$ cifre je $[0,N^{m-1} - 1]$
-* !**Vrednost intervala** za *oznaceni* broj $Y$ koji je zapisan pomocu $n$ cifre je $[-(N^{n-1} - 1), +(N^{n-1} - 1)]$, ili $[-N^{n-1} + 1, N^{n-1} - 1]$
+* **Vrednost intervala** za *neoznacen* broj $X$ koji je zapisan pomocu $m-1$ 
+  cifre je $[0,N^{m-1} - 1]$
+* !**Vrednost intervala** za *oznaceni* broj $Y$ koji je zapisan pomocu 
+  $n$ cifre je $[-(N^{n-1} - 1), +(N^{n-1} - 1)]$, ili 
+  $[-N^{n-1} + 1, N^{n-1} - 1]$
   
 **Aritmetika u zapisu znak i apsolutna vrednost**
 
-* !Promena znaka se vrsi tako sto se se gleda cifra sa najvecom tezinom i ako je na tom mestu cifra sa najvecom tezinom onda se umesto nje upisuje nula, i obrnuto
+* !Promena znaka se vrsi tako sto se se gleda cifra sa najvecom tezinom i ako 
+  je na tom mestu cifra sa najvecom tezinom onda se umesto nje upisuje nula, 
+  i obrnuto
 * !Pravila aritmetickih operacija:
   1. Sabiranje i oduzimanje:
      * Ako su dva broja istog znaka tada je i takav znak rezultata.
        * Apsolutna vrednost rezultata se dobija kao zibr apsolutnih sabiraka
-     * Ako su dva broja razlicitog znaka, znak rezultata je jednak znaku broja koji ima vecu apsolutnu vrednost
-       * Apsolutna vrednost rezultata se dobija kada se oduzme manja apsolutna vrednost od vece
+     * Ako su dva broja razlicitog znaka, znak rezultata je jednak znaku 
+       broja koji ima vecu apsolutnu vrednost
+       * Apsolutna vrednost rezultata se dobija kada se oduzme manja 
+         apsolutna vrednost od vece
   2. Mnozenje i deljenje:
-     * Ako su oba istog znaka rezultat je pozitiva, u suprotnom je rezultat negativan
-       * Apsolutna vrednost rezultata se dobija kao proizvod ili kolicnik apsolutnih vrednosti ta dva broja
+     * Ako su oba istog znaka rezultat je pozitiva, u suprotnom je rezultat 
+       negativan
+       * Apsolutna vrednost rezultata se dobija kao proizvod ili kolicnik 
+         apsolutnih vrednosti ta dva broja
 * !Nedostatak ovog zapisa je mogucnost dvostrukog zapisa nule: $(+0)$ i $(-0)$
-  * potreba za stalno ispitivanje dve vrednosti pri ispitivanju jednakosti na nulu
+  * potreba za stalno ispitivanje dve vrednosti pri ispitivanju jednakosti na 
+    nulu
 
 ### Zapis uz koriscenje komplementa broja
 
 * Pozitivni brojevi se zapisuju kao znak i apsolutna vrednost
-* !Negativni brojevi se zapisuju tako sto se od *komplementacione konstante* oduzme apsolutna vrednost,tj. $K - X$ gde je $K$ *komplementaciona konstanta*
-* Za predstavljanje brojeva iz intervala $[-A, B]$ komplementaciona konstanta mora da zadovoljava uslov $K \geq A+B+1$
-  * Moze se izabrati vise komplementacionih konstanti ali da bi dobili neprekidan niz bez duplikata bira se $K = A+B+1$
+* !Negativni brojevi se zapisuju tako sto se od *komplementacione konstante* 
+  oduzme apsolutna vrednost,tj. $K - X$ gde je $K$ 
+  *komplementaciona konstanta*
+* Za predstavljanje brojeva iz intervala $[-A, B]$ komplementaciona konstanta 
+  mora da zadovoljava uslov $K \geq A+B+1$
+  * Moze se izabrati vise komplementacionih konstanti ali da bi dobili 
+    neprekidan niz bez duplikata bira se $K = A+B+1$
 
 **Aritmetika u zapisu pomocu komplementa**
 
 * !Jednostavnije aritmeticke operacije nad brojevima
-1. Promena znaka broja $X$ se svodi na komplementiranje tekuce vrednosti izracunavanje $K - X$
-2. Sabiranje dva broj $X$ i $Y$ se realizuje kao sabiranje neoznacenih brojeva po modulu koji je jednak komplementacionoj konstanti K
-3. Oduzimanje se realizuje komplementiranjem umanjioca i sabiranjem dobijene vrednosti sa umenjenikom: $X - Y = X + (K - Y)$
+1. Promena znaka broja $X$ se svodi na komplementiranje tekuce vrednosti 
+   izracunavanje $K - X$
+2. Sabiranje dva broj $X$ i $Y$ se realizuje kao sabiranje neoznacenih 
+   brojeva po modulu koji je jednak komplementacionoj konstanti K
+3. Oduzimanje se realizuje komplementiranjem umanjioca i sabiranjem dobijene 
+   vrednosti sa umenjenikom: $X - Y = X + (K - Y)$
 4. Mnozenje i deljenje se realizuje na slican nacin kao u dekadnom sistemu
    (uz sabiranje i oduzimanje po prethodnim pravilima)
 
 #### Izbor komplementacione konstane
 
-* !Efikasnost predstavljanja brojeva pomocu komplemenata zavisi od efikasnosti operacija negacije i izracunavanja ostatka pri deljenju sa $K$.
+* !Efikasnost predstavljanja brojeva pomocu komplemenata zavisi od 
+  efikasnosti operacija negacije i izracunavanja ostatka pri deljenju sa $K$.
 * Najefikasnije izvrsavanje operacija se dobija za sledece vrednosti $K$:
   1. !$K = N^n - 1$ - *komplement umanjene osnove* ili *$N-1$-vi komplement*
-     * Pri trazenju ostatka po modulu (sabiranje brojeva) prenos sa mesta najvece tezina se dodaje na mesto najmanje tezine
+     * Pri trazenju ostatka po modulu (sabiranje brojeva) prenos sa mesta 
+       najvece tezina se dodaje na mesto najmanje tezine
      * Komlementiranje broja moze da se izvede na dva nacina:
        * izracunavanjem $K-X$
        * zamenom svake cifre $x_i$ sa vrednoscu $N-1 - x_i$
      * Postoje dva zapisa nule: $(+0)$ i $(-0)$
      * !Interval zapisa *je* simetrican: $[-N^{n-1} + 1, +N^{n-1} - 1]$
-  2. !$K = N^n$ - *komplement u odnosu na osnovu sistema* ili *$N$-ti komplement* (*radix komplement*).
-     * Pri trazenju ostatka po modulu (sabiranju brojeva) prenos sa mesta najvece tezine se ignorise
+  2. !$K = N^n$ - *komplement u odnosu na osnovu sistema* ili 
+     *$N$-ti komplement* (*radix komplement*).
+     * Pri trazenju ostatka po modulu (sabiranju brojeva) prenos sa mesta 
+       najvece tezine se ignorise
      * Komplementiranje broja moze da se izvede na dva nacina:
        * izracunavanjem $K-X$
-       * zamenom svake cifre $x_i$ sa vrednoscu $N-1 - x_i$ i dodavanjem jedinice na poziciju najmanje tezine
+       * zamenom svake cifre $x_i$ sa vrednoscu $N-1 - x_i$ i dodavanjem 
+         jedinice na poziciju najmanje tezine
      * Nula ima jedinstveni zapis: $(+0)$
      * !Interval zapisa *nije* simetrican: $[-N^{n-1}, +N^{n-1} - 1]$
 
@@ -763,12 +899,17 @@ output: pdf_document
   2. $|X| + (-|X|) = N^n$ u komplementu osnove
 * Napomena:
   * Komplementaciona konstanta se odnosi *samo* na negativne osnove
-  * Kod komplementa u odnosu na osnovu sistema jedinica se uvek dodaje na mesto najmanje tezine
-    * Kod mesovotog broja $(X)_N \equiv x_n N^n + ... + x_0 N^0 + x_{-1} N^{-1} ... + x_{-m}N^{-m}$ jedinica se dodaje na poziciju $-m$
+  * Kod komplementa u odnosu na osnovu sistema jedinica se uvek dodaje na 
+    mesto najmanje tezine
+    * Kod mesovotog broja 
+      $(X)_N \equiv x_n N^n + ... + x_0 N^0 + x_{-1} N^{-1} + ... + 
+      x_{-m}N^{-m}$ jedinica se dodaje na poziciju $-m$
 
 ### Zapis uz dodavanje uvecanja
 
-* Specijalan slucaj zapisa pomocu komplementa u kome se oznaceni broj zapisuje tako sto se njegova vrednost savere sa konstantom $k$ i dobijeni zbir se zapise pomocu komplementa osnove
+* Specijalan slucaj zapisa pomocu komplementa u kome se oznaceni broj 
+  zapisuje tako sto se njegova vrednost savere sa konstantom $k$ i dobijeni 
+  zbir se zapise pomocu komplementa osnove
 * *Uvecanje* ili *visak* - vrednost $k$
 * *Kod visak k* - broj zapisan sa uvecanjem $k$
 
@@ -800,17 +941,25 @@ $(-AB)_{16}$| $FAB$| $F54$   | $F55$   | $F59$
 ### Hijerarhija podataka
 
 * Podaci se zapisuju u razlicitim strukturamo u obliku hijerarhije
-* !*Datoteka* - najveci i najsire rasprostranjen oblik organizacije kao razlicite hijerarhije
+* !*Datoteka* - najveci i najsire rasprostranjen oblik organizacije kao 
+  razlicite hijerarhije
   * datoteke se zapisuju na jednom ili vise uredjaja
   * one su sacinjene od vise blokova koje sadrze slogove datoteka
-    * *datoteka sa slogovima fiksne duzine* - datoteka ciji slogovi imaju istu duzini (broj bajtova)
-    * *datoteka sa slogovima promenljive duzine* - datoteka ciji slogovi imaju razlicite duzine
-    * svi slogovi imaju prvi bit koji oznacava duzinu sloga i poslednji koji oznacava kraj
-    * *slogovi nedefinisane duzine* - slogovi cije karakteristike ne zadovoljavaju specifikacije ni slogova fiksirane duzine ni slogova promenljive duzine
+    * *datoteka sa slogovima fiksne duzine* - datoteka ciji slogovi imaju 
+      istu duzini (broj bajtova)
+    * *datoteka sa slogovima promenljive duzine* - datoteka ciji slogovi 
+      imaju razlicite duzine
+    * svi slogovi imaju prvi bit koji oznacava duzinu sloga i poslednji koji 
+      oznacava kraj
+    * *slogovi nedefinisane duzine* - slogovi cije karakteristike ne 
+      zadovoljavaju specifikacije ni slogova fiksirane duzine ni slogova 
+      promenljive duzine
     * *polja* - pojedinacne pojmove koji ulaze u sastav slogova.
 * !**bit** - binarna vrednost koja se zapisuje u racinar
-* !**bajt** - podatak koji predstavlja osam binarnih vrednosti i cini osnovnu jedinicu podatka od koje se sastoje reci i polja
-* !**rec** - grupu uzastpnih bitova ciji broj odgovara velicini opstih registara u procesoru (cetiri uzastopnih bajta)
+* !**bajt** - podatak koji predstavlja osam binarnih vrednosti i cini osnovnu 
+  jedinicu podatka od koje se sastoje reci i polja
+* !**rec** - grupu uzastpnih bitova ciji broj odgovara velicini opstih 
+  registara u procesoru (cetiri uzastopnih bajta)
   * *dvostruka rec* - osam uzastpnih bajta
   * *polurec* - dva uzastopna bajta
   * *cetvorostruka rec* - 16 bajtova ili dve uzastopne dvostruke reci
@@ -850,20 +999,33 @@ $+$| 0  | 1
 
 #### Prevodjenje iz heksadekadnog u dekadni sistem i obratno
 
-* Klasicno prevodjenje je dosta slozeno i nije pogodno za implementaciju u racunaru
+* Klasicno prevodjenje je dosta slozeno i nije pogodno za implementaciju u 
+  racunaru
 * *Hartmanov* metod - (Hartmann)
-  * polazi od broja u nekom sistemu i nizom sabiranja i mnozenja prevodi broj u drugi sistem
+  * polazi od broja u nekom sistemu i nizom sabiranja i mnozenja prevodi broj 
+    u drugi sistem
   * *korektivna cifra* - koristi za prevodjenje
-    * $-6_{16}$ (tj. $A_{16} - 10_{16}$) za prevodjenje iz dekadnog u heksadekadni sistem
-    * $+6_{10}$ (tj. $16_{10} - 10_{10}$) za prevodjenje iz heksadekadnog u dekadni sistem
+    * $-6_{16}$ (tj. $A_{16} - 10_{16}$) za prevodjenje iz dekadnog u 
+      heksadekadni sistem
+    * $+6_{10}$ (tj. $16_{10} - 10_{10}$) za prevodjenje iz heksadekadnog u 
+      dekadni sistem
 * Hartmanov algoritam:
-  1. Naredna cifra (pri prvom prolazu krajnje leva cifra) se prevodu u heksadekadni sistem i dobijeni prevod postaje pocetna vrednost rezultata prevoda
-  2. Ukoliko nema vise cifara koje nisu prevedene tada rezultat predstavlja broj u heksadekadnom zapisu. Ukoliko pak ima jos cifara koje nisu prevedene rezultat prevoda se mnozi sa korektivnom cifram $-6_{16}$. Dobijeni proizvode se koristi u petom koraku
+  1. Naredna cifra (pri prvom prolazu krajnje leva cifra) se prevodu u 
+     heksadekadni sistem i dobijeni prevod postaje pocetna vrednost rezultata 
+     prevoda
+  2. Ukoliko nema vise cifara koje nisu prevedene tada rezultat predstavlja 
+     broj u heksadekadnom zapisu. Ukoliko pak ima jos cifara koje nisu 
+     prevedene rezultat prevoda se mnozi sa korektivnom cifram $-6_{16}$. 
+     Dobijeni proizvode se koristi u petom koraku
   3. Naredna cifra se prevode u heksadekadni sistem
-  4. Rezultat prevoda se aritmeticki pomeri za jedno mesto u levo i sabere sa vrednoscu koja je dobijena u prethodnom koraku. Dobijena vrednost je nova tekuca vrednost rezultata prevoda
-  5. Proizvod formiran u drugom koraku se sabere sa rezultatom prevoda. Izvrsava se prenos sa koraka $2$
+  4. Rezultat prevoda se aritmeticki pomeri za jedno mesto u levo i sabere sa 
+     vrednoscu koja je dobijena u prethodnom koraku. Dobijena vrednost je 
+     nova tekuca vrednost rezultata prevoda
+  5. Proizvod formiran u drugom koraku se sabere sa rezultatom prevoda. 
+     Izvrsava se prenos sa koraka $2$
 
-* Slican algoritam se primenjuje i pri prevodjenju heksadekadnih brojeva u dekadni brojcani sistem
+* Slican algoritam se primenjuje i pri prevodjenju heksadekadnih brojeva u 
+  dekadni brojcani sistem
   * Koristi se $+6_{10}$ kao korektivna cifra
   * Operacije se vrse u dekadnom brojcanom sistemu
 * Hartmanov metod se moze iskoristiti i za prevodjenje razlomljenih brojeva
@@ -897,7 +1059,8 @@ $+$| 0  | 1
   6. **UTF-8** (*Unicode Transformation Format*)
      * kodira svaki UNICODE simbol pomocu promenljivog broja (1-4) *oktera*
      * svaki okter ima 8 bitova
-     * broj oktera zavisi od celobrojne vrednosti koja je dodeljena UNICODE karakteru
+     * broj oktera zavisi od celobrojne vrednosti koja je dodeljena UNICODE 
+       karakteru
      * UTF-8 je kompatibilan sa ASCII kodom 
 
 ## Celi brojevi i celobrojna aritmetika
@@ -905,12 +1068,16 @@ $+$| 0  | 1
 ### Celi brojevi
 
 * U binarnom sistemu celi brojevi se zapisuju pomocu 0 i 1
-* !Zapisuju se u obliku binarnog broja $a_{n-1} a_{n-2} ... a_1 a_0$ u $n$-bitnoj reci
-* !Celi brojevi se najcesce zapisuju u 32-cifrenim binarnim brojevima, pri cemu se svaka cifra zapisuje u jednom bitu reci
+* !Zapisuju se u obliku binarnog broja $a_{n-1} a_{n-2} ... a_1 a_0$ u $n$-
+  bitnoj reci
+* !Celi brojevi se najcesce zapisuju u 32-cifrenim binarnim brojevima, pri 
+  cemu se svaka cifra zapisuje u jednom bitu reci
 * *mesto najmanje tezine* - mesto u zapisu broja na poziciji 0
 * *mesto najvece tezine* - mesto u zapisu broja na poziciji $n-1$
 * !Bez obzira na duzinu reci brojevi se zapisuju u 32-cifrenim brojevima
-  * ako je broj $m$ zapisan u 16 bita, velicina registra je 32 bita, pri izvodjenju operacija broj m ce biti prenet u registar procesora i interno konvertovan u 32-bitni zapis
+  * ako je broj $m$ zapisan u 16 bita, velicina registra je 32 bita, pri 
+    izvodjenju operacija broj m ce biti prenet u registar procesora i interno 
+    konvertovan u 32-bitni zapis
 
 Binarna cifra: | $a_{n-1}$ | $a_{n-2}$ | ... | $a_1$ | $a_0$
  --------------|:---------:|:---------:|:---:|:-----:|:-----:
@@ -919,11 +1086,14 @@ Pozicija:      | $n-1$     | $n-2$     | ... | $1$   | $0$
 #### Zapis neoznacenih brojeva
 
 * *Neoznacen* - broj ciji zapis *ne sadrzi* znak
-* Zapis neoznacenih celih brojeva je identican njihovoj reprezentaciji u binarnom brojcanom sistemu
+* Zapis neoznacenih celih brojeva je identican njihovoj reprezentaciji u 
+  binarnom brojcanom sistemu
 * Neka je $A$ neoznaceni ceo broj
 * Binarni broj broja $A$ je $a_{n-1} a_{n-2} ... a_1 a_0$
 * Tada vazi $A \in [0, 2^n - 1]$ - interval za neoznacene brojeve
-* Formalno: Ako je niz $n$ uzastopnih binarnih brojeva $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao neoznaceni ceo broj $A$ tada je njegova dekadna vrednost
+* Formalno: Ako je niz $n$ uzastopnih binarnih brojeva 
+  $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao neoznaceni ceo broj $A$ 
+  tada je njegova dekadna vrednost
   $$A = \sum_{i=0}^{n-1} 2^i a_i$$
 
 #### Zapis oznacenih brojeva
@@ -941,27 +1111,37 @@ Pozicija:      | $n-1$     | $n-2$     | ... | $1$   | $0$
 * ostali bitovi oznacavaju apsolutnu vrednost
 * Binarni broj broja $A$ je $a_{n-1} a_{n-2} ... a_1 a_0$
 * !Tada vazi $A \in [-2^{n-1} + 1, 2^{n-1} - 1]$
-* !Formalno: Ako se niz $n$ uzastopnih binarnih brojeva $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao oznaceni ceo broj $A$ tada je njegova dekadna vrednost
+* !Formalno: Ako se niz $n$ uzastopnih binarnih brojeva 
+  $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao oznaceni ceo broj $A$ tada 
+  je njegova dekadna vrednost
  $$A_{ZA} = (-1)^{a_{n-1}} \sum_{i=0}^{n-2} 2^i a_i$$
 * !Karakteristike (nedostaci):
-  1. Pri izvodjenju racunskih operacija za otkrivanje eventualnog prekoracenja neophodno je ispitati znak i apslutnu vrednost oba argumenta
+  1. Pri izvodjenju racunskih operacija za otkrivanje eventualnog 
+     prekoracenja neophodno je ispitati znak i apslutnu vrednost oba argumenta
   2. Nula se moze zapisati na dva nacina, 16-bitnoj reci:
      $$+0 = 0000000000000000$$
      $$-0 = 1000000000000000$$
 
 ##### Nepotpuni komplement
 
-* Jednstavnije izvodjenje racunskih operacija u odnosu na zipis pomocu znaka i apsolutne vrednosti
+* Jednstavnije izvodjenje racunskih operacija u odnosu na zipis pomocu znaka 
+  i apsolutne vrednosti
 * U $n$-bitnoj reci krajnje live bit oznacava znak
 * ostali bitovi oznacavaju vrednost $A$ i to na sledeci nacin:
-  * ako je broj *pozitivan* njihova vrednost je ista kao apsolutna vrednost tog broja
-  * ako je broj *negativan* njegova vrednost je apsolutna vrednost broja $A$ kome je svaka cifra zamenjena njegovim komplementom do najvece cifre brojcanog sistem
+  * ako je broj *pozitivan* njihova vrednost je ista kao apsolutna vrednost 
+    tog broja
+  * ako je broj *negativan* njegova vrednost je apsolutna vrednost broja $A$ 
+    kome je svaka cifra zamenjena njegovim komplementom do najvece cifre 
+    brojcanog sistem
 * Binarni broj broja $A$ je $a_{n-1} a_{n-2} ... a_1 a_0$
 * !Tada vazi $A \in [-2^{n-1} + 1, 2^{n-1} - 1]$
-* !Formalno: Ako se niz $n$ uzastopnih binarnih brojeva $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao oznaceni ceo broj $A$ tada je njegova dekadna vrednost
+* !Formalno: Ako se niz $n$ uzastopnih binarnih brojeva 
+  $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao oznaceni ceo broj $A$ tada 
+  je njegova dekadna vrednost
   $$A_{NK} = (-2^{n-1} + 1) a_{n-1} + \sum_{i=0}^{n-2} 2^i a_i$$
 * !Karakteristike (nedostaci):
-  1. Jednostavnije izvodjenje aritmetickih operacija u odnosu na znapis znak i apslolutna vrednost
+  1. Jednostavnije izvodjenje aritmetickih operacija u odnosu na znapis znak 
+     i apslolutna vrednost
   2. Nula se moze zapisati na dva nacina, 16-bitnoj reci:
      $$+0 = 0000000000000000$$
      $$-0 = 1111111111111111$$
@@ -970,34 +1150,47 @@ Pozicija:      | $n-1$     | $n-2$     | ... | $1$   | $0$
 
 * U $n$-bitnoj reci krajnje live bit oznacava znak
 * ostali bitovi oznacavaju vrednost $A$ i to na sledeci nacin:
-  * ako je broj *pozitivan* njihova vrednost je ista kao apsolutna vrednost tog broja
-  * ako je broj *negativan* njegova vrednost je apsolutna vrednost broja $A$ kome je svaka cifra zamenjena njegovim komplementom do najvece cifre brojcanog sistem i na tako dobijen broj dodata je jedinica na mestu najmanje tezine, odnosno keo vrednost $2^n - A$
+  * ako je broj *pozitivan* njihova vrednost je ista kao apsolutna vrednost 
+    tog broja
+  * ako je broj *negativan* njegova vrednost je apsolutna vrednost broja $A$ 
+    kome je svaka cifra zamenjena njegovim komplementom do najvece cifre 
+    brojcanog sistem i na tako dobijen broj dodata je jedinica na mestu 
+    najmanje tezine, odnosno keo vrednost $2^n - A$
 * Binarni broj broja $A$ je $a_{n-1} a_{n-2} ... a_1 a_0$
 * !Tada vazi $A \in [-2^{n-1}, 2^{n-1} - 1]$
-* !Formalno: Ako se niz $n$ uzastopnih binarnih brojeva $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao oznaceni ceo broj $A$ tada je njegova dekadna vrednost
+* !Formalno: Ako se niz $n$ uzastopnih binarnih brojeva 
+  $a_{n-1} a_{n-2} ... a_1 a_0$ interpretira kao oznaceni ceo broj $A$ 
+  tada je njegova dekadna vrednost
   $$A_{PK} = -2^{n-1} a_{n-1} + \sum_{i=0}^{n-2} 2^i a_i$$
 * !Karakteristike (nedostaci):
-  1. Jednostavnije izvodjenje aritmetickih operacije u odnosu na zapise znak i apsolutna vrednost i nepotpuni komplement
+  1. Jednostavnije izvodjenje aritmetickih operacije u odnosu na zapise znak 
+     i apsolutna vrednost i nepotpuni komplement
   2. U ovom zapisu nula ima jedinstven zapis kao $+0$
 
 ##### Zapis uz dodavanje uvecanja
 
-* Broj predstavljen kao zbir njegovog potpunog komplementa i vrednosti $k$ koja je poznata pod nazivom *uvecanje* ili *visak*
+* Broj predstavljen kao zbir njegovog potpunog komplementa i vrednosti $k$ 
+  koja je poznata pod nazivom *uvecanje* ili *visak*
 * Jedina funkcija je pomeranje reprezentacije broja u potpunom komplementu
-* Vrednost uvecanja se bira tako da ima istu masku bitova kao i najmannji negativan broj. Tada su oni sortirani, ako se posmatra kao neoznaceni celi broj
+* Vrednost uvecanja se bira tako da ima istu masku bitova kao i najmannji 
+  negativan broj. Tada su oni sortirani, ako se posmatra kao neoznaceni celi 
+  broj
 
 ##### Konverzija izmedju zapisa razlicitih duzina
 
-* Neka je cao broj $A = a_{n-1} a_{n-2} ... a_1 a_0$ zapisan u binarnoj reci duzine $n$ i neka ga treba upisati u binarnu rec duzine $m$
+* Neka je cao broj $A = a_{n-1} a_{n-2} ... a_1 a_0$ zapisan u binarnoj reci 
+  duzine $n$ i neka ga treba upisati u binarnu rec duzine $m$
   1. Ako je $m < n$ upisivanje nije moguce izvesti korektno
      * gube se znacajne cifre (dobija se pogresna vrednost)
   2. Ako je $m = n$ konverzija ne postoji
      * zapisi obe binarne reci su identicni
   3. Ako je $m > n$ tada nacin konverzije zavisi od nacina zapisa celog broja
      * Znak i apsolutna vrednost:
-       * bit za znak se pomeri na mesto najvece tezine i ostala mesta se popune nulama
+       * bit za znak se pomeri na mesto najvece tezine i ostala mesta se 
+         popune nulama
      * Nepotpuni i potpuni komplement:
-       * upisuje se $a_{n-1}$ na sve pozicije $i$ u zapisu broja, gde vazi $n \leq i < m$
+       * upisuje se $a_{n-1}$ na sve pozicije $i$ u zapisu broja, gde 
+         vazi $n \leq i < m$
 
 #### Dokaz korektnosti pravila
 
@@ -1021,7 +1214,8 @@ Dekadna vrednost | Binarni zapis
 $+9$             | $0000 1001$
 $-9$             | $1111 0110$
 
-* Potpuni komplement - komplementiranje svake cifre u binarnom zapisu i dodavanje jedinice na pozociju najmanje tezine
+* Potpuni komplement - komplementiranje svake cifre u binarnom zapisu i 
+  dodavanje jedinice na pozociju najmanje tezine
 
 Dekadna vrednost | Binarni zapis
 ----------------:|:--------------
@@ -1030,11 +1224,16 @@ $-9$             | $1111 0111$
 
 * Neka je $A = a_{m-1} a_{m-2} ... a_1 a_0$ broj u potpunom kompelemntu
   $$A = -2^{m-1} a_{m-1} + \sum_{i=0}^{m-2} 2^i a_i$$
-* Broj $B = -A$ se zapisuje komplementiranjem $\bar{a}_i$ svake od cifara $a_i$ broja $A$ i dodavanjem 1
+* Broj $B = -A$ se zapisuje komplementiranjem $\bar{a}_i$ svake od cifara 
+  $a_i$ broja $A$ i dodavanjem 1
   $$B = 1 - 2^{m-1} \bar{a}_{m-1} + \sum_{i=0}^{m-2} 2^i \bar{a}_i$$
-* Potrebno je dokazati $A = -B$, tj. $A + B = 0$. Ako se zna da je $a_i + \bar{a}_i = 1$
-  $$A + B = -2^{m-1} a_{m-1} + \sum_{i=0}^{m-2} 2^i a_i + 1 - 2^{m-1} \bar{a}_{m-1} + \sum_{i=0}^{m-2} 2^i \bar{a}_i$$
-  $$A + B = 1 - 2^{m-1}(a_{m-1} + \bar{a}_{m-1}) + \sum_{i=0}^{m-2} 2^i (a_i + \bar{a}_i)$$
+* Potrebno je dokazati $A = -B$, tj. $A + B = 0$. Ako se zna da je 
+  $a_i + \bar{a}_i = 1$
+  $$A + B = -2^{m-1} a_{m-1} + 
+  \sum_{i=0}^{m-2} 2^i a_i + 1 - 2^{m-1} \bar{a}_{m-1} + 
+  \sum_{i=0}^{m-2} 2^i \bar{a}_i$$
+  $$A + B = 1 - 2^{m-1}(a_{m-1} + \bar{a}_{m-1}) + 
+  \sum_{i=0}^{m-2} 2^i (a_i + \bar{a}_i)$$
   $$A + B = 1 - 2^{m-1} + \sum_{i=0}^{m-2} 2^i$$
   $$A + B = 1 - 2^{m-1} + 2^{m-1} - 1$$
   $$A + B = 0$$
@@ -1044,7 +1243,9 @@ $-9$             | $1111 0111$
 * Neka su brojevi $A$ i $B$ zapisani u binarnom obliku duzine n:
   $$A = a_{n-1} a_{n-2} ... a_1 a_0$$
   $$B = b_{n-1} b_{n-2} ... b_1 b_0$$
-* Ako se kao rezultat neke aritmeticke operacije dobije broj $C$ za ciji je tacan zapis potrebno $n+1$ cifara, tada se kaze da je doslo do *prekoracenja*
+* Ako se kao rezultat neke aritmeticke operacije dobije broj $C$ za ciji je 
+  tacan zapis potrebno $n+1$ cifara, tada se kaze da je doslo do 
+  *prekoracenja*
 * Otkriva se preko modifikovanog zapisa broja
 
  | Registri | Binarni zapis
@@ -1053,7 +1254,8 @@ $-9$             | $1111 0111$
  | $B =$    | $b_n b_{n-1} ... b_1 b_0$|
  | $C =$    | $c_n c_{n-1} ... c_1 c_0$|
 
-* Pravilo: *Ako se sabiraju dva broja, prekoracenje sa javlja ako i samo ako rezultat sabiranja ima suprotan znak, gde je $c_n$ cifra znaka*
+* Pravilo: *Ako se sabiraju dva broja, prekoracenje sa javlja ako i samo ako 
+  rezultat sabiranja ima suprotan znak, gde je $c_n$ cifra znaka*
 
 #### Sabiranje i oduzimanje
 
@@ -1077,8 +1279,13 @@ $-9$             | $1111 0111$
 
 * Posebno se obradjuju znaci a posebno apslolutna vrednost
 * !Pravila za odredjivaanje zbira $A + B$ brojeva $A$ i $B$:
-  1. Ukoliko su brojevi $A$ i $B$ istog znaka, isti znak ima i rezultat sabiranja. Apsolutna vrednost rezultata se dobija sabiranjem aspolutnih vrednosti sabiraka kao neoznacenih brojeva. Ako se javi prekoracenje, prekoracenje se tada javlja i u konacnom zbiru
-  2. Ukoliko su brojebi $A$ i $B$ razlicitog znaka, znak rezultata je isti kao i znak sabirka koji ima vecu apsolutnu vrednost. Apsolutna vrednost rezultata je razlika izmedju vece i manje apsolutne vrednosti
+  1. Ukoliko su brojevi $A$ i $B$ istog znaka, isti znak ima i rezultat 
+     sabiranja. Apsolutna vrednost rezultata se dobija sabiranjem aspolutnih 
+     vrednosti sabiraka kao neoznacenih brojeva. Ako se javi prekoracenje, 
+     prekoracenje se tada javlja i u konacnom zbiru
+  2. Ukoliko su brojebi $A$ i $B$ razlicitog znaka, znak rezultata je isti 
+     kao i znak sabirka koji ima vecu apsolutnu vrednost. Apsolutna vrednost 
+     rezultata je razlika izmedju vece i manje apsolutne vrednosti
   3. Oduzimanje $A - B$ se svodi na sabiranje uz promenu znaka drugom operandu
 
 +14 | $+$ | 10
@@ -1089,10 +1296,15 @@ $-9$             | $1111 0111$
 
 **Sabiranje i oduzimanje brojeva u nepotpunom komplementu**   
 
-* Jednostavnije izvodjenje aritmetickih operacija ako su brojevi zapisani u neoptpunom komplementu od znaka i apsolutne vrednosti
-* Neka je $A = a_{n-1} a_{n-2} ... a_1 a_0$ i $B = b_{n-1} b_{n-2} ... b_1 b_0$ zapisani u nepotpunom komplementu duzine $n$ 
+* Jednostavnije izvodjenje aritmetickih operacija ako su brojevi zapisani u 
+  neoptpunom komplementu od znaka i apsolutne vrednosti
+* Neka je $A = a_{n-1} a_{n-2} ... a_1 a_0$ i 
+  $B = b_{n-1} b_{n-2} ... b_1 b_0$ zapisani u nepotpunom komplementu 
+  duzine $n$ 
 * !Izracunavanje zbira $C = A + B$ se dobija:
-  1. Oznacimo medjurezultat koji se dobija sabiranjem $A$ i $B$ sa $C'$ Sabiranje se vrsi kao sabiranje neoznacenih brojeva bez kontrole prekoracenja $c'_n$
+  1. Oznacimo medjurezultat koji se dobija sabiranjem $A$ i $B$ sa $C'$ 
+     Sabiranje se vrsi kao sabiranje neoznacenih brojeva bez kontrole 
+     prekoracenja $c'_n$
 
  | Registri | Binarni zapis
  |---------:|:------------------------
@@ -1100,7 +1312,9 @@ $-9$             | $1111 0111$
  | $B =$    | $\qquad b_{n-1} \quad ... \quad b_1 \quad b_0$|
  | $C' =$   | $c_n \quad c_{n-1} \quad ... \quad c_1 \quad c_0$|
  
-  2. Neka je $C''$ broj koji se dobija uklanjanjem $c'_n$ iz medjurezultata $C'$. Konacan rezultat $C = A + B$ se dobija tako sto se pronos $c'_n$ sabere sa $C''$ uz kontrolu prekoracenja
+  2. Neka je $C''$ broj koji se dobija uklanjanjem $c'_n$ iz medjurezultata 
+     $C'$. Konacan rezultat $C = A + B$ se dobija tako sto se pronos $c'_n$ 
+     sabere sa $C''$ uz kontrolu prekoracenja
 
  | Registri | Binarni zapis
  |---------:|:------------------------
@@ -1108,17 +1322,26 @@ $-9$             | $1111 0111$
  |         | $\qquad \qquad \qquad \qquad \qquad c'_n$   
  | $C' =$   | $c_{n-1} \quad c_{n-2} \quad ... \quad c_1 \quad c_0$|
      
-* Oduzimanje $C = A - B$ se svodi na sabiranje uz promenu znaka drugom operadnu: $C = A + (-B)$ 
+* Oduzimanje $C = A - B$ se svodi na sabiranje uz promenu znaka drugom 
+  operadnu: $C = A + (-B)$ 
 
 **Sabiranje i oduzimanje brojeva zapisanih u potpunom komplementu**
 
 * Najceste se u racunarima zapisuju brojevi u potpunom kompelemntu
-* Najjednostavnije izvodjenje aritmetickih operacija u odnosu na nepotpuni komplement i znak i apsolutna vrednost
-* Neka je $A = a_{n-1} a_{n-2} ... a_1 a_0$ i $B = b_{n-1} b_{n-2} ... b_1 b_0$ zapisani u potpunom komplementu duzine $n$ 
+* Najjednostavnije izvodjenje aritmetickih operacija u odnosu na nepotpuni 
+  komplement i znak i apsolutna vrednost
+* Neka je $A = a_{n-1} a_{n-2} ... a_1 a_0$ i 
+  $B = b_{n-1} b_{n-2} ... b_1 b_0$ zapisani u potpunom komplementu 
+  duzine $n$ 
 * !Pravila sabiranja:
-  1. Neka je sa $C'$ oznacen medjurezultat sabiranja $A$ i $B$. Sabiranje se vrsi kao sabiranje neoznacenih brojeva bez kontrole prekoracenja; $c'_n$ predstavlja prenos pri sabiranju sa pozicije na znak
-  2. Rezultat $C = A + B$ se dobija uklanjanjem $c'_n$ iz medjurezultata $C'$. Po uklanjanju cifre se crsi kontrola pojave prekoracenja u skaldu sa prethodno navedenim pravilima
-* Oduzimanje $C = A - B$ se svodi na sabiranje uz promenu znaka drugom operandu: $C = A + (-B)$.
+  1. Neka je sa $C'$ oznacen medjurezultat sabiranja $A$ i $B$. Sabiranje se 
+     vrsi kao sabiranje neoznacenih brojeva bez kontrole prekoracenja; $c'_n$ 
+     predstavlja prenos pri sabiranju sa pozicije na znak
+  2. Rezultat $C = A + B$ se dobija uklanjanjem $c'_n$ iz medjurezultata 
+     $C'$. Po uklanjanju cifre se crsi kontrola pojave prekoracenja u skaldu 
+     sa prethodno navedenim pravilima
+* Oduzimanje $C = A - B$ se svodi na sabiranje uz promenu znaka drugom 
+  operandu: $C = A + (-B)$.
 
  | Registri | Binarni zapis
  |---------:|:------------------------
@@ -1139,11 +1362,16 @@ $-9$             | $1111 0111$
 * Osobine za jednostavnije izvodjenje operacija su
   1. Najvecoj dekadnoj cifri (9) je pridruzena rec koja ima najvecu vrednost
      * posmatra se kao binardni broj
-  2. Parnim i neparnim dekadnim ciframa odgovaraju parni odnosno neparni binarni brojevi
-  3. Kod je *komplementaran* ako su svi kodovi dekadnih cifara $a$ i $b$ za koje vazi $a + b = 9$ komplementarni
+  2. Parnim i neparnim dekadnim ciframa odgovaraju parni odnosno neparni 
+     binarni brojevi
+  3. Kod je *komplementaran* ako su svi kodovi dekadnih cifara $a$ i $b$ za 
+     koje vazi $a + b = 9$ komplementarni
      * cifre na odgovarajucim pozicijama u kodu su komplementane
-  4. Kod je *tezinski* ako je $i$-toj poziciji kodne reci pridruzen broj $p_i$ tako da za dekadnu cifru $q$ i njemu kodnu rec $y_3 y_2 y_1 y_0$ vazi jednakost $q = p_3 y_3 + p_2 y_2 + p_1 y_1 + p_0 y_0$
-* *Tezinski kodovi* - kodovi cije ime predstavlja svaku od tezina za datu poziciju cifre
+  4. Kod je *tezinski* ako je $i$-toj poziciji kodne reci pridruzen broj 
+     $p_i$ tako da za dekadnu cifru $q$ i njemu kodnu rec $y_3 y_2 y_1 y_0$ 
+     vazi jednakost $q = p_3 y_3 + p_2 y_2 + p_1 y_1 + p_0 y_0$
+* *Tezinski kodovi* - kodovi cije ime predstavlja svaku od tezina za datu 
+  poziciju cifre
   * Pr. Kod 8421:
     * na poziciji 3 ima tezinu 8
     * na poziciji 2 ima tezinu 4
@@ -1168,19 +1396,27 @@ Dekadna cifra|8421|2421|5421|753-6|84-2-1|visak 3|ciklicni
           8  |1000|1110|1011|0110|1000|1011|1011
           9  |1001|1111|1100|1111|1111|1100|0011
 
-* Binarno kodirani zapis nekog dekadnog broja se dobija tako sto se svaka cifra tog broja kodira odgovarajucim kodom
+* Binarno kodirani zapis nekog dekadnog broja se dobija tako sto se svaka 
+  cifra tog broja kodira odgovarajucim kodom
   * Pr. Broj 3264 u kodu 8421:
     * $3= \;\; 2= \;\; 6= \;\; 4=$
     * 0011 0010 0110 0100
-* Koriscenje nekih kodova omogucava efikasnije izvodjenje racunskih operacija sa BCD brojevima
+* Koriscenje nekih kodova omogucava efikasnije izvodjenje racunskih operacija 
+  sa BCD brojevima
 
 #### Grejev kod
 
-* Grejev kod duzine $n \geq 0$ je funkcije $G(n, i)$ koja vrsi '1-1' preslikavanje celog broja $i \in [0, 2^n - 1]$ pri cemu vazi da se binarne reprezentacije $G(n, i)$ i $G(n, i + 1)$ razlikuju tacno na jednom mesto
+* Grejev kod duzine $n \geq 0$ je funkcije $G(n, i)$ koja vrsi '1-1' 
+  preslikavanje celog broja $i \in [0, 2^n - 1]$ pri cemu vazi da se binarne 
+  reprezentacije $G(n, i)$ i $G(n, i + 1)$ razlikuju tacno na jednom mesto
 * Karakteristike:
-  * Funkcija koja vrsi preslikavanja nije jedinstvena tako da postoji vise Grejevih kodova duzine $n$
-  * Jedna od najcescih koriscenih funkcija se moze definisati na sledeci nacin:
-    * !$G(n, i) = i_n \oplus [i/2]_n$ gde je $n > 0, i \in [0, 2^n - 1]$, $i_n$ oznacava $i$ zapisano u binarnom sistemu kao neoznacen ceo broj u polju duzine $n$, a $\oplus$ ekskluzivnu disjunkciju
+  * Funkcija koja vrsi preslikavanja nije jedinstvena tako da postoji vise 
+    Grejevih kodova duzine $n$
+  * Jedna od najcescih koriscenih funkcija se moze definisati na sledeci 
+    nacin:
+    * !$G(n, i) = i_n \oplus [i/2]_n$ gde je $n > 0, i \in [0, 2^n - 1]$, 
+      $i_n$ oznacava $i$ zapisano u binarnom sistemu kao neoznacen ceo broj u 
+      polju duzine $n$, a $\oplus$ ekskluzivnu disjunkciju
     * !Ista funkcija $G(n, i)$ moze da se definise i rekurentno:
 
       $G(n + 1, i) \; = 0 G(n,i) \qquad \qquad \qquad n > 0, i \in [0,...,2^n - 1]$
@@ -1210,7 +1446,9 @@ Hex. cifra | Bin. vrednost | Grejev kod $n=1$ | Grejev kod $n=2$ | Grejev kod $n
  E |1110|    |    |    |1001
  F |1111|    |    |    |1000
 
-* Neka je $A = a_{n-1} a_{n-2} ... a_1 a_0$ binardni broj i $G = g_{n-1} g_{n-2} ... g_1 g_0$ odgovarajuci Grejov kod. Konverzija izmedju njih je definisana na sledeci nacin
+* Neka je $A = a_{n-1} a_{n-2} ... a_1 a_0$ binardni broj i 
+  $G = g_{n-1} g_{n-2} ... g_1 g_0$ odgovarajuci Grejov kod. Konverzija 
+  izmedju njih je definisana na sledeci nacin
   * !Konvertovanje binarnog broja $A$ u odgovarajuci Grejov kod $G$:
     1. $g_{n-1} = a_{n-1}$
     2. $g_i = a_i \oplus a_{i + 1}, i \in [0, n-2]$
@@ -1224,8 +1462,10 @@ Hex. cifra | Bin. vrednost | Grejev kod $n=1$ | Grejev kod $n=2$ | Grejev kod $n
 * Varijanta Hofmanovog kodiranja
 * Kodiranje tri dekadne cifre u 10 bita
 * 20% efikasnije kodiranje od BCD zapisa
-* Deli cifre na male (0-7) i velike (8, 9) na osnovu vrednosti prvog bita u BCD kodu
-* Male cifre zahtevaju tri bita, a velike jedan bit da bi se medjusobno razlikovale
+* Deli cifre na male (0-7) i velike (8, 9) na osnovu vrednosti prvog bita u 
+  BCD kodu
+* Male cifre zahtevaju tri bita, a velike jedan bit da bi se medjusobno 
+  razlikovale
 * Kodiranje razmatra svaku od kombinacija tri cifre
   * Sve tri cifre su male (51.2% slucajeva)
     * potrebno je 9 bitova za cifre ($3 + 3 + 3$) 
@@ -1243,11 +1483,14 @@ Hex. cifra | Bin. vrednost | Grejev kod $n=1$ | Grejev kod $n=2$ | Grejev kod $n
 #### Kodiranje gustim pakovanjem dekadnih cifara
 
 * Mike Cowlishaw Densely Packed Decimal kodiranje
-* Slicno Cen-Ho kodiraju, ali umesto Hofmanovog koda koristi drugacije preuredjenje bitova
+* Slicno Cen-Ho kodiraju, ali umesto Hofmanovog koda koristi drugacije 
+  preuredjenje bitova
 * Kodira tri dekadne cifre u 10 bita
 * 20% efikasnije kodiranje od BCD zapisa
-* Deli cifre ne male (0 - 7) i velike (8, 9) na osnovu vrednosti provg bita u BCD kodu
-* Male cifre zahtevaju tri bita a velike jedan bit da bi se medjusobno razlkovale
+* Deli cifre ne male (0 - 7) i velike (8, 9) na osnovu vrednosti provg bita u 
+  BCD kodu
+* Male cifre zahtevaju tri bita a velike jedan bit da bi se medjusobno 
+  razlkovale
 * Kodiranje razumatra svaku od kombinacija tri cifre
   * Sve tri cifre su male (51.2% slucajeva)
     * potrebno je 10 bitova za cifre ($3 + 3 + 3$)
@@ -1264,85 +1507,141 @@ Hex. cifra | Bin. vrednost | Grejev kod $n=1$ | Grejev kod $n=2$ | Grejev kod $n
 
 ### Decimalna aritmetika
 
-* Zonski zapis brojeva se obicno koristi pri I/O operacijama za direktno unosenje brojeva
+* Zonski zapis brojeva se obicno koristi pri I/O operacijama za direktno 
+  unosenje brojeva
 * Pri izvodjenju aritmetickih operacija koristi pakovani zapis
-* Zapis binarno kodiranih brojeva u memoriji moze da pocne na bili kojoj adresi
+* Zapis binarno kodiranih brojeva u memoriji moze da pocne na bili kojoj 
+  adresi
 
 #### Promena znaka
 
-* Binarno kodirani brojevi u racunaru zapisani su u obliku znak i apsolutna vrednost
+* Binarno kodirani brojevi u racunaru zapisani su u obliku znak i apsolutna 
+  vrednost
 * Promena znaka se vrsi upisivanjem odgovarajuce vrednosti na mestu za znak
-* Za broj $+82164$ koji je zapisan u pakovanom zapisu sa EBCDIC kodom promena znaka se vrsi na sledeci nacin
+* Za broj $+82164$ koji je zapisan u pakovanom zapisu sa EBCDIC kodom promena 
+  znaka se vrsi na sledeci nacin
   $$82164C \rightarrow 82164D$$
 
 #### Sabiranje i oduzimanje
 
-* Vaze opsta pravila za sabiranje i oduzimanje brojeva zapisanih u obliku znak i apslolutna vrednost
-* Ako je $n$ maksimalan broj cifara koji moze da se zapise u binarno kodiranom dekadnom sisteumu prekoracenje kod sabiranja i oduzimanja moze da nastane samo kada rezultat ima $n+1$ cifru
-* Neka su $A$ i $B$ dekadni brojevi sa $n$ cifara $A = a_{n-1} a_{n-2} ... a_1 a_0$ i $B = b_{n-1} b_{n-2} ... b_1 b_0$
-* Neka je $\alpha$ funkcija kodiranja koja svakoj cifri u broju pridruzuje binarnu kodiranu rec
+* Vaze opsta pravila za sabiranje i oduzimanje brojeva zapisanih u obliku 
+  znak i apslolutna vrednost
+* Ako je $n$ maksimalan broj cifara koji moze da se zapise u binarno 
+  kodiranom dekadnom sisteumu prekoracenje kod sabiranja i oduzimanja moze da 
+  nastane samo kada rezultat ima $n+1$ cifru
+* Neka su $A$ i $B$ dekadni brojevi sa $n$ cifara 
+  $A = a_{n-1} a_{n-2} ... a_1 a_0$ i $B = b_{n-1} b_{n-2} ... b_1 b_0$
+* Neka je $\alpha$ funkcija kodiranja koja svakoj cifri u broju pridruzuje 
+  binarnu kodiranu rec
   $$A_{\alpha} = \alpha (a_{n-1})\alpha (a_{n-2})...\alpha (a_1)\alpha (a_0)$$
   $$B_{\alpha} = \alpha (b_{n-1})\alpha (b_{n-2})...\alpha (b_1)\alpha (b_0)$$
 * Koraci sabiranja:
-  1. Odredi se medjurezultat $C'_{\alpha} = A_{\alpha} + B_{\alpha}$ tako sto se svi parovi zifara sabiraju po pravilima za sabiranje neoznacenih brojeva i cuva se prenos ukoliko postoji
+  1. Odredi se medjurezultat $C'_{\alpha} = A_{\alpha} + B_{\alpha}$ tako sto 
+     se svi parovi zifara sabiraju po pravilima za sabiranje neoznacenih 
+     brojeva i cuva se prenos ukoliko postoji
 
-  $$A_{\alpha} \quad = \quad \alpha (a_{n-1}) \quad \alpha (a_{n-2}) \quad ... \quad \alpha (a_1) \quad \alpha (a_0)$$
-  $$B_{\alpha} \quad = \quad \alpha (b_{n-1}) \quad \alpha (b_{n-2}) \quad ... \quad \alpha (b_1) \quad \alpha (b_0)$$
-  $$C'_{\alpha} \quad = \quad \alpha (c'_{n-1}) \quad \alpha (c'_{n-2}) \quad ... \quad \alpha (c'_1) \quad \alpha (c'_0)$$
-  2. Dobijeni medjurezultat $C'_{\alpha}$ se koriguje zbog specificnosti za pisa binarno kodiranih dekadnih brojeva
-     * Odredjuje se vrednost korekcije na osnovu prenosa i dobijenog zbira cifara
+  $$A_{\alpha} \quad = \quad \alpha (a_{n-1}) \quad \alpha (a_{n-2}) 
+  \quad ... \quad \alpha (a_1) \quad \alpha (a_0)$$
+  $$B_{\alpha} \quad = \quad \alpha (b_{n-1}) \quad \alpha (b_{n-2}) 
+  \quad ... \quad \alpha (b_1) \quad \alpha (b_0)$$
+  $$C'_{\alpha} \quad = \quad \alpha (c'_{n-1}) \quad \alpha (c'_{n-2}) 
+  \quad ... \quad \alpha (c'_1) \quad \alpha (c'_0)$$
+  2. Dobijeni medjurezultat $C'_{\alpha}$ se koriguje zbog specificnosti za 
+     pisa binarno kodiranih dekadnih brojeva
+     * Odredjuje se vrednost korekcije na osnovu prenosa i dobijenog zbira 
+       cifara
 
-  $$C'_{\alpha} \quad = \quad \alpha (c'_{n-1}) \quad \alpha (c'_{n-2}) \quad ... \quad \alpha (c'_1) \quad \alpha (c'_0)$$
-  $$K_{\alpha} \quad = \quad \alpha (k_{n-1}) \quad \alpha (k_{n-2}) \quad ... \quad \alpha (k_1) \quad \alpha (k_0)$$
-  $$C_{\alpha} \quad = \quad \alpha (c_{n-1}) \quad \alpha (c_{n-2}) \quad ... \quad \alpha (c_1) \quad \alpha (c_0)$$
+  $$C'_{\alpha} \quad = \quad \alpha (c'_{n-1}) \quad \alpha (c'_{n-2}) 
+  \quad ... \quad \alpha (c'_1) \quad \alpha (c'_0)$$
+  $$K_{\alpha} \quad = \quad \alpha (k_{n-1}) \quad \alpha (k_{n-2}) 
+  \quad ... \quad \alpha (k_1) \quad \alpha (k_0)$$
+  $$C_{\alpha} \quad = \quad \alpha (c_{n-1}) \quad \alpha (c_{n-2}) 
+  \quad ... \quad \alpha (c_1) \quad \alpha (c_0)$$
 
-* Oduzimanje binarno kodiranih dekadnih brojeva moze da se realizuje na dva nacina
-  1. Po slicnom principu kao i sabiranje, pri cemu se u obe faze umesto sabiranja vrsi oduzimanje brojeva
+* Oduzimanje binarno kodiranih dekadnih brojeva moze da se realizuje na dva 
+  nacina
+  1. Po slicnom principu kao i sabiranje, pri cemu se u obe faze umesto 
+     sabiranja vrsi oduzimanje brojeva
   2. Kao sabiranje brojeva u potpunom komplementu
 
 #### Sabiranje i oduzimanje u kodu 8421
 
-* !Funkcija kodiranje je definisana kao prevodjenje cifre u binarni sistem, tj.
-  $\alpha (c) \mapsto c_3c_2c_1c_0$, gde $\forall x \in \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ i vazi $c = c_3 \times 2^3 + c_2 \times 2^2 + c_1 \times 2^1 + c_0 \times 2^0$, $c_i \in \{0, 1\}, i \in [0, 3]$ 
+* !Funkcija kodiranje je definisana kao prevodjenje cifre u binarni 
+  sistem, tj.
+  $\alpha (c) \mapsto c_3c_2c_1c_0$, gde 
+  $\forall x \in \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ i vazi 
+  $c = c_3 \times 2^3 + c_2 \times 2^2 + c_1 \times 2^1 + c_0 \times 2^0$, 
+  $c_i \in \{0, 1\}, i \in [0, 3]$ 
 * Oznake:
-  * $\alpha {c'_i}$ - zbir dobijen sabiranjem kodova za dekadno cifarsko mesto $i$
-  * $p'_i$ - binarni proces izmedju zbirova $\alpha (c'_i)$ i $\alpha (c'_{i+1})$ u medjurezultatu prve faze sabiranja
+  * $\alpha {c'_i}$ - zbir dobijen sabiranjem kodova za dekadno cifarsko 
+    mesto $i$
+  * $p'_i$ - binarni proces izmedju zbirova $\alpha (c'_i)$ i 
+    $\alpha (c'_{i+1})$ u medjurezultatu prve faze sabiranja
   * $\alpha (k_i)$ - korekciju na dekadnom cifarskom mestu $i$
-  * $p''_i$ - binarni prenos u drugoj fazi sabiranja sa dekadnog cifarskog mesta $i - 1$ na dekadno cifarsko mesti $i$. Vazi $p''_0 = 0$
-* Druga faza se izvodu u $n$ koraka. Sabiranje se vrsi zdesna u levo; postupak u $i$-tom koraku je sledeci
+  * $p''_i$ - binarni prenos u drugoj fazi sabiranja sa dekadnog cifarskog 
+    mesta $i - 1$ na dekadno cifarsko mesti $i$. Vazi $p''_0 = 0$
+* Druga faza se izvodu u $n$ koraka. Sabiranje se vrsi zdesna u levo; 
+  postupak u $i$-tom koraku je sledeci
   1. Odredjuje se privremeni zbir $t_i = \alpha (c'_i) + p''_i$
   2. Na osnovu vrednosti $t_i$ i $p'_i$ odredjuje se korekcija $\alpha (k_i)$
-  3. Krajnja vrednost $\alpha (c_i)$ se dobija kao zbir $t_i + \alpha (k_i)$. Pri tome se odredjuje i $p''_{i+1}$
+  3. Krajnja vrednost $\alpha (c_i)$ se dobija kao zbir $t_i + \alpha (k_i)$. 
+     Pri tome se odredjuje i $p''_{i+1}$
 * !Korekcija medjurezultata je:
   1. $p'_{i+1} = 1 \implies \alpha (k_i) = (0110)_2$ 
-     * Posto postoji prenos izmedju dekadnih cifarskih mesta u prvoj fazi, vrednost binarnog prenosa sa cifarskog mesta $i$ na mesto $i + 1$ je $16_{10}$ dok je vrednost dekadnog prenosa izmedju ovde dve pozicije $10_{10}$ pa je onda korekcija razlika ta dva broja $\alpha (k_i) = 16_{10} - 10_{10} = 6_{10} = (0110)_2$
+     * Posto postoji prenos izmedju dekadnih cifarskih mesta u prvoj fazi, 
+       vrednost binarnog prenosa sa cifarskog mesta $i$ na mesto $i + 1$ je 
+       $16_{10}$ dok je vrednost dekadnog prenosa izmedju ovde dve pozicije 
+       $10_{10}$ pa je onda korekcija razlika ta dva broja 
+       $\alpha (k_i) = 16_{10} - 10_{10} = 6_{10} = (0110)_2$
   2. $t_i \geq (1010)_2 \implies \alpha (k_i) = (0110)_2$ 
-     * Posto je dobijena vrednost veca od koda najvece dekadne cifre, mora da usledi prenos na naredno dekadno cifarsko mesto $i+1$
+     * Posto je dobijena vrednost veca od koda najvece dekadne cifre, mora da 
+       usledi prenos na naredno dekadno cifarsko mesto $i+1$
   3. $\alpha(k_i) = (0000)_2$
-     * Korekcija nije potrebna kada je dobijena vrednost korektno predstavljena
+     * Korekcija nije potrebna kada je dobijena vrednost korektno 
+       predstavljena
 * !Prekoracenje se javlja kada je $p'_n = 1$ ili $p''_n = 1$
-* Oduzimanje se realizuje slicno kao sabiranje ili kao sabiranje brojeva u potpunom komplementu
-  1. U prvoj fazi kodovi se posmatraju kao neoznaceni binarni brojevei sa $4 \times n$ cifara i oduzimanju po pravilima neoznacenih brojeva
-  2. U drugoj fazi se posmatraju grupe $\alpha(c'_i)$ od cetiri koje odgovaraju dekadnim cifarskim mestima. Konacan rezultat se dobija kada se izvrsi oduzimanje $C_{\alpha} = C'_{\alpha} - K_{\alpha}$
-     * !Korekcija za cifarsko mesto $i$ je $\alpha(k_i) = (0110)_2$ ako je bilo prenosa (oduzimanja 1) izmedju dekadnih cifarskih mesta u prethodnom oduzimanju, u suprotnom korekcija je $\alpha(k_i) = (0000)_2$
+* Oduzimanje se realizuje slicno kao sabiranje ili kao sabiranje brojeva u 
+  potpunom komplementu
+  1. U prvoj fazi kodovi se posmatraju kao neoznaceni binarni brojevei sa 
+     $4 \times n$ cifara i oduzimanju po pravilima neoznacenih brojeva
+  2. U drugoj fazi se posmatraju grupe $\alpha(c'_i)$ od cetiri koje 
+     odgovaraju dekadnim cifarskim mestima. Konacan rezultat se dobija kada 
+     se izvrsi oduzimanje $C_{\alpha} = C'_{\alpha} - K_{\alpha}$
+     * !Korekcija za cifarsko mesto $i$ je $\alpha(k_i) = (0110)_2$ ako je 
+       bilo prenosa (oduzimanja 1) izmedju dekadnih cifarskih mesta u 
+       prethodnom oduzimanju, u suprotnom korekcija je 
+       $\alpha(k_i) = (0000)_2$
     
 #### Sabiranje i oduzimanje u kodu visak 3
 
-* !Funkcija kodiranje je definisana kao prevodjenje cifre u binarni sistem, tj.
-  $\alpha (c) \mapsto c_3c_2c_1c_0$, gde $\forall x \in \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ i vazi $c = c_3 \times 2^3 + c_2 \times 2^2 + c_1 \times 2^1 + c_0 \times 2^0 - 3$, $c_i \in \{0, 1\}, i \in [0, 3]$ 
-* Prva faza je nezavisna od funkcije kodiranja tako da se primenjuje prethodni algoritam
-* Druga faza se izvodi u $n$ koraka gde je $n$ maksimum broja cifara dekadnih brojeva koji se sabiraju. 
+* !Funkcija kodiranje je definisana kao prevodjenje cifre u binarni 
+  sistem, tj.
+  $\alpha (c) \mapsto c_3c_2c_1c_0$, gde 
+  $\forall x \in \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ i vazi 
+  $c = c_3 \times 2^3 + c_2 \times 2^2 + c_1 \times 2^1 + c_0 \times 2^0-3$, 
+  $c_i \in \{0, 1\}, i \in [0, 3]$ 
+* Prva faza je nezavisna od funkcije kodiranja tako da se primenjuje 
+  prethodni algoritam
+* Druga faza se izvodi u $n$ koraka gde je $n$ maksimum broja cifara dekadnih 
+  brojeva koji se sabiraju. 
 * Sabiranje se vrsi zdesna u levo; postupak u $i$-tom koraku je:
   1. Na osnovu vrednosti $p'_{i+1}$ odredjuje se korekcija $\alpha (k_i)$
-  2. Krajnja vrednost $\alpha (c_i)$ se dobija kao zbir $\alpha (c'_i) + \alpha (k_i)$
+  2. Krajnja vrednost $\alpha (c_i)$ se dobija kao zbir 
+     $\alpha (c'_i) + \alpha (k_i)$
      * Pojava prekoracenja (prenosa) u ovoj fazi sabiranja se ignorise
 * !Korekcija:
   1. $p'_{i+1} = 1 \implies \alpha (k_i) = (0011)_2$
-     * Posto je postojao prenos izmedju dekadnih cifarskih mesta sa cifarskog mesta $i$ na mesto $i+1$ je $16_{10}$ dok je dekadna vrednost prenosa izmedju ovde dve pozicije $10_{10}$.
-     * Poziciju $i$ anulira visak 3 od obe dekadne cifre, i da bi rezultat bio korektan treba dodati $3_{10} = (0011)_2$ 
+     * Posto je postojao prenos izmedju dekadnih cifarskih mesta sa cifarskog 
+       mesta $i$ na mesto $i+1$ je $16_{10}$ dok je dekadna vrednost prenosa 
+       izmedju ovde dve pozicije $10_{10}$.
+     * Poziciju $i$ anulira visak 3 od obe dekadne cifre, i da bi rezultat 
+       bio korektan treba dodati $3_{10} = (0011)_2$ 
   2. $p'_{i+1} = 0 \implies \alpha (k_i) = (1101)_2$
-     * Prenos sa ove pozicije na narednu ne postoji tako da je akumuliran visak 6 u odnosu na prethodni kod, zbog toga treba oduzeti 3 da bi zapis bio korektan
-     * Pa je korekciona konstanta u potpunom komplementu $\alpha (c'_i) = -3_{10} = -(0011)_2 = (1101)_2$
+     * Prenos sa ove pozicije na narednu ne postoji tako da je akumuliran 
+       visak 6 u odnosu na prethodni kod, zbog toga treba oduzeti 3 da bi 
+       zapis bio korektan
+     * Pa je korekciona konstanta u potpunom komplementu 
+       $\alpha (c'_i) = -3_{10} = -(0011)_2 = (1101)_2$
 * !Prekoracenje pri sabiranju se javlja kada je $p'_n = 1$
 
 ## Realni brojevi i aritmetika
@@ -1352,7 +1651,8 @@ Hex. cifra | Bin. vrednost | Grejev kod $n=1$ | Grejev kod $n=2$ | Grejev kod $n
 * Odredjeni broj cifara pre i posle zareza
 * Moguce greske
   1. Nekorektno smestanje tacke osvnove
-     * Ako je za zapis nekog broja petrebno 16 bitova, a moguce je samo zapisati 15 bitova, zadnji bit tog broja se odbacuje
+     * Ako je za zapis nekog broja petrebno 16 bitova, a moguce je samo 
+       zapisati 15 bitova, zadnji bit tog broja se odbacuje
   2. Nekorektno skaliranje pri aritmetickim operacijama
   3. Ogranicena preciznost
 
@@ -1360,7 +1660,8 @@ Hex. cifra | Bin. vrednost | Grejev kod $n=1$ | Grejev kod $n=2$ | Grejev kod $n
 
 * Predstavlja se pomocu osnove $\beta$ (koja je uvek parna) i preciznosti $p$
   * $\beta = 10, p = 4$: broj $0.4$ se predstavlja ka $4.000 \times 10^{-1}$
-  * $\beta = 2, p = 10$: broj $0.4$ se predstavlja ka $1.100110011 \times 2^{-2}$
+  * $\beta = 2, p = 10$: broj $0.4$ se predstavlja ka 
+    $1.100110011 \times 2^{-2}$
 * Opsti slucaj $\pm d_0. d_1 d_2 ... d_{p-1} \beta^e$
   * $d_0. d_1 d_2 ... d_{p-1}$ - *znacajni deo* (significand)
   * $\beta$ - *osnova*
@@ -1372,7 +1673,8 @@ Hex. cifra | Bin. vrednost | Grejev kod $n=1$ | Grejev kod $n=2$ | Grejev kod $n
 
 1. Znak broja, Uvecan eksponent, Frakcija
 2. Eksponent u potpunom komplementu, Frakcija (u potpunom komplementu)
-3. Znak broja, Frakcija, Ignorise se, Nastavak frakcije, Znak eksponenta, Eksponent
+3. Znak broja, Frakcija, Ignorise se, Nastavak frakcije, Znak eksponenta, 
+   Eksponent
 
 #### Primer zapisa sa binarnom osnovom - PDP-11, VAX-11
 
@@ -1388,30 +1690,47 @@ $0 =$    | 0    | 00000000  | 000000000000000000
   $$vrednost = znak\ frakcija \times 2^{eksponent}$$
 
 * Za velicinu eksponenta *e* vazi $-2^7 \leq e \leq 2^7 -1$
-* Za vrednost $s$ kojom se predstavlja funkcija vazi $2^{-1} \leq |s| \leq 1 - 2^{-24}$
-* Na osnovu prethodnog, mogu se zapisati brojevi u intervalu $2^{-1} \times 2^{-128} \leq |x| \leq (1 - 2^{-24}) \times 2^{+127}$
-* Medjutim, kako vazi da je kod za broj $2^{-1} \times 2^{-128}$ predsavlja 0, opseg je $2^{-128} \leq |x| \leq (1 - 2^{-24}) \times 2^{+127}$, odnosno $2.9 \times 10^{-39} < |x| < 1.7 \times 10^{+38}$
+* Za vrednost $s$ kojom se predstavlja funkcija vazi 
+  $2^{-1} \leq |s| \leq 1 - 2^{-24}$
+* Na osnovu prethodnog, mogu se zapisati brojevi u intervalu 
+  $2^{-1} \times 2^{-128} \leq |x| \leq (1 - 2^{-24}) \times 2^{+127}$
+* Medjutim, kako vazi da je kod za broj $2^{-1} \times 2^{-128}$ 
+  predsavlja 0, opseg je $2^{-128} \leq |x| \leq (1 - 2^{-24}) \times 
+  2^{+127}$, odnosno $2.9 \times 10^{-39} < |x| < 1.7 \times 10^{+38}$
 * Dvostruka tacnost
-  * Bit za znak, Uvecani eksponent 8 bitova, Frakcija + Poduzetak frakcije 55 bitova
-* Interval realnih brojeva koji mogu da se predstave u dvostrukoj tacnosti je $2^{-128} \leq |x| \leq (1 - 2^{-56}) \times 2^{+127}$
+  * Bit za znak, Uvecani eksponent 8 bitova, Frakcija + Poduzetak frakcije 55 
+    bitova
+* Interval realnih brojeva koji mogu da se predstave u dvostrukoj tacnosti je 
+  $2^{-128} \leq |x| \leq (1 - 2^{-56}) \times 2^{+127}$
 
 ### Zapis brojeva u pokretnom zarezu pomocu binarne osvnove - IEEE754
 
 * Karakteristike:
   1. Slaba prenosivost numericki intenzivnih programa
-  2. Postoje razlike u rezultatima u izvrsavanjeu istog programa na ralicitim racunarskim sistemima
+  2. Postoje razlike u rezultatima u izvrsavanjeu istog programa na ralicitim 
+     racunarskim sistemima
   3. IEEE 754 poboljsava prenosivot programa popisujuci
-     * algoritme za operacije sabiranja, oduzimanja, mnozenje, deljenja i izracunavanje kvadratnog korena
+     * algoritme za operacije sabiranja, oduzimanja, mnozenje, deljenja i 
+       izracunavanje kvadratnog korena
      * nacin njihove implementacije
      * nacine zaokruzivanja i ponasanja u granicnim slucajevima
 * Problemi
   1. Zaokruzivanje
-     * $\beta = 10, p = 3$. Neka je rezultat izracunavanja $5.76 \times 10 ^ {-2}$, matematicki tacna vrednost je 0.0574. Greska zapisa je velicine $2 \ times jedinicna vrednost na poslednjem mestu zapisa broja$
+     * $\beta = 10, p = 3$. Neka je rezultat izracunavanja 
+       $5.76 \times 10 ^ {-2}$, matematicki tacna vrednost je 0.0574. Greska 
+       zapisa je velicine $2 \ times jedinicna vrednost na poslednjem mestu 
+       zapisa broja$
      * $0.0574367 \mapsto 5.74 \times 10^{-2}$ - gdeska je 0.367
      * Velicina 'jedinica na poslednjem mestu' je *ulp*
-     * Ako broj $d_0.d_1...d_{p-1} \times \beta^e$ predstavlja broj $z$, tada je greska u zapisu $|d_0.d_1...d_{p-1} - (z/\beta^e) | \beta^{p - 1}$ ulp-a;
-     * *Relativna greska* je apsolutna vrednost razlike izmedju realnog broja i njegove reprezentacije podeljena sa apsolutnom vrednoscu realnog broja.
-     * Ako je realan broj zapisan sa greskom od $n\ ulp-a$, tada je broj cifara obuhvatacenih greskom $\log_{\beta} n$, a ako je relativna greska $n \epsilon$ tada je broj obuhvacenih cifara $\log_{beta} n$
+     * Ako broj $d_0.d_1...d_{p-1} \times \beta^e$ predstavlja broj $z$, tada 
+       je greska u zapisu $|d_0.d_1...d_{p-1} - (z/\beta^e) | \beta^{p - 1}$ 
+       ulp-a;
+     * *Relativna greska* je apsolutna vrednost razlike izmedju realnog broja 
+       i njegove reprezentacije podeljena sa apsolutnom vrednoscu realnog 
+       broja.
+     * Ako je realan broj zapisan sa greskom od $n\ ulp-a$, tada je broj 
+       cifara obuhvatacenih greskom $\log_{\beta} n$, a ako je relativna 
+       greska $n \epsilon$ tada je broj obuhvacenih cifara $\log_{beta} n$
   2. Cifre cuvari
      * Potrebno je dodati dodatnu cifru da bi rezultat bio tacniji
   3. Tacno zaokruzene operacije
@@ -1427,33 +1746,43 @@ $0 =$    | 0    | 00000000  | 000000000000000000
 * Zasto dekadna osnova?
   * Ljudi racunaju u dekadnom sistemu
   * Finansijske i komercijalne aplikacije
-  * Oko $55%$ numerickih podataka u bazama podataka su dekadni podaci, a od preostalih jos $43%$ su celi brojevi
+  * Oko $55%$ numerickih podataka u bazama podataka su dekadni podaci, a od 
+    preostalih jos $43%$ su celi brojevi
   * Tradicionalan nacin rada sa celobrojnom aritmetikom
 * Predstavljanje brojeva u dekadnoj osnovi
   1. Softverski
   2. Hardverski
      * Pomocu BCD zapisa
-     * Pomocu zapisa realnih brojeva u pokretnom zarezu pomocu dekadne osnove (IEEE 754)
+     * Pomocu zapisa realnih brojeva u pokretnom zarezu pomocu dekadne 
+       osnove (IEEE 754)
 * Zapis u registrima racunara
-  * Treba zapisati u prostoru iste velicine kao i pri zapisu realnih brojeva u pokretnom zarezu pomocu binarne osnove
+  * Treba zapisati u prostoru iste velicine kao i pri zapisu realnih brojeva 
+    u pokretnom zarezu pomocu binarne osnove
   * Zapis treba da bude u obliku znak, frakcija i eksponent
-  * Zapis treba da bude moguc u jednostrukoj, dvostrukoj, i cetvorstrukoj tacnosti
-  * Zapis treva da bude takav da omoguci tacno zapisavanje dekadnih cifara bez konverzije
-  * Preciznost zapisa treba da bude uporediva sa preciznoscu zapisa dekadnih brojeva pomocu binarne osnove
+  * Zapis treba da bude moguc u jednostrukoj, dvostrukoj, i cetvorstrukoj 
+    tacnosti
+  * Zapis treva da bude takav da omoguci tacno zapisavanje dekadnih cifara 
+    bez konverzije
+  * Preciznost zapisa treba da bude uporediva sa preciznoscu zapisa dekadnih 
+    brojeva pomocu binarne osnove
 * Probleme pri tom zapisu
   * Nedovoljan prostor
   * Predvideti zapis specijalnih vrednosti
   * Treba definisati pravila za izvodjenje operacija
 * Osnovni formati zapisa
-  1. Tri formata zapisa sa binarnom osnovom sa preslikavanjem vrednosti u 32, 64 i 128 bita.
-  2. Dva formata zapisa sa dekadnom osnovom sa preslikavanjem vrednosti u 64 i 128 bita.
+  1. Tri formata zapisa sa binarnom osnovom sa preslikavanjem vrednosti u 32, 
+     64 i 128 bita.
+  2. Dva formata zapisa sa dekadnom osnovom sa preslikavanjem vrednosti u 64 
+     i 128 bita.
 
 #### Formati za razmenu podataka zapisanih pomocu binarne osnove
 
 1. Znak broja $S$ velicine 1 bit
 2. Uvecani eksponent $E = e + uvecanje$ zapisan u $w$ bita
-3. Ostatak $T = d_1 d_2 ... d_{p-1}$ znacajnog dela broja zapisan u dizuni $t = p - 1$ bita
-   * Vodeci bit $d_0$ znacajnog dela broja je implicitno zaposan u uvecanom eksponetnu $E$
+3. Ostatak $T = d_1 d_2 ... d_{p-1}$ znacajnog dela broja zapisan u dizuni 
+   $t = p - 1$ bita
+   * Vodeci bit $d_0$ znacajnog dela broja je implicitno zaposan u uvecanom 
+     eksponetnu $E$
 
 // todo
 
@@ -1463,11 +1792,13 @@ $$vrednost = znak 1.frakcija \times 2^{eksponent}$$
 
 * **Kogorte**
   * Realan broj moze imati vise reprezentacija u zapisu pomocu dekadne osnove
-  * Skup razlicitih reprezentacija u koje se preslikava broj u pokretnom zarezu naziva se *kohorte*
+  * Skup razlicitih reprezentacija u koje se preslikava broj u pokretnom 
+    zarezu naziva se *kohorte*
 * **Enkodiranje**
   1. Znak broja $S$ velicine 1 bit
   2. Polje za kombinacuju $G$ velicine $w + 5$ bita
-  3. Frakcija, ostatak znacajnog dela broja $T$ velicine $t = J \times 10$ bita
+  3. Frakcija, ostatak znacajnog dela broja $T$ velicine $t = J \times 10$ 
+     bita
 
 Vrednost | Znak | Kombinacija | Nastavak frakcije
 --------:|:----:|:-----------:|:------------------
@@ -1479,4 +1810,201 @@ Vrednost | Znak | Kombinacija | Nastavak frakcije
 * Frakcija $(15)_{10}$ = 0000 0000 0000 0001 0101
 * Vrednost = $+15 \times 10^0 = +15_{10}$
 $$vrednost = znak \text{ } frakcija \times 10^{exponent}$$
+
+## Zapis brojeva pomocu ostatka
+
+### Brojcani sistemi sa ostacima
+
+### Modularna aritmetika
+
+### Multiplikativni inverz
+
+* $A^{-1}$ je multiplikativni inverz broja $A$ u odnosu na moduo $m$ ako vazi:
+  $$| A \times A^{-1} |_m = 1$$
+* Resava se pomocu diofanske jednacine
+  $$A \times x = m \times y + 1$$
+  
+#### Deljenje
+
+1. Najslozenje od osnovnih aritmetickih operacija
+2. Problemi i oko definisanja
+3. Nula nema multiplikativni inverz
+4. Uobicajna definicija deljenja: $c = a/b$. Odavde $a = c \times b$
+
+### Izbor modula
+
+1. Mogu se uzeti bili koji celi brojevi
+2. Vazna je efikasnost izvrsavanja operacija
+3. Muduli trebaju da budu sto je moguce manje, zbog brzine izvodjenja 
+   aritmetickih operacija
+4. Zbog poredjenja modula po velicini sa najvecim, nije prednost upotreba 
+   jednog velikog i velikog broja malih modula
+5. Pozeljno je da muduli budu predstavljenji pomocu sto manje moguceg broja 
+   bitova
+
+### Prevodjenje brojeva
+
+**Prevodjenje brojeva iz dekadnog sistema u RBS**
+
+* $(A)_{10} = (A)_N = (a_n|a_{n-1}|\ldots|a_1)_{RBS(m_n|m_{n-1} | 
+  \ldots | m_1)}$, gde vazi $a_i = A \mod m_i = |A|_{m_i}, 
+  a_i \in [0, m_i - 1], i \in [1, n]$
+
+**Prevodjenje brojeva iz binarnog sistema u RBS**
+
+**Prevodjenje brojeva iz RBS u dekadni sistem**
+
+**Prevodjenje brojeva iz RBS u binarni sistem**
+
+### Poredjenje brojeva u RBS
+
+* Direktno poredjenje nije moguce
+  * $62 = (6|6|2|2)_{RBS(8|7|5|3)}$ i $67 = (3|4|2|1)_{RBS(8|7|5|3)}$
+* Koriste se prevodjenje iz RBS u brojcanom sistemu sa promenljivom osnovom
+  * $62 = (0|4|0|2)_{BSPO(8|7|5|3)}$ i $67 = (0|4|2|1)_{BSPO(8|7|5|3)}$
+* Koristi se aproksimativno dekodiranje pomocu kineske teoreme o ostacima
+
+### Prednosti i nedostaci brojcanog sistema sa ostacima
+
+* Nedostaci
+  1. Slozenost za implementaciju
+  2. Relativno losa efikasnost testiranja znaka broja i prevodjenja velicine 
+     brojeva, prekoracenja i deljenja
+* Prednosti
+  1. Ne postoji problem prenosa izmedju pozicija pri sabiranju i mnozenju
+  2. Cifre su male cak i za velike brojeve
+     * Operacije mogu da budu vrlo brze ako se realizuju preko predefinisanih 
+       tabela
+  3. Aritmetika je jednostavna i brza
+  4. Mogucnost izolacije pojedinacnih cifara koje mogu da imaju gresku
+* Primena
+  1. U aplikacijama koje zahtevaju otpornost na greske
+  2. U aplikacijama u kojima se uglavnom koriste mnozenje i sabiranje
+  3. Pri obradi digitalnih signala
+  4. U aplikacijama koje treva da preduzmu odredjenu vrstu akcije u slucaju 
+     pojave greske u racunarskim sistemima
+  5. U nekim aplikacijama u oblasti telekomunikacije
+
+# Logicke osnove obrade podataka
+
+## Algebra logke
+
+* Algebra logike se definise kao struktura
+
+## Logicke funkcije
+
+## Pun sistem funkcija
+
+## Savrsene normalne forme funkcija
+
+## Logicki elementi
+
+## Minimizacija logickih funkcija
+
+## Algebarske transformacije
+
+## Metoda Kvin-Mekklaskog
+
+## Kombinatorne mreze
+
+## Sekvencijalne mreze
+
+# Otkricanje i korekcija gresaka
+
+* Dva pristupa:
+  1. *Kontrola greske unapred*, svaki blok podataka koji se salje sadrzi 
+     dodatne informacije. Na osnovu ovih informacija primalac moze da otkrije 
+     i ispravi gresku
+  2. *Kontrola greske unatrag* ili *kontrola sa povratnom spregom*, svaki 
+     blok podataka koji se salje sadrzi samo osnove informacije. Primalac 
+     otkriva gresku
+* Broj dodatnih bitova brzo raste sa porastom duzine podataka koji se prenose.
+  1. Metod sa kontrolom greske unatrag je najcesce koriste u telekomunikaciji
+  2. Metod sa kontrolom greskom unapred se koristi pri cuvanju podataka
+
+## Metoda za otkrvanje gresaka 
+
+* Faktori:
+  1. Broj bitova sa greskom (bit error rate, BER)
+  2. Tipa greske, tj. da li se greska javlja na pojedinacnom bitu ili na gupi 
+     uzastopnih bitova.
+
+### Kontrola parnosti
+
+* Kontrola parnosti ili horizontalna provera redundance, LRC (Longitudal 
+  Redundance Ckecking)
+* Uz datu $n$-bitnu rec dodaje se jos jedan bit tako da ukupan broj binarnih 
+  jedinica u rezultujucoj reci duzine $n + 1$ bude paran (neparan)
+
+### Kontrola parnosti u dve dimenziji
+
+* Vertikalna provera redundanci, VRC(Vertical Redundancy Checking)
+
+Bitovi parnosti | ASCII kod | Karakteri
+---------------:|:---------:|:---------
+    0           | 1000 0010 | B
+    0           | 1000 0111 | G
+    0           | 0000 0101 | rec parnosti
+
+### Kontrola zbira blokova
+
+* Ako je poruka duza od jednog bajta, tada se za otkrivanje gresaka moze 
+  primetniti metod sa kontrolom zbira blokova (checksum)
+  1. formira se zbi svih jedinica u bloku i prenose zajedno sa porukom
+  2. vrsi se skracivanje dobijenog zbira
+  3. primalac ponovo izracunava sumu zbira i poredi sa primljenom vrednoscu
+* Nedostaci, ne moze da otkrije:
+  * invertovane podatke
+  * zamenu blokova bajtova
+  * dodavalje i uklanjanje bajtova sa svim nulama
+
+### Ciklicka provera redundanci
+
+* Metoda ciklicke provere redunanci (Cyclic Redundancy Ckecking) otkrivanje 
+  prosirenih gresaka
+  1. Aritmetika u polju celih brojeva po modulu 2
+  2. Deljenje se vrsi po modulu 2
+* U CRC metodi niz bitova se posmatra kao niz koeficijanata polinoma
+  * Tako niz $a_n a_{n-1} \ldots a_0$ odgovara polinomu $M(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$
+* Kodiranje
+  1. Odabrati polinom generatora $G(x)$
+  2. Izracunati $x^k M(x) / G(x)$, gde je $k$ stepen polinoma $G(x)$. Dobijeni ostatak se oznacava sa $R(x)$
+  3. Dodatni koeficijente ostatka na kraj poruke i poruku proslediti primaocu
+* Dekodiranje
+  1. Podeliti primljenu polinomijalnu kodu rec sa $G(x)$
+  2. Ako je ostatak deljenja nula, nema gresaka pri prenosu
+  3. Ako ostatak deljenja nije nula, greske pri prenostu postoje
+* Primeri koji se koriste
+  * CRC-16
+  * CRC-CCITT
+  * CRC_CCITT
+
+## Metoda za otkrivanje i korekciju gresaka
+
+* Greske se mogu podelite u dve kategorije
+  1. Tvrdi ili stalno pristuni defekti
+  2. Mekane ili prolazne greske
+
+### Hamingov kod
+
+### Sindrom rec
+
+* Sindrom rec se dobije poredjenjem dve K-bitne vrednosti bit po bit 
+  uzimaljem ekskluzivne disjunkcije
+* Sindom rec je neoznacen ceo broj duzine K koji ima vrednost izmedju 0 i 
+  $2^K - 1$
+* Vrednost 0 oznacava da nema gresaka u zapisu
+* Stale $2^K - 1$ vrednosti odredjuju mesto greske
+* kako greska moze da se javi na bilo kom od M bitova podataka i K bitova 
+  koji se koriste u proveri, mora da vazi $2^K - 1 \geq M + K$
+* Sindom rec ima sledece karakteristike
+  * Ako su svi bitova u njoj 0 tada nije otkrivena nikakva greska
+  * Ako u reci postoji tacno jedan 1, tada greska postoji u jednom od 4 bita 
+    za proveru, dok je zapis podatka u redi i ne zahteva nikakvu korekciju
+  * Ako sindom sadrzi vise od jednog bita koji ima vrednost 1, tada vrednost 
+    sindrom rec posmatrane kao ceo neoznacen broj odredjuje poziciju na kojoj 
+    se nalazi greska.
+    * Korekcija se sastoji u komplmentiranju vrednosti odgovarajuceg bita 
+      podataka
+
 

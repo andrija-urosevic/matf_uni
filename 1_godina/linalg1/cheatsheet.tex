@@ -7,6 +7,7 @@
 \usepackage[margin=0.5in]{geometry}
 \usepackage{amsmath}
 \usepackage{amsfonts} 
+\usepackage{enumerate} 
 
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Ima}{Im}
@@ -24,6 +25,61 @@
 \begin{multicols}{2}
 
 \section{Uvod}
+
+\subsection{Skupovi. Relacije. Funkcije}
+
+    Za dati \textit{element} $a$ skupa $A$, pisemo $a \in A$, tj.\ element 
+    $a$ pripada skupu $A$.
+    Skup $B$ je \textit{podskup skupa} $A$, ako je svaki element skupa $B$ 
+    ujedno i element skupa $A$, tj ako iz $x \in B$ slide da je $x \in A$, 
+    zapisuje se $B \subseteq A$.
+    \textit{Dekartov proizvod} dva skupa $A$ i $B$ je skup
+    \[A \times B = \{(a, b) | a \in A, b \in B\},\]
+    pri cumu su \textit{uredjeni parovi} $(a_1, b_1)$ i $(a_2, b_2)$ jednaki 
+    akko je $a_1 = a_2$ i $b_1 = b_2$
+
+    Neka su $A$ i $B$ neprazni skupovi tada je \textit{funkcija} 
+    (\textit{preslikavanje}) uredjenja troja $(A, B, f)$ cije prve dve 
+    komponente su dati skupovi $A$ i $B$, a treca je `zakon' $f$ kojem se 
+    svakom elmentu skupa $A$ dodeljuje tacno jedan element skupa $B$. Uredjena 
+    trojka $(A, B, f)$ se zapisuje sa $f$ ili kao $f:A \mapsto B$.
+    Skup $A$ zove se \textit{domen funkcije}, a $B$ njen \textit{kodomen}.
+
+    Za funkciju $f : A \mapsto B$ kazemo da je \textit{injekcija} ili `1--1' 
+    ako za bilo koja dva razlicita elementa $x_1, x_2 \in A$ i njihove slike 
+    su razlicite tj.\ $f(x_1) \neq f(x_2)$. Formalnije:
+    \[(\forall x_1, x_2 \in A) (x1 \neq x_2) \implies (f(x_1) \neq f(x_2))\]
+    ili
+    \[(\forall x_1, x_2 \in A) (x_1 = x_2) \implies (f(x_1) = f(x_2))\]
+
+    Za funkciju $f : A \mapsto B$ kazemo da je \textit{surjekcija} ili `na' 
+    ako za svaki $b \in B$ postoji $x \in A$ takav da je $b = f(a)$. 
+    Formalnije:
+    \[(\forall b \in B) (\exists a \in A)\text{ tako da } b = f(a)\]
+
+    Funkcija koja je istovremeno bijekcija i surjekcija naziva se 
+    \textit{bijekcija}.
+
+    Neka je data funkcije $f : A \mapsto B$, i neka je $X \subseteq A$ tada 
+    skup
+    \[f(X) = \{y \in B | y = f(x), x \in X\} = 
+    \{f(x) | x \in X\} \subseteq B\]
+    nazivamo \textit{slikom skupa} $X$. Ako je $X = A$ tada za $f(A)$ 
+    koristimo oznaku $\Ima A$ i nazivamo ga \textit{slikom funkcije} $f$.
+    Funkcije $f$ je `na' akko je $\Ima A = B$. Analogno, za $Y \subseteq B$ 
+    skup
+    \[f^{-1}(Y) = \{y \in A | f(y) \in Y\} \subseteq A\]
+    nazivamo preslikom skupa $Y$.
+
+    \textit{Relacija} $\rho$ na skupu $A$ je svaki podskup Dekartovog proizvoda
+    \[A^n = A \times A \times \cdots \times A.\]
+    \textit{Binarna relacije} su podskupovi skupa $A \times A$. 
+    Za $(a, b) \in \rho$ koristi se i oznaka $a \rho b$.
+
+    Relacija $\rho$ je \textit{relacija ekvivalencije} 
+    ako je refleksivna, simetricna i tranzitivna. 
+    Relacija $\rho$ je \textit{relacija parcijalnog poretka} 
+    ako je refleksivna, antisimetricna i tranzitivna.
 
 \subsection{Grupe. Prsten. Polja}
 
@@ -100,6 +156,56 @@
     ako važi da je
     \[U + W = V \text{  i  } U \cap W = \{0\}\]
 
+\subsection{Matrice}
+
+    Neka je $F$ polje. Neka su $m$ i $n$ pozitivni celi brojevi. Onda je 
+    pravougaoni niz elemenata iz $F$
+    \[
+        \begin{pmatrix}
+            a_{11} & a_{12} & \cdots & a_{1n} \\
+            a_{21} & a_{22} & \cdots & a_{2n} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            a_{m1} & a_{m2} & \cdots & a_{mn}
+        \end{pmatrix}
+    \]
+    naziva \textit{matrica} iz skupa $M_{mn}(F)$.
+
+
+\subsection{Algebra}
+
+    Neka je $V$ neki neprazan skup. Tada za strukturu 
+    $V \cong (V, F, +, \cdot)$ kazemo da je F-\textit{algebra} ako je:
+    \begin{enumerate}
+        \itemsep0em
+        \item [A.1] $(V, F, +, \cdot)$ vektorski prostor nad poljem $F$
+        \item [A.2] $(V, +, *)$ prsten, tj.\ preslikavanje 
+            $* : V \times V \mapsto V$ je \textit{mnozenje vektora}, 
+            zadoboljava aksiome:
+            \begin{enumerate} [(i)]
+                \item $A * (B + C) = A * B + A * C$
+                \item $(A + B) * C = A * C + B * C$
+            \end{enumerate}
+        \item [A.3] Preslikavanje $*$ je kompitabilno sa mnozenjem
+            \[\lambda \cdot (A * B) = 
+            (\lambda \cdot A) * B = 
+            A * (\lambda \cdot B)\]
+    \end{enumerate}
+
+
+\subsection{Opšta Linearna Grupa}
+
+    Grupa svih inverzibilnih elemenata endomorfizma vektorskog prostora $V$ 
+    nad poljem $F$ zove se \textit{opsta linearna grupa} vektorskog 
+    prostora $V$ nad poljem $F$ i opise se $\GL_F(V)$. 
+    Dodatno, $\GL_F(V) \cong \GL_n(F)$
+
+    Neka je matrica $A \in \mathbb{M}_n (F)$, onda je $A$ \textit{regularna} 
+    ako je inverzibilna, tj.\ $A \in \GL_n(F)$, ako nije inverzibilna onda 
+    je \textit{singularna}.
+
+    Skup matrica koje se razlikuju od jediničnih matrica samo na 
+    jednom elementu nazivaju se \textit{elementarne matrice}.
+
 \subsection{Linearna kombinacija}
 
     Neka je $V$ vektorski prostor nad poljem $F$ i neka su 
@@ -170,6 +276,20 @@
     \textit{izomorfno} na $W$ ako postoji izomorfizam $f : U \mapsto W$. 
     Ako su $U$ i $W$ izomorfni pišemo $U \cong W$
 
+\subsection{Regularni operatori}
+
+    Linearni operator $L$ je \textit{regularan} ako je maksimalnog ranga.
+    \begin{enumerate}[(i)]
+        \itemsep0em
+        \item ako je $\dim U \leq \dim V$ tada je $L$ \textit{regularan} 
+            akko je $\dim \Ima L = \dim U$ i $\Ker L = \{0\}$.
+        \item ako je $\dim U > \dim V$ tada je $L$ \textit{regularan} 
+            akko je $\Ima A = V$.
+    \end{enumerate}
+    Za linearni operator $L$ kazemo da je \textit{singularan} ako je 
+    $\Ker L \neq \{0\}$, tj.\ $d(L) \geq 1$.
+
+
 \subsection{Teorema o Rangu i Defektu}
 
     Neka su $U$ i $W$ dva vektorska prostora nad $F$ i neka je 
@@ -196,21 +316,60 @@
     vektorski porprostor nad poljem $F$ svih linearnih preslikavanja 
     iz $U$ u $W$.
 
-\subsection{Opšta Linearna Grupa}
+\subsection{Dualni prostor i preslikavanje}
 
-    Grupa svih inverzibilnih elemenata endomorfizma vektorskog prostora $V$ 
-    nad poljem $F$ zove se \textit{opsta linearna grupa} vektorskog 
-    prostora $V$ nad poljem $F$ i opise se $\GL_F(V)$. 
-    Dodatno, $\GL_F(V) \cong \GL_n(F)$
+   Neka je $V$ vektorski prostor nad poljem $F$. Neka je $F$ jednodimenzioni 
+   vektorski prostor nad samim sobom. Skup svih linearnih preslikavanja 
+   $V \mapsto F$ naziva se \textit{dualni prostor} i obelezava se sa $V^*$. Po 
+   definiciji je:
+   \[V^* = \mathcal{L} (V, F)\]
 
-    Neka je matrica $A \in \mathbb{M}_n (F)$, onda je $A$ \textit{regularna} 
-    ako je inverzibilna, tj.\ $A \in \GL_n(F)$, ako nije inverzibilna onda 
-    je \textit{singularna}.
-
-    Skup matrica koje se razlikuju od jediničnih matrica samo na 
-    jednom elementu nazivaju se \textit{elementarne matrice}.
 
 \section{Determinante}
+
+\subsection{Grupa permutacija}
+
+    \textit{Permutacija} skupa $S_n = \{1, 2, \ldots, n\}$ je bijektivno 
+    preslikavanje
+    \[\sigma : \{1, 2, \ldots, n\} \mapsto \{1, 2, \ldots, n\}.\]
+    $(S_, \circ)$ je grupa koja se naziva \textit{grupa permutacija} ili
+    \textit{simetricna grupa}. Grupa permutacija ima $\| S_n \| = n$ 
+    elemenata.
+    \[
+        \sigma = 
+        \begin{pmatrix}
+            1 & 2 & \cdots & n \\
+            \sigma(1) & \sigma(2) & \cdots & \sigma(n)
+        \end{pmatrix}
+    \]
+
+\subsection{Parnost permutacija}
+
+    Neka je $\sigma$ permutacije. Ako je $i < j$ i $\sigma(i) > \sigma(j)$, 
+    uredjeni par $(i, j)$ ili uredjeni par $(\sigma(i), \sigma(j))$ se naziva 
+    \textit{inverzija permutacije} $\sigma$. Broj inverzija se obelezava sa 
+    $I(\sigma)$.
+
+    Permutacija je parna ako je broj inverzija $I(\sigma)$ paran broj, a 
+    neparna ako je $I(\sigma)$ neparan broj.
+
+    \textit{Znak} permutacije $\sigma$ je definisan sa $+1$ ako je permutacija 
+    parna i sa $-1$ ako je permutacija neprana. Obelezava se sa $\sgn(\sigma)$
+    i moze da se eksplicitno izrazi kao:
+    \[\sgn({\sigma}) = {(-1)}^{I(\sigma)}.\]
+
+\subsection{Ciklus}
+
+    Neka je $\sigma$ neka permutacija iz $S_n$. Permutacija $\sigma$ je 
+    \textit{ciklus duzina} $k$ ako postoji uredjena $k$-torka:
+    $(i_1, i_2, \ldots, i_k)$, gde su $i_1, i_2, \ldots, i_k \in S_n$ 
+    takvi da je:
+    \[\sigma(i_1) = i_2, \sigma(i_2) = i_3, \ldots, \sigma(i_k) = i_l\]
+    \[\sigma(j) = j, \forall j \in S_n \backslash \{i_1, i_2, \ldots, i_k\}\]
+    
+    Ciklus duzine 2 zove se \textit{transpozicija}.
+
+\subsection{Definicija determinante}
 
     Neka je dato jedinstveno linearno preslikavanje 
     $\det : \mathbb{M}_n (F) \mapsto F$, ako je $A \in \mathbb{M}_n(F)$ onda 
@@ -232,20 +391,113 @@
         \right) 
     \]
 
-\section{Skalarni proizvodi i Ortogonalnost}
+\subsection{Multilinearnost determinante}
+
+    Neka su $V_1, \ldots V_n$ i $W$ vektorski prostori nad poljem $F$. 
+    Za preslikavanje 
+    \[\phi : V_1 \times V_2 \times \cdots \times V_n \mapsto W\]
+    kazemo da je \textit{multilinearno} ako $\forall i=1,\ldots,n, 
+    \lambda \in F$ i $a_i, a_i' \in V_i$,
+    vaze sledeci uslovi:
+    \begin{align*}
+        \varphi [ a_1, \ldots, \lambda a_i + a_i', \ldots, a_n ] = 
+        \lambda & \varphi [ a_1, \ldots, a_i, \ldots, a_n ] + \\
+        &\varphi [ a_1, \ldots, a_i', \ldots, a_n ]
+    \end{align*}
+
+    Multilinearno preslikavanje za koje vazi da menja znak, ako 
+    zamenimo bilo koje dve vrste (kolone) zove se 
+    \textit{alternirajuce preslikavanje}, tj.\ za svako 
+    $i < j$, $i, j = 1, 2, \ldots, n$, vazi:
+    \[
+        \varphi [ a_1, \ldots, a_i, \ldots, a_j, \ldots, a_n ] =
+        - \varphi [ a_1, \ldots, a_j, \ldots, a_i, \ldots, a_n ]
+    \]
+
+    Determinanta je multilinearni alternirajuci funkcional.
+
+
+\section{Sistem Linearnih Jednacina}
+
+    Neka je dat skup $F = \{f_1, \ldots, f_n\} \subset F[ x_1, \ldots, x_m ]$
+    linearnih polinoma u promenljivima $x_1, \ldots x_m$. Skup $F$ definise 
+    sledeci \textit{sistem linearnih jednacina}:
+    \[f_1(x_1, \ldots, x_m) = a_{11}x_1 + \cdots + a_{1m}x_m - b_1 = 0\]
+    \[\vdots\]
+    \[f_n(x_n, \ldots, x_m) = a_{n1}x_1 + \cdots + a_{nm}x_m - b_n = 0,\]
+    ili krace kao:
+    \[\sum_{k=1}^m a_{ik}x_k= b_i, i=1,\ldots,n.\]
+    Sistem se moze zapisati u obliku matrica kao $Ax = b$, gde je
+    \[
+        A = 
+        \begin{bmatrix}
+            a_{11} & \cdots & a_{1m} \\
+            \vdots & &        \vdots \\
+            a_{n1} & \cdots & a_{nm} 
+        \end{bmatrix},
+        x = 
+        \begin{bmatrix}
+            x_1     \\
+            \vdots  \\
+            x_m
+        \end{bmatrix},
+        b = 
+        \begin{bmatrix}
+            b_1     \\
+            \vdots  \\
+            b_n
+        \end{bmatrix}
+    \]
+
+\section{Redukcija linearnog operatora na konacnodimenzionim prostorima}
+
+\section{Unitarni Prostori}
+
+    Neka je $V$ kompleksni vektorski prostor, kazemo da je $V$ 
+    \textit{unitaran} vektorski prostor ako je definisana funkcije 
+    $\langle \cdot, \cdot \rangle : V \times V \mapsto \mathbb{C}$ 
+    za koju vaze sledece aksiome 
+    ($\forall v_1, v_2, w \in V, \forall \lambda \in \mathbb{C}$):
+    \begin{enumerate}
+        \itemsep0em
+        \item [U.1] $\langle v_1 + v_2, w \rangle = 
+            \langle v_1, w \rangle + \langle v_2, w \rangle$ 
+            (aditivnost po 1.-om)
+        \item [U.2] $\langle \lambda v, w \rangle = 
+            \lambda \langle v, w \rangle$ (homogenost po 1.-om)
+        \item [U.3] $\langle v, w \rangle = \lambda \langle w, v \rangle$ 
+            (hermitska simetricnost)
+        \item [U.4] $\langle v, v \rangle \geq 0$ (pozitivna definitnost)
+        \item [U.5] $\langle v, v \rangle = 0$ akko $v = 0$ (nedegenerisanost)
+    \end{enumerate}
+
+    Funkcija koja zadovoljava aksiome (U.1--U.3) zove se 
+    \textit{hermitski bilinearni funkcional}, ako zadovoljava aksimu 
+    nedegenerisanost kazemo da je 
+    \textit{nedegenerisana hermitska bilinearna forma}, a ako jos zadoboljava 
+    i pozitivnu definitnost onda takvu funkciju zovemo 
+    \textit{skalarni proizvod} na $V$.
+
+\subsection{Skalarni proizvodi i Ortogonalnost}
 
     Neka je $V$ vektorski prostor nad poljem $F$. \textit{Skalarni proizvod}  
     nad $V$ je dodela koja paru elementata $v, w \in V$ dodeljuje skalar.
-    Obelezava se sa $v \cdot w$ ili sa $<v, w>$ i zadovoljava svojstva:
+    Obelezava se sa $\langle v, w \rangle$ ili sa $v \cdot w$ i zadovoljava 
+    svojstva:
     \begin{enumerate}
         \itemsep0em
-        \item $v \cdot w$ = $w \cdot v$ za svaki $v, w \in V$
-        \item $u \cdot (v + w) = u \cdot v + u \cdot w$, za $u,v,w \in V$
-        \item $\lambda u \cdot v = \lambda (u \cdot v)$ i 
-            $u \cdot \lambda v = \lambda (u \cdot v)$, za $\lambda \in F$
+        \item [S.1] $\langle v, w \rangle$ = $\langle w, v \rangle$ za svaki 
+            $v, w \in V$
+        \item [S.2] $\langle u, v + w \rangle = 
+            \langle u, v \rangle + \langle u, w \rangle$, za $u,v,w \in V$
+        \item [S.3] $\langle \lambda u, v \rangle = 
+            \lambda \langle u, v \rangle$ 
+            i $\langle u, \lambda v \rangle = \lambda \langle u, v \rangle$, 
+            za $\lambda \in F$
     \end{enumerate}
+
+\section{Bilinearne i kvadratne forme}
  
 \end{multicols}
-
 
 \end{document}
