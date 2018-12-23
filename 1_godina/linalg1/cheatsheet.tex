@@ -395,7 +395,7 @@
 
     Neka su $V_1, \ldots V_n$ i $W$ vektorski prostori nad poljem $F$. 
     Za preslikavanje 
-    \[\phi : V_1 \times V_2 \times \cdots \times V_n \mapsto W\]
+    \[\varphi : V_1 \times V_2 \times \cdots \times V_n \mapsto W\]
     kazemo da je \textit{multilinearno} ako $\forall i=1,\ldots,n, 
     \lambda \in F$ i $a_i, a_i' \in V_i$,
     vaze sledeci uslovi:
@@ -414,7 +414,7 @@
         - \varphi [ a_1, \ldots, a_j, \ldots, a_i, \ldots, a_n ]
     \]
 
-    Determinanta je multilinearni alternirajuci funkcional.
+    Determinanta je \textit{multilinearni alternirajuci funkcional}.
 
 
 \section{Sistem Linearnih Jednacina}
@@ -451,6 +451,71 @@
 
 \section{Redukcija linearnog operatora na konacnodimenzionim prostorima}
 
+\subsection{Prsten polinoma}
+
+    \textit{Polinom} nad poljem $F$ je izraz:
+    \[
+        f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0, 
+        a_i \in F, a_n \neq 0
+    \]
+    Skalari $a_n, \ldots, a_0$ polinomna nazivaju se \textit{koeficijenti} 
+    polinoma $f$.
+
+\subsection{Invarijantni potprostori}
+
+    Neka je $A \in \Hom V$ linearni operator i neka je $L \subseteq V$ 
+    prostora od $V$. Kazemo da je $L$ \textit{invarijantan prosotr} operatora 
+    $A$ ako je $A(L) \subseteq L$.
+
+\subsection{Karakteristicki polinom i invarijante slicnosti}
+
+    Neka je $A \in M_n(F)$ proizvoljna matrica, tada matricu 
+    $C = A - \lambda I_n$, gde je $\lambda$ promenljiva, naziva 
+    \textit{karakteristicna matrica} od $A$. A njena determinanta
+    \[
+        \det (A - \lambda I_n) = 
+        \begin{vmatrix}
+            a_{11} - \lambda & a_{12} & \cdots & a_{1n} \\
+            a_{21} & a_{22} - \lambda & \cdots & a_{2n} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            a_{n1} & a_{n2} & \cdots & a_{nn} - \lambda
+        \end{vmatrix}
+        = p_A (\lambda)
+    \]
+    nazivamo \textit{karakteristicni polinom} matrice $A$.
+
+    Karakteristicni polinom je inverijanta slicnosti.
+
+\subsection{Hamilton---Kejlijeva teorema}
+
+    Neka je $A \in M_n(F)$ proizvoljna matrica, tada je $p_A (A) = 0$, tj.\ 
+    svaka matrica ponistava svoj karakteristicni polinom.
+
+\subsection{Minimalni polinom matrice}
+
+    \textit{Minimalni polinom} matrice $A$ je monicni polinom najmanjeg 
+    stepena kojeg ponistava matrica $A \in M_n(F)$, tj.\ vazi:
+    \[\mu_A (A) = 0\]
+
+\subsection{Sopstvene vrednosti linearnog operatora}
+
+    Neka je $V$ vektorski prostor i neka je $A : V \mapsto V$ linearno 
+    preslikavanje vektorskog prostora $V$ u samo sebe. Element $v \in V$ se 
+    naziva \textit{sopstveni vektor} preslikavanja $A$, ako postoji neko 
+    $\lambda$ tako da $Av = \lambda v$. Ako je $v \neq 0$ tada je $\lambda$ 
+    \textit{jedinstveno odredjeno}. U tom slucaju $\lambda$ je 
+    \textit{sopstvena vrednost} preslikavanja $A$.
+
+\subsection{Nilpotentni operatori}
+
+    Za operator $A \in \Hom V$, kazemo da je \textit{nilpotentan} ako postoji
+    $r \in \mathbb{N}$ takva da je $A^r = 0$. Najmanji prirodni broj $k$ za 
+    kojeg vazi da je $A^r = 0$, ali $A^{k-1} \neq 0$ zove se 
+    \textit{indeks nilpotentnosti} operatora $A$.
+
+\subsection{Zordanova normalna forma}
+
+
 \section{Unitarni Prostori}
 
     Neka je $V$ kompleksni vektorski prostor, kazemo da je $V$ 
@@ -478,7 +543,7 @@
     i pozitivnu definitnost onda takvu funkciju zovemo 
     \textit{skalarni proizvod} na $V$.
 
-\subsection{Skalarni proizvodi i Ortogonalnost}
+\subsection{Skalarni proizvodi}
 
     Neka je $V$ vektorski prostor nad poljem $F$. \textit{Skalarni proizvod}  
     nad $V$ je dodela koja paru elementata $v, w \in V$ dodeljuje skalar.
@@ -495,6 +560,67 @@
             i $\langle u, \lambda v \rangle = \lambda \langle u, v \rangle$, 
             za $\lambda \in F$
     \end{enumerate}
+
+\subsection{Ortogonalnost}
+
+    Neka je $V$ unitarni prostor, za vektore $v$ i $w$ kazemo da su 
+    \textit{ortogonalni} (\textit{normalni}) i pisemo $v \perp w$ ako je 
+    $\langle v, w \rangle = 0$.
+    Za bilo koja dva potprosotra $W_1, W_2 \subseteq V$, kazemo da je $W_1$ 
+    \textit{ortogonalan} na $W_2$ akko
+    \[
+        \langle W_1, W_2 \rangle = 0, \text{ tj.\ }\langle w_1, w_2 \rangle = 0
+    \]
+    za svako $w_1 \in W_1$, i za svako $w_2 \in W_2$ i pisemo $W_1 \perp W_2$.
+
+\subsection{Norma. Ugao. Kosi---Svarcova nejednakost}
+
+    U unitarnom prostoru funkcije $\| \cdot \| : V \mapsto R_o^+$, definisana
+    $\|v\|=sqrt(\langle v, v \rangle)$ naziva se \textit{norma}.
+
+    Neka su $v, w$ bilo koja dva vektora unitarnog prostora $V$. Tada vazi 
+    nejednakost (Kosi---Svarcova nejednakost)
+    \[ | \langle v, w \rangle | \leq \|v\| \|w\| \]
+    pri cemu jednakost vazi akko su vektori $v$ i $w$ linearno zavisni.
+
+    U unitarnom prostoru definisan je i pojam \textit{ugla} za bilo koja dva 
+    ne-nula vektora $v$ i $w$ formulom:
+    \[
+        \cos \angle (v, w) = \frac{\langle v, w \rangle}{\|v\| \|w\|}
+    \]
+
+\subsection{Gram---Smitova ortagonalizacija}
+
+    Neka je $V$ unitaran prostor dimenzije $n$, za bazu 
+    $e = (e_1, e_2, \ldots, e_n)$ kazemo da je \textit{ortonormirana} ako vazi:
+    \[\langle e_i, e_j \rangle = \delta_{ij}, \\ \forall i,j = 1,2,\ldots, n\]
+
+    \textit{Gram---Smitov postupak ortogonalizacije} je algoritam kojim se 
+    neka proizvoljna baza $f$ vektorskog prostora $V$ zamenjuje ortonormiranom 
+    bazom $e$ i to tako da se u svakom koraku podudaraju linearni omotaci 
+    $\mathcal{L}(\{ f_1, \ldots, f_i\}) = \mathcal{L}(\{ e_1, \ldots, e_i \})$
+
+    \begin{enumerate}
+        \itemsep0em
+        \item $e_1 = \epsilon_1 \frac{f_1}{\| f_1 \|}$, gde je 
+            $\epsilon_1 \in \{-1, 1\}$
+        \item $v_2 = f_2 - \langle f_2, e_1 \rangle e_1$, pa onda
+            $e_2 = \epsilon_2 \frac{v_2}{\| v_2 \|}$, gde je 
+            $\epsilon_2 \in \{-1, 1\}$
+        \item $v_k = f_k - \sum_{i=1}^k \langle f_k, e_i \rangle e_i$, pa onda
+            $e_k = \epsilon_k \frac{v_k}{\| v_k \|}$, gde je 
+            $\epsilon_k \in \{-1, 1\}$
+    \end{enumerate}
+
+    Neka je $f = (f_1, f_2, \ldots, f_n)$ baza unitarnog vektorskog prostora 
+    $V$. Tada postoji pozitivno orijentisana ortonormirana baza 
+    $e=(e_1, e_2, \ldots, e_n)$ takvda da je
+    \begin{align}
+        & f_1 = a_{11} e_1 \\
+        & f_2 = a_{12} e_1 + a_{22} e_2 \\
+        & \vdots \\
+        & f_n = a_{1n} e_1 + a_{2n} e_2 + \cdots + a_{nn} e_n
+    \end{align}
 
 \section{Bilinearne i kvadratne forme}
  
