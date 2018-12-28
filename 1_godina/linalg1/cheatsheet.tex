@@ -14,6 +14,8 @@
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\q}{q}
 
 \title{Linearna Algebra Cheat Sheet}
 \author{Andrija Urosevic}
@@ -31,11 +33,11 @@
     Za dati \textit{element} $a$ skupa $A$, pisemo $a \in A$, tj.\ element 
     $a$ pripada skupu $A$.
     Skup $B$ je \textit{podskup skupa} $A$, ako je svaki element skupa $B$ 
-    ujedno i element skupa $A$, tj ako iz $x \in B$ slide da je $x \in A$, 
+    ujedno i element skupa $A$, tj ako iz $x \in B$ sledi da je $x \in A$, 
     zapisuje se $B \subseteq A$.
     \textit{Dekartov proizvod} dva skupa $A$ i $B$ je skup
     \[A \times B = \{(a, b) | a \in A, b \in B\},\]
-    pri cumu su \textit{uredjeni parovi} $(a_1, b_1)$ i $(a_2, b_2)$ jednaki 
+    pri cemu su \textit{uredjeni parovi} $(a_1, b_1)$ i $(a_2, b_2)$ jednaki 
     akko je $a_1 = a_2$ i $b_1 = b_2$
 
     Neka su $A$ i $B$ neprazni skupovi tada je \textit{funkcija} 
@@ -615,15 +617,62 @@
     Neka je $f = (f_1, f_2, \ldots, f_n)$ baza unitarnog vektorskog prostora 
     $V$. Tada postoji pozitivno orijentisana ortonormirana baza 
     $e=(e_1, e_2, \ldots, e_n)$ takvda da je
-    \begin{align}
+    \begin{align*}
         & f_1 = a_{11} e_1 \\
         & f_2 = a_{12} e_1 + a_{22} e_2 \\
         & \vdots \\
         & f_n = a_{1n} e_1 + a_{2n} e_2 + \cdots + a_{nn} e_n
-    \end{align}
+    \end{align*}
 
 \section{Bilinearne i kvadratne forme}
- 
+
+    \textit{Bilinearni funkcional} na $F$ je preslikavanje 
+    $A: V \times V \mapsto F$ ($F \in \{\mathbb{C}, \mathbb{R}\}$) za koje 
+    vaze sledece aksiome, za sve $v_1, v_2, w \in V$ i $a, b \in F$:
+    \begin{enumerate}
+        \itemsep0em
+        \item [B.1] $A (a v_1 + b v_2, w) = a A (v_1, w) + b A (v_2, w)$
+        \item [B.2] $A (w, a v_1 + b v_2) = a A (w, v_1) + b A (w, v_2)$
+    \end{enumerate}
+
+    Bilinearni funkcional $A$ je \textit{hermitski} ako uz aksiomu [B.1] 
+    vazi jos i aksioma:
+    \begin{enumerate}
+        \itemsep0em
+        \item [B.3] $A (v, w) = \overline{A (w, v)}$
+    \end{enumerate}
+
+\subsection{Kongruentnost matrica. Rang i Jezgro hermitskog bilinearnog 
+            funkcionala}
+
+    Za dve matrice $A, B \in M_n(F)$ kazemo da su \textit{kongruentne}, tj.\ 
+    $A \equiv B$ akko postoji regularna matrica $P \in M_n(F)$ takva da je
+    \[B = P^{*} A P\]
+
+    \textit{Rang hermitskog bilinearnog funkcionala} je broj ranga matrice 
+    hermitskog bilinearnog funkcionala $A(e)$, u proizvoljnoj bazi $e$. Kazemo 
+    da je funkcional regularan ako je $\rang (A(e)) = \dim V$.
+
+    Neka je $A(v, w)$ bilinearni funkcional na vektorskom prosturu $V$. Skup 
+    $N_A = \{v \in V | A(v, w) = 0, \forall w \in V\}$ nazivamo 
+    \textit{jezgrom} bilinearnog funkcionala $A$.
+
+\subsection{Kvadratne forme}
+
+    Neka je $A(v, w)$ \textit{simetricni} bilinearni funkcional, onda je 
+    formulom $\q (v) = A(v, v)$ definisano preslikavanje $\q : V \mapsto F$ 
+    koje se zove \textit{kvadratna forma}. $A(v, w)$ zove se 
+    \textit{polarna forma} kvadratne forme $\q$.
+
+    Ako je $A(v, w)$ hermitska bilinearna forma onda pridruzeni kvadratni 
+    funkcional nazivamo \textit{hermitski kvadratni funkcional}.
+
+    Za hermitsku kvadratnu formu $\q (v) = A(v, v)$ kazemo da je 
+    \textit{pozitina} ako je $\q (v) \geq 0$, $\forall v \in V$, dok je 
+    \textit{strogo pozitivna forma} ako vazi $\q (v) = 0$ 
+    (ili $(\forall v \neq 0)(\q (v) > 0)$).
+
+
 \end{multicols}
 
 \end{document}

@@ -1885,30 +1885,6 @@ $$vrednost = znak \text{ } frakcija \times 10^{exponent}$$
      pojave greske u racunarskim sistemima
   5. U nekim aplikacijama u oblasti telekomunikacije
 
-# Logicke osnove obrade podataka
-
-## Algebra logke
-
-* Algebra logike se definise kao struktura
-
-## Logicke funkcije
-
-## Pun sistem funkcija
-
-## Savrsene normalne forme funkcija
-
-## Logicki elementi
-
-## Minimizacija logickih funkcija
-
-## Algebarske transformacije
-
-## Metoda Kvin-Mekklaskog
-
-## Kombinatorne mreze
-
-## Sekvencijalne mreze
-
 # Otkricanje i korekcija gresaka
 
 * Dva pristupa:
@@ -1965,10 +1941,12 @@ Bitovi parnosti | ASCII kod | Karakteri
   1. Aritmetika u polju celih brojeva po modulu 2
   2. Deljenje se vrsi po modulu 2
 * U CRC metodi niz bitova se posmatra kao niz koeficijanata polinoma
-  * Tako niz $a_n a_{n-1} \ldots a_0$ odgovara polinomu $M(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$
+  * Tako niz $a_n a_{n-1} \ldots a_0$ odgovara polinomu 
+    $M(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$
 * Kodiranje
   1. Odabrati polinom generatora $G(x)$
-  2. Izracunati $x^k M(x) / G(x)$, gde je $k$ stepen polinoma $G(x)$. Dobijeni ostatak se oznacava sa $R(x)$
+  2. Izracunati $x^k M(x) / G(x)$, gde je $k$ stepen polinoma $G(x)$. 
+     Dobijeni ostatak se oznacava sa $R(x)$
   3. Dodatni koeficijente ostatka na kraj poruke i poruku proslediti primaocu
 * Dekodiranje
   1. Podeliti primljenu polinomijalnu kodu rec sa $G(x)$
@@ -2007,4 +1985,156 @@ Bitovi parnosti | ASCII kod | Karakteri
     * Korekcija se sastoji u komplmentiranju vrednosti odgovarajuceg bita 
       podataka
 
+# Memorija
 
+## Karakteristike memorije
+
+* stalnost zapisa - da li zapisivanje ostaje ili nakon gubitka napona se gubi
+* jedinica prenosa
+* Adresivnost - prostupanje memoriju pomocu adrese
+  * adresive - moguce je pristupanje bajtu ili reci
+  * poluadresive - prostupa se vecoj grupi bajtova
+  * neadresive - nije moguce pristupanje sadrzaju
+* Moguci nacini pristupa
+  1. Sekvencijalni pristup - podeljenost na slogove 
+  2. Direktan pristup
+  3. Slucajni pristup
+  4. Asocijativni pristup (pr. kes)
+* Cena
+* Performanse
+  1. Vreme pristupe
+  2. Vreme memorijskog ciklusa
+  3. Brzina prenosa
+* Mogucnost promene sadrzaja
+
+### Hijerarhija memorije
+
+![Hijerarhija memorije](img/memory.png){width=400px}
+
+## Unutrasnja memorija
+
+### Glavna memorija
+
+#### RAM memorija
+
+* *Staticka* RAM memorija
+  * cuvanje podataka koristi flip-flop kombinatorne mreze
+* *Dinamicka* RAM memorija
+  * celije koje cuvaju vrendosti kao naboje u kondenzatorima
+
+#### Kes memorija
+
+1. L1 kes
+2. L2 kes
+3. L3 kes
+4. L4 kes
+
+## Spoljasnja memorja
+
+* Po nestanku elektricnog napajanja ne gubi se sadrzaj
+
+### Magnetni diskovi
+
+* Formatiranje - proces upisa staza, sektora i kontrolnih podataka na disk
+
+#### Formatiranje diska
+
+1. Formatiranje niskog nivoa
+2. Logicko formatiranje
+
+#### Karakteristike diska
+
+* Broj glava
+* Jednostrani/dvostrani
+* Fiksni/izmenjivi
+* Vreme pristupa disku
+  * Vreme trazenja
+  * Rotaciono kasnjenje
+* Opseg diska
+
+#### RAID tehnologija
+
+* RAID (Redundant Array of Independent Disks)
+* RAID ima vise nivoa
+
+### Opticki diskovi
+
+* Cuvanje i vitanje podataka se izrvsava na dva nacina:
+  1. Mehanizam konstantne ugaone brzine
+  2. Mehanizam konstantne linearne brzine
+* Opticki diskovi se dele u tri grupe
+  1. Nasnimljeni i sadrzaj se ne moze menjati
+  2. Korisnik moze jednom da upise neki sadrzaj i posle toga se ne moze 
+     menjati
+  2. Diskovi ciji sadrzaj moze da se upisuje i brise bez ogranicenja
+
+#### CD diskovi
+
+#### DVD diskovi
+
+### Magnetne trake
+
+# Ulazno/izlazni podsistem
+
+* Obezbedjuju vezu racunara sa korisnikom
+
+## U/I moduli
+
+* Periferni urejdaji koji sluze da se povezu na racunarski sistem
+* Komunicira sa procesorom
+* Razlog povezivanja
+  * performanse
+* Glavne funkcije U/I modula
+  1. Kontrola i uskladjivanje saobracaja
+  2. Komunikacija sa procesorom
+  3. Komunikacija sa uredjajima
+  4. Prihvatanje podataka
+  5. Otkrivanje gresaka
+* Port - ako uredjaj komunicira sa racunarom preko veze u samo jednoj tacki
+
+## Tehnike izrsavanje U/I operacija
+
+* **Programirani U/i**
+* **Prekidima upravljan U/I**
+* **DMA** - direktan pristup memoriji
+* **U/I procesori i kanali**
+
+# Viseprocesorksi sistemi
+
+## Klasifikacija
+ 
+* Prema broju procesora:
+  1. Jednoprocesorski
+  2. Specijalizovani procesori
+  3. Labavo vezani procesorski sistemi
+  4. Cisto vezani procesorski sistemi
+  5. Sistemi sa paralelnom obradom podataka
+* Prema broju instrukcija i broju tokova podataka
+  1. SISD (*Single Instruction Single Data*)
+  2. SIMD (*Single Instruction Multiple Data*)
+  3. MISD (*Multiple Instruction Single Data*)
+  4. MIMD (*Multiple Instruciton Multiple Data*)
+
+## Karakteristike viseprocesorski sistema
+
+%todo
+
+### SIMD
+
+* Racunari sa deljenom memorijom
+* Racunari sa distributivnom memorijom
+
+## Veza izmedju elemenata
+
+## Sistemi sa parelelnom obradom podataka
+
+* SMP
+* MPP
+* SPP
+
+## Super-racunari
+
+* najveca respoloziva brzina obrade
+* najveca moguca velicine memorije
+* najveca fizicka dimenzija
+* najveca cena

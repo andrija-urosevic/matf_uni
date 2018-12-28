@@ -1539,6 +1539,132 @@ int main() {
 
 ## Pokazivaci i strukture
 
+* Postoji poseban operator ``->``
+  * Primeljuje se na pokazivace da preko pokazivaca pokaze na promenljivu
+* ```
+  struct razlomak *pa = &a;
+  prinf("%d%d", pa -> brojilac, pa -> imenilac);
+  ```
+
 ## Pokazivaci na funkcije
 
-## Dinamicka alokacije memorije
+* ```
+  void map(int a[], int n, int b[], int (*f) (int)) 
+  {
+    for (int i = 0; i < n; i++) {
+      b[i] = (*f)(a[i]);
+    }
+  }
+  ```
+* Funkacija ``map`` uzima niz ``a[]`` i preslikava ga u niz ``b[]`` koristeci 
+  funkciju ``f``
+* ``int *f (double, int);`` - f je funkcija koja uzima double i int i vraca 
+  pokazivac na int
+* ``int (*f) (double, int);`` - f je pokazivac na funkciju koja uzima double 
+  i int
+* ``int (*)[20] (*f) (int (*)(double), int (*)[10])`` - f je pokazivac na 
+  funkciju koja uzima pokazivac na funkciju koja uzima double i vraca int i 
+  pokazivac na niz od 10 inta, i f vraca int
+
+# Pregled standardne bibloteke
+
+## Zaglavlje ``string.h``
+
+* ``strlen``
+* ``strcpy``
+* ``strcat``
+* ``strchr``
+
+## Zaglavlje ``stdlib.h``
+
+* ``rand`` - vraca nasumican broj od 0 do ``RAND_MAX``
+  * za interval od [0, 1) - ``((double) rand() / (RAND_MAX + 1.0))``
+* ``srand`` - random seed
+* ``system``
+* ``exit``
+
+## Zaglavlje ``ctype.h``
+
+* ``isalpha(c)``
+* ``isupper(c)``
+* ``islower(c)``
+* ``isdigit(c)``
+* ``isalnum(c)``
+* ``isspace(c)``
+* ``toupper(c)``
+* ``tolower(c)``
+
+## Zaglavlje ``math.h``
+
+## Zaglavlje ``assert.h``
+
+* ``assert`` Ako je argument 0, prestani sa izvrsavanjem, ako je bilo sto sto 
+  nije nula onda nastavi sa izvrsavanjem
+
+# Ulaz i izlaz programa
+
+## Standardni tokovi
+
+* *Standardni ulaz* - podaci koji se unose sa tastature
+  * ``./prog < infile`` - podaci se unose sa datoteka
+* *Standardni izlaz* - obicno prikaz na ekranu
+  * ``./prog > outfile`` - podaci se upisuju u datoteku
+* *Standardni izlaz za greske* - upucuje poruke o greskama nastalim tokom 
+  rada programa
+  * ``./prog 2> errorfile`` - greska se upisuje u datoteku
+
+### Ulaz i izlaz pojedinacnih karaktera
+
+* ``getchar`` - uzima karakter ili EOF
+* ``putchar`` - ispisuje karakter
+
+### Linijski ulaz i izlaz
+
+* ``gets`` - uzima string (ne koristi se)
+* ``puts`` - ispisuje string
+
+### Formatirani izlazi - ``printf``
+
+### Formatirani ulaz - ``scanf``
+
+## Ulaz iz nistke i izlaz u nisku
+
+* ``sprintf(char *string, nost char *format, arg1, arg2, ...)`` - 
+  upisuje u ``string`` argumente po formatu ``format``
+* ``sscanf(const char* input, char *format)`` - 
+
+## Ulaz iz datoteka i izlaz u datotek
+
+### Tekstualne i binarne datoteke
+
+### Pristupanje datoteci
+
+* ``FILE* fopen(const char* filename, const char *mode);``
+
+### Ulaz i izlaz pojedicnacnih karaktera
+
+* ``int getc(FILE *fp);``
+* ``int putc(int c, FILE *fp);``
+
+### Provera gresaka i kraja datoteke
+
+* ``int feof(FILE *fp);``
+* ``int ferror(FILE *fp);``
+
+### Linijski ulaz i izlaz
+
+* ``char *fgets(char *line, int maxline, FILE *fp);``
+* ``int fputs(const char *line, FILE *fp);``
+
+### Formatirani ulaz i izlaz
+
+* ``int fscanf(FILE *fp, const char *format, ...);``
+* ``int fprintf(FILE *fp, const char *format, ...);``
+
+## Argumenti komandne linije programa
+
+* ``./program arg1 arg2 arg3`` - argumenti komandne linije 
+* ``int main(int argc, const char *argv[])`` - pristupa im se u main-u
+  * ``argc`` - broj argumenata
+  * ``arhv`` - niz pokazivaca na argumente
+  * ``argv[arhc]`` je nula
