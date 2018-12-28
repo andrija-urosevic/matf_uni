@@ -1,0 +1,460 @@
+\documentclass[12p,14paper]{article}
+
+\usepackage[serbian]{babel} 
+\usepackage[T2A]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{amsthm}
+\usepackage{multicol} 
+\usepackage[margin=0.5in]{geometry} 
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{enumerate} 
+\usepackage{amssymb}
+
+\DeclareMathOperator{\Dom}{Dom} 
+\DeclareMathOperator{\Ima}{Im} 
+\DeclareMathOperator{\nzd}{NZD} 
+\DeclareMathOperator{\nzs}{NZS} 
+\DeclareMathOperator{\mod}{mod} 
+
+\newtheorem*{theorem}{Teorema}
+\newtheorem*{prop}{Tvrđenje}
+
+
+\title{Diskretne Strukture 1}
+\author{Andrija Urošević}
+
+\begin{document}
+
+\maketitle
+
+\begin{multicols}{2}
+
+\section{Skupovi}
+
+    Aksiome teorije skupova (ZFC teorija skupova):
+
+    \begin{enumerate}
+        \itemsep0em
+        \item [S.1] \textit{Aksioma ekstenzionalnosti}: 
+            Dva skupa su jednaka ako imaju iste elemente.
+        \item [S.2] \textit{Aksioma praznog skupa}: 
+            Postoji skup koji nema nijedan element. 
+            Označavamo ga sa $\emptyset$.
+        \item [S.3] \textit{Aksioma para}: 
+            Za sve skupove $x$ i $y$ postoji skup $z = \{x, y\}$, 
+            čiji su jedini elementi skupovi $x$ i $y$.
+        \item [S.4] \textit{Aksioma unije}:
+            Za svaki skup $x$ postoji skup $z$ tako da $u \in z$ ako i samo 
+            ako je $u \in y$ za neki $y \in x$. Skup $z$ predstavlja uniju 
+            članova skupa $x$ i označavamo ga sa $\cup x$.
+        \item [S.5] \textit{Aksioma partitivnog skupa}:
+            Za svaki skup $x$ postoji skup $z = \mathcal{P} (x)$, koji se 
+            sastoji od svih podskupova od $x$.
+        \item [S.6] \textit{Aksioma izdvajanja podskupa}:
+            Za svaku formulu $\phi (x)$ i svaki skup $a$ 
+            $\{x \in a | \phi (x)\}$ je skup.
+        \item [S.7] \textit{Aksioma zamene}:
+            Neka je $\psi (x, y)$ formula za koju vazi da za svako $x$ postoji 
+            najviše jedno $y$ tako da je $\psi (x, y)$ ispunjeno. Tada je za 
+            svaki skup $a$ i $\{y | \psi (x, y) \text{ za neko } x \in a \}$
+            takođe skup.
+        \item [S.8] \textit{Aksioma dobrog zasnivanja} ili 
+            \textit{Aksioma regularnosti}:
+            Svaki neprazan skup $A$ sadrži element $a$ takav da je 
+            $A \cap a = \emptyset$.
+        \item [S.9] \textit{Aksioma beskonačnosti}:
+            Postoji skup $A$ koji sadrži $\emptyset$ i sa svakim svojim 
+            elementom $x$ sadrži i $x \cup \{x\}$.
+        \item [S.10] \textit{Aksioma izbora}:
+            Ako je dat skup $x$ čiji su svi elementi neprazni skupovi, onda 
+            postoji funkcija $f: x \mapsto \cup x$ takva da je $f(z) \in z$, 
+            za sve $z \in x$. Ta funkcija naziva se funkcija izbora.
+    \end{enumerate}
+
+\section{Relacije}
+
+    Neka su $A$ i $B$ skupovi. Relacija $\rho$ sa skupa $A$ u skup $B$ je 
+    svaki podskup od $A \times B$. Dakle, $\rho \subseteq A \times B$. Ako je 
+    $A = B$ onda kažemo da je $\rho$ binarna relacija na skupu $A$.
+    Domen relacije $\rho \subseteq A \times B$ je skup
+    \[\Dom (\rho) = \{ a \in A | \exists b \in B, (a, b) \in \rho\}.\]
+    Slika relacije $\rho$ je
+    \[\Ima (\rho) = \{ b \in B | \exists a \in A, (a, b) \in \rho\}.\]
+    Inverzna relacija relacije $\rho \subseteq A \times B$ je
+    \[
+        \rho^{-1} = 
+        \{ (b, a) \in B \times A | (a, b) \in \rho\} 
+        \subseteq B \times A.
+    \]
+    Kompozicija relacija $\rho \subseteq A \times B$ i 
+    $\sigma \subseteq B \times C$ je relacija
+    \[
+        \sigma \circ \rho =
+        \{ (a,b) \in A \times C | 
+        \exists b \in B, (a,b) \in \rho \text{ i } (b,c) \in \sigma\}
+        \subseteq A \times C.
+    \]
+
+    Neka je $\rho$ binarna relacija na skupu $A$. Kažemo da je $\rho$:
+    \begin{enumerate}[]
+        \itemsep0em
+        \item \textit{refleksivna}
+            $(\forall a \in A)((a, a) \in \rho)$
+        \item \textit{antirefleksivna}
+            $(\forall a \in A)((a, a) \notin \rho)$
+        \item \textit{simetrična}
+            $(\forall a,b \in A)((a,b) \in \rho \implies (b,a) \in \rho)$
+        \item \textit{antisimetrična}
+            $(\forall a,b \in A)((a,b) \in \rho \land (b,a) \in \rho 
+            \implies (a,c) \in \rho)$
+        \item \textit{tranzitivna} 
+            $(\forall a,b,c \in A)((a,b) \in \rho \land (b,c) \in \rho 
+            \implies (a,c) \in \rho)$
+    \end{enumerate}
+
+\subsection{Relacije ekvivalencije}
+
+    Neka je $\rho$ binarna relacija na skup $A$. Kažemo da je $\rho$ relacija 
+    ekvivalencije, ako je refleksivna, simetrična i tranzitivna, i označavamo 
+    sa $\sim$.
+
+    Neka je $\sim$ relacija ekvivalencije na skupu $A$. Klasa ekvivalencije 
+    elemenata $a \in A$ je skup
+    \[C_a = \{x \in A | a \sim x\}.\]
+
+\subsection{Relacije parcijalnog uređenja}
+
+    Neka je $\rho$ binarna relacija na skupu $A$. Kazemo da je $\rho$ relacija
+    parcijalnog uređenja, ako je refleksivna, antisimetrična i tranzitivna.
+
+    Neka je $\preceq$ relacija parcijalnog poretka na skupu $A$. Kazemo da je 
+    element $a \in A$:
+    \begin{enumerate}[]
+        \itemsep0em
+        \item \textit{minimalan} 
+            $(\forall x \in A)(x \preceq a \implies x = a)$
+        \item \textit{maksimalan} 
+            $(\forall x \in A)(a \preceq x \implies x = a)$ 
+        \item \textit{najmanji} 
+            $(\forall x \in A)(a \preceq x)$
+        \item \textit{najveci} 
+            $(\forall x \in A)(x \preceq a)$
+    \end{enumerate}
+
+\section{Funkcije}
+
+    Neka je $f \subseteq A \times B$ relacija. Kažemo da je $f$ funkcija ako 
+    za svako $a \in \Dom (f)$ postoji tačno jedno $b \in B$ tako da 
+    $(a,b) \in f$.
+
+    Ako je $f \subseteq A \times B$ funkcija, piđemo $b = f(a)$. Ako je 
+    $\Dom (f) = A$, pišemo $f: A \mapsto B$ i kažemo da je $A$ domen 
+    funkcije $f$, a $B$ njen kodomen.
+
+    Funkcija $f : A \mapsto B$ je surjekcija, ili `na' funkcija, ako vazi
+    \[(\forall b \in B)(\exists a \in A, f(a) = b).\]
+
+    Funkcija $f : A \mapsto B$ je injekcija, ili `1--1' funkcija, ako vazi
+    \[(\forall a_1, a_2 \in A)(f(a_1) = f(a_2) \implies a_1 = a_2).\]
+
+    Funkcija $f : A \mapsto B$ je bijekcija, ako je injekcija i surjekcija.
+
+    Neka su $f: A \mapsto B$ i $g : B \mapsto C$ funkcija. Kompozicija funkcija
+    $f$ i $g$ je funkcija $g \circ f : A \mapsto C$ tako da 
+    $(g \circ f) (x) = g(f(x))$.
+
+\subsection{Direktna i inverzna slika skupa}
+
+    Neka je $f: X \mapsto Y$ i $A \subseteq X$. Direktna slika skupa $A$ 
+    je skup
+    \[f[A] = \{f(x) | x \in A\}.\]
+    
+    Neka je $f: X \mapsto Y$ i $B \subseteq Y$. Inverzna slika skupa $B$ 
+    je skup
+    \[f^{-1}[B] = \{x \in X | f(x) \in B\}.\]
+
+\subsection{Karakteristicne funkcije skupa}
+
+    Neka je $X$ bilo koji skup i $A \subset X$. Karakteristicna funkcija skupa
+    $A$ je $\chi_A : X \mapsto \{0, 1\}$ tako da
+    \[
+        \chi_A (x) = 
+        \begin{cases}
+            0, & x \notin A \\
+            1, & x \in A
+        \end{cases}
+    \]
+
+    \begin{theorem}[Kantorova teorema]
+        Neka je $X$ proizvoljan skup. Postoji injekcija iz $X$ u 
+        $\mathcal{P} (X)$, ali ne postoji bijekcija između tih skupova.
+    \end{theorem}
+
+\section{Konačni i beskonačni skupovi}
+
+    Skup $X$ je konačan ako ima $n$ elemenata, gde je $n$ prirodan broj. Ako
+    skup nije konačan, kažemo da je beskonačan.
+
+    \begin{prop}
+        Skup $X$ je beskonačan ako i samo ako postoji pravi podskup 
+        $X' \subset X$ tako da su $X$ i $X'$ u bijekciji.
+    \end{prop}
+
+    \begin{prop}
+        Skup prirodnih brojeva je beskonačan.
+    \end{prop}
+
+    Skup $X$ je prebrojiv ako postoji bijekcija $f : X \mapsto \mathbb{N}$. 
+    Ako je skup konačan ili prebrbrojib, onda kažemo da je najviše prebrojib. 
+    Ako skup nije najviše prebrojim kažemo da je neprebrojiv.
+
+    \begin{prop}
+        Skup svih konačnih podaskupova skupa prirodnih brojeva 
+        $\mathcal{P}_{fin} (\mathbb{N})$ jeste prebrojiv.
+    \end{prop}
+
+    \begin{prop}
+        Skup realnih brojeva $\mathbb{R}$ nije prebrojiv.
+    \end{prop}
+
+    \begin{theorem}[Kantor---Bernštajnova teorema]
+        Ako postoji injekcija iz $X$ u $Y$ i injekcija iz $Y$ u $X$, 
+        tada postoji bijekcija između $X$ i $Y$.
+    \end{theorem}
+
+\section{Brojevi}
+
+    Peanove aksiome:
+    \begin{enumerate}
+        \itemsep0em
+        \item [P.1] 0 je prirodan broj.
+        \item [P.2] Ako je $x$ prirodan broj, onda je i $x'$ prirodan broj.
+        \item [P.3] Ako su $x$ i $y$ prirodni brojevi i $x' = y'$, 
+            onda je $x = y$.
+        \item [P.4] Za svaki prirodan broj $x, x' \neq 0$.
+        \item [P.5] Neka je $\Phi$ svojstvo prirodnih brojeva za koje vazi
+            \begin{enumerate}
+                \itemsep0em
+                \item 0 ima svojstvo $\Phi$;
+                \item Ako prirodan broj $x$ ima svojstvo $\Phi$, tada i $x'$ 
+                    ima svojstvo $\Phi$.
+            \end{enumerate}
+            Tada svaki prirodan broj ima svojstvo $\Phi$.
+    \end{enumerate}
+
+    \begin{theorem}
+        Fon Nojmanov model prirodnih brojeva zadovoljava Peanove aksiome.
+    \end{theorem}
+
+    \begin{theorem}[Princip potpune indukcije]
+        Neka je $\Phi$ neko svojstvo prirodnih brojeva. Tada se iz Peanovih 
+        aksioma moze izvesti
+        \[\forall n (\forall k < n) \Phi (k) \implies \forall n \Phi (n).\]
+    \end{theorem}
+    
+\subsection{Deljivost}
+
+    Neka su $a, b \in \mathbb{N}$. Kažemo da $a$ deli $b$ ili da je $b$ 
+    deljivo sa $a$ i pišemo $a | b$ ako postoji broj $c \in \mathbb{N}$ tako 
+    da je $b = a \cdot c$.
+
+    \begin{theorem}[o Euklidovom deljenju]
+        Neka su $a, b \in \mathbb{N}$ i $b \neq 0$. Tada postoje brojevi 
+        $q, r \in \mathbb{N}$ koji su jedinstveno određeni tako da je 
+        \[a = b \cdot q + r,\ 0 \leq r < b.\]
+    \end{theorem}
+
+    Broj $d \in \mathbb{N}$ je zajednički delilac prirodnih brojeva $a$ i $b$ 
+    ako $d | a$ i $d | b$. Za takav broj $d$ kažemo da je najveći zajednički 
+    delilac brojeva $a$ i $b$ ako $d' | d$ za svaki zajednički delilac $d'$ 
+    tih brojeva. U tom slučaju pišemo $d = \nzd (a, b)$.
+
+    Broj $s \in \mathbb{N}$ je zajednički sadržalac prirodnih brojeva $a$ i
+    $b$ ako $a | s$ i $b | s$. Za takav broj $d$ kažemo da je najmanji 
+    zajednički sadržalac brojeva $a$ i $b$ ako $s | s'$ za svaki zajednički 
+    sadržalac $d'$ tih brojeva. U tom slučaju pišemo $d = \nzs (a, b)$.
+
+\subsection{Diofantove jednačine}
+
+    Diofantova jednačina je jednačina sa celobrojnim koeficijentima kod koje 
+    tražimo rešenja u skupu $\mathbb{Z}$.
+
+\subsection{Prosti brojevi}
+
+    Ceo broj $p > 1$ je prost ako su jedini delioci tog broj 1 i $p$.
+    Ceo broj $n > 1$ koji nije prost je složen.
+
+    \begin{prop}
+        Postoji beskonačno mnogo prostih brojeva.
+    \end{prop}
+
+    \begin{prop}
+        Svaki prirodan broj veći od 1 je prost ili se može predstaviti kao 
+        proizvod prostih brojeva.
+    \end{prop}
+
+    \begin{theorem}[Osnovna teorema aritmetike]
+        Svaki prirodni broj veći od 1 može se predstaviti u obliku proizvoda 
+        prostih brojeva na jedinstven nacin (do na redosled prostih faktora).
+    \end{theorem}
+
+\subsection{Kongruencije}
+
+    Neka je $m$ prirodni broj veći do 1. Kažemo da su brojevi 
+    $a, b \in \mathbb{Z}$ kongruentni po modulu $m$ i pišemo 
+    $a \equiv b \pmod m$ ili $a \equiv_m b$ ako je $m | (a - b)$.
+
+    \begin{theorem}[Vilsonova teorema]
+        Ako je $p$ prost broj tada je $(p - 1)! \equiv -1\ \pmod p$.
+    \end{theorem}
+
+    \begin{theorem}
+        Sistem kongruencija
+        \begin{align*}
+            x \equiv\ & a_1 \pmod m_1 \\
+            x \equiv\ & a_2 \pmod m_2 \\
+            & \vdots \\
+            x \equiv\ & a_k \pmod m_k 
+        \end{align*}
+        ima rešenje ako $\nzd(m_i, m_j) | (a_i - a_j)$ za sve $i \neq j$. Ako
+        je $\overline{x}$ neko rešenje mog sistema, onda je opšte rešenje 
+        oblika $x = \overline{x} + \nzs(m_1, \ldots, m_k) \cdots t$, gde je 
+        $t \in \mathbb{Z}$.
+    \end{theorem}
+
+    Neka je $n > 1$ prirodan broj. Sa $\varphi (n)$ označavamo broj prirodnih 
+    brojeva $m$ tako da $1 \leq m < n$ i $\nzd(m, n) = 1$. Funkcija $\varphi$ 
+    se naziva Ojlerova funkcija.
+
+    \begin{prop}
+        Neka su $m, n > 1$ prirodni brojevi takvi da je $\nzd(m, n) = 1$. 
+        Tada je $\varphi(mn) = \varphi(m)\varphi(n)$.
+    \end{prop}
+
+    Neka je $n > 1$ prirodni broj. Skup $\{ r_1, \ldots, r_n \}$ prirodnih 
+    brojeva je potpuni sistem ostataka po modulu $n$ ako je svaki ceo broj 
+    kongruentan po modulu $n$ tačno jednom od brojeva $r_i$.
+
+    Neka je $n > 1$ prirodni broj. Skup $\{ r_1, \ldots, r_n \}$ prirodnih 
+    brojeva je redukovani sistem ostataka po modulu $n$ ako je svaki ceo broj 
+    koji je uzajamno prost sa $n$ kongruentan po modulu $n$ tačno jednom od 
+    brojeva $r_i$.
+
+    \begin{theorem}[Ojlerova teorema]
+        Neka su $a$ i $n$ pozitivni prirodni brojevi, taki da $\nzd(a, n) = 1$.
+        Tada vazi $a^{\varphi(n)} \equiv 1 \pmod n$.
+    \end{theorem}
+
+    \begin{theorem}[Mala Germanova teorema]
+        Neka je $p$ prost broj i $p$ ne deli pozitivan broj $a$. 
+        Tada je $a^{p-1} \equiv 1 \pmod p$.
+    \end{theorem}
+
+\section{Bulove algebra}
+
+    Neka je $B$ neki neprazan skup, i neka su zadate dve binarne operacije 
+    $\land, \lor : B \times B \mapsto B$, i jedna unarna operacija 
+    $- : B \mapsto B$. Onda je struktura $\mathcal{B} = (B, \land, \lor, -)$ 
+    bulova algebra ako važi:
+    \begin{enumerate}
+        \itemsep0em
+        \item [B.1] \textit{komutativnost}:
+            $(\forall a,b \in B)$ 
+            $a \lor b = b \lor a$, 
+            $a \land b = b \land a$
+        \item [B.2] \textit{asocijativnost}:
+            $(\forall a,b,c \in B)$ 
+            $(a \lor b) \lor c = a \lor (b \lor c)$, 
+            $(a \land b) \land c = a \land (b \land c)$
+        \item [B.3] \textit{distributivnost}:
+            $(\forall a,b,c \in B)$ 
+            $a \lor (b \land c) = (a \lor b) \land (a \lor c)$,
+            $a \land (b \lor c) = (a \land b) \lor (a \land c)$
+        \item [B.4] \textit{neutral}:
+            $(\exists 0,1 \in B)(\forall a \in B)$ 
+            $a \lor 0 = a$, 
+            $a \land 1 = a$
+        \item [B.5] \textit{inverz}:
+            $(\forall a \in B)(\exists \overline{a} \in B)$ 
+            $a \lor \overline{a} = 1$, 
+            $a \land \overline{a} = 0$
+    \end{enumerate}
+
+    Simboli Bulove algebre su:
+    \begin{enumerate}
+        \itemsep0em
+        \item iskazni simboli $\{ p, q, r, \ldots \}$
+        \item simboli operacija $\{ \land, \lor, -, \implies, \iff, \veebar \}$
+        \item otvorene i zatvorene zagrade
+    \end{enumerate}
+
+    Neka su $\mathcal{B}_1 = (B_1, \land_1, \lor_1, -_1)$ i 
+    $\mathcal{B}_2 = (B_2, \land_2, \lor_2, -_2)$ Bulove algebre. Kažemo da su 
+    $\mathcal{B}_1$ i $\mathcal{B}_2$ izomorfne Bulove algebre u oznaci 
+    $\mathcal{B}_1 \cong \mathcal{B}_2$, ako postoji bijekcija $f : B_1 \mapsto B_2$, tako da ($\forall a, b \in B_1$):
+    \begin{enumerate}{}
+        \itemsep0em
+        \item $f(a \lor_1 b) = f(a) \lor_2 f(b)$
+        \item $f(a \land_1 b) = f(a) \land_2 f(b)$
+        \item $f(\overline{a}) = \overline{(f(a))}$
+        \item $f$ je bijekcija
+    \end{enumerate}
+
+    \begin{theorem}[Stonova teorema]
+        Za svaku Bulovu algebru $\mathcal{B} = (B, \land, \lor, -)$ postoji 
+        skup $I$ i preslikavanje $f : B \mapsto \mathcal{I}$ tako da 
+        ($\forall x,y \in B$):
+        \[
+            \begin{align*}
+                f(x \lor y) = f(x) \cup f(y) \\
+                f(x \land y) = f(x) \cap f(y) \\
+            \end{align*}
+        \]
+        i $f$ je bijekcija, tj.\ 
+        $(B, \land, \lor, -) = (\mathcal{P}(s), \cup, \cap, ^{c})$.
+        Drugim recima svaka Bulova algebra je izomorfna je nekoj Bulovoj
+        algebri skupova.
+    \end{theorem}
+
+    Ako je neka relacija teorema Bulove algebre tada zamenom operacija (ili) i 
+    (i) i elemenata neutrala (0) i (1) u toj teoreme dolazimo da tacne 
+    relacije koja je takođe teorema Bulove algebre. Ako se opisanim postupkom 
+    dolazi do iste teoreme takvu teoremu zovemo samo dualnom. 
+    ($\overline{\overline{x}} = x$)
+
+\subsection{Parcijalno uredjeđe Bulove algebre}
+
+    Neka je $(B, \land, \lor, \neg)$ neka Bulova algebra i $a,b \in B$. 
+    Definišemo $a \leq b$ akko $a \lor b = b$.
+
+    \begin{theorem}
+        Ovako definisana relacija predstavlja relaciju parcijalnog uređenja
+        na $B$.
+    \end{theorem}
+
+\subsection{Iskazna logika}
+
+    Iskaz je rečenica kojoj se može dodeliti vrednost tačno ili netačno.
+
+    Operacije sa iskazima:
+    \begin{enumerate}
+        \itemsep0em
+        \item \textit{Konjukcija} (i): Iskaz $p \land q$ je tačan akko su 
+            $p$ i $q$ tačni.
+        \item \textit{Disjunkcija} (ili): Iskaz $p \lor q$ je netačan akko
+            su $p$ i $q$ netačni.
+        \item \textit{Implikacija}: Iskaz $p \implies q$ je netačan akko
+            je $p$ tačan, a $q$ netačan.
+        \item \textit{Ekvivalencija} (akko): Iskaz $p \iff q$ je tačan akko 
+            si oba tačna ili netačna.
+        \item \textit{Negacija}: Iskaz $\neg p$ je tačan akko je $p$ netačan.
+        \item \textit{Ekskluzivna disjunkcija}: Iskaz $p \veebar q$ je tačno
+            akko je tačno jedna od $p$ i $q$ tačan.
+    \end{enumerate}
+
+\subsection{Metoda tabloa}
+
+\end{multicols}
+
+\end{document}
