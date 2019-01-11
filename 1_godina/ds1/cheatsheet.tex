@@ -15,7 +15,6 @@
 \DeclareMathOperator{\Ima}{Im} 
 \DeclareMathOperator{\nzd}{NZD} 
 \DeclareMathOperator{\nzs}{NZS} 
-\DeclareMathOperator{\mod}{mod} 
 
 \newtheorem*{theorem}{Teorema}
 \newtheorem*{prop}{Tvrđenje}
@@ -405,12 +404,10 @@
         Za svaku Bulovu algebru $\mathcal{B} = (B, \land, \lor, -)$ postoji 
         skup $I$ i preslikavanje $f : B \mapsto \mathcal{I}$ tako da 
         ($\forall x,y \in B$):
-        \[
-            \begin{align*}
-                f(x \lor y) = f(x) \cup f(y) \\
-                f(x \land y) = f(x) \cap f(y) \\
-            \end{align*}
-        \]
+        \begin{align*}
+            f(x \lor y) = f(x) \cup f(y) \\
+            f(x \land y) = f(x) \cap f(y) \\
+        \end{align*}
         i $f$ je bijekcija, tj.\ 
         $(B, \land, \lor, -) = (\mathcal{P}(s), \cup, \cap, ^{c})$.
         Drugim recima svaka Bulova algebra je izomorfna je nekoj Bulovoj

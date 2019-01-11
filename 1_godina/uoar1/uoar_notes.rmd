@@ -2,6 +2,8 @@
 title: Uvod u organizaciju racunara - beleske
 author: Andrija Urosevic
 output: pdf_document
+header-includes:
+    - \usepackage{tikz}
 ---
 
 \tableofcontents
@@ -1984,6 +1986,588 @@ Bitovi parnosti | ASCII kod | Karakteri
     se nalazi greska.
     * Korekcija se sastoji u komplmentiranju vrednosti odgovarajuceg bita 
       podataka
+
+# Globlana struktura racunarskog sistema
+
+## Fon Nojamanova masina
+
+* Delovi fon Nojmanovog izvestaja
+  * Svaki racunar vrsi osnovne aritmeticke operacije (sabiranje, oduzimanje, 
+    mnozenje i deljenje). Kao posevan deo treba da postoji *centralna 
+    aritmeticki* (eng. *central arithmetical*) organ, CA racunara.
+  * Mora da postoji razlika izmedju specificnih instrukcija koje definisu 
+    pojedinacni problemi i opstih za nadgledanje kako se izvode te specificne 
+    istrukcije. Pod *centralnim upravljanjem* (eng. *central control*), CC 
+    podrazumeva taj organ za nadgledanje.
+  * Uredjaj koji izvodi dugacak i komplikovan niz operacija mora da ima
+    odgovarajucu memoriju. *Memorija* (eng. *memory*), M cini treci 
+    specificni deo racunara.
+  * C i M odgovaraju neuronima ljludskog nervnog sistema. Dok *ulazne* i 
+    *izlazne* organi odgovaraju senzorima i motorike neurona. Uredjaj sa 
+    specificnim medojumom tog tipa. Taj medijum je medijum za spoljasnje 
+    *snimanje* (eng. *recording*) uredjaja R.
+  * Uredjaji koji prenose informacije od R ka specificnim delovima C i M, 
+    formiraju cetvrti specificni deo racunara, *ulaz*, I.
+  * Uredjaji koji prenose informacije od C i M u R, formiraju peti specificni
+    deo racunara, *izlaz* O.
+![Struktura IAS racunara](img/ias_struct.jpg){width=250px}
+![Prosirena struktura IAS racunara](img/ias_expanded.png){width=250px}
+* Analogije izmedju coveka i masine.
+* U danasnjoj terminologiji aritmeticko-logicka jedinica i upravljacka 
+  jedinica cine jednu celoni koja se naziva *centralna procesorka jedinica* 
+  (eng. *CPU*)
+* Karakteristike IAS racunara:
+  * 1000 lokacija u memoriju koje su nazvane *rec*
+  * rec je sadrzala 40 binarnih cifara
+  * u memoriji su cuvane instrukcije i podaci
+    * brojevi su bili predstavljeni u binarnom obliku
+      * 1 bit za znak, 39 bita za vrednost
+    * instrukcije su bile predstavljene u binarnom kodu
+      * 2 instrukcije u jednoj reci
+      * 8 bita za operacije i 12 bita za adresu reci u memoriji
+* Centralni procesor je sadrzao *registre*:
+  * *Prihvatni registar memorije* (PRM)
+    * sadrzi rec koja je trebalo da se sacuva u memoriji
+  * *Registar memorijskih adresa* (RMA)
+    * adresa reci u memoriji iz koje je trebalo preneti sadrzaj u/iz PRM
+  * *Instrukcioni registar* (IR)
+    * 8-bitni kod operacije koja se trenutno izvrsava
+  * *Prijemni registra instrukcija* (PRI)
+    * prvremeno cuva instrukcije iz desne polovine reci
+  * *Brojac instrukcija* (PC)
+    * cuva adresu sledeceg para instrukcija koje je trebalo preneti iz 
+      memorije.
+  * *Akumulator* (AC) i *Mnozilaz/Delilac* (MQ)
+    * privremeno cuva operacije i rezultate operacija koje su izvodjene u 
+      aritmeticko-logickoj jedinici
+* IAS je instrukcije izvrsava u *instrukcionim ciklusima*:
+  * *Ciklus pripreme*
+    * operacioni kod naredne instrukcije se smesta u IR
+    * adresni deo smesta u RMA
+  * *ciklus izvrsavanje*
+    * upravljacka jedinica interpretita operacioni kod instrukcije i salje 
+      odgovarajuce kontrolne signale koji oznacavaju da treba preneti podatke 
+      ili izvrsiti operaciju od strane ALU.
+* IAS racunar ima 21 masinsku instrukciju koje su bile podeljenju u pet grupa:
+  1. *instrukcije za prenso podatak*
+  2. *instrukcije bezuslovnog grananja*
+  3. *instrukcije uslovnog grananja*
+  4. *aritmeticke instrukcije*
+  5. *instrukcije za modifikaciju adrese*
+* Pri opisu znacenja instrukcija iz naredne tabele koriscena je sledeca 
+  notacija:
+  * $S(L)$ oznacava sadrzaj lokacije $L$
+  * $X \rightarrow Y$ oznacava upisivanje vrednosti $X$ u lokaciju $Y$
+  * $| X |$ oznacava apsolutnu vrednost $X$
+
+## Izgled savremenog racunarskog sistema
+
+* Najveci broj savremenih racunara je zasnovan na fon Nojmanovoj arhitekturu
+  1. Racunarski sistem poseduje jednu memorji u kojoj se cuvaju podaci i 
+     instrukcije
+  2. Memorija recunara je adresibilna po lokacijama kojima se moze pristupiti 
+     bez obzira kakav im je sadrzaj
+  3. Izvrsavanje instrukcija se izvodi strogo sekvencijalno, sem ukoliko 
+     drugacije nije eksplicito naglaseno
+![Savremeni racunarski sistem](img/modern_computer_system.jpg)
+
+## Sistem prekida
+
+* Sistem prekida predstavlja mehaniza koji omogucuje efikasan rad racunara.
+* U/I program cine tri komponente:
+  * Niz instrukcija koji vrsi pripremu tekuce U/I operacije.
+  * Stvarna U/i komanda. U njoj se izdvaja komanda uredjaju koji obavlha 
+    zahtevanu akciju.
+  * Niz istrukcija koji kompletira zahtevanu operaciju.
+* U visekorisnickom sistemu u istom trenutku moze da se javi vise prekida 
+  koje su generisani razliciti programi ili uredjaji.
+  1. Onemogucavanje prekida
+  2. Definisanje priroriteta prekida
+
+## Brzina obrade podataka
+
+* Broj masinskih instrukcija u sekundi koje CPU moze da obradi. Jedinica je 
+  MIPS (eng. *millions of instructuions per secnud*):
+  * Intel Pentium II mikroprocesor ($400MHz$) ima oko 830 MIPS-a
+  * Intel Pentium 4 mikroprocesor ($1.5GHz$) ima oko 1700 MIPS-a
+  * Intel Pentium 4 mikroprocesor ($2GHz$) ima oko 3900 MIPS-a
+  * IBM PowerPC 750CX mikroprocesor ($400MHz$) ima oko 930 MIPS-a
+  * Motorola PowerPC MPC7450 mikroprocesor ($733MHz$) ima oko 1300 MIPS-a
+  * Motorola PowerPC MPC7457 mikroprocesor ($1GHz$) ima oko 2310 MIPS-a
+  * Intel Core 2 Extreme QX9770 mikroprocesor ($1GHz$) oko 177000 MIPS-a
+  * IBM Z196 mikroprocesor ($5.2GHz$) oko 1200 MIPS-a 
+* Brzina superracunara se meri u FLOPS-ima (eng. *floating point operations 
+  per secund*)
+  * CRAY-1 imao je brzini od 165 MFLOPS-a
+  * IBM ASCI White ima brzinu od 12.3 TFLOPS-a
+  * IBM Roadrunner ima przinu od 1.105 PFLOPS-a
+  * CRAY Jagura XT5 ima brzinu od 1.1059 PFLOPS-a
+  * NUDT Tianhe-2 ima brzinu od 33.862 PFLOPS-a
+* Drugi nacin merenja brzine racunara je vreme potrebno za izvrsavanje jendog 
+  instrukcionog ciklusa.
+
+# Centralni procesor
+
+## Organizacija centralnog procesora
+
+* Glavne komponente CPU-a su aritmeticko-logicka jedinica ALU i upravljacka   
+  jedinica CU
+* Savremeni mikroprocesori razvijaju i funkcionalne jedicnice
+* Proces izvrsavanja instrukcija ukljucuje:
+  * dohvatanje instrukcije i njenu interpretaciju
+  * obezbedjivanje argumenata instrukcije
+  * cuvanje vrednosti dobijenih pri izvrsavanju
+  * odredjivanje naredne instrukcije koja se izvrsava
+
+![Struktura CPU-a](img/cpu_struct.png){width=250px}
+
+* Globalne funkcije funkcionalnih jedinica mikroprocosora su:
+
+Skracenica | Naziv i opis
+-:|:------------
+BCEU       | *Branch Control Element Unit*. Koristi se pri obradi zahteva za podacima i instrukcijama iz kes memorije, prevodjenje virtualnih u apsolutne adrese, pri implementaciji preklapanja instrukcija...
+IU         | *Instruction Unit*. Ova jedinica se koristi za dekodiranje instrukcija i odredjivanje njihovih komponenti
+AGU        | *Adress Generation Unit*. Koristi se za generisanje adresa koje treba sacuvati ili sa kojih treba napuniti vrednosti.
+LSU        | *Load/Store Unit*. Korisit se za prijem i cuvanje podataka pri njihovom citanju/upisu u L1 kes podatke. Tadkoje obezbedjuje poravnanje, konverziju izmedju zapisa brojeva razlicitih duzina, kao i normalizaciju brojeva u pokretnom zarezu.
+FX ALU     | *FiXed point ALU*. Vrsi operacija sa brojevima u fiksom zarezu kao i logicke operacije.
+FP ALU     | *Floating Point ALU*. Vrsi operacije sa brojevima u pokretnom zarezu.
+DC         | *Data Cashe*. Kes na nivou 1 za podatke.
+IC         | *Instruction Cashe*. Kes na nivou 1 za instrukcije.
+L2I        | *Cashe Level 2 Interface*. Veza ka kesu na nivou 2. Obicno ukljucuje i odredjene kontrolne naredbe.
+L2C        | *Level 2 Cashe*. Nalazi se van CPU-a i sa njim je povezan posebnom magistralom.
+
+* Jedicnice su povezane internim vezama koje se nazivaju 
+  *interne magistrale procesora*.
+
+### Registri
+
+* Registri se prema nameni mogu podeliti na:
+  1. Registre opste namene
+  2. Specijalizovane registre
+* **Registri opste namene**
+  * Koriste se za razlicite funkcije
+  * Korisnik moze da pristupi, cita i menja njihov sadrzaj
+  * U zavisnosti od dizajna procesora i odgovarajuceg masinskog jezika, opsti
+    registi se mogu dodatno podeliti prema nameni na:
+    * *Akumlatore*. Koriste se za:
+      * aritmeticko-logicke operacije
+      * cuvanje znakovnih podataka
+    * *Indeks registre*. Koriste se za:
+      * indeksno adresiranje
+    * *Pokazivace segmenata*
+      * sadrze pocetnu adresu segmenta na racunarima sa segmentnim 
+        adresiranjem
+    * *Pokazivace steka*
+      * pokazuju na pocetak memorije koja je odredjena za stek
+* **Specijalizovani registri**
+  * Koriste se pri izracunavanju operacija, njihovoj kontorli...
+  * Nisu direktno dostupni korisniku programa
+  * Neke koriste samo programi operativnih sistema, dok su drugi dostupni 
+    samo na nivou mikro koda.
+  * Neki specijalni registri i njihove funkcije:
+    * *Intstrukcioni registar* IR
+      * sadrzi poslednju procitanu instrukciju
+    * *Registar memorijskih adresa* RMA
+      * sadrzi adresu u memoriji iz koje treba prenete sadrzaj u PRM ili 
+        obrnuto
+    * *Prihvatni registar memorije* PRM
+      * sadrzi rec koja je poslednja procitana iz memorije ili koju treba 
+        upisati u memoriju na adresu koja je sadrzana u RMA
+    * *Brojac instrukcija* PC
+      * sadrzi adresu sledece instrukcije koju treba preneti na precesor
+    * *Registar koji sadrzi status programa koji se izvrsava* PSW
+      * sadrzi informacije koje se odnese na program koji se trenutno 
+        izvrsava:
+      * Uslovne kodove (*Contdition codes*, CC) pri izvrsavanju 
+          aritmetickih i logickih operacija
+      * Postojanje prenosa pri aritmetickim operacijama
+      * Prekoracenje pri aritmetickim opracijam i vrstu podataka nad kojima 
+          je doslo do prekoracenja
+      * Prekoracenje i potkoracenje pri izvrsavanju operacija nad realnim 
+          brojevima u ne-IEEE 754 zapisu
+      * Indikatore da li je dozvoljen prekid kao i tip podataka koji je 
+          dozovoljen
+      * Indikator da li je tekuci program u supervizorskom ili korisnickom
+          rezimu rada
+      * Indikator da li je tekuca adresa realna ili je potrebno 
+          preracunavati adrese iz programa da vi se dobile realne adrese
+      * Indikator da li je CPU u stanju cekanja kada ne izvrsava ni jednu 
+          instrukciju
+    * *Kontrolni registar pri izvrsavanju operacija u pokretnom zarezu* FPC
+      * sadrzi informacije vezane za izracuvanjanje u pokretnom zarezu
+    * *Kontrolne registre* koji sadrze specificne informacije za svaku masinu
+
+## Mikroprocesori
+
+* *Mikroprocesor* - cip koji sadrzi CPU kao i malu kolicinu memorije koja se 
+  koristi za specijalne nemene
+
+## Tehnologija izrade mikroproceosora
+
+**Tranzisotri**
+
+* Uredjaj sa tri zavrsna prikljucka koja u racunaru moze da ima funkciju ili
+  prekidaca ili pojacivaca
+* Sastoji se od tri sloja poluprovodnickog materijala koji moze da provodi 
+  elektrucnu struju
+* Obicno se kao poluprovodnik uzima silicijum ili germanijum
+* Poluprovodnik dobija specijalna svojstva pomocu hemijskog procesa u kome
+  se mesa sa posebnim materijalom koji sadrzi visak ili manjak elektorna
+* ako ima visak elektrona oznacava se kao negativan (N)
+* ako ima manjak elektrona oznacava se kao pozitivan (P)
+* najceske korisceni *bipolarni* i *FET* tranzistori
+* **Bipolarni trazistori**
+  * cine ga dva para PN spojenih dioda koje su smestene jedna uz drugu
+  * Posotje dva tipa bipolarnih tranzistora:
+    1. Tranzistori sa PNP konfiguracijom, kod kojih je izmdju dva P-sloja 
+       poluprovodnika smesten jedan N-sloj poluprovodnika
+    2. Tranzisotri sa NPN konfiguracijom, kod kojih je izmdju dva N-sloja
+       poluprovodnika smesten jedan P-sloj poluprovodnika
+  * Tri osnove koje sacinjavaju sendvic nazivamo redom *kolektor*, *osnova* i
+    *emitor*
+* **FET tranzistori**
+  * *Tranzistor sa efektom polja* (eng. *Field Effect Transistor* FET) zasniva
+    se na drugacijem principu od bipolarnih tranzistora
+  * Elektrode FET tranzistora se nazivaju *izvor*, *vatra* i *odvod*.
+* **CMOS tehnologija**
+  * U CMOS tranzistorima ako su na metalna vrata primeni niska voltaza,   
+    prekidac se zatvara i propsta elektricitet. 
+  * U slucaju primene visoke voltaze, prekidac ostaje otvoren
+* **Cipovi**
+  * Cipovi se mogu grupisati u tri kategorije:
+    * mikroprocesorski cipovi
+    * memorijski cipovi
+    * logicki cipovi koji kontrolisu rad magistrale racunara, diskove i druge 
+      razlicite vrste uredjaja
+* **Litografija**
+  * Umnozavanje matrice na ploce od silicijuma (silicijumske oblande)
+  * Matrica koja se prenosi sadrzi strukturu kompletnog cipaa ukljucujuci 
+    tranzistore, njihove spojeve i ostale strukture
+  * Koristi se fotootpornik sastavljen od polimera
+  * Sa svaki sloj na cipu se na povrsini silicijumske oblande nanosi po jedan 
+    sloj fotootpornika
+  * Laserski zrak deluje na tofootpornik i rastvara osvetljene delove
+  * Na kraju procesa preostali fotootpornik se uklanja pomocu organskog 
+    rastovra, dok silicijumska oblanda ostaje sa narazanom zeljenom strukturom
+    na povrsni
+* **Jos neke tehnologije izradnje brzih cipova**
+  * Tehnologija sa bakarnim vezama
+  * Niski K-dielektrik
+  * Grafen
+  * Ugljenicne nanocevi
+
+## CISC i RISC arhitekture mikroprocesora
+
+* Karakteristike ponasanja CISC procesora i programa:
+  * Naredbe koje su se najcesce javljale u programima su bile naredbe dodele,
+    uslovna naredba i poziv potprograma.
+  * Referisanje na operande se obavlja kao referisanje na lokalne skalarne 
+    vrednosti. 
+  * Pri pozivu procesora oko 98% procedura je pronosilo manje od 6 argumenata,
+    a cak kod 92% procedura su ti argumenti bili lokalni
+* Tri nacina za poboljsanje performansi:
+  1. *Povecanje broja registara*. 
+  2. Poboljsanje dizajna *preklapanja instrukcija*.
+  3. *Smanjen broj osnovnih instrukcija*.
+* Osobine RISC procesora:
+  1. Izvrsavanje jedne masinske instrukcije za jedan masinski ciklus
+  2. Najveci borj masinskih operacija je tipa registar-u-registar
+  3. Upotreba relativno malog broja nacina adresiranja
+  4. Upotreba jednostavnih formata instrukcija
+* Prednosti RISC procesora u odnosu na CISC procesore:
+  1. Jednostavnija konstrukcija
+  2. Bolje performanse
+
+## Casovnik, rec i magistrala
+
+* Brzinu i snagu 'tradicionalnih' cipova odredjuju tri velicine:
+  * brzina casovnika
+  * velicina reci
+  * sirina magistrale
+* *Brzina casovnika* 
+  * odnosi se na ritam sistemskog casovnika koji je obicno smesten na 
+    mikroprocesorski cip.
+  * meri se u megahercima (MHz), pri cemu je 1MHz ekvivalentan milion pulseva
+    u sekundi
+* **Magistrala** (eng. *bus*) je veza kojom se prenose elektronski impulsu 
+  koji formiraju bitove u mikroprocesor i sistemsku jedinicu
+  1. Magistrala adresa (eng. *address bus*) prenosi signale koji se koriste
+     za odredjivanje adrese u primarnoj memoriji
+  2. Magistrala podataka (eng. *data bus*) prenosi podatke od/ka primarnoj
+     memoriji
+  3. Magistrala kontrole (eng. *control bus*) prenosi signale koji kazu 
+     racunaru da 'cita' ili 'pise' podatke sa ili na odredjenu memorijsku 
+     adresu ulazni ili izlazini uredjaj.
+
+## Primeri mikroprocesorskih arhitektura
+
+* **Struktura S/390 i mikroprocesora z serije**
+  * Cip je integrisan na procesorskoj ploci
+    * *Single-Chip-Module* (SCM)
+    * *Multi-Chip-Module* (MCM)
+  * Na modulu se nalaze cipovi
+    * sa procesorskim jedinicama (PU) koji mogu da budu:
+      * centralni procesori (CP)
+      * pomocni procesori (eng. *System Assist Processor*) (SAP)
+      * procesori za interni rad u paru (eng. *Internal Coupling Facility*) 
+        (ICF)
+      * procesori sa internom podrskom za Linux (eng. *Internal Facility for
+        Linux*)
+    * cipove za kontrolu momorije (eng. *Storage Control*) (SC)
+    * cipove za memorisanje podataka (eng. *Storage Data*) (SD)
+    * cip sa casovnikom (eng. *clock*)
+    * cipove sa adapterom za memorijsku magistralu (eng. *Memory Bus Adapter*)
+      (MBA)
+    * procesore za kripto-zastitu (eng. *Crypto Processor*) (CRP)
+    * cip sa mikrokodom (eng. *Integrated Firmware Processor*) (IFP)
+    * *z Application Assist Processor* (zAAP)
+    * *z Integrated Information Processor* (zIIP)
+
+# Masinske instrukcije
+
+## Karakteristike masinskih instrukcija
+
+* Skup razlicitih masinskih instrukcija koje mogu da se izvrsavaju na nekom 
+  procesoru se naziva *skup instrukcija proceosra*
+* Informacije potrebne za uspesno izvrsavanje ukljucuju:
+  1. *Operacioni kod instrukcija* koji definise operaciju koja ce biti 
+     izvrsena
+  2. *Reference na operande instrukcije*
+  3. *Referencu na narednu instrukciju* koja treba da se prenose u procesoru 
+     po zavrsetku izvrsavanja tekuce instrukcije
+
+### Format instrukcija
+
+* Sve instrukcije imaju slican format
+  * Na pocetku instrukcije se nalazi operaconi kod, a za njim slede 
+    operandi instrukcije
+    * Operacioni kod | Operand1 | Operand2
+* Operandi se zadaju na razlicite nacine:
+  * Preko svojih adresa
+  * indirektnim adresiranjem
+  * neposrednim navodjenjem
+* Mnemonicke oznake za operacione kodove se definisu za skup instrukcija 
+  svakog od procesora:
+
+80x86 | PowerPC | S/390 | Znacenje
+------|---------|-------|---------
+ADD   | add     | A     | Sabira vrednosti operanda
+SUB   | subf    | S     | Oduzima vrednosti operanda
+MUL   | mullw   | M     | Mnozi vrednosti operanda
+AND   | and     | N     | Logicko AND nad vrednosti operanda
+LDS   | ld      | L     | Punjenje podataka iz memorije
+
+* Podalu skupa instrukcija moguce je izvesti po operaciji koja je zadata 
+  instrukcijom. 
+* Skup instrukcija moze da sadrzi vise razlicitih instrukcija za jednu istu 
+  operaciju koje se primenjuju u zavisnosti od tipa operanda.
+* Podelu formata instrukcija moguce je napraviti i prema vrsti  broju 
+  njihovih operanda. 
+* Instrukcije u istoj grupi imaju istu duzinu, broj operanda i korisceni 
+  nacin adresiranja.
+
+### Tipovi instrukcija
+
+* Instrukcije se mogu grupisati i po vrsti operacije koja se izvrsava 
+  njihovim pozivanjem. Instrukcije se dele na
+  1. Aritmeticke
+  2. Logicke
+  3. Instrukcije za konverziju
+  4. Instrukcije za prenos podataka
+  5. Ulazno/izlazne instrukcije
+  6. Kontrolne instrukcije
+  7. Instrukcije za prenos kontrole
+
+### Broj adresa u instrukciji
+
+* Podela prema maksimalnom broju adresa koji mogu da se pojave u instrukciji
+* Racunari koji imaju maksimalno jendu adresu u instrukcijama se nazivaju
+  *jednoadresni*, dve *dvoadresni* i tri *troadresni*
+* Posmatramo izvrsavanje aritmetickog izraza: $F = (A + B + C) * (D + E)$
+
+Jednoadresni racunar | Dvoadresni racunar | Troadresni racunar
+---------------------|--------------------|----------------------
+LOAD A               | LOAD R1, A         | ADD R, A, B
+ADD B                | ADD R1, B          | ADD R, R, C
+ADD C                | ADD R1, C          | ADD F, D, E
+STORE F              | LOAD R2, D         | MULL F, F, R
+LOAD D               | ADD R2, E          |         
+ADD E                | MR R1, R2          | 
+MUL F                | STORE R1, F        |
+STORE F              |                    |
+
+
+## Nacin adresiranja
+
+* Za navodjenje adresa operanda koriste se razlicite tehnike poznate pod
+  nazivom *nacini adresiranja*
+* Najcesce se koriste:
+  1. registarsko adresiranje
+  2. direktrno adresiranje
+  3. indirekntno adresiranje
+  4. registarsko indirektno adresiranje
+  5. adresiranje sa referencom i udaljenjem
+  6. neposredno adresiranje
+  7. implicitno adresiranje
+* Radi ilustracije ovih nacina adresiranja ovodim oznake:
+  * A - Sadrzaj adresnog polja u instrukciji
+  * SA - Stvarna adresa lokacije koja sadrzi operand
+  * R - Sadrzaj opsteg registra koji se javlja u instukciji
+  * (I) - Sadrzaj lokacije 1, pri cemu 1 moze da predstavlja lokaciju u 
+    memoriji
+  * B - Bazni registar
+  * X - Indeks registar
+  * PC - Brojac instrukcija
+* Nacin adresiranja odredjuje algoritam po kome se izracunava stvarna adresa
+* Stvarna adresa moze da oznacava registar, realnu ili virtualnu memoriju
+* Svi racunari koriste bar jedan od nacina adresiranja
+  1. Upotreba razlicitih operacionih kodava za istu operaciju sa razlicitim 
+     nacinima adresiranja (np. A i AR za sabiranje)
+  2. Upotreba *indikatora modifikacije* koji predstavlja jedan ili vise 
+     bitova u samoj instrukciji cije vrednosti oznacavaju nacin adresiranja
+* *Registarsko adresiranje*
+  * oznaka koji sadrzi operand je ukljucena u instrukciju
+  * stvarna adresa se odredjuje kao SA = A
+* *Direktno adresiranje*
+  * stvarna adreesa direktno ukljucuje u instrukciju SA = A
+  & adrese koje se javljaju u instrukcijama sa se nazivaju *apsolutne adrese*
+* *Indirektno adresiranje*
+  * adresa operanda se navodi indirektrno preko adrese lokacije na kojoj se 
+    nalazi adresa operanda
+  * SA = A
+  * zahteva dva memorijska ciklusa, jedan za citanje adrese lokacija i drugi
+    za citanje samog operanda
+* *Inderektno registarko adresiranje*
+  * u adresnom polju instrukcije nalazi oznaka registra, a ne adresa lokacije 
+    u memorija. 
+  * SA = (R)
+* *Adresiranje sa referencom i udaljenjem*
+  // todo
+* *Neposredno adresiranje*
+  * operand se nalazi u adresnom delu instrukcije
+  * operand = A
+* *Implcitno adresiranje*
+
+## Masinski i asemblerski jezici
+
+* *Masinski jezik* - skup instrukcija procesora koji poseduje semanticku 
+  interpetaciju u hardveru ili mikrokodu racunara
+* Za programe koji su pisani sa menmonickim oznakama instrukcija uz 
+  koriscenje relativnog adresiranja se kaze da su pisani u *asemblerskom 
+  jeziku*.
+* Program koji vrsi prevodjenje progrma sa asemblerskom jeziku na masinskom 
+  jeziku racunara se naziva *asembler*.
+* Naredne tabele prikazujem izvrsavanje naredbe $A = B + C * D$ u binarnom, 
+  heksadekadnom, simbolickom, i asemblerskom porgramu
+
+Adresa | Sadrzaj (binarno)
+-------|------------
+51     | 0001 0001 1000 0101
+53     | 0011 0001 1000 0111
+55     | 0010 0001 1000 0011
+57     | 0100 0001 1000 0001
+81     | 0000 0000 0000 0000
+83     | 0000 0000 0000 1010
+85     | 0000 0000 0001 0100
+87     | 0000 0000 0001 1110
+
+Adresa | Sadrzaj (heks.)
+-------|------------
+51     | 1185
+53     | 3187
+55     | 2183
+57     | 4181
+81     | 0000
+83     | 000A
+85     | 0014
+87     | 001E
+
+Adresa | Simb. kod | Operandi
+-------|-----------|--------
+51     | LOAD      | 1.85
+53     | MUL       | 1.87
+55     | ADD       | 1.83
+57     | STORE     | 1.81
+81     | INT       | 0
+83     | INT       | 10
+85     | INT       | 20
+87     | INT       | 30
+
+Labele | Asemb.    | Operandi
+-------|-----------|--------
+START  | LOAD      | 1.85
+ .     | MUL       | 1.87
+ .     | ADD       | 1.83
+ .     | STORE     | 1.81
+  A    | INT       | 0
+  B    | INT       | 10
+  C    | INT       | 20
+  D    | INT       | 30
+
+### Pozivi potprograma
+
+* Uproscen redosled akcija pri pozivu potprograma obuhvata:
+  1. Odredjivanje adrese potprograma koga treba pozvati
+  2. Odredjivanje i pripremu argumenata potprograma koji se poziva
+  3. Cuvanje svih relativnih parametara trenutnog stanja programa koji se 
+     izvrsava
+  4. Specificiranje adrese na koju se vrsi povratak iz potprograma
+  5. Izvrsavanje instrukcije skoka kojom se izvrsavanje prenosi na naredbu 
+     potprograma.
+  6. Izvrsavanje potprograma
+  7. Izvrsavanje naredbe povratka na zahtevanu adresu u pozivajucem programu
+* Argumenti i rezultati potprograma se mogu preneti u opstem slucaju na tri 
+  nacina
+  1. preko opstih registara
+  2. upisivanjem u odredjenu zonu memorije cija adresa se prenosi preko 
+     opstih registara
+  3. putem steka, zajedno sa adresom povratka
+* *Reentrant* potprogrami su potprogrami ciji se kod ne menja pri njihovom 
+  izvrsavanju.
+
+## Smestanje podataka u memoriji
+
+### Redosled smestanja bajtova
+
+* Pri zapisivanju visebajtnih skalarnih vrednosti u momoriji moguca su dva
+  pristupa:
+  * Bajt najvece tezine se upisuje u bajt sa najmanjom adresom u momoriji.
+    Za ovaj nacin zapisa koristi se nazim *sa levog kraja* (big-endian)
+  * Bajt najmanje tezine se upisuje u bajt sa najmanjom adresom u momoriji.
+    Za ovaj nacin zapisa koristi se nazim *sa desnog kraja* (little-endian)
+* U oba slucaja se preostale vrednostu upisuju kontinuirano
+
+ nacin | 101 | 102 | 103 | 104
+-------|-----|-----|-----|------
+I      | 12  | 34  | 56  | 78
+II     | 78  | 56  | 34  | 12
+
+* Prednosti i mane svakog od nacina zapisa su:
+  * Sa desnog kraja
+    * Aritmeticke operacije koje zahtevaju vecu preciznost sa jednostavnije
+      obavljaju jer se lakse odredjuje bajt najmanje tezine
+    * Konverzija 32-bitne u 16-bitnu celobrojnu adresu je jednostavnija jer
+      ne zahteva dodatne operacije za izdvajanje bitova najmanje tezine
+  * Sa levo kraja
+    * Brze poredjenje karaktera niski koje su zapisane tako da po poravnanju
+      odgovaraju celobrojnim vrednostima
+    * Calobrojne vrednosti i karakter niske se zapisuje konzistentno
+    * pri pregledu zadrzaja memorije u slucaju otkrivanja gresaka sve 
+      vrednosit se stampaju sleva na desno
+
+### Redosled smestaja bitiova
+
+* Ne postoji jedinstven nacin smestanja bitova unutar bajta
+
+nacin           |
+----------------|------------
+sa desnog kraja | 7 6 5 4 3 2 1 0
+sa levog kraja  | 0 1 2 3 4 5 6 7
+
+* ne postoji ni konzistentno oznacavanje rednog broja pocetnog bita (0 ili 1)
+
+
+### Redesled smestanja bitova
 
 # Memorija
 
