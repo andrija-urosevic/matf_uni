@@ -2695,13 +2695,23 @@ sa levog kraja  | 0 1 2 3 4 5 6 7
   5. Sistemi sa paralelnom obradom podataka
 * Prema broju instrukcija i broju tokova podataka
   1. SISD (*Single Instruction Single Data*)
+     * Jedan procesor i serijsko izvrsavanje instrukcija
   2. SIMD (*Single Instruction Multiple Data*)
+     * Jedna jedinica za obradu instrukcija i vise jedinica za obradu podataka
   3. MISD (*Multiple Instruction Single Data*)
+     * Izvrsavaju razlicite instrukcije nad istim podacima
   4. MIMD (*Multiple Instruciton Multiple Data*)
+     * Izvrsavaju razlicite instrukcije nad razlicitim podacima
 
 ## Karakteristike viseprocesorski sistema
 
-%todo
+1. Dva ili vise slicna procesora opste nameri
+2. Svi procesori dele zajednicu unutrasnju memoriju
+3. Komunikacija izmedju procesora se vrsi preko deljene memorije
+4. Losije performanse, zbog sporog pristupa memoriji
+5. Svi procesori dele isti skup U/I uredjaja
+6. Svi procesori u sistemu su pod kontrolom jednog istog operativnog sistema
+7. Vise procesorski sistemi najceste imaju centralnu upravljacku jedinicu
 
 ### SIMD
 

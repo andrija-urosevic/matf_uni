@@ -90,7 +90,7 @@
     $\sigma \subseteq B \times C$ je relacija
     \[
         \sigma \circ \rho =
-        \{ (a,b) \in A \times C | 
+        \{ (a,c) \in A \times C | 
         \exists b \in B, (a,b) \in \rho \text{ i } (b,c) \in \sigma\}
         \subseteq A \times C.
     \]
@@ -106,7 +106,7 @@
             $(\forall a,b \in A)((a,b) \in \rho \implies (b,a) \in \rho)$
         \item \textit{antisimetrična}
             $(\forall a,b \in A)((a,b) \in \rho \land (b,a) \in \rho 
-            \implies (a,c) \in \rho)$
+            \implies a = b)$
         \item \textit{tranzitivna} 
             $(\forall a,b,c \in A)((a,b) \in \rho \land (b,c) \in \rho 
             \implies (a,c) \in \rho)$
@@ -147,7 +147,7 @@
     za svako $a \in \Dom (f)$ postoji tačno jedno $b \in B$ tako da 
     $(a,b) \in f$.
 
-    Ako je $f \subseteq A \times B$ funkcija, piđemo $b = f(a)$. Ako je 
+    Ako je $f \subseteq A \times B$ funkcija, pišemo $b = f(a)$. Ako je 
     $\Dom (f) = A$, pišemo $f: A \mapsto B$ i kažemo da je $A$ domen 
     funkcije $f$, a $B$ njen kodomen.
 
@@ -242,6 +242,15 @@
             Tada svaki prirodan broj ima svojstvo $\Phi$.
     \end{enumerate}
 
+    Fon Nojmanov model prirodnih brojeva je defnisan na sledeci nacin:
+    \[
+        0 := \emptyset, 1 := \{0\}, 2 := \{0, 1\}, 3 := \{0, 1, 2\} \ldots
+    \]
+    Preciznije,
+    \[
+        0 := \emptyset, n' := n \cup \{n\}, \mathbb{N} = \{0, 1, 2, \ldots\}.
+    \]
+
     \begin{theorem}
         Fon Nojmanov model prirodnih brojeva zadovoljava Peanove aksiome.
     \end{theorem}
@@ -270,9 +279,9 @@
     tih brojeva. U tom slučaju pišemo $d = \nzd (a, b)$.
 
     Broj $s \in \mathbb{N}$ je zajednički sadržalac prirodnih brojeva $a$ i
-    $b$ ako $a | s$ i $b | s$. Za takav broj $d$ kažemo da je najmanji 
+    $b$ ako $a | s$ i $b | s$. Za takav broj $s$ kažemo da je najmanji 
     zajednički sadržalac brojeva $a$ i $b$ ako $s | s'$ za svaki zajednički 
-    sadržalac $d'$ tih brojeva. U tom slučaju pišemo $d = \nzs (a, b)$.
+    sadržalac $s'$ tih brojeva. U tom slučaju pišemo $s = \nzs (a, b)$.
 
 \subsection{Diofantove jednačine}
 
@@ -308,7 +317,7 @@
         Ako je $p$ prost broj tada je $(p - 1)! \equiv -1\ \pmod p$.
     \end{theorem}
 
-    \begin{theorem}
+    \begin{theorem}[Kineska teorema o ostacima]
         Sistem kongruencija
         \begin{align*}
             x \equiv\ & a_1 \pmod m_1 \\
@@ -318,7 +327,7 @@
         \end{align*}
         ima rešenje ako $\nzd(m_i, m_j) | (a_i - a_j)$ za sve $i \neq j$. Ako
         je $\overline{x}$ neko rešenje mog sistema, onda je opšte rešenje 
-        oblika $x = \overline{x} + \nzs(m_1, \ldots, m_k) \cdots t$, gde je 
+        oblika $x = \overline{x} + \nzs(m_1, \ldots, m_k) \cdot t$, gde je 
         $t \in \mathbb{Z}$.
     \end{theorem}
 
@@ -341,7 +350,8 @@
     brojeva $r_i$.
 
     \begin{theorem}[Ojlerova teorema]
-        Neka su $a$ i $n$ pozitivni prirodni brojevi, taki da $\nzd(a, n) = 1$.
+        Neka su $a$ i $n$ pozitivni prirodni brojevi, takvi da 
+        $\nzd(a, n) = 1$.
         Tada vazi $a^{\varphi(n)} \equiv 1 \pmod n$.
     \end{theorem}
 
@@ -354,7 +364,8 @@
 
     Neka je $B$ neki neprazan skup, i neka su zadate dve binarne operacije 
     $\land, \lor : B \times B \mapsto B$, i jedna unarna operacija 
-    $- : B \mapsto B$. Onda je struktura $\mathcal{B} = (B, \land, \lor, -)$ 
+    $^{-} : B \mapsto B$. Onda je struktura 
+    $\mathcal{B} = (B, \land, \lor, ^{-})$ 
     bulova algebra ako važi:
     \begin{enumerate}
         \itemsep0em
@@ -388,10 +399,12 @@
         \item otvorene i zatvorene zagrade
     \end{enumerate}
 
-    Neka su $\mathcal{B}_1 = (B_1, \land_1, \lor_1, -_1)$ i 
-    $\mathcal{B}_2 = (B_2, \land_2, \lor_2, -_2)$ Bulove algebre. Kažemo da su 
+    Neka su $\mathcal{B}_1 = (B_1, \land_1, \lor_1, ^{-_1})$ i 
+    $\mathcal{B}_2 = (B_2, \land_2, \lor_2, ^{-_2})$ Bulove algebre. 
+    Kažemo da su 
     $\mathcal{B}_1$ i $\mathcal{B}_2$ izomorfne Bulove algebre u oznaci 
-    $\mathcal{B}_1 \cong \mathcal{B}_2$, ako postoji bijekcija $f : B_1 \mapsto B_2$, tako da ($\forall a, b \in B_1$):
+    $\mathcal{B}_1 \cong \mathcal{B}_2$, ako postoji bijekcija 
+    $f : B_1 \mapsto B_2$, tako da ($\forall a, b \in B_1$):
     \begin{enumerate}{}
         \itemsep0em
         \item $f(a \lor_1 b) = f(a) \lor_2 f(b)$
@@ -401,15 +414,15 @@
     \end{enumerate}
 
     \begin{theorem}[Stonova teorema]
-        Za svaku Bulovu algebru $\mathcal{B} = (B, \land, \lor, -)$ postoji 
-        skup $I$ i preslikavanje $f : B \mapsto \mathcal{I}$ tako da 
+        Za svaku Bulovu algebru $\mathcal{B} = (B, \land, \lor, ^{-})$ postoji 
+        skup $I$ i preslikavanje $f : B \mapsto \mathcal{P}(I)$ tako da 
         ($\forall x,y \in B$):
         \begin{align*}
             f(x \lor y) = f(x) \cup f(y) \\
             f(x \land y) = f(x) \cap f(y) \\
         \end{align*}
         i $f$ je bijekcija, tj.\ 
-        $(B, \land, \lor, -) = (\mathcal{P}(s), \cup, \cap, ^{c})$.
+        $(B, \land, \lor, ^{-}) \cong (\mathcal{P}(s), \cap, \cup, ^{c})$.
         Drugim recima svaka Bulova algebra je izomorfna je nekoj Bulovoj
         algebri skupova.
     \end{theorem}
@@ -429,6 +442,79 @@
         Ovako definisana relacija predstavlja relaciju parcijalnog uređenja
         na $B$.
     \end{theorem}
+
+\subsection{Binarni izrazi u dualnoj Bulovoj algebri}
+
+    Bulova algebra je zadata sa 
+    $\mathcal{B} = \{ \{0, 1\}, \lor, \land, ^{-}\}$.
+    U Skupu $\{0, 1\}$ definisemo izraz $x^a$ gde je
+    \[
+        x^a = 
+            \begin{cases}
+                0, & x \neq a \\
+                1, & x = a
+            \end{cases}
+    \]
+    Bulovi izrazi su elementi $0, 1$ koje zovemo \textit{konstante} i elementi
+    $x, y, z, \ldots$ koje zovemo \textit{promenljive}.
+
+    \textit{Elementarna disjunkcija} $\mathcal{D}$ od promenljivih 
+    $x1, \ldots, x_n$ je Bulov izraz:
+    \[
+        x_{i_1}^{\alpha_{i_1}} \lor x_{i_2}^{\alpha_{i_2}} \lor \cdots
+        \lor x_{i_m}^{\alpha_{i_m}},
+    \]
+    gde je $\{i_1, \ldots, i_m\} \subseteq \{1, \ldots, n\}$, 
+    $\{\alpha_{i_1}, \ldots, \alpha_{i_n}\} \subseteq {\{0, 1\}}^m$, 
+    i $x_i$ se pojavljuje najvise jedanput.
+
+    \textit{Elementarna konjunkcija} $\mathcal{K}$ od promenljivih 
+    $x1, \ldots, x_n$ je Bulov izraz:
+    \[
+        x_{i_1}^{\alpha_{i_1}} \land x_{i_2}^{\alpha_{i_2}} \land \cdots
+        \land x_{i_m}^{\alpha_{i_m}}.
+    \]
+
+    \textit{Kanonicna elementarna disjunkcija} $\mathcal{KD}$ od promenljivih 
+    $x1, \ldots, x_n$ je elementarna disjunkcija u kojoj se svaka promenljiva 
+    pojavljuje tacno jednom:
+    \[
+        x_{1}^{\alpha_{1}} \lor x_{2}^{\alpha_{2}} \lor \cdots
+        \lor x_{m}^{\alpha_{m}}.
+    \]
+
+    \textit{Kanonicna elementarna konjunkcija} $\mathcal{KK}$ od promenljivih 
+    $x1, \ldots, x_n$ je elementarna konjunkcija u kojoj se svaka promenljiva 
+    pojavljuje tacno jednom:
+    \[
+        x_{1}^{\alpha_{1}} \land x_{2}^{\alpha_{2}} \land \cdots
+        \land x_{m}^{\alpha_{m}}.
+    \]
+
+    \textit{Disjunktivna forma} $\mathcal{DF}$ je Bulov izraz:
+    \[
+        \bigvee_{i = 1}^{m} K_i = K_1 \lor K_2 \lor \cdots \lor K_m,
+    \]
+    gde su $K_1, K_2, \ldots, K_m$ elementarne disjunkcije.
+
+    \textit{Konjunktivna forma} $\mathcal{KF}$ je Bulov izraz:
+    \[
+        \bigwedge_{i = 1}^{m} D_i = D_1 \land D_2 \land \cdots \land D_m,
+    \]
+    gde su $D_1, D_2, \ldots, D_m$ elementarne disjunkcije.
+
+    \textit{Savrsena disjunktivna normalna forma} (SDNF) u odnosu na 
+    promenljive $x_1, \ldots, x_n$ je $\mathcal{DF}$ u kojoj su $K_i$ 
+    kanonicne elementrane konjukcije. 
+    Dualno \textit{Savrsene konjuktivna normalna forma} (SKNF) je 
+    $\mathcal{KF}$ u kojoj su $D_i$ kanonicne elementarne disjunkcije.
+
+    Skup Bulovih $f$-ja $\{f_1, \ldots, f_k\}$ je \textit{generatorski} skup 
+    za skup $F = \{f_1, f_2, \ldots, f_k, f_{k+1}, \ldots, f_n\}$ ako se 
+    svaka funkcija iz $F$ moze dobiti pomocu $f_1, \ldots, f_k$. Skup
+    $\{f_1, f_2, \ldots, f_k\}$ je minimalan ako se nijedna od ovoh $f$-ja ne
+    moze dobiti pomocu preostalih. Minimalan geretarotrski skup je 
+    \textit{baza}.
 
 \subsection{Iskazna logika}
 
@@ -450,7 +536,63 @@
             akko je tačno jedna od $p$ i $q$ tačan.
     \end{enumerate}
 
+    \textit{Iskazna algebra} satstoji se od logickih konstanti $(\top, \bot)$,
+    iskaznih slove $(p, q, r, \ldots, a, b, c, \ldots)$ i logickih veznika
+    $(\land, \lor, \veebar, \neg, \implies, \iff)$. Skup svih izkaznih slova
+    oznacavamo sa $P$.
+
+    Iskazne formule su:
+    \begin{enumerate}
+        \itemsep0em
+        \item Iskazna slova i logicke konstante
+        \item Ako su $A$ i $B$ iskazne formule onda su i 
+              $\neg A, A \land B, A \lor B, A \veebar B, A \implies B, 
+              A \iff B$ izkazne formule
+        \item Sve iskazne formule se mogu dobiti konacnim 
+              primenjivanjem 1.\ i 2.
+    \end{enumerate}
+
+    Svaka funkcija $v : p \mapsto \{0, 1\}$ zove se \textit{valuacija}. 
+    Prosirimo na skupu $\mathcal{F}or$, $v : \mathcal{F}or \mapsto \{0, 1\}$.
+
+    Iskazna formula $A \in \mathcal{F}or$ je \textit{tautologija} ako je 
+    tacna u svim valuacijama $v : p \mapsto \{0, 1\}$, oznaka $\models A$.
+
+    Iskazna formula $A \in \mathcal{F}or$ je \textit{kontradikcija} ako je 
+    netacna u svim valuacijama $v : p \mapsto \{0, 1\}$, oznaka \#.
+
+    Iskazna formula $A \in \mathcal{F}or$ \textit{zadovoljava} ako postoji
+    varijacija $v$, tako da je $v (A) = 1$.
+    
+
 \subsection{Metoda tabloa}
+
+    Ako je $A$ iskazna formula, onda su $\top A$ i $\bot A$ oznacene formule. 
+    Formula $\top A$ je tacna u nekoj operaciji ako je tacna $A$ u toj 
+    valuaciji, a netacna inace. Formula $\bot A$ je tacna u nekoj valuaciji 
+    ako je $A$ netacna u toj valuaciji, a netacna inace.
+
+\subsection{Predikatska logika}
+
+    Prelacijski i funkcijski simboli imaju svoju duzinu koja je prirodan broj 
+    $n > 0$ i koja se zajednicki naziva arnost relacije ili funkcije. 
+    Oznacavamo je sa $ar$.
+
+    \begin{enumerate}
+        \itemsep0em
+        \item Promenljive i konstante su \textit{termi}.
+        \item Ako su $t_1, \ldots, t_n$ termi i $f$ funkcijski simboli arnosti 
+              $n$ onda je $f(t_1, \ldots, t_n)$ term.
+    \end{enumerate}
+    Termi se mogu dobiti jedino konacnom primenom pravila 1 i 2. Skup 
+    oznacavamo sa \textit{Term}.
+
+    \begin{enumerate}
+        \itemsep0em
+        \item Ako su $t_1$ i $t_2$ termi, onda je $t_1 = t_2$ atomicka formula.
+        \item Ako su $t_1, \ldots t_n$ termi i $\rho$ relacijski simbol 
+              arnosti $n$, onda je $\rho(t_1, \ldots, t_n)$ atomicka formula.
+    \end{enumerate}
 
 \end{multicols}
 
