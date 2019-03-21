@@ -1570,17 +1570,27 @@ int main() {
 
 ## Zaglavlje ``string.h``
 
-* ``strlen``
-* ``strcpy``
-* ``strcat``
-* ``strchr``
+* ``strlen`` - vraca duzinu niske
+* ``strcpy`` - kopira drugu navedenu nisku u prvu
+  * ``strncpy`` - kopira drugu nadedenu nisku u prvu, ali samo prvih ``n`` 
+    karaktera
+* ``strcat`` - nadovezuje drugu navedenu nisku na prvu
+  * ``strncat`` - nadovezuje drugu navedenu nisku na prvu, ali samo prvih
+    ``n`` karaktera
+* ``strchr`` - vraca pokazivac na prvu poziciju na kojoj je karakter nadjen u
+  nekom stringu ili ``NULL`` ako karakter nije nadjen
+  * ``strrchr`` - slicno samo vraca pokazivac na poslednji karakter
+* ``strcmp`` - uzima dva stringa i vraca 0 ako su oni jednaki
+* ``strtok`` - deli nisku u tekene koji su niske uzastopnih karaktera 
+  razdeljene karakterima navedenim u drugoj niski
+  
 
 ## Zaglavlje ``stdlib.h``
 
 * ``rand`` - vraca nasumican broj od 0 do ``RAND_MAX``
   * za interval od [0, 1) - ``((double) rand() / (RAND_MAX + 1.0))``
 * ``srand`` - random seed
-* ``system``
+* ``system`` - izvrsava neku komandu na sistemu
 * ``exit``
 
 ## Zaglavlje ``ctype.h``

@@ -1,0 +1,186 @@
+\documentclass[12p, a4paper]{article}
+
+\usepackage[serbian]{babel} 
+\usepackage[T2A]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{amsthm}
+\usepackage{multicol} 
+\usepackage[margin=0.5in]{geometry} 
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{enumerate} 
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{booktabs} 
+
+\DeclareMathOperator{\Dom}{Dom} 
+\DeclareMathOperator{\Ima}{Im} 
+\DeclareMathOperator{\nzd}{NZD} 
+\DeclareMathOperator{\nzs}{NZS} 
+
+\newtheorem*{theorem}{Teorema}
+\newtheorem*{prop}{Tvrđenje}
+
+
+\title{Uvod u Organizaciju i Arhitekturu Racunara 2 --- Cheat Sheet}
+\author{Andrija Urošević}
+
+\begin{document}
+
+\maketitle
+
+\begin{multicols}{2}
+
+\section{Bulova Algebra}
+
+    \subsection{Tabele Istinitosti}
+
+    \begin{tabular}{*{6}{c}}
+        A & B & AND & OR & NOT & XOR \\
+        \midrule
+        0 & 0 & 0 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 1 & 1 & 1 \\
+        1 & 0 & 0 & 1 & 0 & 1 \\
+        1 & 1 & 1 & 1 & 0 & 0 \\
+    \end{tabular}
+
+    \subsection{Osnovni Zakoni Bulove Algebre}
+
+    \begin{itemize}
+        \itemsep0em
+        \item $x \cdot x = x, x + x = x$ (zakon idempotencije)
+        \item $x \cdot 1 = x, x + 0 = x$ (zakon neutrala)
+        \item $x \cdot (x + y) = x, x + x \cdot y$ (zakon apsorpcije)
+        \item $\overline{\overline{x}} = x$ (zakon dvojne negacije)
+        \item $\overline{x + y} = \overline{x} \cdot \overline{y},
+            \overline{x \cdot y} = \overline{x} + \overline{y}$
+            (De-Morganovi zakoni)
+    \end{itemize}
+
+    \subsection{Logicki Izrazi i Normalne Forme}
+
+    Pridruzivanje 0 i 1 logickim promenljivima naziva se \emph{valuacija}, tj.
+    \emph{valuacija} je bilo koje preslikavanje iz skupa promenljivih $P$ u 
+    $\{0, 1\}$, $v: P \mapsto \{0, 1\}$. Ovakvih funkcija ima $2^{|P|}$
+
+    Za dva logicka izraza $E_1, E_2$ kazemo da su \emph{ekvivalentni} ako imaju
+    jednake vrednosti u svakoj valuaciji.
+
+    \subsubsection{Konjuktivna i Disjunktivna Normalna Forma}
+
+    \emph{Literal} je logicka izraz koji se sastoji od logickih promenljivih i 
+    njihovig negacija ($x, \overline{y}, z$).
+    
+    \emph{Elementarna konjukcija} --- $\mathcal{EK}$ je logicki izraz koji se 
+    sastoji od konjukcije literala ($x \overline{y} z$).
+
+    \emph{Elementarna disjunkcija} --- $\mathcal{ED}$ je logicki izraz koji se
+    sastoji od disjunkcija literala ($ x + \overline{y} + z$).
+
+    \emph{Disjunktivna normalna forma} --- $\mathcal{DNF}$ se sastoji od 
+    disjunkcija elementarnih konjukcija 
+    ($x \overline{y} + \overline{x} y z + x z$).
+
+    \emph{Konjuktivna normalna forma} --- $\mathcal{KNF}$ se sastoji od 
+    konjukcija elementranih disjunkcija
+    ($(x + \overline{y} ) \cdot (\overline{x} + y + z) \cdot (x + z)$).
+
+    Algoritam svodjenja izraza $E$ na izraz $E'$ u $\mathcal{DNF}$:
+    \begin{enumerate}
+        \itemsep0em
+        \item Eliminacija logickih konstanti 0 i 1.
+        \item Eliminacija negacija na vise od jedne promenljive pomocu 
+              De-Morganovih zakona.
+        \item Primena distributivnosti.
+    \end{enumerate}
+
+    \subsubsection{Savrsena Konjuktivna i Disjunktivna Normalna Forma}
+
+    Za $\mathcal{EK}$ kazemo da je \emph{savrsena} u odnosu na dati skup
+    promenljivih $P$ ako sadrzi tacno po jedan literal za svako od 
+    promenljivih iz $P$ ($P = \{x, y, z\}, x \overline{y} z$).
+
+    Za $\mathcal{ED}$ kazemo da je \emph{savrsena} u odnosu na dati skup 
+    promenljivih $P$ ako sadrzi tacno po jedan literal za svaku od
+    prmenljivih iz $P$ ($P = \{x, y, z\}, x + \overline{y} + z$).
+
+    Za $\mathcal{KNF}$ kazemo da je \emph{savrsen} ako su njegove 
+    $\mathcal{ED}$ savrsene ($(x + y) (\overline{x} + y)$).
+
+    Za $\mathcal{DNF}$ kazemo da je \emph{savrsen} ako su njegove 
+    $\mathcal{EK}$ savrsene ($xy + \overline{x}y$).
+
+    \subsection{Logicke Funkcije}
+    
+    \emph{Logicka funkcija reda $n$} je bilo koje preslikavanje
+    $f: {\{0, 1\}}^n \mapsto \{0, 1\}$, koje svakoj $n$-torci logickih 
+    vrednosti $(x_1, x_2, \ldots, x_n) \in {\{0, 1\}}^n$ pridruzuje vrednost
+    $y = \{0, 1\}$, tj. $f(x_1, x_2, \ldots, x_n) = y$.
+
+    Domen funkcije $f$ ima $2^n$ vrednosti, dok kodomen ima $2$ vrednosti. 
+    Sledi da funkcija ima ukupna $2^{2^n}$ preslikavanja.
+
+    Funkcije reda 1:
+
+    \begin{tabular}{*{2}{c}}
+        Ime funkcije        & Vrednost funkcije \\
+        \midrule
+        Nula funkcija       & $f(x) = 0$ \\
+        Jedinicna funkcija  & $f(x) = 1$ \\
+        Funkcija identiteta & $f(x) = x$ \\
+        Funkcija negacije   & $f(x) = \overline{x}$ \\
+    \end{tabular}
+
+    Funkcije reda 2:
+
+    \begin{tabular}{*{2}{c}}
+        Ime funkcije                                    & Vrednost funkcije \\
+        \midrule
+        Nula funkcija                                   & $f(x, y) = 0$ \\
+        Jedinicna funkcija                              & $f(x, y) = 1$ \\
+        Prva projekcija                                 & $f(x, y) = x$ \\
+        Druga projekcija                                & $f(x, y) = y$ \\
+        Negacija prve projekcije                        & $f(x, y) = \overline{x}$ \\
+        Negacija druge projekcije                       & $f(x, y) = \overline{y}$ \\
+        Konjukcija                                      & $f(x, y) = x y$ \\
+        Disjunkcija                                     & $f(x, y) = x + y$ \\
+        Seferova funkcija (NAND)                        & $f(x, y) = \overline{xy} = \overline{x} + \overline{y}$ \\
+        Pirsova funkcija (NOR)                          & $f(x, y) = \overline{x + y} = \overline{x} \ \overline{y}$ \\
+        Implikacija $x \implies y$                      & $f(x, y) = \overline{x} + y$ \\
+        Implikacija $y \implies x$                      & $f(x, y) = \overline{y} + x$ \\
+        Negacija implikacija $\overline{x \implies y}$  & $f(x, y) = x \overline{y}$ \\
+        Negacija implikacija $\overline{y \implies x}$  & $f(x, y) = \overline{x} y$ \\
+        Ekskluzivna disjunkcija $y \oplus x$            & $f(x, y) = x \overline{y} + \overline{x} y$ \\
+        Ekvivalencija                                   & $f(x, y) = x y + \overline{x} \ \overline{y}$ \\
+    \end{tabular}
+
+    \subsubsection{Potpuni Skupovi Veznika}
+
+    \emph{Potpnuni skup veznika} je skup veznika pomocu koga se mogu izraziti
+    sve ostale logicke funkcije
+
+    Ako je skup veznika $C$ potpuni skup veznika, tada je i svaki njegov 
+    nadksup $C$ takodje potpuni skup veznika.
+
+    Minimalni potpnu skupovi veznika: $C^\cdot = \{\cdot, ^-\}$, 
+    $C^+ = \{+, ^-\}$, $C^\uparrow = \{\uparrow\}$, 
+    $C^\downarrow = \{\downarrow\}$.
+    \[
+        x \cdot y = 
+        \overline{\overline{x \cdot y}} = 
+        \overline{\overline{x \cdot y} \cdot \overline{x \cdot y}} =
+        (x \uparrow y) \uparrow (x \uparrow y)
+    \]
+    \[
+        x + y =
+        \overline{\overline{x + y}} =
+        \overline{\overline{x + y} + \overline{x + y}} =
+        (x \downarrow y) \downarrow (x \downarrow y)
+    \]
+
+    
+    \subsubsection{Veznici Arnosti $\bold{n}$}
+
+\end{multicols}
+
+\end{document}
