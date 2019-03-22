@@ -1,4 +1,4 @@
-\documentclass[12p, a4paper]{article}
+\documentclass[12p,a4paper]{article}
 
 \usepackage[serbian]{babel} 
 \usepackage[T2A]{fontenc} 
@@ -12,6 +12,7 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 \usepackage{booktabs} 
+\usepackage{graphicx} 
 
 \DeclareMathOperator{\Dom}{Dom} 
 \DeclareMathOperator{\Ima}{Im} 
@@ -154,6 +155,49 @@
         Ekvivalencija                                   & $f(x, y) = x y + \overline{x} \ \overline{y}$ \\
     \end{tabular}
 
+    \subsubsection{Savrsena Disjunktivna/Konjuktivna Normalna Forma}
+
+    \begin{tabular}{*{4}{c}}
+        $x$ & $y$ & $z$ & $f(x, y, z)$ \\
+        \midrule
+        0 & 0 & 0 & 1 \\
+        0 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 1 & 1 & 1 \\
+        1 & 0 & 0 & 0 \\
+        1 & 0 & 1 & 1 \\
+        1 & 1 & 0 & 0 \\
+        1 & 1 & 1 & 0 \\
+    \end{tabular}
+
+    Postupak za formiranje savrsene $\mathcal{DNF}$:
+    \begin{enumerate}
+        \itemsep0em
+        \item Za svaku kombinaciju ulaznih vrednosti koja je tacna, tj. 1, 
+              formiramo savrsenu elementarnu konjukciju koja je tacna samo u 
+              toj valuaciji od promenljivih $x, y, z$.
+        \item Formiranje savrsene disjunktivne normalne forme od tako 
+              dobijenih elementarnih konjukcija.
+    \end{enumerate}
+    Za gornju tabelu dobijamo: 
+    $f(x, y, z) = \overline{xyz} + \overline{x}yz + x\overline{y}z$.
+
+    Postupak za Formiranje savrsene $\mathcal{KNF}$:
+    \begin{enumerate}
+        \itemsep0em
+        \item Za svaku kombinaciju ulaznih vrednosti koja je netacna, tj. 0,
+              formiramo savrsenu elementarnu disjunkciju koja je netacna samo u
+              toj valuaciji od promenljivih $x, y, z$.
+        \item Formiranje savrsene konjuktivne normalne forme od tako 
+              dobijenih elementranih disjunkcija.
+    \end{enumerate}
+    Za gornju tabelu dobijamo:
+    $f(x, y, z) = (x + y + \overline{z}) 
+                  (x + \overline{y} + z)
+                  (\overline{x} + y + z)
+                  (\overline{x} + \overline{y} + z)
+                  (\overline{x} + \overline{y} + \overline{z})$.
+
     \subsubsection{Potpuni Skupovi Veznika}
 
     \emph{Potpnuni skup veznika} je skup veznika pomocu koga se mogu izraziti
@@ -179,7 +223,178 @@
     \]
 
     
-    \subsubsection{Veznici Arnosti $\bold{n}$}
+    \subsection{Minimizacija Logickih Izraza}
+
+    \emph{Slozenost izraza} je broj beznika koje se pojavljuju u izrazu.
+
+    \emph{Minimizacija} je pronalazenje logickog izraza minimalne slozenosti
+    koji izracunava neku funkciju zadatu tabelarno.
+
+    Minimizacija je znacajna u procesu dizajna logickih kola koja u savremenim 
+    racunarima implementiraju logicke izraze, zbog ustede u procesu 
+    proizvodnje i potrosnje elektricne energije.
+
+    \subsubsection{Metod algebarskih transformacija}
+    
+    \begin{enumerate}
+        \itemsep0em
+        \item Ako izraz sadrzi dve elementarne konjukcija oblika $xK$ i 
+              $\overline{x}K$, gde je $K$ proizvoljna konjukcija literala, tada
+              imamo $xK + \overline{x}K = (x + \overline{x})K = K$
+        \item Ukoliko jednu istu konjukciju $K$ mozemo grupisati na dva nacina
+              sa $K_1$ i $K_2$, tada se primenom zakona idempotencije 
+              ($K = K + K$), konjukcija moze grupisati i sa $K_1$ i sa $K_2$.
+    \end{enumerate}
+
+    Primer:
+
+    \begin{align*}
+        F(x, y, z) &=
+        \overline{xyz} + \overline{xy}z + \overline{x}yz + 
+        x\overline{y}z + \overline{x}y\overline{z} \\
+        &= \overline{xyz} + (\overline{xy}z + \overline{xy}z) + 
+        \overline{x}yz + x\overline{y}z + \overline{x}y\overline{z} \\
+        &= (\overline{xyz} + \overline{xy}z) + 
+        (\overline{x}y\overline{z} + \overline{x}yz) + 
+        (\overline{xy}z +  x\overline{y}z) \\
+        &= \overline{xy} + \overline{x}y + \overline{y}z
+    \end{align*}
+
+    \subsubsection{Metod Karnoovih mapa}
+
+    \emph{Karnoova mapa} ja tablica pravougaonog oblika ciji je ukupan broj 
+    polja $2^n$, gde je $n$ broj promenljivih u $\mathcal{DNF}$ izrazu.
+    Za $n = 3$ imamo pravougaonu tablicu dimenzje $2 \times 4$, dok za $n = 4$
+    imamo tablicu dimenzije $4 \times 4$. Svako polje tablice odgovara jednoj 
+    valuaciji.
+
+    \includegraphics[width=\columnwidth]{Figures/torus.png}
+
+    Na pocetku se upise u svako polje odgovarajuca vrednost funkcije.
+    Ako se dve jedinice nalaze jedna pored druge to znaci da se one mogu 
+    grupisati, jer se razlikuju samo na jednom mestu.
+    Slicno i ako imamo cetiri jedinice koje formiraju provougaonik
+    Pravila zaokruzivanja:
+    \begin{itemize}
+        \itemsep0em
+        \item Zaokruzuju se samo jedinice.
+        \item Svaka jedinica mora da bude zaokruzena bar jednom.
+        \item Mogu se zaokruzivati iskljucivo grupo od po $2^k$ polja 
+              pravougaonog oblika.
+        \item Uvek se zaokruzuju sto vece grupe, cak i ako se tom prilikom 
+              neke jedinice ponovo zaokruzuju.
+        \item Nakon sto se sve jednice zaokruze, treba proveriti da li je neko 
+              od zaokruzivanja postalo suvisno, jer scako njegovo polje 
+              pripada i nekom drugom zaokruzivanju.
+    \end{itemize}
+
+    Svakom od dobijenih zaokruzivanja odgovara jedna elementarna konjukcija
+    koja sadrzi upravo one literale koju su zajednici za sva polja koja 
+    obuhvata to zaokruzivanje.
+
+    \subsection{Metod Kvin-Meklaskog}
+    
+    \section{Logicka Kola}
+    
+    \emph{Logicko kolo} (eng. \emph{logic circuit}) je uredjaj koji 
+    implementira neki skup logickih funkcija u datoj tehnologiji.
+
+    \subsection{Vrednost visoke impedense}
+    
+    Nekada je moguce da izlaz logickog nema nikakvu vrednost, tj.\ da mu
+    izlazna vrednost nije ni 0 ni 1. Tu vrednost nazivamo 
+    \emph{vrednost visoke impedense} i obelezavamo je sa $\mathbf{Z}$. Ukoliko
+    neki izraz ima vrednost $\mathbf{Z}$, tada taj izraz ne uticne na vrednost 
+    ulazna na koji je povezan.
+
+    \subsection{Logicke Kapije}
+
+    \emph{Logicke kapije} ili \emph{gejtovi} su uredjaju koji implementiraju 
+    logicke veznika iz izabranog skupa.
+
+    \begin{tabular}{*{3}{c}}
+        Naziv kola & Sematska oznaka \\
+        \midrule
+        buffer  & \includegraphics[width=30px]{Figures/buffer.png} \\
+        NOT  & \includegraphics[width=30px]{Figures/not.png} \\
+        AND  & \includegraphics[width=30px]{Figures/and.png} \\
+        OR   & \includegraphics[width=30px]{Figures/or.png} \\
+        NAND & \includegraphics[width=30px]{Figures/nand.png} \\
+        NOR  & \includegraphics[width=30px]{Figures/nor.png} \\
+        XOR  & \includegraphics[width=30px]{Figures/xor.png} \\
+        XNOR & \includegraphics[width=30px]{Figures/xnor.png} \\
+    \end{tabular}
+
+    \subsection{Implementacija Logickih Kapija u Savremenim Racunarima}
+
+    Savremeni racunari su zasnivani na jednoj posebnoj vrsti unipolarnih
+    tranzistora --- \emph{MOS tranzistori} 
+    (eng. \emph{Metal-Oxide-Semiconductor}).
+    MOS predstavlja poluprovodnicku komponentu koja ima tri prikljucka:
+    \emph{sors} (eng. \emph{source}), \emph{drejn} (eng \emph{drain}), i 
+    \emph{gejt} (eng. \emph{gate}).
+    MOS tranzistor funkcionise kao prekidac --- struja moze da protice od 
+    sorsa ka drajnu po uslovom da se odgovarajuci napon dovede na gejt.
+    Kroz gejt ne protice struja vec on stvara elektricno polje kroz koje
+    ce struja da tece.
+    Postoje dva tipa MOS tranzistora: NMOS i PMOS tranzistor.
+
+    Kod NMOS tranzistora sopr mora biti prikljucen na negativan, a drejn na 
+    pozitivan napon.
+    Da bi doslo do provodjenja struje, potrebno je na gejt dovesti dovoljno 
+    veliki pozitivan napon.
+    Ukoliko je napon u zoni logicke nule, tada je tranzistor u potpunosti 
+    zatvoren i ne provodi struju od sorsa ka drejnu, dok kada je u zoni 
+    logicke jedinice od provodi struju.
+
+    Kod PMOS tranzistora sors se prikljucuje na pozitivan, a drajn na negativan
+    napon. 
+    Da bi doslo do provodjenja struje, potrebno je na gejt dovesti negativan 
+    napon.
+    Ukoliko je napon u zoni logicke jedinice, tada je tranzistor u zatvoren i
+    ne provodi struju, dok kada je u zoni logicke nule on provodi struju.
+
+    \includegraphics[width=0.8\columnwidth]{Figures/mos.png}
+
+    Ako se u izradi logickig kola koriste i NMOS i PMOS tranzistori, tada
+    govorimo o CMOS tehnologiji (eng. \emph{Complementary MOS}).
+
+    \subsubsection{NOT kolo}
+
+    \includegraphics[width=0.7\columnwidth]{Figures/mos_not.png}
+
+    \subsubsection{NAND i AND kolo}
+
+    \includegraphics[width=0.8\columnwidth]{Figures/mos_nand_and.png}
+
+    \subsubsection{NOR i OR kolo}
+
+    \includegraphics[width=0.8\columnwidth]{Figures/mos_nor_or.png}
+
+    \subsubsection{XOR kolo}
+
+    \includegraphics[width=0.7\columnwidth]{Figures/mos_xor.png}
+
+    \subsubsection{Buffer}
+
+    \includegraphics[width=0.4\columnwidth]{Figures/mos_buffer.png}
+
+    \subsubsection{Propusni Tranzistori i Prenosne Kapije}
+
+    \emph{Propusni tranzistori} kontrolisu propustanje nekog signala od jedne 
+    tacke kola ka drugoj u zavisnost od vrednosti nekog drugog signala.
+
+    \emph{Propusna kapija} CMOS varijanta propusnih tranzistora.
+
+    \subsection{Baferi sa Tri Stanja}
+
+    \includegraphics[width=0.7\columnwidth]{Figures/mos_tristate_buffer.png}
+    
+    \section{Kombinatorna Kola}
+
+    \section{Sekvencijalna Kola}
+    
+    
 
 \end{multicols}
 
