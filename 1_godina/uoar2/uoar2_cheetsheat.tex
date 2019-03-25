@@ -18,6 +18,7 @@
 \DeclareMathOperator{\Ima}{Im} 
 \DeclareMathOperator{\nzd}{NZD} 
 \DeclareMathOperator{\nzs}{NZS} 
+\DeclareMathOperator{\NOR}{NOR} 
 
 \newtheorem*{theorem}{Teorema}
 \newtheorem*{prop}{Tvrđenje}
@@ -36,13 +37,13 @@
 
     \subsection{Tabele Istinitosti}
 
-    \begin{tabular}{*{6}{c}}
-        A & B & AND & OR & NOT & XOR \\
+    \begin{tabular}{*{8}{c}}
+        A & B & AND & NAND & OR & NOR & NOT & XOR \\
         \midrule
-        0 & 0 & 0 & 0 & 1 & 0 \\
-        0 & 1 & 0 & 1 & 1 & 1 \\
-        1 & 0 & 0 & 1 & 0 & 1 \\
-        1 & 1 & 1 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+        0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 \\
+        1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 \\
+        1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 \\
     \end{tabular}
 
     \subsection{Osnovni Zakoni Bulove Algebre}
@@ -267,7 +268,6 @@
     Za $n = 3$ imamo pravougaonu tablicu dimenzje $2 \times 4$, dok za $n = 4$
     imamo tablicu dimenzije $4 \times 4$. Svako polje tablice odgovara jednoj 
     valuaciji.
-
     \includegraphics[width=\columnwidth]{Figures/torus.png}
 
     Na pocetku se upise u svako polje odgovarajuca vrednost funkcije.
@@ -392,8 +392,457 @@
     
     \section{Kombinatorna Kola}
 
-    \section{Sekvencijalna Kola}
+    \emph{Kombinatorna kola} (eng. \emph{combinationl curcuit}) su kola ko 
+    kojih su izlazni signali jednoznacno odredjeni trenutnim ulaznim signlima, 
+    tako da predstavljaju jednu logicku funkciju.
+
+    \subsection{Osnovna kombinatorna kola}
+
+    \subsubsection{Multiplekser}
+
+    \emph{Multiplekser} je kolo sa $2^n$ ulaza, jednim izlazom i $n$ 
+    upravljackih jedinica pomocu kojih se bira jedna od ulaza koji ce se 
+    pojaviti na izlazu.
     
+    \paragraph{Primena multipeksera}:
+    \begin{itemize}
+        \itemsep0em
+        \item Bira podatak koji se salje na magistralu
+        \item Operacija koju ALU mora da izracuna
+        \item Dekompozicija logickih funkcija na jendostavnije funkcije
+    \end{itemize}
+    \includegraphics[width=0.7\columnwidth]{Figures/mux.png}
+
+    \begin{tabular}{*{2}{c}}
+        $S$ & $f(\mathbf{X}, S)$ \\
+        \midrule
+        00  & $X_1$ \\
+        01  & $X_2$ \\
+        10  & $X_3$ \\
+        11  & $X_4$ \\
+    \end{tabular}
+
+    \subsubsection{Demultiplekser}
+
+    \emph{Demultiplekser} je kolo sa jednim ulazom, $2^n$ izlaza i $n$
+    upravljackih jedinica pomocu kojih se ulaz preusmerava na tacno jedan
+    izlaz.
+
+    \paragraph{Primena demultipleksera}
+    \begin{itemize}
+        \itemsep0em
+        \item Bira odrediste vrednosti koja se prenosi nekom magistralom
+    \end{itemize}
+    \includegraphics[width=0.6\columnwidth]{Figures/dmx.png}
+
+    \begin{tabular}{*{5}{c}}
+        $S$ & $Y_1$ & $Y_2$ & $Y_3$ & $Y_4$ \\
+        \midrule
+        00  & $x$ &  0  &  0  &  0  \\
+        01  &  0  & $x$ &  0  &  0  \\
+        10  &  0  &  0  & $x$ &  0  \\
+        11  &  0  &  0  &  0  & $x$ \\
+    \end{tabular}
+
+    \subsubsection{Dekoder}
+
+    \emph{Dekoder} je kolo koje kao ulazni podatak prihvata $n$-bitni broj, a
+    zatim na osnovu njega bira samo jedan on $2^n$ izlaza koji postavlja na 
+    vrednost logicke jedinice.
+
+    \paragraph{Primena decodera}
+    \begin{itemize}
+        \itemsep0em
+        \item Odredjuje vrednost broja koji je zadat binarno
+        \item Biranje registra iz kog se uzima vrednost
+        \item Obrada sistema prekida
+    \end{itemize}
+    \includegraphics[width=0.4\columnwidth]{Figures/decoder.png}
+
+    \begin{tabular}{*{5}{c}}
+        $S$ & $Y_1$ & $Y_2$ & $Y_3$ & $Y_4$ \\
+        \midrule
+        00 & 1 & 0 & 0 & 0 \\
+        01 & 0 & 1 & 0 & 0 \\
+        10 & 0 & 0 & 1 & 0 \\
+        11 & 0 & 0 & 0 & 1 \\
+    \end{tabular}
+
+    \subsubsection{Enkoder}
+
+    \emph{Enkoder} je kolo koje ime $2^n$ ulaza, a zatim na osnovu njih stvara
+    $n$-bitni broj.
+
+    \emph{Enkoder sa prijoritetom} sprecava gresu kada se pojave vise od jedne
+    jedinice na ulazu, te on ima prioritet prve jedinice koja se pojavljuje.
+
+    \paragraph{Primene encodera}
+    \begin{itemize}
+        \itemsep0em
+        \item 
+    \end{itemize}
+    \includegraphics[width=0.6\columnwidth]{Figures/encoder.png}
+
+    \includegraphics[width=0.8\columnwidth]{Figures/priority_encoder.png}
+
+    \subsubsection{Komparatori}
+
+    \emph{Komparatori} su kola koja porede dve ulazne vrednosti.
+    
+    \includegraphics[width=0.6\columnwidth]{Figures/cmp_eq.png}
+
+    \subsection{Aritmeticko-Logicka kola}
+
+
+    \subsubsection{Pomeraci}
+
+    \includegraphics[width=\columnwidth]{Figures/shifter.png}
+
+    \subsubsection{Sabiraci i Oduzimaci}
+
+    \paragraph{Polusabirac}
+
+    \begin{tabular}{*{5}{c}}
+        $X$ & $Y$ & $S$ & $C$ \\
+        \midrule
+         0  &  0  &  0  &  0  \\
+         0  &  1  &  1  &  0  \\
+         1  &  0  &  1  &  0  \\
+         1  &  1  &  0  &  1  \\
+    \end{tabular}
+
+    \includegraphics[width=0.5\columnwidth]{Figures/half_adder.png}
+
+    \paragraph{Punisabiraci}
+
+    \begin{tabular}{*{5}{c}}
+        $X$ & $Y$ & $PC$ & $S$ & $C$ \\
+        \midrule
+         0  &  0 &  0  &  0  &  0  \\
+         0  &  0 &  1  &  1  &  0  \\
+         0  &  1 &  0  &  1  &  0  \\
+         0  &  1 &  1  &  0  &  1  \\
+         1  &  0 &  0  &  1  &  0  \\
+         1  &  0 &  1  &  0  &  1  \\
+         1  &  1 &  0  &  0  &  1  \\
+         1  &  1 &  1  &  1  &  1  \\
+    \end{tabular}
+
+    \includegraphics[width=0.7\columnwidth]{Figures/full_adder.png}
+
+    \paragraph{Visebitni sabiraci}
+    
+    \emph{Visebitni talasasti sabirac} (eng. \emph{Ripple Carry Adder}) je kolo
+    koje je implementirano tako da se za svaki bit pomoci sabiraca racuna zbir 
+    i prenos, koji se onda prenosi na sledeci sabirac. Tako ulancani sabiraci,
+    sa po $2\Delta$ kasnjenja, imaju ukupno $n \times 2\Delta$, jer se za svaki
+    prethodni ceka racunanje prenosa. Pr.\ 32-bitni sabirac ima $64\Delta$ 
+    kasnjenja.
+
+    \includegraphics[width=0.7\columnwidth]{Figures/riplle_carry_adder.png}
+
+    \paragraph{Poluoduzimac}
+    
+    \begin{tabular}{*{4}{c}}
+        $X$ & $Y$ & $S$ & $C$ \\
+        \midrule
+         0  &  0  &  0  &  0  \\
+         0  &  1  &  1  &  1  \\
+         1  &  0  &  1  &  0  \\
+         1  &  1  &  0  &  0  \\
+    \end{tabular}
+
+    \includegraphics[width=0.5\columnwidth]{Figures/half_sub.png}
+
+    \paragraph{Punioduzimaci}
+
+    \begin{tabular}{*{5}{c}}
+        $X$ & $Y$ & $PC$ & $S$ & $C$ \\
+        \midrule
+         0  &  0 &  0  &  0  &  0  \\
+         0  &  0 &  1  &  1  &  1  \\
+         0  &  1 &  0  &  1  &  1  \\
+         0  &  1 &  1  &  0  &  1  \\
+         1  &  0 &  0  &  1  &  0  \\
+         1  &  0 &  1  &  0  &  0  \\
+         1  &  1 &  0  &  0  &  0  \\
+         1  &  1 &  1  &  1  &  1  \\
+    
+    \end{tabular}
+
+    \includegraphics[width=0.7\columnwidth]{Figures/full_sub.png}
+
+    \paragraph{Visebitni oduzimac}
+
+    \emph{Visebitni talasasti oduzimac} (eng. \emph{Ripple Carry Subtractor}) 
+    je kolo koje je implementirano tako da se za svaki bit pomoci oduzimaca 
+    racuna razliku i prenos, koji se onda prenosi na sledeci oduzimac. Tako 
+    ulancani oduzimaci, sa po $2\Delta$ kasnjenja, imaju ukupno 
+    $n \times 2\Delta$, jer se za svaki prethodni ceka racunanje prenosa. Pr.\ 
+    32-bitni oduzimac ima $64\Delta$ kasnjenja.
+
+    \includegraphics[width=0.7\columnwidth]{Figures/riplle_carry_sub.png}
+
+    \subsubsection{Aritmeticko-Logicka Jedinica}
+
+    \emph{Aritmeticko-Logicka jedinica} 
+    (eng. \emph{Arithmetic Logic Unit --- ALU}) je kolo koje izvrsava razlicite
+    aritheticke i logicke operacije, u zavisnosti od zahteva korisnika.
+
+    \includegraphics[width=0.6\columnwidth]{Figures/alu.png}
+
+    \subsubsection{Programabilni logicki nizovi}
+
+    \emph{Programabilni logicki nizovi} 
+    (eng. \emph{Programmable Logic Array --- PLA}) su programabilna logicka 
+    kola koja sluze za implementiranje bilo koje logicke funkcije 
+    predstavljene u savrsenom $\mathcal{DNF}$-u.
+
+    \includegraphics[width=0.8\columnwidth]{Figures/pla.png}
+
+    \subsubsection{ROM}
+
+    \begin{tabular}{*{4}{c}}
+        $X_1$ & $X_2$ & $Y_1$ & $Y_2$ \\
+        \midrule    
+        0 & 0 & 0 & 1 \\
+        0 & 1 & 1 & 1 \\
+        1 & 0 & 1 & 0 \\
+        1 & 1 & 0 & 0 \\
+    \end{tabular}
+
+    \includegraphics[width=0.5\columnwidth]{Figures/rom.png}
+
+    \section{Sekvencijalna Kola}
+
+    Kod \emph{kombinatornih kola} vrednost na izlazu 
+    $\mathbf{Y} = (y_1, y_2, \ldots, y_n)$ u nekom trenutku $t$ vazi 
+    iskljucivo od vrednosti na ulazu $\mathbf{X} = (x_1, x_2, \ldots, x_n)$, 
+    pa se moze predsaviti kao
+    \[
+        \mathbf{Y} = F(\mathbf{X}),
+    \]
+    gde je $F$ neka vektorska logicka funkcija po $\mathbf{X}$.
+
+    Pod \emph{stanjem} podrazumevamo niz bitova 
+    $\mathbf{S} = (s_1, s_2, \ldots, s_n)$, koja se pamte unutar kola.
+    Da bi se to stanje odrzavalo samo sebe mora da zavisi i od $\mathbf{X}$ i 
+    od $\mathbf{S}$:
+    \[
+        \mathbf{S} = G(\mathbf{X}, \mathbf{S}),
+    \]
+    gde je $G$ neka vektorska logicka funkcija po $\mathbf{X}$ i $\mathbf{S}$.
+    Ovo se realizuje \emph{povratnom spregom}.
+    
+    \emph{Stabilono stanje} je stanje koje se nece promeniti sve dok se ulaz
+    $\mathbf{X}$ funkcije $G$ ne promeni. Dok je \emph{nestabilno stanje}, 
+    stanje za koje $\mathbf{S}$ nije fiksirana tacka funkcije $G$.
+
+    \begin{itemize}
+        \itemsep0em
+        \item Vreme koje je potrebno da se stanje $\mathbf{S}$ stabilizuje u
+              stabilno stanje $\mathbf{S'}$ naziva se 
+              \emph{vreme stabilizacije}.
+        \item Kolo koje osciluje izmedju razlicitih stanja i ne uspeva da 
+              dostigne stbilno stanje naziva se \emph{nestabilno}.
+        \item Kako kolo koje osciluje izmedju 0 i 1, tj. $+0V$ i $+5V$, u tom
+              procesu promene moze da se stabilizuje na $+2.5V$, to stanje
+              se naziva \emph{metastabilnost}.
+        \item Nekada za dati ulaz $\mathbf{X}$ kolo moze da ode u stabilno 
+              stanje $\mathbf{S'}$ ili $\mathbf{S''}$, u zavisnosti od 
+              nepredvidivih fizickih faktora. Ova pojava se naziva 
+              \emph{nedeterministicnost}.
+    \end{itemize}
+
+    Za kolo kazemo da je \emph{stabilno}, ako za svaku vrednost $\mathbf{X}$ 
+    na ulazi i za svako trenutno stanje $\mathbf{S}$ kolo prelazi u stabilno
+    stanje $\mathbf{S'}$ koje je jedinstveno odredjeno i zavisi samo od 
+    $\mathbf{X}$ i $\mathbf{S}$, tj.\ imamo:
+    \[
+        \mathbf{S'} = T(\mathbf{X}, \mathbf{S}).
+    \]
+    Funkcija $T$ naziva se \emph{funkcija prelaska}.
+
+    \subsection{Generatori radnog takta}
+
+    \emph{Radni takt} ili \emph{casovnik} (eng. \emph{clock}) neprekidno 
+    emituje impusle odredjene duzine u odredjenim vremenskim razmacima. 
+
+    Prelazak sa 0 na 1 se naziva \emph{ulazna ivica} (eng. \emph{rising edge}).
+    Prelazak sa 1 na 0 se naziva \emph{silazna ivica} 
+    (eng. \emph{falling edge}).
+
+    Vreme intervala izmedju dve odgovarajuce ivice dva uzastona impulsa naziva 
+    se \emph{ciklus radnog takta} (eng. \emph{clock cycle time}).
+
+    Broj ciklusa u sekundi odredjuju \emph{frekvenciju radnog takta}.
+
+    \emph{Sinhroni} radni takt ima jednako trajanje ciklusa, Dok 
+    \emph{asinhroni} nema.
+
+    \subsection{Asinhrona i Sinhrona sekvencijalna kola}
+
+    \emph{Asinhrona kola} su sekvencijalna kola kod kojih se menja stanje na
+    osnovu izlaza nekog drugog kola.
+
+    \emph{Sinhrona kola} su sekvencijalna kola koja menjaju stanje samo u 
+    odredjenom trenutku ciklusa casovnika (uzlazni ili silazni signla).
+
+    Kod sinhronih kola stanje se menja na odredjeno vreme sto je diskretna
+    velicina, dok kod asinhronih kola vreme je kontinualna velicina.
+    Da bi sinhrona kola radila ciklus radnog takta mora da bude duzi od 
+    najveceg kasnjenja nekog kola, sto smanjuje brzinu kola koje imaju malo
+    kasnjenje.
+
+    \subsection{Reze}
+
+    \subsubsection{SR reza}
+
+    \emph{SR reza} (eng. \emph{SR latch}) je sekvencijalno kolo koje ima dva
+    ulazna bita $S$ (set) i $R$ (reset) i dvobitno stanje $Q\overline{Q}$ koje 
+    je ujedno i izlaz i definisano je sa:
+
+    \begin{align*}
+        Q &= R \ \NOR\ \overline{Q} \\
+        \overline{Q} &= S \ \NOR\ Q 
+    \end{align*}.
+    \begin{itemize}
+        \itemsep0em
+        \item $S = 0, R = 0$ reza cuva prethodno stanje
+        \item $S = 0, R = 1$ reza resetuje svoje stanje na 0
+        \item $S = 1, R = 0$ reza setuje svoje stanje na 1
+        \item $S = 1, R = 1$ je nestabilno stanje 
+    \end{itemize}
+
+    \begin{tabular}{*{5}{c}}
+        $S$ & $R$ & $Q$ & $Q_n$ & Action \\
+        \midrule
+         0  &  0  &  0  &  0  & hold state\\
+         0  &  0  &  1  &  1  & hold state\\
+         0  &  1  &  x  &  0  & reset \\
+         1  &  0  &  x  &  1  & set \\
+         1  &  1  &  x  & --- & not allowed \\
+    \end{tabular}
+
+    \includegraphics[width=0.5\columnwidth]{Figures/sr_latch.png}
+
+    \subsubsection{D reza}
+
+    \emph{D reza} (eng. \emph{D lathc}) je sekvencijalno kolo, koje za
+    razliku od SR reze ima samo jedan ulazni bit $D$ i jedan bit za kontrolu 
+    menjanja stanja $e$. Kod D reze nemamo mogucnost nestabilnog stanja, zato
+    sto je na $S$ ulazu $D$, a na $R$ ulazu $\overline{D}$. Iz tog razloga
+    nikada nije moguce cuvati stanje za bilo koje $D$, pa se uvodi bit za 
+    kontrolu stanja $e$, koji menja stanje u zavisnost od $D$ kada je 1, dok
+    kada je 0 on cuva stanje. Ukratko vrednost sa $D$ se smesta u D rezu.
+
+    \begin{itemize}
+        \itemsep0em
+        \item $e = 0$ stanje ostaje isto
+        \item $e = 1, D = 0$ stanje se resetuje na 0
+        \item $e = 1, D = 1$ stanje se setuje na 1
+    \end{itemize}
+
+    \begin{tabular}{*{5}{c}}
+        $D$ & $Q$ & $e$ & $Q_n$ & Action \\
+        \midrule
+         x  &  0  &  0  &  0  & hold state\\
+         x  &  1  &  0  &  1  & hold state\\
+         0  &  x  &  1  &  0  & reset \\
+         1  &  x  &  1  &  1  & set \\
+    \end{tabular}
+
+    \includegraphics[width=0.7\columnwidth]{Figures/d_latch.png}
+
+    \subsection{Flip-Flop}
+
+    Reze predstavljaju asihnrona sekvencijalna kola. Dok \emph{Flip-Flopovi} 
+    predstavljaju najjednostavnija sinhrona kola. Za rad flip-flopova potreban
+    je radni takt pa tako oni menjaju svoje stanje samo na ulaznoj/silaznoj
+    ivici casovnika.
+
+    \subsubsection{Master-Slave SR flip-flop}
+
+    \includegraphics[width=0.8\columnwidth]{Figures/sr_ms_flipflop.png}
+
+    Dok god je signal radnog takta 0, onda se stanje na prvoj SR rezi menja 
+    ili ostaje isto u zavisnosti od $S$ i $R$. Kada se signal radnog takta
+    promeni na 1, na ulaznoj ivici stanje se menja na drugoj SR rezi, koje
+    ujedno i predstavlja stanje SR flip-flopa. Ako se dovedu dve jedinice na
+    ulazu dolazi do nestabilnog stanja.
+
+    \subsubsection{Master-Slave D flip-flop}
+
+    \includegraphics[width=0.9\columnwidth]{Figures/d_ms_flipflop.png}
+
+    Ako je enable bit $e = 0$, stanje se cuva, dok kada je enable bit 
+    $e = 1$ stanje prve SR reze postavlja se na vrednost ulaza $D$, kada se
+    signal radnog takta promeni sa 0 na 1, stanje se prenosi na drugu SR rezu,
+    koje je ujedno i stanje D flip-flopa.
+
+    \subsubsection{Master-Slave JK filp-flop}
+
+    \includegraphics[width=0.9\columnwidth]{Figures/jk_ms_flipflop.png}
+
+    Prva SR reza zavisi od trenutnog stanja JK flip-flopa i ulaza $J, K$. Na
+    ulaznoj ivici casovnika stanje sa prve SR reze prebacuje se u drugu sto je
+    ujedno i stanje FJ flip-flopa.
+
+    \begin{itemize}
+        \itemsep0em
+        \item $J = 0, K = 0$ stanje ostaje isto
+        \item $J = 0, K = 1$ stanje se resetuje na 0
+        \item $J = 1, K = 0$ stanje se setuje na 1
+        \item $J = 1, K = 1$ stanje prelazi u svoj komplement
+    \end{itemize}
+
+    \subsubsection{Master-Slave T flip-flop}
+
+    \includegraphics[width=0.9\columnwidth]{Figures/t_ms_flipflop.png}
+
+    Prva SR reza zavisi od trenutnog stanja T flip-flopa i ulaza $T$. Na
+    ulaznoj ivica cosovnika stanje sa prve SR reze prebacuje se u drugu sto je
+    ujedno i stanje T flip-flopa.
+
+    \begin{itemize}
+        \itemsep0em
+        \item $T = 0$ stanje ostaje isto
+        \item $T = 1$ stanje prelazi u svoj komplement
+    \end{itemize}
+
+    \subsubsection{1s Catching Problem}
+
+    \emph{1s catching problem} nastaje kada se na $J$ ili $K$ dovede 1 i pre
+    uzlazne ivice casovnika onda vrati na 0. Nakon otkucaja radnog takta 
+    stanje JK flip-flopa ce se promeniti u zavisnosti od prethodnog stanja, 
+    jer je prva SR reza `uhvatila' tu jedinicu i promenila svoje stanje. 
+    Resava se dodavanjem jednog multipleksera koji na ulazu ima 
+    $Q, 0, 1, \overline{Q}$, a kontrolni bit mu je 2bitni zapis $JK$.
+    \includegraphics[width=\columnwidth]{Figures/jk_ms_flipflop_1s.png}
+
+    \subsection{Registri}
+
+    \emph{Registar} je kolo koje cuva jedan visebitni binarni broj. Registri
+    su napravljeni od jednog niza D flip-flopova, najcesce 8, 16, itd., 
+    signalima za citanje i upis.
+    \includegraphics[width=\columnwidth]{Figures/reg_8bit.png}
+
+    \emph{Pomeracki registri} imaju mogucnost pomeranja svog sadrzaja u levo
+    ili u desno u svakom ciklusu radnog takta, u zavisnosti od kontrolnih
+    signala.
+    \includegraphics[width=\columnwidth]{Figures/shift_reg.png}
+
+    \subsection{Memorija}
+    
+    \emph{Staticka memorija} se konstruise pomocu registra koji su 
+    hijerarhijski konstruisani pomocu D flip-flopova. Ova memorija je veoma
+    brza pa se zato koristi kao kes memorija drugog nivoa.
+
+    \includegraphics[width=\columnwidth]{Figures/mem28.png}
+
+    \includegraphics[width=\columnwidth]{Figures/mem416.png}
+
+    \subsection{Brojaci}
     
 
 \end{multicols}
