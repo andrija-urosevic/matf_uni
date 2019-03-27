@@ -837,12 +837,34 @@
     \emph{Staticka memorija} se konstruise pomocu registra koji su 
     hijerarhijski konstruisani pomocu D flip-flopova. Ova memorija je veoma
     brza pa se zato koristi kao kes memorija drugog nivoa.
-
     \includegraphics[width=\columnwidth]{Figures/mem28.png}
-
     \includegraphics[width=\columnwidth]{Figures/mem416.png}
 
     \subsection{Brojaci}
+
+    \emph{Asinhroni brojac} radi tako sto stanje na svakog prethodnog kola
+    utice na trenutno stanje kolo i tako se prenosi kao talas.
+
+    \includegraphics[width=0.8\columnwidth]{Figures/asinhroni.png}
+
+    \emph{Sinhroni brojac} radi tako sto stanje na svim kolima utice od 
+    predhodnih stanja i menja se na svakom otkucaju casovnika.
+    \includegraphics[width=\columnwidth]{Figures/sinhroni.png}
+
+    \subsection{Automat i Transdruktor}
+
+    \section{Procesorska Organizacija i Performanse}
+
+    \subsection{Datapath}
+        
+    \emph{Putanja podataka} (eng. \emph{datapath}) je skup funkcionalnih 
+    jedinica kao sto je aritmeticko-logicka jedinica, registra, i magistrala.
+
+    \includegraphics[width=\columnwidth]{Figures/1bus_datapath.jpg}
+    \includegraphics[width=\columnwidth]{Figures/2bus_datapath.jpg}
+    \includegraphics[width=\columnwidth]{Figures/3bus_datapath.jpg}
+    
+    
     
 
 \end{multicols}
