@@ -1,0 +1,403 @@
+\documentclass[12p, a4paper]{article}
+
+\usepackage[serbian]{babel} 
+\usepackage[T2A]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{amsthm}
+\usepackage{multicol} 
+\usepackage[margin=0.5in]{geometry} 
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{enumerate} 
+\usepackage{amssymb}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Dom}{Dom} 
+\DeclareMathOperator{\Ima}{Im} 
+\DeclareMathOperator{\nzd}{NZD} 
+\DeclareMathOperator{\nzs}{NZS} 
+
+\newtheorem*{theorem}{Teorema}
+\newtheorem*{prop}{Tvrđenje}
+\newtheorem*{lema}{Lema}
+
+
+\title{Diskretne Strukture 2}
+\author{Andrija Urošević}
+
+\begin{document}
+
+\maketitle
+
+\begin{multicols}{2}
+
+\section{Kombinatorika}
+
+\subsection{Prebrojavanje}
+
+    \emph{Prebrojavanje} je odredjivanje kardinalnosti nekog skupa.
+
+    \emph{Princim jednakosti}: Ako za skupove $A$ i $B$ postoji bijektivno 
+    preslikavanje $f: A \mapsto B$ tada vazi:
+    \[ |A| = |B|. \]
+    
+    \emph{Princim zbira}: Ako su $A_1, A_2, \ldots, A_n$ konacni disjunktni 
+    skupovi, tj.\ $A_i \cap A_j = \emptyset, \forall i \neq j$, tada vazi:
+    \[ 
+        |A_1 \cup A_2 \cup \cdots \cup A_n| = 
+        |A_1| + |A_2| + \cdots + |A_n| =
+        \sum_{i=1}^n |A_i|.
+    \]
+
+    \emph{Princim proizvoda}: Neka su $A_1, A_2, \ldots, A_n$ konacni skupovi
+    i neka je $A_1 \times A_2 \times \cdots \times A_n = 
+    \{(a_1, a_2, \ldots a_n) | a_i \in A_i, i = 1,\ldots, n\}$. Tada vazi:
+    \[
+        |A_1 \cap A_2 \cap \cdots \cap A_n| = 
+        |A_1| \cdot |A_2| \cdots |A_n| = 
+        \prod_{i=1}^n |A_i|
+    \]
+
+    \emph{Dirihleov princip}: Ako je $n+1$ objekat smesteno u $n$ kutija, 
+    postoji bar jedna kutija koja sadrzi bar $2$ objekta.
+
+    \emph{Uopsteni Dirihlevo princip}: Ako je $k$ objekata smesteno u $n$ 
+    kutija, pri cemu vazi $k > cn$, za $c \in \mathbb{N}$, tada postoji kutija 
+    u kojoj je smesteno bar $c + 1$ objekat.
+
+\subsection{Binomni koeficijent}
+
+    \emph{Binomni keoficijent}, u oznaci $\binom{n}{k}$, definise se 
+    $\forall k \in \mathbb{N}$ i $\forall n \in \mathbb{R}$ kao:
+    \[ 
+        \binom{n}{k} = 
+        \frac{n (n - 1) \cdots (n - k + 1)}{k!}
+    \]
+    Dodatno $\binom{n}{k} = 1$. U specijalnom slucaju za 
+    $n \in \mathbb{N}, k \leq n$, vazi jednakost
+    \[
+        \binom{n}{k} =
+        \frac{n!}{k! (n - k)!}
+    \]
+
+    \subsubsection{Osnovna svojstva}
+
+    \begin{enumerate}
+        \itemsep0em
+        \item [S.1] $\binom{n}{k} = \binom{n}{n - k}$ 
+                    (\emph{Uslov simetricnosti})
+        \item [S.2] $\binom{-n}{k} = {(-1)}^k \binom{n + k - 1}{k}$
+                    (\emph{Negacija gornjeg indeksa})
+        \item [S.3] $\binom{n}{k} = \binom{n - 1}{k} + \binom{n - 1}{k - 1}$
+                    (\emph{Adiciona formula})
+    \end{enumerate}
+    
+    \emph{Paskalov trougao}:
+
+    \begin{tabular}{rccccccccc}
+        $n=0$:&    &    &    &    &  1\\
+            \noalign{\smallskip\smallskip}
+        $n=1$:&    &    &    &  1 &    &  1\\
+            \noalign{\smallskip\smallskip}
+        $n=2$:&    &    &  1 &    &  2 &    &  1\\
+            \noalign{\smallskip\smallskip}
+        $n=3$:&    &  1 &    &  3 &    &  3 &    &  1\\
+            \noalign{\smallskip\smallskip}
+        $n=4$:&  1 &    &  4 &    &  6 &    &  4 &    &  1\\
+            \noalign{\smallskip\smallskip}
+    \end{tabular}
+
+    \begin{theorem}[Binomna formula]
+        Za $n \in \mathbb{N}$ i za 
+        $x, y \in \mathbb{R}$ vazi:
+        \[
+            {(x + y)}^n = \sum_{k = 0}^n \binom{n}{k} x^k y^{n - k}.
+        \]
+    \end{theorem}
+
+    \begin{theorem}
+        Za $n \in \mathbb{N}$ i $x_1, x_2, \ldots, x_r \in \mathbb{R}$ vazi:
+        \[
+            {(x_1 + x_2 + \cdots + x_r)}^n = 
+            \sum_{\substack{k_1 + k_2 + \cdots + k_r = n \\ 
+                  k1, k2, \ldots, k_r \geq 0}}
+            \binom{n}{k_1, k_2, \ldots, k_r} 
+            x_1^{k_1} x_2^{k_2} \cdots x_r^{k_r}
+        \]
+    \end{theorem}
+
+    \subsubsection{Binomni identiteti}
+
+    \begin{enumerate}
+        \itemsep0em
+        \item [I.1] $\binom{n}{k} = \frac{n}{k} \binom{n - 1}{k - 1} = 
+            \frac{n}{n - k} \binom{n - 1}{k}$
+            (\emph{Izvlacenje ispred zagrade})
+        \item [I.2] $\binom{n}{k + r} \binom{k + r}{k} = 
+            \binom{n}{k} \binom{n - k}{k}$
+            (\emph{Pojednostavljivanje proizvoda})
+        \item [I.3] $\sum_{k = 0}^n \binom{r + k}{k} = \binom{n + r + 1}{n}$ i
+            $\sum_{k = 0}^n \binom{k}{r} = \binom{n + 1}{r + 1}$
+            (\emph{Sumacione formule})
+        \item [I.4] $\sum_{k = 0}^n {\binom{n}{k}}^2 = \binom{2n}{n}$
+            (\emph{Suma kvadrata})
+    \end{enumerate}
+
+    \subsubsection{Formula ukljucenja-iskljucenja}
+
+    Za tri konacna skupa $A, B, C$ vazi jednakost:
+    \[
+        |A \cup B \cup C| = |A| + |B| + |C| - 
+        (|A \cap B| + |A \cap C| + |B \cap C|) +
+        |A \cap B \cap C|.
+    \]
+    
+    \begin{theorem}[Formula ukljucenja-iskljucenja]
+        Za konacne skupove $A_1, A_2, \ldots, A_n$ vazi jednakost:
+        \[
+            \left| \bigcup_{i = 1}^n A_i \right| = 
+            \sum_{\emptyset \neq I \subset \mathbb{N}_n}
+            {(-1)}^{|I| - 1} \left| \bigcap_{i \in I} A_i \right|
+        \]
+    \end{theorem}
+
+    \subsection{Izbor elemenata}
+    
+    Neka je dat skup $S= \{a, b, c\}$. Biramo 2 iz njega:
+
+    Uredjeni izbor elemenata:
+    \begin{enumerate}
+        \item Ponavljanje \textbf{je} dozvoljeno.
+            \begin{tabular}{*{3}{c}}
+                aa & ba &ca \\
+                ab & bb &cb \\
+                ac & bc &cc \\
+            \end{tabular}
+        \item Ponavljanje \textbf{nije} dozvoljeno.
+            \begin{tabular}{*{3}{c}}
+                ab & ba &ca \\
+                ac & bc &cb \\
+            \end{tabular}
+    \end{enumerate}
+
+    Ne uredjeni izbro elemenata:
+    \begin{enumerate}
+        \item Ponavljanje \textbf{je} dozvoljeno.
+            \begin{tabular}{*{3}{c}}
+                aa & bb & cc \\
+                ab & ac & bc \\
+            \end{tabular}
+        \item Ponavljanje \textbf{nije} dozvoljeno.
+            \begin{tabular}{*{3}{c}}
+                ab & ac & bc \\
+            \end{tabular}
+    \end{enumerate}
+
+    \subsubsection{Uredjeni izbor elemenata sa ponavljanjem --- Varijacije}
+
+    Uredjeni izbor $k$ elemenata skupa od $n$ elemenata, uz dozvoljeno 
+    ponavljanje prilikom izbora jednak je proju preslikavanja 
+    $f: \mathbb{N}_k \mapsto \mathbb{N}_n$, tj.\
+    \[
+        n^k = \underbrace{n \cdot n \cdot \cdots \cdot n}_k.
+    \]
+
+    \subsubsection{Uredjeni izbor elemenata --- 
+    Permutacije $\mathbf{k}$-tog reda}
+
+    Uredjini izbor $k$ elemenata skupa od $n$ elemenata jednak je broju 
+    injektivnih preslikavanja $f: \mathbb{N}_k \mapsto \mathbb{N}_n$, tj.
+    \[
+        \prod_{i = 0}^{k - 1} (n - i) = n(n - 1)(n - 2)\cdots(n - k + 1).
+    \]
+
+    \emph{Permutacije} su specijalan slucaj uredjenig izbora kod kojih vazi
+    $k = n$. Sledi, broj permutacija skupa od $n$ elemenata jednak je
+    \[
+        n! = n(n - 1) \cdots 1.
+    \]
+
+    \subsubsection{Neuredjeni izbor elemenata --- Kombinacije}
+
+    Broj neuredjenih izbora $k$ elemenata skupa od $n$ elemenata jednak je
+    \[
+        \binom{n}{k} = \frac{n!}{k! (n - k)!}.
+    \]
+    
+    \subsubsection{Neuredjeni izbor elemenata sa ponavljanja}
+
+    Broj neuredjenih izbora $k$ elementa skupa od $n$ elemenata, uz dozvoljeno 
+    ponavljanje prilikom izbora, jednak je
+    \[
+        \binom{n + k - 1}{k} = \frac{(n + k - 1)!}{k!(n - 1)!}.
+    \]
+
+    Broj permutacija sa ponavljanjem multiskupa od $n$ elemenata u kojem se 
+    prvi element pojavljuje $n_1$ puta, drugi element $n_2$ puta, $k$-ti  
+    element $n_k$ puta, pri cemu bazi jednakost 
+    $n = n_1 + n_2 + \cdots + n_k$, jednak je
+    \[
+        \binom{n}{n_1, n_2, \ldots, n_k} = \frac{n!}{n_1! n_2! \cdots n_3!}.
+    \]
+
+    \subsection{Funkcija generatrise}
+
+    Svakom nizu $(a_n) = (a_0, a_1, \ldots, a_k, \ldots)$ mozemo jednoznacno 
+    pridruditi stepeni red
+    \[
+        \sum_{i = 0}^\infty a_i x^i = a_0 + a_1 x + a_2 x^2 + \cdots 
+        + a_k x^k + \cdots
+    \]
+    pri cemu je $x$ neka realna promenljiva. U slucaju da ovaj niz konvergira,
+    njegovu sumu nazivamo \emph{funkcijom generatrise} niza $(a_n)$ i 
+    oznacavamo je sa $a (= a(x))$.
+
+    Nizu $(a_n) = (1, 1, \ldots, 1, \ldots)$ odogovara stepeni red 
+    \[
+        \sum_{i = 0}^\infty x^i = 1 + x + x^2 + \cdots + x^k + \cdots,
+    \]
+    te onda sledi da je funkcija generatrise jednaka niza $(a_n)$ jednaka
+    \[
+        a(x) = \sum_{i = 0}^\infty = \frac{1}{1 - x}.
+    \]
+    
+    \begin{lema}
+        Za $n \in \mathbb{N}$ i $x \in \mathbb{R}$ koeficijent koji se 
+        nalazi uz $x^k$ u razvoju izraza ${(1 + x + x^2 + \ldots)}^n$ 
+        jednak je
+        \[
+            \binom{n + k - 1}{k}.
+        \]
+    \end{lema}
+
+    \begin{theorem}[Binomna formula za celobrojne eksponente]
+        Za $n \in \mathbb{Z}$ i $|x| < 1$ vazi jednakost
+        \[
+            {(x + 1)}^n = \sum_{k = 0}^\infty \binom{n}{k} x^k.
+        \]
+    \end{theorem}
+
+    \subsubsection{Odredjivanje funkcija generatrise}
+    
+    Neka su dati nizovi $(a_n)$ i $(b_n)$ i njihove funkcije generatrise 
+    $a(x)$ i $b(x)$.
+
+    \emph{Sabiranje nizova}: 
+    \[
+        (a_0 + b_0, a_1 + b_1, a_2 + b_2, \ldots) \leftrightarrow a(x) + b(x)
+    \]
+
+    \emph{Mnozenje niza skalarom}:
+    \[
+        (c a_0, c a_1, c a_2, \ldots) \leftrightarrow c a(x)
+    \]
+
+    \emph{Pomeranje niza za $k$ mesta udesno}:
+    \[
+        (\underbrace{0, 0, \ldots, 0}_k, a_0, a_1, a_2, \ldots) \leftrightarrow
+        x^k a(x)
+    \]
+
+    \emph{Pomeranje niza za $k$ mesta ulevo}:
+    \[
+        (a_k, a_{k + 1}, a_{k + 2}, \ldots) \leftrightarrow 
+        \frac{a(x) - (a_0 + a_1 x + a_2 x^2 + \cdots + a_{k - 1} x^{k - 1})}
+        {x^k}
+    \]
+
+    \emph{Zamena $x$ sa $c x$}:
+    \[
+        (a_0, c a_1, c^2 a_2, \ldots, c^k a_k, \ldots) \leftrightarrow a(c x)
+    \]
+
+    \emph{Zamena $x$ sa $x^k$}: 
+    \[
+        (a_0, \underbrace{0, 0, \ldots, 0}_{k - 1}, a_1, 
+        \underbrace{0, 0, \ldots, 0}_{k - 1}, a_2, \ldots) \leftrightarrow 
+        a(x^k)
+    \]
+
+    \emph{Diferenciranje}:
+    \[
+        (a_1, 2 a_2, \ldots, k a_k, \ldots) \leftrightarrow a'(x)
+    \]
+
+    \emph{Integracija}:
+    \[
+        (0, a_0, \frac{1}{2} a_1, \frac{1}{3} a_2, \ldots, 
+        \frac{1}{k + 1} a_k) \leftrightarrow \int a(x)\, \mathrm{d} x
+    \]
+
+    \section{Teorija brojeva}
+
+    \subsection{Rekurentne jednacine}
+
+    Za $n, k \in \mathbb{N}$ \emph{rekurentna jednacina $k$-tog reda} je oblika
+    \[
+        a_{n+k} = F (n, a_n, a_{n + 1}, \ldots, a_{n + k - 1}),
+    \]
+    gde su $a_n, a_{n + 1}, \ldots, a_{n + k} \in \mathbb{R}$ uzastopni 
+    clanovi nekog niza.
+
+    \subsubsection{Linearne rekurentne jednacine}
+
+    Jednacinu oblika
+    \[
+        f_0(n) a_n + f_1(n) a_{n + 1} + \cdots + f_k(n) a_{n + k} = f(n)
+    \]
+    nazivamo \emph{linearna rekurentna jednacina $k$-tog reda}:
+    \begin{itemize}
+        \item \emph{sa konstantnim keoficijentima} $f_i = const$.
+        \item \emph{sa funkcionalnim keoficijentima} $f_i = f_i(n)$
+    \end{itemize}
+
+    Za linearnu rekurentnu jednacinu kazemo da je homogena ako je $f(n) = 0$, 
+    tj.\ ona je oblika:
+    \[
+        f_0(n) a_n + f_1(n) a_{n + 1} + \cdots + f_k(n) a_{n + k} = 0.
+    \]
+
+    Postupak resavanja homogene linearne rekurentne jednacine sa konstantnim
+    keoficijentima:
+
+    \begin{enumerate}
+        \itemsep0em
+        \item Postavimo karakteristicnu jednacinu \\
+            $f_0 + f_1 x + f_2 x^2 +\cdots + f_k x^k = 0$.
+        \item Ako su nule $x_1, x_2, \ldots, x_k$ nule karakteristicne 
+            jednacine onda je opste resenje dato sa \\
+            $a_n = c_1 x_1^n + c_2 x_2^n + \cdots c_k x_k^n$.
+        \item Ako postoji nula $x_i$ visestrukosti $m$ karakteristicne
+            jednacine onda je opste resenje dato sa \\
+            $a_n = c_1 x_1^n + c_2 x_2^n + \cdots + 
+            c_i x_i^n + c_{i + 1} n x_i^n + \cdots + 
+            c_{i + m - 1} n^{m - 1} x_i^n + \cdots + c_k x_k^n$.
+    \end{enumerate}
+    
+    Postupak resavanja nehomogene linearne rekurentne jednacine sa konstantnim
+    keoficijentima:
+
+    \begin{enumerate}
+        \itemsep0em
+        \item Resenje je oblika $a_n = h_n + p_n$, gde je $h_n$ opste resenje
+            nehomogene linearne jednacine, a $p_n$ partikularno resenje date
+            ne homogene linearne jednacine.
+        \item Ako vazi $f(n) = P_d(n) b^n$, pri cemu je $P_d$ polinom stepena
+            $d$, a $b$ relana konstanta, onda vazi sledece
+        \begin{itemize}
+            \itemsep0em
+            \item ako je $x = b$ nije nula karakteristicne jednacine, onda
+                partikularno resenje trazimo u \\
+                $p_n = (A_0 + A_1 n + A_2 n^2 + \cdots + A_d n^d) b^n$;
+            \item ako je $x = b$ jeste nula karakteristicne jednacine, onda
+                partikularno resenje trazimo u \\
+                $p_n = n^m(A_0 + A_1 n + A_2 n^2 + \cdots + A_d n^d) b^n$.
+        \end{itemize}
+    \end{enumerate}
+
+    \section{Teorija grafova}
+    
+
+\end{multicols}
+
+\end{document}
