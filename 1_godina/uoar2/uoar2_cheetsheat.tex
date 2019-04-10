@@ -13,6 +13,7 @@
 \usepackage{tikz}
 \usepackage{booktabs} 
 \usepackage{graphicx} 
+\usepackage{listings} 
 
 \DeclareMathOperator{\Dom}{Dom} 
 \DeclareMathOperator{\Ima}{Im} 
@@ -23,6 +24,7 @@
 \newtheorem*{theorem}{Teorema}
 \newtheorem*{prop}{Tvrđenje}
 
+\lstset{language=C}
 
 \title{Uvod u Organizaciju i Arhitekturu Racunara 2 --- Cheat Sheet}
 \author{Andrija Urošević}
@@ -65,26 +67,26 @@
     \emph{valuacija} je bilo koje preslikavanje iz skupa promenljivih $P$ u 
     $\{0, 1\}$, $v: P \mapsto \{0, 1\}$. Ovakvih funkcija ima $2^{|P|}$
 
-    Za dva logicka izraza $E_1, E_2$ kazemo da su \emph{ekvivalentni} ako imaju
-    jednake vrednosti u svakoj valuaciji.
+    Za dva logicka izraza $E_1, E_2$ kazemo da su \emph{ekvivalentni} ako 
+    imaju jednake vrednosti u svakoj valuaciji.
 
-    \subsubsection{Konjuktivna i Disjunktivna Normalna Forma}
+    \subsubsection{Konjunktivna i Disjunktivna Normalna Forma}
 
-    \emph{Literal} je logicka izraz koji se sastoji od logickih promenljivih i 
-    njihovig negacija ($x, \overline{y}, z$).
+    \emph{Literal} je logicka izraz koji se sastoji od logickih promenljivih 
+    i njihovig negacija ($x, \overline{y}, z$).
     
-    \emph{Elementarna konjukcija} --- $\mathcal{EK}$ je logicki izraz koji se 
-    sastoji od konjukcije literala ($x \overline{y} z$).
+    \emph{Elementarna konjunkcija} --- $\mathcal{EK}$ je logicki izraz koji se 
+    sastoji od konjunkcije literala ($x \overline{y} z$).
 
     \emph{Elementarna disjunkcija} --- $\mathcal{ED}$ je logicki izraz koji se
     sastoji od disjunkcija literala ($ x + \overline{y} + z$).
 
     \emph{Disjunktivna normalna forma} --- $\mathcal{DNF}$ se sastoji od 
-    disjunkcija elementarnih konjukcija 
+    disjunkcija elementarnih konjunkcija 
     ($x \overline{y} + \overline{x} y z + x z$).
 
-    \emph{Konjuktivna normalna forma} --- $\mathcal{KNF}$ se sastoji od 
-    konjukcija elementranih disjunkcija
+    \emph{Konjunktivna normalna forma} --- $\mathcal{KNF}$ se sastoji od 
+    konjunkcija elementarnih disjunkcija
     ($(x + \overline{y} ) \cdot (\overline{x} + y + z) \cdot (x + z)$).
 
     Algoritam svodjenja izraza $E$ na izraz $E'$ u $\mathcal{DNF}$:
@@ -96,7 +98,7 @@
         \item Primena distributivnosti.
     \end{enumerate}
 
-    \subsubsection{Savrsena Konjuktivna i Disjunktivna Normalna Forma}
+    \subsubsection{Savrsena Konjunktivna i Disjunktivna Normalna Forma}
 
     Za $\mathcal{EK}$ kazemo da je \emph{savrsena} u odnosu na dati skup
     promenljivih $P$ ako sadrzi tacno po jedan literal za svako od 
@@ -144,7 +146,7 @@
         Druga projekcija                                & $f(x, y) = y$ \\
         Negacija prve projekcije                        & $f(x, y) = \overline{x}$ \\
         Negacija druge projekcije                       & $f(x, y) = \overline{y}$ \\
-        Konjukcija                                      & $f(x, y) = x y$ \\
+        Konjunkcija                                     & $f(x, y) = x y$ \\
         Disjunkcija                                     & $f(x, y) = x + y$ \\
         Seferova funkcija (NAND)                        & $f(x, y) = \overline{xy} = \overline{x} + \overline{y}$ \\
         Pirsova funkcija (NOR)                          & $f(x, y) = \overline{x + y} = \overline{x} \ \overline{y}$ \\
@@ -156,7 +158,7 @@
         Ekvivalencija                                   & $f(x, y) = x y + \overline{x} \ \overline{y}$ \\
     \end{tabular}
 
-    \subsubsection{Savrsena Disjunktivna/Konjuktivna Normalna Forma}
+    \subsubsection{Savrsena Disjunktivna/Konjunktivna Normalna Forma}
 
     \begin{tabular}{*{4}{c}}
         $x$ & $y$ & $z$ & $f(x, y, z)$ \\
@@ -175,10 +177,10 @@
     \begin{enumerate}
         \itemsep0em
         \item Za svaku kombinaciju ulaznih vrednosti koja je tacna, tj. 1, 
-              formiramo savrsenu elementarnu konjukciju koja je tacna samo u 
+              formiramo savrsenu elementarnu konjunkciju koja je tacna samo u 
               toj valuaciji od promenljivih $x, y, z$.
         \item Formiranje savrsene disjunktivne normalne forme od tako 
-              dobijenih elementarnih konjukcija.
+              dobijenih elementarnih konjunkcija.
     \end{enumerate}
     Za gornju tabelu dobijamo: 
     $f(x, y, z) = \overline{xyz} + \overline{x}yz + x\overline{y}z$.
@@ -187,9 +189,9 @@
     \begin{enumerate}
         \itemsep0em
         \item Za svaku kombinaciju ulaznih vrednosti koja je netacna, tj. 0,
-              formiramo savrsenu elementarnu disjunkciju koja je netacna samo u
-              toj valuaciji od promenljivih $x, y, z$.
-        \item Formiranje savrsene konjuktivne normalne forme od tako 
+              formiramo savrsenu elementarnu disjunkciju koja je netacna samo 
+              u toj valuaciji od promenljivih $x, y, z$.
+        \item Formiranje savrsene konjunktivne normalne forme od tako 
               dobijenih elementranih disjunkcija.
     \end{enumerate}
     Za gornju tabelu dobijamo:
@@ -201,13 +203,13 @@
 
     \subsubsection{Potpuni Skupovi Veznika}
 
-    \emph{Potpnuni skup veznika} je skup veznika pomocu koga se mogu izraziti
+    \emph{Potpuni skup veznika} je skup veznika pomocu koga se mogu izraziti
     sve ostale logicke funkcije
 
     Ako je skup veznika $C$ potpuni skup veznika, tada je i svaki njegov 
-    nadksup $C$ takodje potpuni skup veznika.
+    nadskup $C$ takodje potpuni skup veznika.
 
-    Minimalni potpnu skupovi veznika: $C^\cdot = \{\cdot, ^-\}$, 
+    Minimalni potpun skupovi veznika: $C^\cdot = \{\cdot, ^-\}$, 
     $C^+ = \{+, ^-\}$, $C^\uparrow = \{\uparrow\}$, 
     $C^\downarrow = \{\downarrow\}$.
     \[
@@ -226,25 +228,25 @@
     
     \subsection{Minimizacija Logickih Izraza}
 
-    \emph{Slozenost izraza} je broj beznika koje se pojavljuju u izrazu.
+    \emph{Slozenost izraza} je broj veznika koje se pojavljuju u izrazu.
 
     \emph{Minimizacija} je pronalazenje logickog izraza minimalne slozenosti
     koji izracunava neku funkciju zadatu tabelarno.
 
-    Minimizacija je znacajna u procesu dizajna logickih kola koja u savremenim 
-    racunarima implementiraju logicke izraze, zbog ustede u procesu 
-    proizvodnje i potrosnje elektricne energije.
+    Minimizacija je znacajna u procesu dizajna logickih kola koja u 
+    savremenim racunarima implementiraju logicke izraze, zbog ustede u 
+    procesu proizvodnje i potrosnje elektricne energije.
 
     \subsubsection{Metod algebarskih transformacija}
     
     \begin{enumerate}
         \itemsep0em
-        \item Ako izraz sadrzi dve elementarne konjukcija oblika $xK$ i 
-              $\overline{x}K$, gde je $K$ proizvoljna konjukcija literala, tada
-              imamo $xK + \overline{x}K = (x + \overline{x})K = K$
-        \item Ukoliko jednu istu konjukciju $K$ mozemo grupisati na dva nacina
+        \item Ako izraz sadrzi dve elementarne konjunkcija oblika $xK$ i 
+              $\overline{x}K$, gde je $K$ proizvoljna konjunkcija literala, 
+              tada imamo $xK + \overline{x}K = (x + \overline{x})K = K$
+        \item Ukoliko jednu istu konjunkciju $K$ mozemo grupisati na dva nacina
               sa $K_1$ i $K_2$, tada se primenom zakona idempotencije 
-              ($K = K + K$), konjukcija moze grupisati i sa $K_1$ i sa $K_2$.
+              ($K = K + K$), konjunkcija moze grupisati i sa $K_1$ i sa $K_2$.
     \end{enumerate}
 
     Primer:
@@ -261,38 +263,71 @@
         &= \overline{xy} + \overline{x}y + \overline{y}z
     \end{align*}
 
-    \subsubsection{Metod Karnoovih mapa}
+    \subsubsection{Metod Karnoovih Mapa}
 
     \emph{Karnoova mapa} ja tablica pravougaonog oblika ciji je ukupan broj 
     polja $2^n$, gde je $n$ broj promenljivih u $\mathcal{DNF}$ izrazu.
-    Za $n = 3$ imamo pravougaonu tablicu dimenzje $2 \times 4$, dok za $n = 4$
-    imamo tablicu dimenzije $4 \times 4$. Svako polje tablice odgovara jednoj 
-    valuaciji.
+    Za $n = 3$ imamo tablicu pravougaonog oblika dimenzje $2 \times 4$, dok za 
+    $n = 4$ imamo tablicu dimenzije $4 \times 4$. Svako polje tablice odgovara 
+    jednoj valuaciji.
     \includegraphics[width=\columnwidth]{Figures/torus.png}
 
     Na pocetku se upise u svako polje odgovarajuca vrednost funkcije.
     Ako se dve jedinice nalaze jedna pored druge to znaci da se one mogu 
     grupisati, jer se razlikuju samo na jednom mestu.
-    Slicno i ako imamo cetiri jedinice koje formiraju provougaonik
+    Slicno i ako imamo cetiri jedinice koje formiraju pravougaonik.
     Pravila zaokruzivanja:
     \begin{itemize}
         \itemsep0em
         \item Zaokruzuju se samo jedinice.
         \item Svaka jedinica mora da bude zaokruzena bar jednom.
-        \item Mogu se zaokruzivati iskljucivo grupo od po $2^k$ polja 
+        \item Mogu se zaokruzivati iskljucivo grupa od po $2^k$ polja 
               pravougaonog oblika.
         \item Uvek se zaokruzuju sto vece grupe, cak i ako se tom prilikom 
               neke jedinice ponovo zaokruzuju.
-        \item Nakon sto se sve jednice zaokruze, treba proveriti da li je neko 
-              od zaokruzivanja postalo suvisno, jer scako njegovo polje 
+        \item Nakon sto se sve jednice zaokruze, treba proveriti da li je 
+              neko od zaokruzivanja postalo suvisno, jer svako njegovo polje 
               pripada i nekom drugom zaokruzivanju.
     \end{itemize}
 
-    Svakom od dobijenih zaokruzivanja odgovara jedna elementarna konjukcija
-    koja sadrzi upravo one literale koju su zajednici za sva polja koja 
+    Svakom od dobijenih zaokruzivanja odgovara jedna elementarna konjunkcija
+    koja sadrzi upravo one literale koju su zajednicik za sva polja koja 
     obuhvata to zaokruzivanje.
 
     \subsection{Metod Kvin-Meklaskog}
+
+    \begin{enumerate}
+        \itemsep0em
+        \item Sortiranje savrsenih $\mathcal{KNF}$-ova prema broju ne 
+            invertovanih literala.
+        \item Grupisanje parova iz susednih klasa (zato sto se razlikuju
+            u samo jednom literalu).
+        \item Tako grupisani savrseni $\mathcal{KNF}$-ovi se ponovo grupisu
+            u sledecoj interaciji. To se ponavlja sve dok je grupisanje 
+            moguce.
+        \item Sve konjunkcije koje su ostale ne pokrivene nazivaju se 
+            \emph{proste implikante}.
+        \item Formira se \emph{tabela prostih implikanata}. Kolone su pocetne
+            konjunkcije, vrste su proste implikante.
+        \item Sa $+$ oznacavamo polje gde proste implikante sadrze pocetne
+            konjunkcije.
+        \item Oznacavamo bitne pluseve, tj.\ plusevi koji su jedini u svojoj
+            koloni.
+        \item Drugom oznakom oznacimo pluseve koji se nalaze u istoj
+            vrsti kao i bitni plusevi.
+        \item Kao rezultat uzimamo samo one vrste koje imaju oznacene pluseve.
+    \end{enumerate}
+
+    \emph{Patrikov metod} ima ulogu da pojednostavi drugu fazu u minimizaciji, 
+    zato sto je ona eksponencijalne slozenosti za racunar.
+
+    \subsection{Minimizacija u Prisustvu nebitnih vrednosti}
+
+    Karnoove mape: Nebitna vrednost bice tretirana kao 1 ako to polje 
+    omogucava vece zaokruzivanje, inace ce biti tretirana kao 0.
+
+    Kvin-Meklaski: Nebitna vrednosti u prvoj fazi se tretiraju kao 1, dok
+    se u drugoj fazi tretiraju kao 0.
     
     \section{Logicka Kola}
     
@@ -304,8 +339,8 @@
     Nekada je moguce da izlaz logickog nema nikakvu vrednost, tj.\ da mu
     izlazna vrednost nije ni 0 ni 1. Tu vrednost nazivamo 
     \emph{vrednost visoke impedense} i obelezavamo je sa $\mathbf{Z}$. Ukoliko
-    neki izraz ima vrednost $\mathbf{Z}$, tada taj izraz ne uticne na vrednost 
-    ulazna na koji je povezan.
+    neki izraz ima vrednost $\mathbf{Z}$, tada taj izraz ne uticne na 
+    vrednost ulazna na koji je povezan.
 
     \subsection{Logicke Kapije}
 
@@ -339,7 +374,7 @@
     ce struja da tece.
     Postoje dva tipa MOS tranzistora: NMOS i PMOS tranzistor.
 
-    Kod NMOS tranzistora sopr mora biti prikljucen na negativan, a drejn na 
+    Kod NMOS tranzistora sors mora biti prikljucen na negativan, a drejn na 
     pozitivan napon.
     Da bi doslo do provodjenja struje, potrebno je na gejt dovesti dovoljno 
     veliki pozitivan napon.
@@ -347,8 +382,8 @@
     zatvoren i ne provodi struju od sorsa ka drejnu, dok kada je u zoni 
     logicke jedinice od provodi struju.
 
-    Kod PMOS tranzistora sors se prikljucuje na pozitivan, a drajn na negativan
-    napon. 
+    Kod PMOS tranzistora sors se prikljucuje na pozitivan, a drajn na 
+    negativan napon. 
     Da bi doslo do provodjenja struje, potrebno je na gejt dovesti negativan 
     napon.
     Ukoliko je napon u zoni logicke jedinice, tada je tranzistor u zatvoren i
@@ -392,9 +427,9 @@
     
     \section{Kombinatorna Kola}
 
-    \emph{Kombinatorna kola} (eng. \emph{combinationl curcuit}) su kola ko 
-    kojih su izlazni signali jednoznacno odredjeni trenutnim ulaznim signlima, 
-    tako da predstavljaju jednu logicku funkciju.
+    \emph{Kombinatorna kola} (eng. \emph{combinational curcuit}) su kola ko 
+    kojih su izlazni signali jednoznacno odredjeni trenutnim ulaznim 
+    signalima, tako da predstavljaju jednu logicku funkciju.
 
     \subsection{Osnovna kombinatorna kola}
 
@@ -404,7 +439,7 @@
     upravljackih jedinica pomocu kojih se bira jedna od ulaza koji ce se 
     pojaviti na izlazu.
     
-    \paragraph{Primena multipeksera}:
+    \paragraph{Primena multipeksera}
     \begin{itemize}
         \itemsep0em
         \item Bira podatak koji se salje na magistralu
@@ -473,13 +508,14 @@
     \emph{Enkoder} je kolo koje ime $2^n$ ulaza, a zatim na osnovu njih stvara
     $n$-bitni broj.
 
-    \emph{Enkoder sa prijoritetom} sprecava gresu kada se pojave vise od jedne
-    jedinice na ulazu, te on ima prioritet prve jedinice koja se pojavljuje.
+    \emph{Enkoder sa prijoritetom} sprecava gresku kada se pojave vise od 
+    jedne jedinice na ulazu, te on ima prioritet prve jedinice koja se 
+    pojavljuje.
 
     \paragraph{Primene encodera}
     \begin{itemize}
         \itemsep0em
-        \item 
+        \item Odredjuje koji od I/O uredjaja trazi prekid
     \end{itemize}
     \includegraphics[width=0.6\columnwidth]{Figures/encoder.png}
 
@@ -532,12 +568,12 @@
 
     \paragraph{Visebitni sabiraci}
     
-    \emph{Visebitni talasasti sabirac} (eng. \emph{Ripple Carry Adder}) je kolo
-    koje je implementirano tako da se za svaki bit pomoci sabiraca racuna zbir 
-    i prenos, koji se onda prenosi na sledeci sabirac. Tako ulancani sabiraci,
-    sa po $2\Delta$ kasnjenja, imaju ukupno $n \times 2\Delta$, jer se za svaki
-    prethodni ceka racunanje prenosa. Pr.\ 32-bitni sabirac ima $64\Delta$ 
-    kasnjenja.
+    \emph{Visebitni talasasti sabirac} (eng. \emph{Ripple Carry Adder}) je 
+    kolo koje je implementirano tako da se za svaki bit pomoci sabiraca 
+    racuna zbir i prenos, koji se onda prenosi na sledeci sabirac. Tako 
+    ulancani sabiraci, sa po $2\Delta$ kasnjenja, imaju ukupno 
+    $n \times 2\Delta$, jer se za svaki prethodni ceka racunanje prenosa. 
+    Pr.\ 32-bitni sabirac ima $64\Delta$ kasnjenja.
 
     \includegraphics[width=0.7\columnwidth]{Figures/riplle_carry_adder.png}
 
@@ -578,16 +614,54 @@
     je kolo koje je implementirano tako da se za svaki bit pomoci oduzimaca 
     racuna razliku i prenos, koji se onda prenosi na sledeci oduzimac. Tako 
     ulancani oduzimaci, sa po $2\Delta$ kasnjenja, imaju ukupno 
-    $n \times 2\Delta$, jer se za svaki prethodni ceka racunanje prenosa. Pr.\ 
-    32-bitni oduzimac ima $64\Delta$ kasnjenja.
+    $n \times 2\Delta$, jer se za svaki prethodni ceka racunanje prenosa. 
+    Pr.\ 32-bitni oduzimac ima $64\Delta$ kasnjenja.
 
     \includegraphics[width=0.7\columnwidth]{Figures/riplle_carry_sub.png}
+
+    \paragraph{Sabirac sa racunanjem prenosa unapred}
+    (eng. \emph{Lookahead Carry Adder --- LCA}) racuna prenost unapred kako bi
+    se smanjilo kasnjenje visebitnih sabiraca. Neka su $C_i$ prenosi, svakog 
+    od $i$ punih sabiraca.
+    \begin{align*}
+        C_0 &= x_0 y_0 + x_0 pc + y_0 pc \\
+        C_1 &= x_1 y_1 + x_1 C_0 + y_1 C_0 \\
+            &= x_1 y_1 + x_1 (x_0 y_0 + x_0 pc + y_0 pc) + \\
+            &+ y_1 (x_0 y_0 + x_0 pc + y_0 pc)\\
+            &= x_1 y_1 + x_1 x_0 y_0 + x_1 x_0 pc + x_1 y_0 pc + \\
+            &+ y_1 x_0 y_0 + y_1 x_0 pc + y_1 y_0 pc\\
+    \end{align*}
+
+    Ovaj izraz veoma brzo raste tako da nije efikasan.
+    \begin{align*}
+        C_0 &= x_0 y_0 + x_0 pc + y_0 pc \\
+            &= x_0 y_0 + (x_0 + y_0) pc \\
+            &= x_0 y_0 + (x_0\oplus y_0) pc \\
+            &= G_0 + P_0 pc \\
+        C_i &= G_i + P_i C{i-1}, \\
+    \end{align*}
+    gde je $G_0 = x_i y_i, P_i = x_i \oplus y_i$. Na primer za $C_3$:
+    \begin{align*}
+        C_1 &= G_1 + P_1 C_0 \\
+            &= G_1 + P_1 (G_0 + P_0 pc) \\
+            &= G_1 + P_1 G_0 + P_1 P_0 pc \\
+        C_2 &= G_2 + P_2 C_1 \\
+            &= G_2 + P_2 (G_1 + P_1 G_0 + P_1 P_0 pc) \\
+            &= G_2 + P_2 G_1 + P_2 P_1 G_0 + P_2 P_1 P_0 pc \\
+        C_3 &= G_3 + P_3 C_2 \\
+            &= G_3 + P_3 (G_2 + P_2 G_1 + P_2 P_1 G_0 + P_2 P_1 P_0 pc) \\
+            &= G_3 + P_3 G_2 + P_3 P_2 G_1 + P_3 P_2 P_1 G_0 + P_3 P_2 P_1 P_0 pc \\
+        C_3 &= G_G + P_G pc, \\
+    \end{align*}
+    gde je $G_G = G_3 + P_3 G_2 + P_3 P_2 G_1 + P_3 P_2 P_1 G_0$, \\
+    $P_G = P_3 P_2 P_1 P_0$.
 
     \subsubsection{Aritmeticko-Logicka Jedinica}
 
     \emph{Aritmeticko-Logicka jedinica} 
-    (eng. \emph{Arithmetic Logic Unit --- ALU}) je kolo koje izvrsava razlicite
-    aritheticke i logicke operacije, u zavisnosti od zahteva korisnika.
+    (eng. \emph{Arithmetic Logic Unit --- ALU}) je kolo koje izvrsava 
+    razlicite aritheticke i logicke operacije, u zavisnosti od zahteva 
+    korisnika.
 
     \includegraphics[width=0.6\columnwidth]{Figures/alu.png}
 
@@ -644,13 +718,13 @@
               stabilno stanje $\mathbf{S'}$ naziva se 
               \emph{vreme stabilizacije}.
         \item Kolo koje osciluje izmedju razlicitih stanja i ne uspeva da 
-              dostigne stbilno stanje naziva se \emph{nestabilno}.
+              dostigne stabilno stanje naziva se \emph{nestabilno}.
         \item Kako kolo koje osciluje izmedju 0 i 1, tj. $+0V$ i $+5V$, u tom
               procesu promene moze da se stabilizuje na $+2.5V$, to stanje
               se naziva \emph{metastabilnost}.
         \item Nekada za dati ulaz $\mathbf{X}$ kolo moze da ode u stabilno 
               stanje $\mathbf{S'}$ ili $\mathbf{S''}$, u zavisnosti od 
-              nepredvidivih fizickih faktora. Ova pojava se naziva 
+              nepredvidljivih fizickih faktora. Ova pojava se naziva 
               \emph{nedeterministicnost}.
     \end{itemize}
 
@@ -668,12 +742,13 @@
     \emph{Radni takt} ili \emph{casovnik} (eng. \emph{clock}) neprekidno 
     emituje impusle odredjene duzine u odredjenim vremenskim razmacima. 
 
-    Prelazak sa 0 na 1 se naziva \emph{ulazna ivica} (eng. \emph{rising edge}).
+    Prelazak sa 0 na 1 se naziva \emph{ulazna ivica} 
+    (eng. \emph{rising edge}).
     Prelazak sa 1 na 0 se naziva \emph{silazna ivica} 
     (eng. \emph{falling edge}).
 
-    Vreme intervala izmedju dve odgovarajuce ivice dva uzastona impulsa naziva 
-    se \emph{ciklus radnog takta} (eng. \emph{clock cycle time}).
+    Vreme intervala izmedju dve odgovarajuce ivice dva uzastona impulsa 
+    naziva se \emph{ciklus radnog takta} (eng. \emph{clock cycle time}).
 
     Broj ciklusa u sekundi odredjuju \emph{frekvenciju radnog takta}.
 
@@ -686,7 +761,7 @@
     osnovu izlaza nekog drugog kola.
 
     \emph{Sinhrona kola} su sekvencijalna kola koja menjaju stanje samo u 
-    odredjenom trenutku ciklusa casovnika (uzlazni ili silazni signla).
+    odredjenom trenutku ciklusa casovnika (uzlazni ili silazni signala).
 
     Kod sinhronih kola stanje se menja na odredjeno vreme sto je diskretna
     velicina, dok kod asinhronih kola vreme je kontinualna velicina.
@@ -699,8 +774,8 @@
     \subsubsection{SR reza}
 
     \emph{SR reza} (eng. \emph{SR latch}) je sekvencijalno kolo koje ima dva
-    ulazna bita $S$ (set) i $R$ (reset) i dvobitno stanje $Q\overline{Q}$ koje 
-    je ujedno i izlaz i definisano je sa:
+    ulazna bita $S$ (set) i $R$ (reset) i dvobitno stanje $Q\overline{Q}$ 
+    koje je ujedno i izlaz i definisano je sa:
 
     \begin{align*}
         Q &= R \ \NOR\ \overline{Q} \\
@@ -852,7 +927,27 @@
 
     \includegraphics[width=0.9\columnwidth]{Figures/sinhroni.png}
 
+    \emph{Sinhroni brojaci sa proizvoljnim redosledom stanja} se dizajniraju
+    tako sto se:    
+    \begin{enumerate}
+        \itemsep0em
+        \item Pravi se tablica ekscitacije stanja
+        \item Minimizacija svakog od ulaza $J_i K_i$
+        \item Implementacija na osnovu te minimizacije
+    \end{enumerate}
+
     \subsection{Automat i Transdruktor}
+
+    \emph{Koncani automat} je sekvencijalno kolo koje u zavisnost od ulaza i
+    trenutnog stanja prelazi u zeljeno stanje. Ako on tada generise i neki
+    izlaz, tada ga zovemo \emph{konacnim transduktorom}. 
+
+    Konacni trasnduktor je najopstiji model sinhronog sekvencijalnog kola.
+    Pomocu njega se prave kontrolne jedinice u procesoru.
+
+    Implementacija konacnih automata i transduktora je slicna implementacija 
+    brojaca sa proizvoljnim redosledom stanja, jedino sto sada na sledece
+    stanje uticu i bitova na ulazi.
 
     \section{Procesorska Organizacija i Performanse}
 
@@ -862,11 +957,95 @@
     jedinica kao sto je aritmeticko-logicka jedinica, registra, i magistrala.
 
     \includegraphics[width=\columnwidth]{Figures/1bus_datapath.jpg}
+
     \includegraphics[width=\columnwidth]{Figures/2bus_datapath.jpg}
+
     \includegraphics[width=\columnwidth]{Figures/3bus_datapath.jpg}
+
+    \subsection{Kontrolna Jedinica}
+
+    \emph{Kontrolna jedinica} (eng. \emph{Control Unit --- CU}) je kolo
+    koje upravlja svim komponentama procesora. Onda u svakom ciklusu 
+    casovnika generise \emph{kontrolne signala} koji svim komponentima
+    govore sta treba da rede u tom koraku. Primer kontrolnih signala koje
+    CU generise su:
+    \begin{itemize}
+        \itemsep0em
+        \item \texttt{reg\_adr}: signal koji selektuje registar iz koga se 
+            vrsi citanje ili u koji se vrsi upisivanje
+        \item \texttt{reg\_in}: signal koji zahteva od izabranog registra da 
+            prihvati i sacuva vrednost sa magistrale
+        \item \texttt{reg\_out}: signal koji zahteva da izabranog registra da 
+            svoju vrednost poslaje na magistralu
+        \item \texttt{p\_in}: signal koji zahteva od P registra da prihvati
+            i sacuva vrednost sa magistrale
+        \item \texttt{alu\_op}: signal koji selektuje operaciju koju treba da
+            izvrsi ALU jedinica
+        \item \texttt{psw\_in}: signal koji zahteva od PSW registra da sacuva
+            izracunate flegove iz ALU jedinice
+        \item \texttt{a\_in}: signal koji zahteva od A registra da sacuva
+            izracunatu vrednost sa ALU jedinice
+        \item \texttt{a\_out}: signal koji zahteva od A registra da svoju 
+            vrednost posalje na magistralu
+    \end{itemize}
+
+    Registri reaguju na ulazni rub casovnika, dok kontrolna jedinica salje
+    signale na silaznom rubu casovnika, kako bi kontrolna jedinica imala vreme
+    da u obzir uzme vrednost flegova u PSW registru pri razunanju novog 
+    stanja.
+
+    Kontrolna jedinica je jedan konacni transduktor koji na ulazu ima 
+    vrednost PSW registra, a na izlazu ima kontrolne signale. Stanja konacnog 
+    transduktora odgovaraju pozicijama u algoritmu koji se izvrsava.
+
+    Svaki algoritam se moze predstaviti kao niz ovih elementarnih koraka.
     
-    
-    
+    \begin{itemize}
+        \itemsep0em
+        \item Naredba dodele: $R_i = R_j$
+            \begin{enumerate}
+                \itemsep0em
+                \item $R_j \texttt{ no\_op1 } P \rightarrow A, PSW$
+                \item $A \rightarrow R_i$
+            \end{enumerate}
+        \item Naredba zbira: $R_i = R_j + R_k$
+            \begin{enumerate}
+                \itemsep0em
+                \item $R_k \rightarrow P$
+                \item $R_j \texttt{ add } P \rightarrow A, PSW$
+                \item $A \rightarrow R_i$
+            \end{enumerate}
+        \item Uperedjivanje: $R_i < R_j$
+            \begin{enumerate}
+                \itemsep0em
+                \item $R_j \texttt{ sub } P \rightarrow A, PSW$
+                \item $A \rightarrow R_i$
+            \end{enumerate}
+        \item Negacija: $R_i = -R_j$
+            \begin{enumerate}
+                \itemsep0em
+                \item $R_J \texttt{ neg } P \rightarrow A, PSW$
+                \item $A \rightarrow R_i$
+            \end{enumerate}
+    \end{itemize}
+
+    Primer:
+    \begin{lstlisting}
+        if (R0 > R1) R2 = R1
+        else R2 = R0
+    \end{lstlisting}
+
+    \begin{enumerate}
+        \itemsep0em
+        \item [0.] $R_0 \rightarrow P \ (1)$
+        \item [1.] $R_1 \texttt{ sub } P \rightarrow A, PSW \ (2)$
+        \item [2.] $C \texttt{ == } 1 \texttt{ ? } R1 \texttt{ no\_op1 } 
+            P \rightarrow A, PSW \ (3)$
+        \item [2.] $C \texttt{ != } 1 \texttt{ ? } R0 \texttt{ no\_op1 } 
+            P \rightarrow A, PSW \ (3)$
+        \item [3.] $A \rightarrow R_2 \ (4)$
+        \item [4.] --- \ $(4)$
+    \end{enumerate}
 
 \end{multicols}
 
