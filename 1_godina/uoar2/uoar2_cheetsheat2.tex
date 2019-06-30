@@ -1,0 +1,827 @@
+\documentclass[12p,a4paper]{article}
+
+\usepackage[serbian]{babel} 
+\usepackage[T2A]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{amsthm}
+\usepackage{multicol} 
+\usepackage[margin=0.5in]{geometry} 
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{enumerate} 
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{booktabs} 
+\usepackage{graphicx} 
+\usepackage{listings} 
+
+\DeclareMathOperator{\Dom}{Dom} 
+\DeclareMathOperator{\Ima}{Im} 
+\DeclareMathOperator{\nzd}{NZD} 
+\DeclareMathOperator{\nzs}{NZS} 
+\DeclareMathOperator{\NOR}{NOR} 
+
+\newtheorem*{theorem}{Teorema}
+\newtheorem*{prop}{Tvrđenje}
+
+\lstset{language=C}
+
+\title{Uvod u Organizaciju i Arhitekturu Racunara 2B --- Cheat Sheet}
+\author{Andrija Urošević}
+
+\begin{document}
+
+\maketitle
+
+\begin{multicols}{2}
+
+
+    \section{Fon-Nojmanovi Racunari}
+
+    \subsection{ISA}
+
+    \textbf{ISA} (eng. \emph{Instruction Set Architecture}) je jedan apstraktan
+    model racunara. ISA obuhvata skup registara, skup instrukcija, formati 
+    instrukcija, nacini adresiranja operanada, velicina memorijskog prostora,
+    rezim rada, sistem prekida itd.
+
+    \subsection{Instrukcioni Formati}
+
+    Struktura masinske instrukcije:
+    \begin{lstlisting}
+        OPCODE | OPERANDS  
+    \end{lstlisting}
+
+    Operandi mogu biti registarski, memorijski i neposredni.
+    Razmotrimo sledeci izraz u zavisnosti od vrste instrukcije: 
+    $(a + b) * (c + d)$
+
+    \subsubsection{Tro-adresne Instrukcije}
+
+    \begin{lstlisting}
+        OPCODE | DEST | SRC | SRC
+    \end{lstlisting}
+    \begin{lstlisting}
+    ADD     R1, A, B
+    ADD     R2, C, D
+    MUL     X, R1, R2
+    \end{lstlisting}
+
+    Imaju tri adresna polja za specifikovanje registra ili memorijske lokacije.
+    Program je mnogo manji po duzini, ali broj bitova po instrukciji se 
+    povecava, sto ne znaci da ce biti brzi jer puno stvari mora da uradi
+    u jednoj instrukciji (load, execute, store, itd.).
+
+    \subsubsection{Dvo-adresne Instrukcije}
+
+    \begin{lstlisting}
+        OPCODE | DEST | SRC
+    \end{lstlisting}
+    \begin{lstlisting}
+    MOV     R1, A
+    ADD     R1, B
+    MOV     R2, C
+    ADD     R2, D
+    MUL     R1, R2
+    MOV     X, R1
+    \end{lstlisting}
+
+    Najpristupljeniji u komercijalnim racunarima.
+
+    \subsubsection{Jedno-adresne Instrukcije}
+
+    \begin{lstlisting}
+        OPCODE | OPERAND
+    \end{lstlisting}
+    \begin{lstlisting}
+    LOAD    A
+    ADD     B
+    STORE   T
+    LOAD    C
+    ADD     D
+    MUL     T
+    STORE   X
+    \end{lstlisting}
+
+    Koristi \emph{akumulator} registar za manimulisanjem podacima. Jedan
+    operadn je akumulator a drugi je u registru ili na memorijskoj lokaciji.
+
+    \subsubsection{Nula-adresne Instrukcije}
+
+    \begin{lstlisting}
+    PUSH    A
+    PUSH    B
+    ADD
+    PUSH    C
+    PUSH    D
+    MUL
+    POP     X
+    \end{lstlisting}
+
+    Ovi racunari su bazirani na staku. Da bi se izracunao izraz prvo se 
+    prevede u obrnutu poljsku notaciju.
+    
+    \subsection{Load/Store Arhitektura}
+
+    \emph{Load/Store arhitektura} je ISA koja deli instrukcije u dve 
+    kategorije: pristupanje memoriji (load/store izmedju memorije i registra)
+    i ALU operacije (koje se izvrsavaju samo nad registarima). Implementira
+    ih RISC.\
+    
+    Na primer, oba operanda i destinacija za ADD operaciju moraju biti u 
+    registrima.
+    
+    \subsection{RISC/CISC}
+
+    \textbf{CISC} (eng. \emph{Complex Instruction Set Computer}):
+    \begin{itemize}
+        \itemsep0em
+        \item Veliki broj instrukcija
+        \item Komplekse instrukcije promenljive duzine
+        \item Instrukcije mogu trajati vise otkucaja radnog takta
+        \item ISA radi sto je vise moguce koriscenjem hardvera
+        \item Efikasno koriscenje RAM-a
+    \end{itemize}
+
+    \textbf{RISC} (eng. \emph{Reduced Instruction Set Computer}):
+    \begin{itemize}
+        \itemsep0em
+        \item Mali broj instrukcija
+        \item Jednostavne instrukcije fiksirane duzine
+        \item Instrukcije traju tacno jedan otkucaj radnog takta
+        \item Kompajleri visokog nivoa preuzimaju kodiranje kompleksnih 
+            instrukcija
+        \item Tesko koriscenje RAM-a (izaziva problem uskog grla)
+    \end{itemize}
+
+    \subsection{Adresiranje}
+
+    \subsubsection{Neposredno Adresiranje}
+
+    Operand se zadaje najlakse ako se zada na mestu gde se zadaje adresa.
+    Takav operand se zove \emph{neposredni operand}
+    (eng. \emph{immediate operand}). 
+    Primer:
+    \begin{lstlisting}
+        MOV     R1, 4
+    \end{lstlisting}
+    Koristi se u radu sa malim konstantama.
+
+    \subsubsection{Direktno Adresiranje}
+
+    Operand se nalazi na potpunoj adresi koja je zadata u instrukciji. 
+    Koristi se u radu sa globalnim promenljivim, jer se adresa globalnih
+    promenljiva ne menja dok njihova vrednost moze da se menja.
+
+    \subsubsection{Registarko Adresiranje}
+
+    Slicno je kao i direktno adresiranje sem sto se ovde ne zadaje 
+    memorijska lokacija vec registar. Primer
+    \begin{lstlisting}
+        MOV     R1, R2
+    \end{lstlisting}
+    Prevodioci se trude da otkriju koje promenljive se najvise koriste i njih
+    smestaju u registre.
+
+    \subsubsection{Indirektno Adresiranje}
+
+    Zadati operand dolazi iz memorije ili odlazi u nju, ali njegova adresa
+    nije zabelezena unutar instrukcije kao u direktnom adresiranju, vec se 
+    nalazi u registru.
+    \begin{lstlisting}
+        ADD     R1, [R2]    
+    \end{lstlisting}
+
+    \subsubsection{Indeksno Adresiranje}
+
+    Adresiranje memorije tako sto se navede registar i konstantno rastojanje
+    zove se \emph{indeksno adresiranje} (eng. \emph{indexed addressing})
+    \begin{lstlisting}
+        ADD     R1, [R2 + R3]
+    \end{lstlisting}
+    
+    \subsubsection{Relativno Adresiranje}
+
+    U instrukcijama grananja potrebna je i odredisna adresa koju takodje treba
+    zadati. Vrednost operanda je relativna adresa u odnosu na adresu tekuce
+    instrukcije, tj. PC registra.
+
+    To je u stvari indeksno adresiranje, s registrom PC.\
+
+    \section{x86--64 Arhitektura}
+
+    \subsection{Nacini Adresiranje}
+
+    \begin{lstlisting}
+    MOV     rax, 10        
+    MOV     rax, rbx        
+    MOV     rax, 0x603829   
+    MOV     rax, [rbx + rcx]
+    MOV     rax, [rbx + 4 * rcx]
+    MOV     rax, [rbx + 4 * rcx + 8]
+    \end{lstlisting}
+
+    \subsection{Tipovi Instrukcija}
+
+    \subsubsection{Instrukcije Transfera}
+
+    \begin{lstlisting}
+    MOV     dst, src
+    LEA     dst, src
+    PUSH    src
+    PULL    dst
+    \end{lstlisting}
+
+    \subsubsection{Aritmeticke i Bitovske Instrukcije}
+
+    \begin{lstlisting}
+    ADD     dst, src ;dst += src
+    SUB     dst, src ;dst -= src
+    IMUL    dst, src ;dst *= src
+    NEG     dst      ;dst = -dst
+
+    AND     dst, src ;dst &= src
+    OR      dst, src ;dst |= src
+    XOR     dst, src ;dst ^= src
+    NOT     dst      ;dst =~dst
+
+    SHL     dst, count ; dst <<= count
+    SAR     dst, count ; dst >>= count
+    SHR     dst, count ; dst >>= count
+
+    MUL    src       ;rax *= src
+    SHL     dst      ;dst <<= 1
+    \end{lstlisting}
+
+    \subsubsection{Flag-ovi}
+
+    PSW registar je registar koji sadrzi informacije o stanju procesora.
+    \begin{itemize}
+        \itemsep0em
+        \item \textbf{ZF} --- Nula (eng. \emph{Zero Flag}) pokazuje da li je
+            rezultat aritmeticke ili logicke operacije bio nula.
+        \item \textbf{CF} --- Prenos (eng. \emph{Carry Flag}) dopusta
+            brojevima vecim od jedne redi da se dodaju ili oduzimaju, tako sto
+            cuva prenos.
+        \item \textbf{SF} --- Znak (eng. \emph{Sign Flag}) pokazuje da li je
+            rezultat matematicke operacije negativan.
+        \item \textbf{OF} --- Prekoracenje (eng. \emph{Overflow Flag}) pokazuje
+            da li je oznaceni rezultat operacije prevelik da stane u registar.
+    \end{itemize}
+    
+    \subsubsection{Instrukcije poredjenja}
+
+    \begin{lstlisting}
+    CMP     op1, op2 ;op1 - op2
+    TEST    op1, op2 ;op1 & op2
+
+    JMP     target  
+    JE      target  ;(ZF=1)
+    JNE     target  ;(ZF=0)
+    JL      target  ;(SF!=OF)
+    JLE     target  ;(ZF=1 ili SF!=OF)
+    LG      target  ;(ZF=0 i SF=OF)
+    LGE     target  ;(SF=OF)
+    JA      target  ;(CF=0 i ZF=0)
+    JB      target  ;(CF=1)
+    JS      target  ;(SF=1)
+    JNS     target  ;(SF=0)
+    \end{lstlisting}
+    
+    \subsection{Funkcije}
+
+    \subsubsection{Pozivanje Prodecura}
+    
+    Pre poziva procedure mora se sacuvati povratna adresa. Ona moze da se cuva
+    u registar ili na stek.
+
+    Ako bi postojao poseban registar koji bi cuvao povratnu adresu, nakon
+    zavrsetka procedure znali bi smo gde da se vratimo. Ali recimo da 
+    procedura P poziva proceduru Q i onda procedura Q poziva proceduru R, nakon
+    izvrsavanja procedure R i vracanja u proceduru Q izgubili bi adresu za 
+    vracanje u proceduru P.
+
+    Druga mogucnost jeste cuvanje povratne adrese na steku. Pozivajuca 
+    procedura gura adresu na stek, nakon izvrsavanja pozvane procedure ona
+    skida adresu sa steka. Time se resava problem gubljenja povratne adrese
+    i omogucava se rekurentan poziv procedure.
+    
+    \subsubsection{Prenos Argumenata}
+
+    Argumenti se takodje mogu prenositi na dva nacina preko registara i preko
+    steka.
+
+    Argumenti se prenose preko registra na prethodno dogovoren nacin i to
+    po sledecem redosledu: RDI, RSI, RDX, RCX, R8, R9. Ovaj metoda ne radi
+    za pozivanje funkcije u trenutno pozvanoj funkciji i kada su parametri
+    veci od 8 bajta.
+
+    Argumenti mogu da se prenose i preko steka tako sto ih pozivajuca 
+    procedura gurne na stek u obrnutom poretku, tj.\ prvo se gurne param n, 
+    onda param (n-1), \ldots,
+    param 1. Onda nakon izvrsavanja pozvane procedure, pozivajuca procedura
+    skida sa steka prethodno dodate argumente.
+
+    \subsubsection{Vracanje Vrednosti}
+
+    Povratna vrednost ako je 8 bajta ili manje vraca se preko registra RAX,
+    u slucaju da je vrednost sa pokretnim zarezom koristi se 
+    \emph{floating-point register}.
+
+    Vrednost ukoliko je neka strutura ona se gura na stek.
+    
+    \subsubsection{Pozivanje funkcije x86--64}
+
+    Skeleton pozivanja funkcije:
+    \begin{lstlisting}
+function:
+    # prologue
+    PUSH    ebs         
+    MOV     ebp, esp
+    SUB     esp, N
+    :::
+    # epilogue
+    MOV     ESP, EBP
+    POP     EBP
+    RET     0
+
+main:
+    :::
+    MOV     RDI, 1st arg
+    MOV     RSI, 2nd arg 
+    :::
+    MOV     R9, 6th arg
+    PUSH    7th arg
+    PUSH    8th arg
+    :::
+    CALL function
+    POP     n-th arg
+    :::
+    POP     7th arg
+    :::
+    \end{lstlisting}
+    
+    \section{Procesor}
+    
+    Osnovne komponente procesora su putanja podataka, kontrolna jedinica, 
+    memorijske komponente (registri i kes memorija), radni takt, logicke 
+    kapije.
+
+    \emph{Putanja podataka} (eng. \emph{data path}) je deo procesora koji 
+    sadrzi aritmeticko-logicku jedinicu (ALI), njene ulaze i izlaze. Sadrzi
+    i niz registara opste namene i memorijske registre
+
+    \includegraphics[width=0.8\columnwidth]{Figures/datapath1.png}
+
+    \includegraphics[width=0.8\columnwidth]{Figures/datapath2.png}
+
+    \includegraphics[width=0.8\columnwidth]{Figures/datapath3.png}
+
+    \subsection{Interni Registri Procesora}
+
+    \begin{itemize}
+        \itemsep0em
+        \item PC --- programski brojac (eng. \emph{Program Counter})
+        \item IR --- instrukcioni registra 
+            (eng. \emph{Instruction Registar})   
+        \item MAR --- registar memorijskih adresa 
+            (eng. \emph{Memory Address Register})
+        \item MDR --- registar memorijskih podataka
+            (eng. \emph{Memory Data Register})
+        \item PSW --- statusni registart (eng. \emph{Program Status Word})
+        \item CW --- kontrolni registar (eng. \emph{Control Word})
+    \end{itemize}
+
+    \subsection{Faze Izvrsavanja Instrukcije}
+
+    \begin{enumerate}
+        \itemsep0em
+        \item \emph{Dohvatanje instrukcije} (eng. \emph{Fetch}): Instrukcije 
+            se ucitava iz memorije sa adrese na koju ukazuje PC registar i 
+            prebacuje na MDR registar. U MAR registar se prebaci vrednost PC
+            registra, izdaje se komanda za citanje memoriji. Vrednost dolazi
+            sa magistrale podataka do MDR registra, i ona se u njemu zapamti.
+        \item \emph{Dekodiranje instrukcije} (eng. \emph{Decode}): Instrukcija
+            se prebacuje u IR registar cija se vrednost salje na ulaze 
+            kontrolne jedinice. Dekodiranje se vrsti kada kontrolna jedinica
+            utvrdjuje koju instrukciju zapravo izvrsava i koje korake treba
+            da preduzme u nastavku.
+        \item \emph{Izvrsavanje instrukcije} (eng. \emph{Execute}): Izvrsava
+            se odredjenja operacija. 
+
+            Ukoliko instrukcija sadrzi memorijske 
+            operande, u ovoj fazi sve vrsi i dohvatanje operanada iz memorije
+            (na slican nacin kao i dohvatanje instrukcije). 
+
+            U slucaju aritmeticko-logickih instrukcija, vrednost operanada se
+            propusta kroz ALU da bi se izracunao rezultat. 
+
+            U slucaju transfera izmejdu registra, vrednost izvornog registre 
+            se propusta korz ALU bez ikakve operacije i prebacuje u odredisni 
+            registar.
+
+            U slucaju transfera iz registra u memoriju, vrednost iz izvornog
+            registra se kopira u MDR registra, a adresta odredista u MAR 
+            registar. Nakon toga se preko magistrale podatak upisuje na 
+            zadatu adresu.
+
+            U Slucaju instrukcije skoka, izvrsavanje zavisi od ispunjenosti 
+            uslova. Ukoliko flegovi ukazuju da je uslov ispunjen, vrsi se upis
+            adrese na koju se skace u PC registar, u suprotnom ne radi se 
+            nista.
+    \end{enumerate}
+
+    \subsection{Nacini Implementacije Kontrolne Jedinice}
+
+    \subsubsection{Tvrdo Ozicena Implementacija}
+
+    Tvrdo Ozicena Implementacija (eng. \emph{Hardwired Control Unit}) ili
+    ``hardverska implementacija''.
+    \begin{itemize}
+        \itemsep0em
+        \item Dizajnira se sekvencijalno kolo koje funkcionise kao 
+            konacni trasduktor
+        \item Na ulazu se nalaze vrednosti IR i PSW registra, a na izlazu
+            se nalazi skup kontrolnih signala koji se salju putanji podataka,
+            momoriji, i ostalim delovima racunara.
+        \item Stanja odgovaraju fazama izvrsavanja instrukcija
+        \item Mogu postojati i medjustanja u slucaju komplikovanih operacija.
+        \item Pogodan za procesore sa jednostavnim skupom instrukcija (RISC).
+        \item Brz je, ali zato ne moze lako da za modifikuje
+    \end{itemize}
+
+    \subsubsection{Mikroprogramirana Implementacija}
+
+    Mikroprogramirana implementacija (eng. \emph{Microprogrammed Contrl Unit})
+    ili ``softverska implementacija''.
+    \begin{lstlisting}
+        CONTROL SIGNAL | ADDRESS BITS
+    \end{lstlisting}
+    \begin{itemize}
+        \itemsep0em
+        \item Kontrolna jedinica sadrzi \emph{kontrolnu memoriju} 
+            (eng. \emph{control store}). Svaka adresibilna lokacija u ovoj
+            memoriji sadrzi jendu mikroinstrukciju.
+        \item Svaka mikroinstrukcija se izvrsava u jednom ciklusu.
+        \item Adresni bitovi iz tekuce mikroinstrukcije se kombinuju na 
+            odgovarajuci nacin sa vrednoscu IR i PSW registra cime se dobija 
+            adresa sledece mikroinstrukcije u kontrolnoj memoriji.
+        \item MIR registar (eng. \emph{Micro Instruction Register}) sadrzi
+            tekucu mikroinsrukciju.
+        \item Niz mikroinstrukcija u kontrolnoj memoriji naziva se
+            \emph{mikroprogram}. 
+        \item PSW registar takodje utice na izbor mikroprograma koji ce se
+            izvrsavati, jer se pojedinacne instrukcije izvrsavaju drugacije 
+            u zavisnosti da li je niki uslov ispunjen ili ne.
+        \item Mikroprogramirana kontrolna jedinica omoguca da se dizajn 
+            kontrolne jedinice svede na mikroprogramiranje. Jednostavnost u
+            slucaju slozenih skupova instrukcije (CISC).
+        \item Losa strana je sto je sporiji od tvrdo-ozicenih implementacija
+    \end{itemize}
+
+    Struktura mikroinstrukcije:
+    \begin{enumerate}
+        \itemsep0em
+        \item \emph{Horizontalna struktura}: Svi kontrolni signali postoje
+            kao pojedinacni bitovi mikroinstrukcije i mogu se direktno
+            usmeriti ka odgovarajucim komponentama procesora.
+        \item \emph{Vertikalne strukture}: Ideja je da se duzina 
+            mikroinstrukcije smanji tako sto se prepoznaju neke tipicne
+            kombinacije kontrolnih signala koje se javljaju u 
+            mikroinstrukcijama.
+    \end{enumerate}
+
+    \section{Memorija}
+
+    \subsection{Karakteristike Memorije}
+
+    \subsubsection{Vrste Pristupa}
+
+    \paragraph{Proizvoljan Pristup:}
+    Kod ovih memorija postoji mehanizam za pristupanje svakoj adresibilnoj
+    jedinici u priblizno konstantnom vremenu. Koristi se jos i
+    \emph{slucajan pristup} (eng. \emph{random access}). 
+
+    \paragraph{Sekvencijalni Pristup:} 
+    Adresibilnim jedinicama u momoriji se moze pristupiti iskljucivo redom. Da 
+    bismo pristupili 10-toj adresibilnoj jedinici, moramo pre toga da 
+    pristupimo svim adresibilnim jedinicamo od 0-te do 9-te redom.
+
+    \paragraph{Direktan Pristup:} 
+    Kod ovih memorija posotji mogucnost direktnog pristupa nekoj okolini
+    adresibilne jedinice u memoriji na osnovu zadate adrese. Kada se pristupi
+    okolini, pretraga trazene adresibilne jedinice se nastavlja sekvencijalno 
+    unutar ukoline.
+
+    \paragraph{Asocijativni Pristup:}
+    Podatku se ne pristupa preko adrese, vec tako sto se zadaje neka maska
+    koja se na neki nacin pretrazuje u memoriji.
+
+    \subsubsection{Kapacitet}
+
+    Kolicina podataka koja se moze sacuvati u memoriji. Izrazava se u
+    (KiloByte, MegaByte, GigaByte, TeraByte, \ldots).
+
+    \subsubsection{Brzina}
+    
+    Na brzinu uticu \emph{kasnjenje} (eng. \emph{memory latency}) i 
+    \emph{brzina transfera} (eng. \emph{bandwitdth}). Kasnjene se 
+    izrazava vremenom koje protekne od trenutka iniciranja transfera do
+    trenutka kada taj transfer zaista zapocne. Brzina transfera se izrazava
+    kolicinom podataka koji se mogu preneti u jednoj sekundi.
+
+    \emph{Vreme pristupa} je prosecno ukupno vreme potrebno da se pojedinacni 
+    podatak prenese iz memorije u procesor.
+
+    \emph{Vreme memorijskog ciklusa} predstavlja vreme koje je potrebno da
+    prodje izmedju dva uzastopna zahteva za pristupom. Ukljucuje vreme
+    pristupa, ali i dodatno vreme koje mora proci nakon zavrsetka transfera
+    do ponovnog zahteva za pristupom.
+    
+    \subsubsection{Postojanost}
+
+    Memorija je \emph{postojana} (eng. \emph{persisten/non-valatile}) ako
+    se iskljucenjem napajanja njen sadrzaj \underline{ne gubi}.
+
+    Memorija je \emph{nepostojana} (eng. \emph{non-persistent/valatile}) ako
+    se iskljucenjem napajanja njen sadrzaj \underline{gubi}.
+
+    \subsubsection{Promenljivost}
+
+    Memorija ciji je sadrzaj nepromenljiv nazivaju se \emph{nepromenljive 
+    memorije} (eng. \emph{read-only memory}).
+
+    Memorija ciji je sadrzaj promenljiv naziva se \emph{promenljiva memorija} 
+    (eng. \emph{read-write memory}).
+
+    \subsection{Memorijske Hijerarhije}
+
+    \emph{Univerzalna memorija} je memorija koja ima sve pozeljne
+    karakteristike. Ovakva memorija ne postoji.
+
+    Memorije su organizovane u \emph{memorijsku hijerarhiju}.
+
+    \includegraphics[width=\columnwidth]{Figures/memory_hierarchy.png}
+    
+    \subsubsection{Unutrasnje memorije}
+    
+    \paragraph{Read Only Memory (ROM):}
+    ROM sadrzi programe i podatke koji su nepromenljivi i koji treba da su
+    stalno prisutni da bi racunar mogao da radi. ROM ima proizvoljan pristup.
+    Implementiraju se kao kombinatorno kolo.
+    
+    PROM (Programmable ROM) koji se moze programirati samo jednom, spaljivanjem
+    odgovarajucih zica.
+
+    EPROM (Erasable Programmable ROM) koji se moze programirati uz pomoc
+    posebnog uredjaja za programiranje. Moze se programirati vise puta,
+    ali je pre svakog programiranja potrebno obrisati prethodni sadrzaj.
+
+    EEPROM (Electronically Erasable Programmable ROM) koji se moze brisati
+    elektronskim putem i zatim ponovo programirati.
+
+    \paragraph{Random Access Memory (RAM):}
+    RAM memorija je osnovna memorija u kojoj se nalaze podaci i programi
+    koji se trenutno izvrsavaju.
+
+    SRAM (Staticki RAM) se konstruise pomocu kola slicnih osnovnim D 
+    flip-flopovima. Cuva svoj sadrzaj sve dok postoji napajanje. 
+    Vreme pristupanja nekoliko milisekundi.
+
+    DRAM (Dinamicki RAM) se sastoji od niza celija, a svaka sadrzi jedan
+    tranzistor i mali kondenzator. Kondenzatori se pune i prazne cime se 
+    omogucava cuvanje logickih nula i jedinica. Kako elektricni napon
+    tezi disipaciji, svaki bit u DRAM mora se \emph{osvezavati}. 
+
+    SDRAM (Synchronous DRAM) je hibrid staticke i dinamicke memorije kojom
+    upravlja glavni radni takt. Prednost je sto radni takt uklanja potrebu za
+    upravljacke signale, sto je cini brzom.
+    
+    DDR (Double Data Rate) SDRM je memorija koja isporucuje podatke i na
+    ulaznoj i na silaznoj ivici radnog takta.
+    
+    Da bi se smanjilo kasnjenje prilikom pristupa susednim memorijskim adresama
+    je koriscenje \emph{isprepletanih memorija} 
+    (eng. \emph{interleaved memory})
+    Ideja je da se memorija podeli na nekoliko manjih memorijskih jedinica 
+    koje nazivamo \emph{bankama}. Banke se organizuju slicno kao organizovanje
+    memorijskih cipova u vece cipove. Nizi bitovi se koriste za izbor banke.
+    Ovo daje vremena bankama da pripreme svoje podatke, kasnjenja pojadinacnih
+    banki se medjusobno preklapaj. Ovaj metod radi samo ukoliko se pristupa 
+    podacima sekvencijalno.
+
+    \subsubsection{Spoljasnje memorije}
+
+    \paragraph{Hard Disk:} Sadrze veci broj diskova premazanih magnetnim 
+    materijalom koji su postavljeni na istu osovinu. Imaju veliki kapacitet,
+    ali su dosta sporiji od najsporije unutrasnje memorije. Podeljen je na
+    sektore cija je velicina 512 bajtova. Sektori se grupisu u staze koje
+    predstavljaju koncentricne krugove na diskovima razlicitih precnika.
+    Svaki sektor ima svoju adresu.
+
+    \paragraph{Floppy Disk:} Slicni kao hard diskovi koji su elektromagnetni.
+    Veoma malog kapaciteta. Danas se ne koriste.
+
+    \paragraph{CD i DVD ROM:} Uredaju koji omogucuju samo citanje. Zapisane
+    na optickom principu.
+
+    \paragraph{Flash Memorije i SSD:} Zasnovani su na slicnoj tehnologiji
+    kao i EEPROM, s razlikom sto ne omogucuju brisanje pojedinacnih bajtova,
+    vec iskljucivo prisanje i upis citavih blokova. Dosta su brzi od
+    hard diskova, ali su dosta skuplji a i zivotni ciklus im je dosta kraci.
+
+    \subsection{Mapiranje Memorijskih Adresa}
+
+    \emph{Adresni prostor} procesora je skup adresa koje procesor moze 
+    direktno da adresira. Procesori se dizajniraju tako je adresni procesor
+    veci nego sto je to zapravo potrebno (jer se pretpostavlja da ce se
+    RAM uvecavati). Memorija ce zauzimati samo deo adresnog prostora procesora.
+    \emph{Mapiranje memorijskih adresa} je pridruzivanje adrese procesorskog 
+    adresnog procesora, adresibilnim lokacijama u memoriji.
+
+    Mapiranje adresa se vrsi tako sto se adresa podeli na nizi i visi deo.
+    Visi deo adrese aktivira memorijski modul u kome ce se traziti 
+    odgovarajuca adresa, a nizi deo adrese odredjuje adresu u 
+    okviru modula. 
+
+    Jednostavan nacin za selektovanje memorijskog modula na osnovu viseg dela 
+    adrese je da se odgovarajucom kombinatornom logikom implementira funkcija 
+    koja ima vredno 1 samo za odgovarajucu kombinaciju visih bitova adrese.
+    
+    Ukoliko svakom memorijskom modulu odgovara jedinstvena kombinacija visih
+    bitova adrese, tada ovakvo mapiranje nazivamo \emph{potpuno mapiranje}.
+
+    Postoji mogucnost da se memorijski modul aktivira za veci broj kombinacija
+    visih adresnih bitova. U tom slucaju je istom memorijskom modulu pridruzeno
+    vise opsega adresa u okviru adresnog prostora procesora, te se svakoj 
+    njegovoj memorijskoj lokaciji moze pristupiti pomocu razlicitih adresa.
+    Ovaj nacin mapiranja zovemo \emph{parcijalno mapiranje} 
+
+    \subsection{Memorijsko Poravnanje}
+    
+    Memorije su \emph{bajt-adresibilne} ako svaki bajt ima svoju adresku preko 
+    koje mu se moze pristupiti. Medjutim, magistrala podataka je po pravilu 
+    sira. Ono znaci da prilikom transfera prebacujemo vise od jednog bajta
+    pocev od nekog na odredjenoj adresi. Zbog toga cesto postoji zahtev da se
+    podaci u memoriji organizuju u blokove, tako da je pocetni bajt
+    na adresi koja je deljiva nekim stepenom dvojke. Neke arhitekture to 
+    zahtevaju, dok ce druge u slucaju da transfer nije adekvatno poravnat
+    podeliti ga u 2 dela sto smanjuje performanse.
+
+    \section{Kes Memorija}
+
+    \emph{Kes memorija} se koristi kako bi se prevazisla razlika u brzini
+    procesora i RAM-a. Ideja je da se podaci koji se najcesce koriste
+    drze u kes memoriji koja je zasnovana na brzoj statickoj memoriji i time
+    smanjilo kasnjenje.
+
+    \paragraph{Princip Vremenske Lokalnosti:} (eng. \emph{temporal locality}) 
+    Odnosi se na ponovno pristupanje nedavno posecenim memorijskim lokacijama.
+    Memorijske lokacije blizu vrha steka ili instrukcije koje se ponavljaju u
+    petlji.
+
+    Koristi se uglavno tako sto se bira koji ce se sadrzaj iz kesa izbaciti
+    tako sto se analizira koriscenje tog sadrzaja u bliskoj proslosti.
+    
+    \paragraph{Princim Prostorne Lokalnosti:} (eng. \emph{spatial locality})
+    Odnosi se na adrese koje su veoma bliske adresama kojima je nedavno
+    pristupano, pa je vrlo verovatno da ce se i njima pristupiti.
+
+    Kes koristi ovo svojstvo da pripremi vise podataka nego sto se trenutno
+    traziz, u nadi da ce oni uskoro biti iskorisceni.
+
+    Kes memorija je podeljena na blokove 
+    fiksirane velicine koje zovemo \emph{linije kesa}. Prilikom transfera
+    podataka iz memorije u kes, uvek se ucitava ceo blok koji se upisuje u
+    neku liniju kesa.
+
+    Ukoliko se podatak, koji procesor zahteva, nalazi u nekoj od linija kesa 
+    on se dohvata i transferuje u procesor, to se naziva \emph{pogotak kesa}
+    (eng. \emph{cache hit}). 
+
+    Ukolio se podatak ne nalazi u nekoj od linija kesa, to se naziva
+    \emph{promasaj kesa} (eng. \emph{cache miss}).
+    
+    \subsection{Razdvojeni i Jedinstveni Kes} 
+
+    Da li instrukcije i podatke treba drzati u istom kesu ili odvojeno?
+
+    \emph{Jedinstveni kes} (eng. \emph{unified cache}), u kome se nalaze i
+    instrukcije i podaci, jednostavan je i dobar je za velike memorije.
+
+    \emph{Razdvojeni kes} (eng. \emph{split cache}), koji je podeljen
+    na deo sa instrukcijama i deo sa podacima, je dobar za male memorije.
+
+    \subsection{Nivoi Kesa}
+    
+    Kes memorija se obrazuje hjerarhijski, u vise nivoa. Svaki sledeci nivo je
+    sve veci, ali je i sve sporiji. Na taj nacin se najcesce korisceni podaci 
+    nalaze u najblizem kesu, oni malo redje u sledecem itd.
+    
+    Kod \emph{inkluzinvne organizacije} kesa svaki sledeci nivo kesa sadrzi 
+    sve podatke koje je sadrzai i prethodni, ali i dodatne podatke koji u 
+    prethodnom nisu postojali.
+
+    Kod \emph{ekskluzivne organizacije} kesa sledeci nivoi sadrze iskljucivo
+    druge podatke.
+
+    \emph{L1 kes}: Nalazi se u cipu procesora. 
+    Realizuje se kao razdvojeni 8-asocijativni kes.
+    Tipicna velicina 32K + 32K.
+
+    \emph{L2 kes}: Nalazi se u cipu procesora.
+    Realizuje se kao jedinstveni 4-asocijativni kes.
+    Tipicna velicina 256K.
+
+    \emph{L3 kes}: Nalazi se na procesorskoj ploci i zajednicki je za
+    sva jezgra procesora.
+    Realizuje se kao jedinstveni 8/16-asocijativni kes.
+    Tipicna velicina: 2M-4M.
+
+    \subsection{Direktno Mapiranje}
+
+    \begin{lstlisting}
+ADRESA: | TAG | BROJ_LINIJE | POMERAJ |
+    \end{lstlisting}
+
+    POMERAJ:\ Predstavlja redni broj bajta unutar linije kesa.
+
+    BROJ\_LINIJE:\ Predstavlja redni broj linije kesa u kes memoriji.
+
+    TAG:\ Ostatak adrese
+
+    \begin{lstlisting}
+LINIJA KESA:
+    | dirty_bit | valid_bit | TAG | PODACI |
+    \end{lstlisting}
+
+
+    \subsection{Asocijativno Mapiranje}
+
+    \subsection{Set---Asocijativno Mapiranje}
+    
+    \subsection{Politika Zamene}
+
+    Politika zamene definise nacin na koji se bira linija kesa koja ce 
+    biti zamenjena i veoma je vazna zbog dobrog iskoriscenja vremenske
+    lokalnosti. Kod direktnog mapiranje nema potebe za politiku zamene.
+    U Slucaju asocijativnog mapiranja politika zamene treba da odabere jednu
+    kes liniju iz skupa svih kes linija u kesu. U slucaju set---asocijativnog
+    mapiranja, potrebno je odabrati jednu kes liniju iz odgovarajuceg skupa
+    kes linija u koje dati podatak ide.
+
+    \paragraph{LRU (Least Recently Used):}
+    Zamenjuje se ona linija kesa koja najduze nije bila koriscena. Najbolji
+    rezultati, najteza implementacija. Za $n$ kes linija moze se 
+    implementirati konacni automat sa $n! $ stanja. Problem je sto $n! $ brzo
+    raste.
+
+    \paragraph{Pseudo---LRU:}
+    Aproksimacija LRU politike koja se manje precizna, ali se lakse 
+    implementira. Neka imamo n linija kesa. Ovaj skup delimo na dve polovine.
+    Jednim bitom odredjujemo u kojoj se od te dve polovine nalazi linija kesa
+    kojoj je najskorije pristupano. Na slican nacin se deli svaka od ovih
+    polovina.
+
+    \paragraph{FIFO (First In First Out):}
+    One linije kesa koje su u kesu najduze najmanje se koriste, dok se one 
+    koje su u kesu stigle kasnije vise koriste. Jednostavna je implementacija,
+    dovoljno je cuvati brojac koji predstavlja odredjenu liniju kesa, i
+    koji se svaki put uvecava kada se doda nova linija kesa.
+
+    \paragraph{LFU (Least Frequently Used):}
+    Najredje koriscena linije se izbacuje iz kesa. Potrebno je da postoji
+    brojac za svaku liniju kesa, koji se uvecava pri svakom pristupu te 
+    linije kesa, kao i slozena logika koja je potrebna za uporedjivanje
+    brojaca. Implementacija je dosta slozena.
+
+    \subsection{Politika Pisanja}
+
+    \begin{enumerate}
+        \itemsep0em
+        \item \emph{Write-Back}: Ako se podatak nalazi u kesuo
+        \item \emph{Write-Throught}:  
+    \end{enumerate}
+
+    \subsection{Odluke Pri Projektovanju Kesa}
+
+    \paragraph{Velicina kesa:}
+    Povecanjem kesa do neke granice imamo poboljsanje performansi, iznad
+    te granice performanse opadaju.
+
+    \paragraph{Velicina linije kesa:}
+    Povecanjem veliine linije kesa do neke mere performanse se poboljsavaju,
+    ali se u nekom trenutku performanse pocinju da opadaju.
+
+    \paragraph{Asocijativnost}:
+    Povecanjem stepena asocijativnost povecava se procenat pogodaka kesa.
+    Potpuno asocijativni kes je u tom smislu najbolji, ali je njegova
+    implementacija previse slozena, pa se zbog toga koriste set-asocijativno
+    mapiranje.
+    
+    
+    
+
+\end{multicols}
+
+\end{document}

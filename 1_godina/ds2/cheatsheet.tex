@@ -11,6 +11,7 @@
 \usepackage{enumerate} 
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage[]{algorithm2e}
 
 \DeclareMathOperator{\Dom}{Dom} 
 \DeclareMathOperator{\Ima}{Im} 
@@ -20,6 +21,7 @@
 \newtheorem*{theorem}{Teorema}
 \newtheorem*{prop}{Tvrđenje}
 \newtheorem*{lema}{Lema}
+\newtheorem*{alg}{Algoritam}
 
 
 \title{Diskretne Strukture 2}
@@ -396,6 +398,381 @@
     \end{enumerate}
 
     \section{Teorija grafova}
+
+    \emph{Prost graf} je uredjeni par $G = (V, E)$, gde je $V$ skup elemenata,
+    koje nazivamo \emph{cvorovi} i $E$ skup elemenata, keoje nazivamo 
+    \emph{grane}.
+
+    Dva cvora su \emph{susedana} ukoliko su spojena istom granom.
+
+    Za granu koja spaja dva cvora kazemo da je \emph{incidentna} sa njima
+    i te cvorove nazivamo \emph{krajevima} grane.
+
+    Ako su dve grane incidentne sa nekim cvorom za njih kazemo da su
+    \emph{susedne}.
+
+    \emph{Stepen cvora} $u$, u oznaci $d_u ( = d(u))$, jednak je broju
+    grana koje su incidentne sa $u$.
+
+    \emph{Okolina cvora} $u$, u oznaci $N(u)$, nazivamo skup svih cvorova 
+    susednih sa $u$.
+
+    \begin{itemize}
+        \itemsep0em
+        \item \emph{Graf sa petljama} --- dopusta postojanje grane cija su obe
+              strane krajeva isti cvor.
+        \item \emph{Multigraf} --- dopusta postojanje vise grana izmedju 
+              dva ista cvora.
+        \item \emph{Tezinski graf} --- graf cijoj je svakoj grani 
+              pridruzena neka vrednost. Tu numericku vrednost nazivamo tezina
+              grane.
+        \item \emph{Usmereni graf} --- graf u kome svaka grana moze da 
+              poseduje usmerenje od jednog cvora sa kojim je incidentna ka 
+              drugom takvom cvoru.
+    \end{itemize}
+    
+    \begin{theorem}
+        Suma stepena cvorova grafa jednaka je dvostrukom broju grana, tj.
+        \[
+            \sum_{i = 1}^n d(u_i) = 2|E|.
+        \]
+    \end{theorem}
+
+    Za grafove $G$ i $H$ kazemo da su \emph{izomorfni} ako postoji bijekcija
+    izmedju skupa cvorova jednog sa skupom cvorova drugog grafa, koja
+    cuva susede izmedju njih.
+
+    \emph{Invarijanta} grafa je funkcije definisana u skupu grafova koja
+    ima istu vrednost za sve izomorfne grafove.
+
+    \emph{Podgraf} grafa $G = (V, E)$, je graf $G' = (V', E')$, tako da
+    \[
+        V' \subseteq V, E' \subseteq E.
+    \]
+
+    \emph{Indukcioni podgraf} grafa $G$ dobija se uklanjanjem proizvodljnog 
+    skupa covorova grafa $G$.
+
+    \emph{Komlement grafa} $G = (V, E)$ je graf 
+    $\overline{G} = (V, \overline{E})$, koji ima isti skup cvorova u kojem
+    su cvorovi susedni akko nisu susedni u grafu $G$.
+
+    \emph{Setnja} u grafu je niz $(v_1, e_1, v_2, e_2, \ldots, e_{k-1}, v_k)$
+    ciji su clanovi iaizmenicno covorovi i grane tog grafa tako da je grana
+    $e_i$ incidentna sa cvorovima $v_i$, i $v_{i+1}$. Setlja je 
+    \emph{zatvorena} ako vazi $v_1 = v_k$.
+
+    \emph{Staza} u grafu je setnja koja cvakom granom prolazi najvise jednom.
+
+    \emph{Put} u grafu je setnja koja svakim cvorovom prolazi najvise jednom.
+
+    Dva cvora grafa $G$ su \emph{povezani} ukoliko postoji put koji ih 
+    povezuje.
+
+    Za graf kazemo da je \emph{povezan} ukoliko su svaka dva cvora povezana.
+
+    Klasa ekvivalencije u odnosu na povezanost nazivamo 
+    \emph{komponente povezanosti grafa}.
+
+    \emph{Vezivni cvor} grafa je cvoj cijim se uklanjanjem broj komponenata
+    povezanosti povecava.
+
+    \emph{Most} grafa je grana cijom se uklanjanjem broj komponanata 
+    povezanost povecava.
+
+    \begin{itemize}
+        \itemsep0em
+        \item \emph{Rastojanje} izmedju dva cvora $u$ i $v$ grafa $G$,
+              u oznaci $dist(u, v)$, jednako je duzini najkraceg puta koji
+              ih povezuje. Ako dva cvora nisu povezana njihovo rastojanje je
+              beskonacno.
+        \item \emph{Ekscentritet} --- $ecc(u) = \max \{dist(u, v)| v \in V\}$
+        \item \emph{Radius} --- $r(G) = \min \{ ecc(u) | u \in V\}$
+        \item \emph{Dijametar} --- $diam(G) = \max \{ecc(u) | u \in V\}$
+    \end{itemize}
+
+    Tipovi grafova:
+    \begin{itemize}
+        \itemsep0em
+        \item \emph{Prazan graf} --- graf koji nema grana.
+        \item \emph{Kompletan graf $K_n$} --- graf cija su svaka dva 
+              cvora povezana granom.
+        \item \emph{Pegularni graf} --- graf ciji cvorovi imaju jednake 
+              stepene.
+        \item \emph{Bipartitan graf} --- graf ciji se skup cvorova moze
+              podeliti na dva disjunktna podskupa tako da svaka grana tog grafa
+              spaja cvor iz jednog podskupa sa cvorom iz drugog podskupa.
+        \item \emph{Kompletan bipartitan graf $K_{n_1, n_2}$} --- 
+              bipartitan graf kod koga je svaki cvor jednog podskupa susedan 
+              sa svakim cvorom drugog podskupa.
+        \item \emph{Zvezda} --- kompletan bipartitni graf kod kog je $n_1 = 1$.
+        \item \emph{Ciklus $C_n$} --- graf kog koga je svaki cvor stepena 2.
+        \item \emph{Put $P_n$} --- graf koji se dobija uklanjanjem jedne grane
+              iz ciklusa.
+    \end{itemize}
+
+    \begin{theorem}
+        Graf je bipartitan ako ne sadrzi ciklus neparne duzine kao podgraf.
+    \end{theorem}
+
+    Reprezentacija grafova u racunaru:
+    \begin{itemize}
+        \itemsep0em
+        \item \emph{Matrica susedstva} --- matrica formata $n \times n$ u
+              kojoj je element na poziciji $(i, j)$ jednak 1 ukoliko su
+              cvorovi $v_i$ i $v_j$ susedni, u suprotnom je 0.
+        \item \emph{Matrica incidencije} --- matrica formata $n \times m$ u
+              kojoj je element na poziciji $(i, j)$ jednak 1 ukoliko je
+              cvor $v_i$ incidentan sa granom $e_j$, a u suprotnom je 0.
+    \end{itemize}
+
+    \emph{Stablo} je povezan grak koji ne sadrzi ciklus kao podgraf.
+
+    \begin{theorem}
+        Sledeca tvdjenja su ekvivalentna:
+        \begin{itemize}
+            \itemsep0em
+            \item $T$ je stablo.
+            \item Za graf $T$ vazi $m = n - 1$.
+            \item $T$ je maksimalan graf bez ciklusa.
+            \item $T$ je minimalan povezani graf.
+            \item Za svaka dva cvora grafa $T$ postoji tacno jedan put koji ih
+                  povezuje.
+        \end{itemize}
+    \end{theorem}
+
+    \emph{Korensko stablo} je stablo kod koga je jedan cvor izdojen od ostalih,
+    taj cvor nazivamo \emph{koren}.
+
+    Neka je $T$ korensko stablo i neka je $r$ koren tog stabla. Za cvor $u$
+    za koji vazi $dist(u, r) = i$ kazemo da je na $i$-tom nivou stabla $T$.
+
+    Ako cvor $u$ pripada $(i + 1)$-tom nivou stabla, a $v$ pripada $i$-tom
+    nivou stabla i $u$ i $v$ su susedni, onda kazemo da je $u$ prethodnih 
+    cvora $v$, a $v$ je naslednik covra $u$.
+
+    Cvor koji nema naslednika nazivamo \emph{list}.
+
+    \emph{Korensko $k$-arno stablo} je korensko stablo kod kog svaki cvor
+    ima najvise $k$ naslednika.
+
+    \emph{Potpuno korensko $k$-arno stablo} je korensko stablo kod kog
+    svaki cvor koji nije list ima tacno $k$ naslednika.
+
+    \emph{Razapinjuci graf} grafa $G$ je graf koji ima isti skup cvorova kao
+    graf $G$ i ciji je skup grana podskup skupa grana grafa $G$.
+
+    \emph{Razapinjuce stablo} povezanog grafa je razapinjuci graf koji je 
+    stablo.
+
+    \emph{Razapinjuca suma} nepovezanog grafa je razapinjuci podgraf koji se
+    sastoji od razapinjuceg stabla komponenata povezanosti datog grafa.
+
+    Pretraga grafa se sastoji od selektovanja jednog po jednog cvora u grafu
+    tako da svaki bude selektovan tacno jednom, u skladu sa nekim pravilima
+    koji odredjuju selektovanje.
+
+    Pretraga grafa se sastoji od selektovanja jednog po jednog cvora u grafu
+    tako da svaki bude selektovan tacno jednom, u skladu sa nekim pravilima
+    koji odredjuju selektovanje.
+
+    \emph{Pretraga po dubini} (Depth First Search, DFS). 
+    Najpre cvor koji obilazimo susedan je cvoru koji smo prethodno obisli,
+    ukoliko je to moguce. Ukoliko nije, obilazimo susadan prethodnog od
+    prethodnog obidjenog cvora, itd\ldots
+
+    \emph{Pretraga po sirini} (Breadth First Search, DFS).
+    Njpre obilazimo susede prvog cvora, potom sve susede drugog 
+    obidjenog cvora, itd\ldots
+
+    \emph{Minimalno razapinjuce stablo} grafa $G$ je razapinjuce stablo 
+    minimalne tezine.
+
+    \begin{alg}[Kraskalov algoritam]
+        Algoritam prihvata povezani tezinski graf $G$, a vraca jedno
+        minimalno razapinjuce stablo tog grafa.
+        \begin{enumerate}
+            \itemsep0em
+            \item [K1] Inicijalizavija $T = (V, \emptyset)$
+            \item [K2] Urediti grane po tezinama u rastuci niz
+            \item [K3] Neka je $e$ naredna grana niza, ako ona ne postoji K5.
+            \item [K4] Ako dodavanjem grane $e$ tekucem grafu $T$ nastaje
+                       nastaje ciklus K3. U suprotnom dodaj granu $e$ u $T$ K3.
+            \item [K5] Kraj.
+        \end{enumerate}
+    \end{alg}
+
+    \begin{theorem}
+        Kraskalov algoritam rezultuje minimalnim razapinjucim stablom povezanog
+        tezinskog grafa
+    \end{theorem}
+
+    \begin{theorem}
+        Neka je $G = (V, E)$ povezani tezinski graf, $U \subset V$ i $e$ grana
+        minimalne tezina koja spaja cvor iz $U$ sa cvorom iz $V/U$. Tada
+        postoji minimalno razapinjuce stablo tezinskog grafa $G$ koje
+        sadrzi granu $e$.
+    \end{theorem}
+
+    \begin{alg}[Primov algoritam]
+        Algoritam prihata tezinski graf $G$, a vraca jednu minimalnu 
+        razapinjucu sumu tog grafa.
+        \begin{enumerate}
+            \itemsep0em
+            \item [K1] Inicijalizacije $T = (\emptyset, \emptyset)$, 
+            \item [K2] Proizvoljan cvor grafa $G$ dodati stablu $T$.
+                  Ako takav cvor ne postoji K5.
+            \item [K3] Granu najmanje tezine koja spaja tekuci graf $T$ sa
+                  ostatkom grafa $G$ podati grafu $T$.
+                  Primenjivati K3 dok god je moguce, u suprotnom K2.
+            \item [K5] Kraj.
+        \end{enumerate}
+    \end{alg}
+
+    \emph{Oznaceni graf} su graf kod kog oznake na cvorovima igraju esencijalnu
+    uglogu za razliku od izomorfnih grafova.
+
+    \emph{Priferov niz}, u oznaci $s_{(n)} = (s_1, s_2, \ldots, s_{n-2})$, je
+    bilo koji niz koji se sastoji od $n-2$ broja skupa $\mathbb{N}_n$
+
+    \begin{theorem}
+        Priferov niz odredjuje jedno oznaceno stablo koje ima $n$ cvorova
+        i obrnuto.
+    \end{theorem}
+
+
+    \begin{algorithm}[H]
+        \KwData{$T=(\{1, 2, \ldots, n\}, E)$ --- stablo}
+        \KwResult{$s$ --- priferov niz}
+        $s = ()$ --- init\;
+        \While{$|V(T)| > 2$}
+        {$u$ --- cvor stepena 1 minimalne oznake\;
+        $v$ --- sused od $u$\;
+        $T:= T - u$\;
+        $s:= s + v$\;}
+        \caption{Priferovo kodiranja}
+    \end{algorithm}
+
+    \begin{algorithm}[H]
+        \KwData{$s = (s_1, s_2, \ldots, s_{n-2})$}
+        \KwResult{$T$ --- stablo}
+        $T = (\{1, 2, \ldots, n\}, \emptyset)$\;
+        $l = (1, 2, \ldots, n)$\;
+        \For{$i = 1$ \KwTo$(n-2)$}
+        {$v$ --- minimalna vrednost koja pripara u $l$ a ne pripada u $s$\;
+        $w = s(i)$\;
+        $T:= T - u$\;
+        $s:= s + v$\;}
+        \caption{Priferovo dekodiranja}
+    \end{algorithm}
+
+    Ne postoji efektivni nacin za izracunavanje broja neizomorfnih stabla 
+    grafova sa datim brojem cvorova.
+
+    \begin{theorem}[Kejlijeva teorema]
+        Broj oznacenih stabala sa $n$ cvorova jednak je $n^{n-2}$.
+    \end{theorem}
+
+    Neka je $e$ grana multigrafa $G$. \emph{Kontrakcija multigrafa} $G$, u 
+    oznaci $G \cdot e$, je multigraf koji se dobija od $G - e$ identifikovanjem
+    cvorova sa kojima je grana $e$ bila incidentna.
+
+    \begin{theorem}
+        Za svaki oznaceni multigraf $G$ vazi jednakost:
+        \[
+            t(G) = t(G-e) + t(G \cdot e).
+        \]
+    \end{theorem}
+
+    Ako je $T$ razapinjuce stablo povezanog grafa $G$, onda dodavanjem
+    proizvoljne grane stablu $T$, pri cemu ona pripada ostaktu grafa $G$, 
+    dobija tacno jedan ciklus u povezanom grafu. Taj ciklus nazivamo
+    \emph{elementarni ciklus} grafa $G$, u odnosu na stablo $T$.
+
+    \emph{Ciklomaticni broj} grafa, u oznaci $\nu$, jedank je broju 
+    elementarnih ciklusa grafa.
+    
+    \begin{theorem}
+        Broj elementarnih ciklusa grafa jednak je $\nu = m - n + p$, gde
+        je $m$ broj grana, $n$ broj cvorova, i $p$ broj komponenta povezanosti
+        grafa.
+    \end{theorem}
+
+    Za multigraf kazemo da je \emph{Ojlerov} ukoliko sadrzi zatvorenu stazu 
+    koja svakom granom tog multigrafa prolazi tacno jedanput. Takvu stazu
+    nazivamo \emph{ojelrovom}.
+
+    Za multigraf kazemo da je \emph{poluojlerov} ukoliko sadrzi stazu 
+    koja svakom granom tog multigrafa prolazi tacno jedanput. Takvu stazu
+    nazivamo \emph{poluojlerovom}.
+
+    \begin{theorem}
+        Netrivijalni povezan multigraf je Ojlerov akko su svi cvorovi tog 
+        multigrafa parnog stepena.
+    \end{theorem}
+
+    \begin{theorem}
+        Netrivijalni povezan multigrafa je poluojlerov akko sadrzi
+        0 ili 2 cvora neparnog stepena.
+    \end{theorem}
+
+    \begin{algorithm}[H]
+        \KwData{$G$}
+        \KwResult{$s$ --- ojlerova staza}
+        $s = (v_0)$ --- init\;
+        \While{$|E(G)| > 0$}
+        {$e = uv \in E(G)$, tako da $u$ je poslednji element staze $s$, 
+        i $e$ nije most, sem ako nema drugog izbora\;
+        $s = s + e$\;
+        $G = G - e$\;}
+        \caption{Fleringov algoritam}
+    \end{algorithm}
+
+    \emph{Problem kineskog postara}. Postar kreci iz poste, obilazi ulice
+    u svojoj oblasti paznoseci posiljke i potom se vraca u postu.
+    Postar treba da obice sve ulice, a vreme ce trositi najracionalnije ako je
+    duzina predjenog puta minimalna.
+
+    Odrediti zatvorenu setlju u tezinskom multigrafu koja sadrzi sve grane 
+    multigrafa i minimalne je tezine.
+
+    Za graf kazemo da je \emph{Hamiltonov} ukoliko sadrzi ciklus koji prolazi 
+    svakim cvorom tog grafa. Takav ciklus nazivamo \emph{Hamiltonovim}.
+
+    Za graf kazemo da je \emph{poluhamiltonov} ukoliko sadrzi put koji prolazi 
+    svakim cvorom tog grafa. Takav ciklus nazivamo \emph{Hamiltonovim}.
+
+    \begin{theorem}
+        Ukoliko graf $G$ sadrzi dva nesusedna cvora $u$ i $v$, tako da njihov
+        stepen zadovoljava nejednakosti \[d_u + d_v \geq n,\] onda vazi
+        da je graf $G$ Hamiltonov akko je graf $G + uv$ takode Hamiltonov.
+    \end{theorem}
+
+    \begin{theorem}
+        Graf koji ima barem 3 cvora i ciji minimalni stepen cvorova
+        zadovoljava nejednakost \[\delta \geq n/2.\]
+    \end{theorem}
+
+    \emph{Problem trgovackog putnika}. 
+    Neka je dat skup gradova koji su povezani putevima odredjene duzine. 
+    Trgovacki putnik treba da obice sve gradove i da se vrati u grad iz koga
+    je posao, a da pritom predje najmanji moguci put.
+
+    Problem se svodi na odredjivanje Hamiltonovog ciklusa minimalne tezine.
+
+    \emph{3-heuristika}:
+    \begin{itemize}
+        \itemsep0em
+        \item $S_0$ --- proizvoljan ciklus
+        \item Uklanjanje 3 nesusedne grane ciklusa $S_0$ dobijamo podgraf tog
+            ciklusa koji se sastoji od 3 puta.
+        \item Spajanjem tih puteva dobijemo nove Hamiltonove cikluse.
+        \item Od dobijenih ciklusa biramo onaj koji je minimalne tezine i 
+            oznacavamo ga sa $S_1$.
+        \item Primenjujemo 3-heuristika na $S_1$
+        \item Dobijamo niz $S_0, S_1, \ldots$
+        \item Procedura se zavrsava nakon odredjenog broja iteracija.
+    \end{itemize}
     
 
 \end{multicols}
