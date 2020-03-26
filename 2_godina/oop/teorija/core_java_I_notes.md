@@ -430,7 +430,7 @@ Scanner in = new Scanner(Paths.get("myfile.txt"), "UTF-8");
 * Za pisanje u fajl:
 ```java
 PrintWriter out = new PrintWriter("myfile.txt", "UTF-8");
-```java
+```
 * Kod citanja iz fajlova ako fajl ne postoji na toj putanji dolazi
   do *exception*. Java koristi drugacije nacine za obradjivanje expections. 
 
