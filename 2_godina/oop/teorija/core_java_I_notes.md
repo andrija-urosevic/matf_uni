@@ -1,9 +1,3 @@
----
-title: Core Java I Notes
-author: Andrija Urosevic
-output: pdf_document
----
-
 # Uvod u Javu
 
 * Java Buzzwords:
@@ -25,7 +19,7 @@ output: pdf_document
 
 ## Jednostavni Java Program
 
-```
+```java
 package org;
 
 public class SimpleProgram {
