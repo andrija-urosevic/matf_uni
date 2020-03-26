@@ -126,12 +126,12 @@ public class SimpleProgram {
 
 * Pre koriscenja deklarisane promenljive ona mora biti inicijalizovana.
   * Deklaracija pa inicijalizacija:
-    ```
+    ```java
     int vacationDays;
     vacationDays = 12;
     ```
   * Deklaracija i inicijalizacija:
-    ```
+    ```java
     int vacationDays = 12;
     ```
 * Deklaracija ili inicijalizacija se mogu naci bilo gde u kodu.
@@ -139,12 +139,12 @@ public class SimpleProgram {
 ### Konstante
 
 * U javi se koristi kljucna rec `final` da konstante.
-```
+```java
 final double CM_PER_INCH = 2.54;
 ```
 * *Klasne konstante* imaju dodato `static` i nalaze se u klasi izvan
   svih funcija kako bi se mogle referisati u svakoj funkciji:
-```
+```java
 static final double CM_PER_INCH = 2.54;
 ```
 
@@ -161,13 +161,13 @@ static final double CM_PER_INCH = 2.54;
 ### Matematicke funcije i konstante
 
 * `Math` klasa sadrzi veliki broj matematickih funkcija.
-```
+```java
 double x = 4;
 dobule y = Math.sqrt(x);
 double z = Math.pow(x, 4);
 ```
 * Trigonometrijske funkcija:
-```
+```java
 Math.sin
 Math.cos
 Math.tan
@@ -175,13 +175,13 @@ Math.atan
 Math.atan2
 ```
 * Eksponencijalne i logaritamske funkcije:
-```
+```java
 Math.exp
 Math.log
 Math.log10
 ```
 * Konstante
-```
+```java
 Math.PI
 Math.E
 ```
@@ -208,7 +208,7 @@ byte --> short --> int  -->  long
 * Po nekada zelimo da na primer `double` posmatramo kao `int`.
 * To je moguce ali naravno informacija moze biti izgubljena.
 * Tu operaciju nazivamo *kastovanje*.
-```
+```java
 double x = 9.997;
 int nx = (int) x; // nx = 9
 int mx = (int) Math.round(x); // nx = 10 Math.round(x) vraca long 
@@ -216,7 +216,8 @@ int mx = (int) Math.round(x); // nx = 10 Math.round(x) vraca long
 ```
 
 ### Kombinovanje Dodele sa Operatorima
-```
+
+```java
 // Sledece dve linije su ekvivalentne
 x += 4;
 x = x + 4;
@@ -254,7 +255,7 @@ x = x + 4;
 
 * Ponekada zelimo da promenljiva drzi samo neki skup mogucih promenljivih.
 * Enumerisani tip ima skonacna broj imenovanmih vrednosti:
-```
+```java
 enum Size { SMALL, MEDIUM, LARGE, EXTRA_LARGE };
 Size s = Size.MEDIUM;
 ```
@@ -264,21 +265,21 @@ Size s = Size.MEDIUM;
 * Java `String` je sekvenca Unicode karaktera.
 * Ne postoji predefinisani `String` tip, vec je on u formi klase.
 * Svaki navedeni string je instanca klase `String`.
-```
+```java
 String e = "";
 String greeting = "Hello";
 ```
 
 ### Podstring
 
-```
+```java
 String greeting = "Hello";
 String s = greeting.substring(0, 3); // s = "Hel"
 ```
 
 ### Konkatinacija ili Nadovezivanje
 
-```
+```java
 String expletive = "Explective";
 String PG13 = "deleted";
 String message = expletive + PG13;
@@ -370,7 +371,7 @@ String all = String.join(" / ", "S", "M", "L", "XL");
   * Nefikasno je vrsiti konkatonaciju jer svaka konkatonacija stvara novi
     `String` objekat.
   * `StringBuilder` resava ovaj problem
-```
+```java
 StringBuilder sb = new StringBuilder();
 sb.append(ch);  // appends char
 sb.append(str); // appends string
@@ -390,7 +391,7 @@ String s = sb.toString();
 
 ### Citanje sa Ulaza
 
-```
+```java
 Scanner in = new Scanner(System.in);
 String name = in.nextLine();  // cita celu liniju (string)
 String firstName = in.next(); // cita sledecu rec (string)
@@ -401,7 +402,7 @@ in.close();
 
 ### Formatiranje Izlaza
 
-```
+```java
 double x = 1000.0 / 3.0;
 System.out.print(x); // stampa 333.33333335
 System.out.printf("%8.2f", x) // stampa 3333.33 (8 polja sa preciznoscu 2)
@@ -423,13 +424,13 @@ format-specifier:
 ### Ulaz i Izlaz sa fajlovima
 
 * Za citanje iz fajla: 
-```
+```java
 Scanner in = new Scanner(Paths.get("myfile.txt"), "UTF-8");
 ```
 * Za pisanje u fajl:
-```
+```java
 PrintWriter out = new PrintWriter("myfile.txt", "UTF-8");
-```
+```java
 * Kod citanja iz fajlova ako fajl ne postoji na toj putanji dolazi
   do *exception*. Java koristi drugacije nacine za obradjivanje expections. 
 
@@ -440,7 +441,7 @@ PrintWriter out = new PrintWriter("myfile.txt", "UTF-8");
 * Blokovi sadrze nekoliko Java naredbi, koje objedinjuju par 
   viticastih zagrada `{ }`.
 * Blokovi se mogu ugnjezditi u druge blokove.
-```
+```java
 public static void main(String[] args)
 {
    int n;
@@ -455,7 +456,7 @@ public static void main(String[] args)
 
 ### Uslovne naredbe
 
-```
+```java
 if (condition) statement
 
 if (condition) {
@@ -480,7 +481,7 @@ else
 
 ### Petlje
 
-```
+```java
 while (condition) statement
 
 do statement while (condition);
@@ -488,14 +489,14 @@ do statement while (condition);
 
 ### Determinisane Petlje
 
-```
+```java
 for (initStatement; condition; ithStatement)
     statement
 ```
 
 ### Switch naredba
 
-```
+```java
 switch (label) {
     case 1:
         ...
@@ -524,7 +525,7 @@ switch (label) {
 * `goto` je rezervisana rec ali ne sluzi ni cemu.
 * neoznaceni `break` izlazi iz petlje.
 * onazneni `break` izlazi iz petlje do oznacenog mesta.
-```
+```java
 read_data:
 while (...) {
     for (...) {
@@ -544,7 +545,7 @@ while (...) {
 
 * `BigInteger` i `BigDecimal` su klase za predstavljanje proizvoljno
   velikih sekvenca brojeva.
-```
+```java
 BigInteger a = BigInteger.valueOf(100);
 BigInteger b = BigInteger.valueOf(1000);
 BigInteger c = a.add(b);                                 // c = a + b
@@ -578,12 +579,12 @@ BigInteger d = c.multiply(b.add(BigInteger.valueOf(2))); // d = c * (b + 2)
 
 ### For each Petlja
 
-```
+```java
 for (variable : collection) statement
 ```
 * `collection` izraz mora da bude niz ili objekat koji implementira
   `Iterable` interfejs, kao sto je na primer `ArrayList`.
-```
+```java
 // For each petlja
 for (int element : a) {
     System.out.println(element);
@@ -596,13 +597,13 @@ for (int i = 0; i < a.length; i++) {
 
 ### Inicijalizatori Niza i Anonimni Nizovi
 
-```
+```java
 int[] smallPrimes = { 2, 3, 5, 7, 11, 13 }; 
 new int[] {17, 19, 23, 29, 31, 37} // Anonimni niz
 ```
 * Anonimni nizovi se mogu koristiti kod ponovne inicijalizacije nekog niza
   kako se ne bi kreirao novi niz.
-```
+```java
 smallPrimes = new int[] {17, 19, 23, 29, 31, 37}; 
 // je krace od
 int[] tmp = {17, 19, 23, 29, 31, 37};
@@ -613,7 +614,7 @@ smallPrimes = tmp;
 
 * Moguce je kopiranje jedne promenljive niza u drugu, ali onda obe
   promenljive referisu na isti niz:
-```
+```java
 int[] luckyNumbers = smallPrimes;
 luckyNumbers[5] = 12; // sada je i smallPrimes[5] = 12
 
@@ -629,7 +630,7 @@ int[] copiedLuckyNumbers = Array.copyOf(luckyNumbers, luckyNumbers.length);
 * Svaki Java program ima `main` metodu sa `String[] args` parametrom.
 * Ovi parametri argumente koji su specifikovani u komandnoj liniji prilikom
   pokretanja programa.
-```
+```java
 public static void main(String[] args) {
     if (args.lenght == 0 || args[0].equals("-h")) {
         System.out.print("Hello, ");
@@ -650,7 +651,7 @@ out: Hello, nice world!
 
 ### Sortiranje Niza
 
-```
+```java
 int[] a = new int[1000];
 ...
 Arrays.sort(a);
@@ -675,7 +676,7 @@ Arrays.sort(a);
 * Inicijalizacije:
   * `arrName = new type[N][N];`
 * Inicijalizacija sa poznatim vrednostima:
-  * ```
+  * ```java
     int[][] arr = {
         {1, 2, 3, 4},
         {2, 2, 2, 2},
@@ -702,7 +703,7 @@ Arrays.sort(a);
 1  5 10 10  5  1
 1  6 15 20 15  6  1
 ```
-```
+```java
 int[][] binomial = new int[NMAX + 1][];
 for (int n = 0; n <= NMAX; n++) {
     binomial[n] = new int[n + 1];
