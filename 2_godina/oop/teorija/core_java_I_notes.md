@@ -720,7 +720,387 @@ for (int n = 1; n < binomial.length; n++) {
 
 ```
     
-# Objekti i Klas
+# Objekti i Klase
+
+## Uvod u Objektno-Orijentisano Programiranje
+
+* Objektno-Orijentisan program se sastoji od objekata.
+  * Svaki objekta ima specificne funkcionalnosti.
+  * Mnogi objekti su preuzeti iz biblioteka, drugi moraju biti napravljeni.
+  * Sve dok neki objekat zadovoljava specifikacije, ne zanima nas 
+    implmentacija.
+* Tradicionalno proceduralno programiranje se zasniva na dizajniranju nekog 
+  skupa procedura za resavanje probleme, a nakon toga se pronalaze nacini sa 
+  skladno smestanje podataka.
+* Objektno-Orijentisano programiranje okrece ovaj proces:
+  1. Smestimo prvo podatke
+  2. Pravimo algoritme za operisanje nad tip podacima
+
+### Klase
+
+* *Klasa* je blueprint sa kojim se prave objekti.
+  * Kada konstruisemo objekat iz klase, kazemo da smo stvorili *instancu* 
+    klase.
+* Sav kod u Javi se nalazi u klasi.
+* *Enkapsulacija* je kljucan koncept, koji spaja podatke i ponasanja u jedan
+  paket, i skrivanje implementacionih detalja od korisnika objekta.
+  * Delovi podataka u objektu su *polja instance*.
+  * Procedure koje operisu nad tim podacima su *metode*.
+  * Skup tih vrednosti je trenutno *stanje* objekta.
+    * Kada se pozove metod na objekta, njegovo stanje se moze promeniti.
+* Kljuc enkapsulacije je ne koristiti direktno polja instance.
+  * Program bi trebalo da interaktuje sa njima samo preko njegovih metoda.
+* Klase se mogu praviti *prosirivanje* drugih klasa.
+  * U Javi postoji ``kosmicka superklasa'' naznava `Object`. Svi drugi objekti
+    prosiruju ovo klasu.
+* Koncept prosirivanje klase za dobijanje nove klase se naziva *nasledjivanje*.
+
+### Objekti
+
+* Tri kljucne karakteristike objekta:
+  * *Ponasanje* objekta --- sta je moguce uraditi sa ovim objekto, ili koje
+    metode je moguce primeniti na njega?
+  * *Stanje* objekta --- kako se objekat menja kada se na njega pozovu
+    te metode?
+  * *Identitet* objekta --- kako se objekat razlikuje od drugog koji moze da
+    ima isto ponasanje i stanje?
+* Svi objekti koji su instance iste klase dele familiju koja podrzava ista
+  *ponasanja*. Ta ponasanja se definisu metodama koje mogu pozvati.
+* Svaki objekat sadrzi informacije kako on trenutno izgleda. To je njegovo
+  *stanje*. Stanje objekta se moze promeniti tokom vremena pozivom njegovih
+  metoda. 
+  * Ako se njegovo stanje menja na drugi nacin nemamo enkapsulaciju.
+* Svaki objekat je okarakterisan jedinstvenim *identitetom*.
+  * Objekti koji su instanca iste klase *uvek* se razlikuju po identitetu, i
+    *obicno* se razlikuju po stanju.
+
+### Identifikovanje Klasa
+
+* U objektn-orijentisanom programiranju nema pocetka, tj. ne pocinje se
+  od `main` te se dalje kod pise linearno, vec se identifikuju klase i onda
+  se njima dodaju metodi.
+* Identifikovanje klasa je trazenje imenica u analizi problema, dok metodi
+  odgovaraju odgovarajucim glagolima koji mogu da se koriste na tu imenicu.
+
+### Relacija izmedju Klasa
+
+1. *Zavisnost* (koristi)
+  * Uvek hocemo da minimizujemo broj klasa koje zavise na druge klase.
+    * Ako klasa A nije svesna od postojanju klase B, nije je briga za bilo
+      kakve promene u B. (minimizacija *uparivanje*)
+2. *Agregacija* (sadrzi)
+3. *Nasledjivanje* (jeste)
+  * Ako klasa A prosiruje klasu B, klasa A nasledjuje metode klase B, ali
+    ima vise mogucnosti.
+* UML (*Unified Modeling Language*) notacija za crtanje *dijagrama klasa* koje
+  opisuju relacije izmedju njih.
+
+## Koriscenje Predefinisanih Klasa
+
+### Objekti i Objektne Promenljive
+
+* Objekte prvo konstruisemo tako sto odredimo njihovo inicijalno stanje, onda
+  mozemo primenjivati metode na njima.
+* U Javi, koristimo *konstruktore* za konstruisanje novih instanci.
+  * Konstruktor je specijalan metod ciji je cilj da konstruise i inicijalizuje
+    objekat.
+  * Konstruktor uvek ima isto ime kao ime klase.
+  * Za konstruisanje novog objekta spajamo operator `new` sa konstruktorom:
+```java
+    new Date()
+```
+* Taj objekat mozemo onda koristiti kao argument nekog drugog metoda:
+```java
+    System.out.println(new Data());
+```
+* Mozemo takonje primenjivati metode na njega:
+```java
+    String s = new Data().toString();
+```
+* Obicno, hocemo da cuvamo referencu objekat u *objektnoj promenljivoj* 
+  kako bi ga koristili vise puta:
+```java
+    Data birthday = new Data();
+```
+```
+                             ___________
+              ______        |    Date   |
+    birthday=|______|-----> |^^^^^^^^^^^|
+                            |           |
+                            |___________|
+```
+* Postoji razlika izmedju objekta i objektne promenljive:
+```java
+    Data deadline; // ne referise ni na jedan objekat
+    deadline.toString(); // nije moguce
+    deadline = new Data(); // sada referise na jednu instancu klase Data
+    deadline = null; // deadline je inicijalizovan i eksplicitno ne pokazuje
+                     // ni na jedan objekat
+```
+
+### LocalDate Klasa Javine Biblioteke
+
+* Za inicijalizaciju objekta klase `LocalDate` nije potrebno koristiti
+  konstruktor, vec staticku *fabricku metodu* koja zatim poziva konstruktor.
+```java
+    // konstruise novi objekat sa trenutnim datumom.
+    LocalDate date= LocalDate.now(); 
+
+    // konstruise novi objekat sa zadatim datuom.
+    LocalDate date = LocalDate.of(1999, 12, 31); 
+    LocalDate aThousandDaysLater = date.plusDays(1000);
+    int year = date.getYear(); // 1999
+    int month = date.getMonthValue(); // 12
+    int day = date.getDatOfMonth(); // 31
+```
+
+### Mutator i Accessor Metodi
+
+```java
+    LocalDate aThousandDaysLater = date.plusDays(1000);
+```
+* Sta se desava sa `date` nakon poziva metode `plusDays()`?
+* Da li se promenio da bude 1000 godina kasnije?
+  * Ispostavlja se da je idalje isti, jer metod `plusDays()` daje novi
+    objekat koji se dodeljuje `aThousandDaysLater` promenljivi.
+* Kazemo da `plusDays` metod *ne mutira* objekat nad kojim se poziva.
+* Svi drugi metodi koji nemaju stanje objekta su *mutirajuci metodi*.
+* Metodi koji samo pristupaju objektima bez da ih menjaju nazivaju se
+  *pristupajuci metodi*.
+
+## Definisanje klasa
+
+```java
+    class ImeKlase {
+        polje1 
+        polje2
+        ...
+        konstructor1
+        konstructor2
+        ...
+        metod1
+        metod2
+        ...
+    }
+```
+
+* Razmotrimo sledecu jednostavnu klasu `Zaposleni`:
+```java
+    class Zaposleni {
+        // instance polja
+        private String ime;
+        private double plata;
+        private LocalDate datumZaposljavanja;
+
+        // construktor
+        public Zaposleni(String i, double p, int godina, int mesec, int dan) {
+            ime = i;
+            plata = p;
+            datumZaposljavanja = LocalDate.of(godina, mesec, dan);
+        }
+
+        // metode
+        public String getIme() {
+            return ime;
+        }
+        
+        public double getPlata() {
+            return plata;
+        }
+
+        public LocalDate getDatumZaposljavanja() {
+            return datumZaposljavanja;
+        }
+
+        public void povecajPlatu(double procenat) {
+            double povecanje = plata * procenat / 100;
+            plata += povecanje;
+        }
+    }
+```
+* Hocemo da popunimo niz zaposlenih sa tri objekta `Zaposleni`:
+```java
+    Zaposleni[] zaposleni = new Zaposleni[3];
+
+    zaposleni[0] = new Zaposleni("Pera Peric", 1000, 2000, 4, 3);
+    zaposleni[1] = new Zaposleni("Mara Maric", 1200, 2000, 5, 2);
+    zaposleni[2] = new Zaposleni("Kata Katic", 1100, 2000, 4, 1);
+```
+* Zatim hocemo da povecamo svima platu za 5%, i da ih sve ispisemo:
+```java
+    for (Zaposleni z : zaposleni) {
+        z.povecajPlatu(5);
+    }
+    for (Zaposleni z : zaposleni) {
+        System.out.printf("ime=" + z.getIme()
+            + ", plata=" + z.getPlata()
+            + ", datumZaposljenja=" + z.getDatumZaposljavanja());
+    }
+```
+
+### Raspravljamo o Klasi Zaposleni
+
+* Kao sto vidimo kalsa `Zaposleni` ime jedan kostruktor i cetiri metode:
+```java
+    public Zaposleni(String i, double p, int godina, int mesec, int dan) 
+    public String getIme() 
+    public double getPlata() 
+    public LocalDate getDatumZaposljavanja() 
+    public void povecajPlatu(double procenat) 
+```
+* Svi oni imaju kljucno red `public` sto znaci da bilo koji druga klasa
+  moze da pozove te metode.
+* Sada primetimo instance polja koje sadrze podatke:
+```java
+        private String ime;
+        private double plata;
+        private LocalDate datumZaposljavanja;
+```
+* Kljucna rec `private` znaci da im se jedino moze pristupiti preko metoda
+  klase `Zaposleni`. Ni jedan drugi metod van klase ne moze pristupiti ovim
+  poljima.
+* Primetimo jos da instance polja sadrze mogu da sadrze objekte. 
+  * U nasem slucaju su to `String` i `LocalDate`.
+
+### Prvi Korakci sa Konstruktorom
+
+* Primetimo kada se napravi instanca klase `Zaposleni`, kodom:
+```java
+    new Zaposleni("Pera Peric", 1000, 2000, 1, 1);
+```
+* tada postavljamo instance polja kao:
+```java
+    ime = "Pera Peric";
+    plata = 1000;
+    datumZaposljavanja = LocalDate.of(1950, 1, 1);
+```
+* Postoji jasna razlika izmedju konstruktora i drugih metoda.
+  * Konstruktor ima isto ime kao klasa.
+  * Klasa moze da ima vise od jednog konstruktora.
+  * Konstruktor moze da ime nula, jedan, ili vise parametara.
+  * Konstruktor nema return vrednost
+  * Konstruktor se uvek poziva sa `new` operatorom.
+
+### Implicitni i Eksplicitni parametri
+
+* Posmatrajmo sledeci metod, pozvan sa `z1.povecajPlatu(5)`:
+```java
+    public void povecajPlatu(double procenat) {
+        double povecanje = plata * procenat / 100;
+        plata += povecanje;
+    }
+    // poziv izvrsava sledece
+    double povecanje = z1.plata * 5 / 100;
+    z1.plata += povecanje;
+```
+* Ova metoda ima dva parametra:
+  1. *Implicitni* parametar je objekat tipa `Zaposleni` koji se pojavljuje
+     pre imena metode.
+     * Ne deklarisu se u deklaraciji metode vec se prodrazumeva.
+     * Kljucna rec `this` referisi na taj parametar.
+  2. *Eksplicitni* parametar je broj koji se pojavljuje u zagradama metode.
+    * Deklarise se u zagradama i moze da ih ima vise.
+
+### Benefit Enkapsulacije
+
+* Posmatrajmo sledece jednostavne metode `getIme, 
+  getPlata, getDatumZaposljavanja`.
+* Ovi su pristupajuci metodi, i kako jednostavno vracaju vrednosti instance
+  polja, nazivaju se *pristupnici poljima*.
+* Zar ne bi bilo lakse napraviti samo polja javnim, umesto da imamo posebne
+  pristupajuce metode?
+  * Polje `ime` je read-only polje. Kada se postavi u konstruktoru ostaje 
+    nepromenjeno, jer ne postoji ni jedan metod koji ga menja. Time 
+    garantujemo da to polje nece postati koruptirano.
+  * Slicno polje `plata` nije read-only, ali jedino se menja u metodi
+    `povecajPlatu`. Sto u praksi znaci ako imamo pogresnu vrednost, 
+    dovoljno je debagovati tu metodu, a ne traziti po citavom kodu
+    gde smo promenili ovu vrednost.
+* Nekada hocemo da uzimamo i postavljamo vrednosti instance polja:
+  * Privatno polje podataka;
+  * Javan pristupajuci metod; i
+  * Javni mutator metod.
+* Sto se cini naporno, ali ima benefite:
+  1. Moce se promeniti interna implementacija bez uticaja na bilo koji drugi
+     kod sem metoda te klase.
+  2. Mutator metodi mogu izvrsavati proveru gresaka, kako kod koji postavlja
+     vrednost nema potrebu da se zamara sa tim postupkom.
+
+### Klasni pristup Pristupi
+
+* Vec znamo da metod moze da ima pristup privatnim podacima objekta nad kojim
+  se on poziva. Ali ono sto je iznenadjujuce, je to da metod moze pristupiti
+  privatnim podacima *svih objekata te klase*.
+* Razmotrimo sledecu funkciju:
+```java
+class Zaposleni {
+    ...
+    public boolean equals(Zaposleni other) {
+        return this.name.equals(other.name);
+    }
+    ...
+}
+```
+
+### Privatni Metode
+
+* Nekada zelimo da podelimo neki metod na manje delova, ili jos bolje ako se
+  neki blok javlja u vise metoda neke klase zelimo da taj blok apstrakujemo.
+  * On mozda nije kompletan da bi se pozivao van klase, zato ga mozemo 
+    naciniti privatnim, i odvojiti ga od ostalih javnih metoda.
+* Privatni metod se jednostavno implementira koriscenjem kljucne reci 
+  `private`.
+
+### Final Instance Polja
+
+* Moguce je definisati instancu polja kao `final`.
+  * Ova polja se *moraju* inicijalizovati kada se objekat konstruise, tj.
+    moramo garantovati da ce polje biti postavljeno pre kraja konstruktora.
+* Nakon toga nikada nije moguce modifikovati to polje.
+* `final` se koristi za polja ciji je tip primitivan ili imutabilna klasa.
+
+## Staticna Polja i Metode
+
+### Staticna Polja
+
+* Ako se polje definise kao `static`, onda postoji samo jedna promenljiva
+  po klasi.
+
+### Staticne Konstante
+
+* Definisu se sa `static final` i moze im se pristupiti bez stvaranja 
+  instance te klase, na primer `Math.PI`.
+
+### Staticne Metode
+
+* Staticne metode ne operisu na objektu, drugim recima nemaju impliciti
+  parametar.
+  * Staticne metode ne mogu da pristupe instancim poljima objekte, ali mogu
+    staticnim poljima te klase.
+* Staticne metode koristimo u dve situacije:
+  1. Kada metod nema potrebu da pristupa stanju objekta zato sto su svi
+     potrebni parametri eksplicitni parametri.
+  2. Kada metodi samo treba pristup statickio poljima klase.
+
+### Fabricke Metode
+
+### Main Metod
+
+* Staticne metode se mogu pozivati bez instance klase u kojoj se nalaze, pa 
+  je zato `main` metod static jer se nikada ne konstruise objekat 
+  klase `Main`.
+
+## Parametri Metoda
+
+## Konstrukcije Objekta
+
+## Paketi
+
+## Putanja Klase
+
+## Dokumentacioni Komentari
+
+## Hintovi za Dizajniranje Klasa
 
 # Nasledjivanje
 
