@@ -1092,17 +1092,652 @@ class Zaposleni {
 
 ## Parametri Metoda
 
+* *poziv po vrednosti* --- metod dobija samo vrednosti koje pozivalac pruza.
+* *poziv po referenci* --- metod dobija *lokacuju* promenljive koju pruza 
+  pozivalac. 
+  * metoda moze da *menja* vrednosti promenljive
+* Java *uvek* koristi poziv po vrednosti.
+* Ali medjutim postoje dve vrste parametara:
+  1. Primitivnog tipa (brojevi, `boolean`)
+    * kopira *vrednost* u parametar metode
+  2. Objektne reference
+    * kopira *referencu* u parametar metode
+* Mnogi misle da je poziv po referenci ondnosu na poziv po vrednosti
+  objektne reference, te prave greske kao sto je `swap(obj1, obj2)` sto
+  nije moguce jer se referenca na obj1 i obj2 kopira, tj. reference
+  *objekta su prosledjeni po vrednosti*.
+* Ukratko:
+  1. Metoda ne moze da modifikuje parametre primitivih tipova.
+  2. Metoda moze da promeni stanje objekta.
+  3. Metoda ne moze da primeni da neka promenljiva referise na
+     neki drugi objekat.
+
 ## Konstrukcije Objekta
+
+### Overloading
+
+* Mogucnost da neka klasa ima vise konstruktora, generalno vise funkcija
+  istog naziva se *overloading*.
+* Kompajler bira metod koji poziva u zavisnosti od parametara.
+  * compile-timer error se desi kada kompajler ne moze da.
+* Proces nalazenja odgovarajuceg metoda naziva se *overloading resolution*.
+
+### Default-no inicijalizovanje polja
+
+* Ako se u konstruktoru ne inicijalizuje vrednost nekog polja, ona se 
+  automacki inicijalizuje default-nom vrednoscu tog polja (`0, false, null`, 
+  za broj, `boolean`, i objekat respektivno)
+  * Zbog citljivosti ovo se izbegava.
+
+### Konstruktor bez argumenata
+
+* Mnoge kalse imaju konstruktore bez argumenata, koje postavljaju 
+  inicijalne vrednosti polja.
+  * Ako ne navedemo ovaj konstruktor, java nam pruza jedan 
+    konstruktor bez argumenata koji svako polje postavi na default vrednost,
+    ali opet to je losa praksa zbog citljivosti.
+* Ako klasa ima samo konstruktor sa argumentima, nije dozvoljeno da se
+  poziva default-ni konstruktor koji pruza java.
+
+### Eksplicitno inicijalizovanje polja
+
+* Moguce je jednostavno pridruziti vrednost bilo kom polju u definiciji klase.
+```java
+    class Zaposleni {
+        private String ime = "";
+        ...
+    }
+```
+
+### Ime parametara
+
+* Nekada je frustrirajuce smisljati nova imena parametara kako bi se 
+  razlikovala od imena polja. 
+* Neki programeri vole da dodaju prefiks `a` svakom parametru.
+* Dok drugi vole da koriste ista imena kao i imena polja, ali pri koriscenju
+  polja koriste kljucnu rec ``this``.
+* Primer oba nacina:
+```java
+    // Ovo nema smisla na srpskom
+    Zaposleni(String aName, double aPlata) {
+        name = aName;
+        plata = aPlata;
+    }
+    // Drugi metod je bolji
+    Zaposleni(String name, double plata) {
+        this.name = name;
+        this.plata = plata;
+    }
+```
+
+### Pozivanje drugog konstruktora
+
+* Kljucna rec `this` ima jos jedno znacenje:
+* Ako je *prva naredba konstruktora* oblika `this(...)`, onda konstruktora
+  poziva drugi konstruktor iste klase.
+```java
+   Zaposleni(double plata) {
+       this("Zaposleni #" + nextId, plata);
+       nextId++;
+   }
+```
+
+### Inicijalizacioni blokovi
+
+* Vec smo videli 2 nacina za inicijalizovanje polja podataka:
+  1. inicijalizacija u konstruktoru
+  2. inicijalizacija u deklaraciji 
+* Postoji i treci nacin koji se zove *inicijalizacioni blok*.
+* Klasa moze da ima blokove koda. Ovi blokovi se izvrsavaju kada god se
+  objekat te klase napravi.
+```java
+    class Zaposleni {
+
+        private static int nextId;
+        private int id;
+        ...
+
+        // inicijalizacioni blok
+        {
+            id = nextId;
+            nextId++;
+        }
+
+        ...
+    }
+```
+* Detaljan proces izbrsavanja konstruktora:
+  1. Sva polja su inicijalizovana na default-ne vrednosti (`0, false, null`)
+  2. Svi inicijalizatori polja i inicijalizacioni bolokovi su izvrseni, u
+     redu u kome su nalaze u kodu.
+  3. Ako prva linija konstruktor pozove drugi konstruktor, onda se  
+     izvrsava telo drugog konstruktora.
+  4. Izvrsava se telo konstruktora
+* Sledeci kod prikazuje:
+  1. Overloading
+  2. Poziv drugog konstruktora sa this
+  3. Konstruktor bez argumenata
+  4. inicijalizacioni blok
+  5. inicijalizacija polja
+```java
+class Zaposleni {
+
+    private static int nextId;
+
+    private int id;
+    private String name = ""; // inicijalizacija polja
+    private double plata;
+
+    // Staticni inicijalizacioni blok
+    static
+    {
+        Random rand = new Random();
+        nextId = rand.nextInt(1000);
+    }
+
+    // inicijalizacioni blok
+    {
+        id = nextId;
+        nextId++;
+    }
+    
+    public Zaposleni(String name, double plata) {
+        this.name = name;
+        this.plata = plata;
+    }
+
+    public Zaposleni(double plata) {
+        // Poziv drugog konstruktora sa this
+        this("Zaposleni #" + nextId, plata); 
+    }
+
+    public Zaposleni() {
+        // Prazan konstruktor
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPlata() {
+        return plata;
+    }
+}
+```
+
+### Unistavanje Objekata i `finalize` Metod
+
+* U javi ne postoji koncept unistenja objekta, kada nam vise nije potreban.
+* Time se bavi kolektor smeca.
+* Ipak neki objekti koriste neke resurse koji nisu memorija, u tim 
+  slucajevima nam je bitno da resursi budu oslobodjeni kada nam vise
+  nisu potrebni.
+* Za metodu koja se bavi oslobadjanje koristimo kljucnu rec `finalize`.
 
 ## Paketi
 
+* Moguce je grupisati klase u kolekcije nazvane *paketi*.
+* Paketi funkcionisu kao direktorijumi, te pruzaju bolje grupisanje.
+* Paketi sluze kako ne bi doslo do konflikta sa imenima klasa. 
+  * Na primer dva programera mogu klasu da nazovu istim imenom, ali ako 
+    se oni nalaze u razlicitim paketima nemamo konflikt uvek znamo 
+    koju klasu koristimo.
+
+### Uvozenje klasa
+
+* Klasa moze da koristi druge klase iz svog paketa, ali moze da koristi
+  i javne klase drugih paketa.
+* Pristupanje javnih klase drugih paketa moguce je na dva nacina:
+  1. Jednostavno dodamo puno ime paketa ispred imena klase.
+```java
+    java.time.LocalDate danas = new java.time.LocalDate.now();
+```
+  2. Uvezemo klasu pomocu kljucne reci `import`.
+```java
+    import java.time.LocalDate;
+    ... 
+    LocalDate danas = new LocalData.now();
+```
+* Moguce je koristiti i `*` da importujemo sve klase iz nekog paketa:
+  `import java.util.*`
+* Ako klase imaju isto ime u dva razlicita uvezena paketa, mora se
+  eksplicitno uvesti i klase iz paketa koju koristimo, a ako nam trebaju
+  obe klase onda moramo da koristimo metodu 1.
+
+### Staticno uvezenje
+
+* Klasicno uvezenje zabranjuje koriscenje statickih polja i metoda, zbog
+  toga se koristi kljucna rec `static` pri uvozenju. Pa nesto kao sto je:
+```java
+    import static java.util.Math.*;
+    sqrt(pow(x) + pow(y)) // ekvivalentno je sa
+    Math.sqrt(Math.pow(x) + Math.pow(y))
+```
+  
+### Dodavanje Klasa u Paket
+
+* Da bi dodali klasu u paket moramo da definisemo u kom paketu se ta
+  klasa nalazi pre same definicije klase, to radimo na sledeci nacin:
+```java
+package org.nesto1.nesto2;
+
+class Klasa {
+    ...
+}
+```
+* Ako se to ne definise klasa pripada *default-nom paketu*.
+  * On nema ime 
+
+### Doseg paketa
+
+* `public` moze da se koristi u bilo kojoj klasi.
+* `private` moze da se koristi samo u klasi u kojoj se definise.
+* ako se ne specifikuje moguc je pristup iz svih klasa jednog paketa.
+
 ## Putanja Klase
+
+* Fajlovi klasa se skladiste u poddirektorijume, tako da je putanja do 
+  fajla klase ista kao i putanja do pakata.
+* Fajlovi klase se takodje skladiste u JAR (Java archive) fajlove. 
+  * JAR fajl sadrzi kompresovane falove klasa i poddirektorijume.
+* Za deljenje klasa izmedju programera potrebno je:
+  1. Staviti fajlove klasa u direktorijum.
+  2. Staviti JAR fajlove.
+  3. Postaviti *class path*. 
+    * Putanja klase je kolekcija svih lokacija koje sadrzi fajlove klasa.
+      * U UNIXu, elementi putanje klasa su razdvojeni sa `::`:
+* Razmotrimo jednostavan primer:
+```
+/home/user/classdir:.:/home/user/archives/archive.jar
+```
+* Pretpostavimo da virtualna masina trazi `org.Zaposleni.class`
+* Trazi po redu u: 
+  1. `/home/user/classdir/org/Zaposleni.class`
+  2. `org/Zaposleni.class` od pocetka radnog direktorijuma
+  3. `org/Zaposleni.class` u 
+     `/home/user/archives/archive.jar`
+
+### Postavljanje putanje klase
+
+* Najbolje je postaviti putanju klase sa ``-classpath``:
+```
+java -classpath /home/user/classdir:.:/home/user/archives/archive.jar MyProg
+```
+* Druga mogucnost je preko `CLASSPATH` promenljive.
+```
+export CLASSPATH=/home/user/classdir:.:/home/user/archives/archive.jar
+```
+* U drugom slucaja putalja klase je postavljenja sve dok je shell radi.
 
 ## Dokumentacioni Komentari
 
+* JDK sadrzi korisnu alatku za generisanje HTML dokumentacije iz source
+  koda nazvanu `javadoc`.
+* Dodavanje `/**` na pocetak komentara moguce je stvoriti profesionalnu
+  dokumentaciju.
+
+### Umetanje komentara
+
+* `javadoc` izvlaci informacije iz sledeci fajlova:
+  * paketi
+  * javne kalse i interfejsi
+  * javna i zasticena polja
+  * javne i zasticene konstruktore i metode
+* Svaki komentar se nalazi *iznad* informacije koju opisuje i pocinje
+  sa `/**` a zavrsava se sa `*/`
+* Svaki komentar sadrzi *slobodan tekst*, zajedno sa *tagovima*.
+  * Tagovi pocinju sa `@`.
+* *Prva recenica* bi trebala da bude *kratak opis*. 
+* Slobodan tekst moze da sadrzi HTML elemente.
+
+### Komentari klasa
+
+* Komentari klasa se nalaze *ispod* `import` naredbi, i *direktno iznad*
+  definicije *klase*.
+```java
+/**
+* {@code Karta} objekat predstavlja kartu za igranje, kao sto je 
+* "Kraljica Srce". Karta ima znak (Karo, Herc,
+* Pik, ili Tref) i vrednost (1 = Kec, 2 . . . 10, 11 = Zandar,
+* 12 = Kraljica, 13 = Kralj)
+*/
+public class Karta 
+{
+   ...
+}
+```
+
+### Komentar metoda
+
+* Svaki komentar metoda mora da se nalazi *direktno iznad* metode. 
+* Pored generalnih tagova moze da sadrzi:
+  * `@param` *promenljiva opis*
+  * `@return` *opis*
+  * `@throws` *clasa opis*
+```java
+    /** 
+     * Povecava platu Zaposlenom
+     * @param procenat procenat povecanja plate
+     * @return sumu povecanja plate
+     */
+    public double povecajPlatu(double procenat) {
+        double povecanje = this.plata * procenat / 100;
+        this.plata += povecanje;
+        return povecanje;
+    }
+```
+
+### Komentar polja
+
+* Potrebno je samo dokumentovati javna polja, generalno staticne konstante.
+```java
+    /**
+    * "Herc" znak karte
+    */
+    public static final int HERC = 1;
+```
+
+### Komentari generalno 
+
+* Tagovi koji se mogu koristiti:
+  * `@author` *ime*
+  * `@version` *text*
+  * `@deprecated` *text*
+  * `@see` *referenca*
+  * `{@link paket.klasa#[polje/konstruktor/metoda] labela}`
+
+### Komentari Paketa i Pregleda 
+
+* Za komentarisanje pakete potrebno je dodati novi fajl za svaki paket.
+  1. `package.html` ili;
+  2. `package-info.java`
+* Moguce je imati i *overview* komentar koji se nalazi u roditeljskom
+  durektorijumu projekta pod nazivom `overview.html`.
+
+### Izvlacenje dokumentacije iz komentara
+
+1. Udji u direktorijum sa source fajlovima koji se dokumentisu.
+  * Ako postoji `overview.html` on se mora nalaziti u tom direktorijumu.
+2. Pozovi komandu: 
+```
+javadoc -d docDirektorijum imePaketa1 imePaketa2 ...
+```
+
 ## Hintovi za Dizajniranje Klasa
 
+1. *Uvek cuvaj podatke privatnim.*
+2. *Uvek inicijalizuj podatke.*
+3. *Nemoj da koristis previse osnovnih tipova u klasi.*
+  * Na primer ako `Potrosac` ima polja `ulica, grad, drzava, zip` zameni
+    sa novim objektom `Adresa`.
+4. *Ne treba svim poljima zasebi pristupajuci i mutirajuci metod.*
+5. *Razdvoji klase koje imaju previse odgovornosti*.
+6. *Neka imena kalsa i metodi oznacavaju njigove odgovornosti.*
+  * Dobra praksa je koristiti imenicu, ili imenicu sa pridevom za clasu, a
+    sto se metoda tice one su glagoli i obicno za pristupajuce se koristi
+    prefix `get`, a za mutirajuci se korsiti prefix `set`.
+7. *Preferisi imutabilne klase*.
+  * Zbog visenitnosti.
+
 # Nasledjivanje
+
+* Ideja *nasledjivanja* je stvaranje novih klasa na osnovu vec postojecih.
+* Nasledjivanjem se naslede sve metode i polja iz vec postojecih klasa, a
+  pri tome moguce je dodavanje novih polja i metoda, ili modifikacija vec
+  postojecih.
+* *Refleksija* je mogucnost nalazenja informacija o klasama u pokrenutom
+  programu.
+
+## Klase, Superklase, Podklase
+
+* Posmatramo klasu `Zaposlen`. I neka u nasoj kompaniji Menadjeri razlikuju
+  od ostalih Zaposlenih. U ovom slucaju nam je potrebno `nasledjivanje`, jer
+  postoji ocigledna relacija `je` izmedju `Menadjer` i `Zaposleni`.
+  * Svaki menadjer *je* zaposleni.
+
+### Definisanje podklasa
+
+* `Menadjer` nasledjuje `Zaposleni` definisempo pomocu kljucne reci `extends`,
+  na sledeci nacin:
+```java
+    public class Menadjer extends Zaposleni {
+        ...
+    }
+```
+* `extends` ukazuje na to da pravimo novu klasu koja je izvedena iz
+  postojace klase.
+  * Postojaca klase se naziva *superklasa, bazna klasa, roditeljska klasa*.
+  * Nova klasa se naziva *podklasa, izvedena klasa, naslednicka klasa*.
+* `Zaposleni` je superklasa, ali ne zbog svoje superiornosti nad svojim
+  podklasama, *suprotno je tacno*:
+  * Podklase imaju *vise* funkcionalnosti od njigovih superklasa.
+```java
+    public class Menadjer extends Zaposleni {
+        private double bonus;
+        ...
+        public void setBonus(double bonus) {
+            this.bonus = bonus;
+        }
+    }
+```
+* Nad objektom klase `Menadjer` moguce je pozvati metodu `setBonus`.
+* Naravno moguce je koristiti `setName`... nad objektom klase `Menadjer`.
+* Slicno su preuzata i sva polja iz klase `Zaposlen`.
+* Kada se definise podklasa prosirivanje njene superklase, dovoljno je
+  definisati *razlike* izmedju njih.
+
+### Overriding Metode
+
+* Neko od metoda klase `Menadjer` se ne slazu sa metodama iz `Zaposlen`.
+* Na primer `getPlata` bi trebala da uracuna i `bonus`.
+* Potrebno je pruziti novi metod da bi *redefinisali* (engl. *override*) 
+  metod superklase.
+```java
+    public double getPlata() {
+        return plata + bonus; // ne radi
+    }
+```
+* Samo `Zaposleni` ima direktan pristup promenljivi `plata`.
+```java
+    public double getPlata() {
+        double osnovnaPlata = getPlata(); // ne radi
+        return osnovnaPlata + bonus;
+    }
+```
+* Ovde dobijamo rekurziju.
+* Moramo nekako ukazati da zelimo da pozovemo metod iz `getPlata()`, ali iz
+  klase `Zaposleni`. 
+  * To nam omogucava kljucna rec `super`.
+```java
+    public double getPlata() { 
+        double osnovnaPlata = super.getPlata(); // radi
+        return osnovnaPlata + bonus;
+    }
+```
+* Zakljucak:
+  * Mozemo *dodati* nova polja.
+  * Mozemo *dodati* nove metode.
+  * Mozemo *redefinisati* (engl. *override*) metode superklase.
+  * Nije moguce brisanje polja ili metoda.
+
+### Konstruktori podklase
+
+* Da bi zavrsili primer moramo dodati konstruktor:
+```java
+    public Menadjer(String name, double plata) {
+        super(name, plata);
+        this.bonus = 0;
+    }
+```
+* Ovde kljucna rec `super` ima drugacije znacenje.
+  * `Menadjer` mora da inicijalizuje polja klase `Zaposleni` preko
+    konstruktora.
+  * Konstruktor superklase se poziva sa `super` gde parametri
+    predstavljaju argumente konstruktora.
+* Ako se konstruktor superklase ne pozove eksplicitno onda se poziva
+  konstruktor bez argumenata.
+  * Dolazi do greske ako superklase nema konstruktor bez argumenata.
+* Posmatramo sledeci kod:
+```java
+Menadjer gazda = new Menadjer("Pera Peric", 100000, 4000);
+
+Zaposleni[] radnici = new Zaposleni[3];
+
+radnici[0] = gazda;
+radnici[1] = new Zaposleni("Mara Maric", 50000);
+radnici[2] = new Zaposleni("Niki Nikic", 40000);
+
+for (Zaposleni radnik : radnici) {
+    System.out.println(radnik.getName() + " " + radnik.getPlata());
+}
+```
+* Ovde imamo tri objekta radnika, od kojih su dva iz klase `Zaposleni`, a
+  jedan iz klase `Menadjer`.
+* Kada pozovemo `radnik.getPlata()` deklarisani tip objekta radnik je
+  `Zaposleni` ali objekat `radnik` moze da referise ili na `Zaposleni` ili
+  na `Menadjer`.
+  * Posledica toga je da u zavisnosti od *pravog* tipa promenljive `randik`,
+    izvrsava se druga 
+* Cinjenica da jedna objektna promenljiva moze da referise na vise tipova
+  se naziva *polimorfizam* (engl. *polymorphism*). 
+* Biranje odgovarajuce metode u izvrsavanju se naziva *dinamicko povezivanje*
+  (eng. *dynamic binding*).
+
+### Hijerarhija Nasledjivanja
+
+* Kolekcija svih klasa koje nasledjuju zajednicku superklasu se naziva
+  *hijerarhija nasledjivanja*. 
+* Put od neke klase do svih predaka u hijerarhiji nasledjivanja naziva se
+  *lanac nasledjivanja*.
+```
+                Zaposleni
+                    ^
+                    |
+        -------------------------
+        |           |           |
+    Menadjer    Sekretar    Programer
+       |
+    Direktor
+```
+
+### Polimorfizam
+
+* Prirodan nacin odredjivanje da li je nasledjivanje dobar dizaj podataka,
+  je pravilo *je*.
+  * Na primer, Svaki menadjer *je* zaposleni, prirodno obrnuto nije tacno.
+* Drugi nacin formulisanja ovog pravila je *princim substitucije* 
+  (engl. *substitution principle*), on kaze da mozes koristiti 
+  podklasni objekat ukoliko program ocekuje superklasni objekat.
+  * Na prime, mozes dodeliti podklasni objekat u superklasnoj promenljivoj.
+```java
+  Zaposleni radnik;
+  radnik = new Zaposleni(...);
+  radnik = new Menadjer(...);
+```
+* Objekte promenljive su *polimofne* (engl. *polymorphic*).
+  * Svaka objektna promenljiva neke klase moze da referise na objekat 
+    te klase, ili bilo koji objekat njene podklase.
+  * Ali nije moguce dodeliti superklasi referencu neke klase.
+    * Razlog: Nisu svi zaposleni menadjeri.
+
+### Razumevanje Poziva Metoda
+
+* Neka je pozvana `x.f(args)`, gde je `x` implicitni parametar, deklarisan
+  tako da je objekat klase `C`.
+  1. Kompajler trazi deklarisani tip objekta i ime metode. Mozemo da imamo
+     vise metoda sa imenom `f`. Kompajler numerise sve metode sa imenom `f` u
+     klasi `C` i sve dostupne metode nazvane `f` u superklasama od `C`.
+     * Posledica: Imamo sve moguce metode za kandidate.
+  2. Kompajler pronalazi tipove argumenata u pozivu. Ako je medju svim 
+     kandidatima postoji jedinstveni metod sa zadatim parametrima on se
+     poziva (*overloading resolution*).
+     * Posledica: Suzili smo skup kandidata na sve koji imaju iste parametre.
+  3. Ako je metod `private, static, final` ili konstruktur, tada
+     kompajler zna tacno koji metod da pozove (*static binding*).
+     U suprotonm metod za pozivanje zavisi od stvarnog tipa implicitnog 
+     parametra.
+     * Posledica: Koristimo dinamicko povezivanje (*dynamic binding*) u
+       izvrsavanju.
+  4. Program je pokrenut i koristi dinamicko povezivanje da pozove metod, 
+     tada moramo naci *pravi* tip objekta na koji `x` referise.
+     Pretpostavimo da je to tip `D` podklasa od `C`. Ako `D` definise metod
+     `f(args)` metod se pozove, u suprotonom se trazise metod u superklasi
+     od `D`, itd.
+     * Virtualna masina odrzava *tabelu metoda*, kada se pozove neki metod
+       on se cuva tabeli, kako se ne bi trazio ponovo.
+* Dinamicko povezivanje ima osobinu da ucini program *nadogradivim* bez
+  potrebe za modifikovanje postojaceg koda.
+
+### Zaustavljanje Nasledjivanja: Finalne Klase i Metode
+
+* Klase koje se ne mogu prosiriti se nazivaju *finalne* klase, i koriste
+  kljucno rec `final`.
+```java
+    public final class Direktor extends Menadjer {
+        ...
+    }
+```
+* Moguce je i da metodi budu finalni, tj. nijedna podklase ne moze da
+  redefinise (*override*) taj metod.
+```java
+    public final String getName() {
+        return this.name;
+    }
+```
+* Postoji samo jedan dobar razlog deklarisati klasu kao `final`.
+  * Da bi obezbedili da se njena semantika nece promeniti u podklasi.
+* Neki programeri smatraju da se svi metodi trebaju deklarisati kao
+  `final` sem ako zelimo polimorfizam.
+  * C++ radi to.
+* Ako metod nije redefinisan/overriden, i kratak je, kompajler moze 
+  optimizovati poziv metoda, procesom nazvanim *inlining*. (samo ako je 
+  `final`, jer inace ne zna sa kojim kodom da zameni)
+
+### Kastovanje
+
+* Kao sto je potrebna konverzija iz float u int, isto je potrebna 
+  konverzija objektne reference jedne klase u drugu.
+```java
+    Menadjer sef = (Menadjer) radnici[0];
+    Menadjer sef = (Menadjer) radnici[1]; // Greska!
+```
+* Zbog toga ako se ne uhvati `ClassCastException` program staje sa 
+  izvrsavanje.
+```java
+    if (radnici[1] instanceof Menadjer) {
+        sef = (Menadjer) radnici[1];
+    }
+```
+* Moguce je kastovati samo postujuci hijerarhiju nasledjivanja.
+* Koristimo `instanceof` da proverima da li je objekat podklasa 
+  neke superklase
+* Jedini razlog zasto zelimo kastovanje objekta je ukoliko klasa u koju
+  kastujemo sadrzi neki metod koji ne postoji u superklasi.
+
+### Apstraktne Klase
+
+* Kako idemo uz hijerarhiju nasledjivanja klase postaju sve vise generalne
+  i verovatno vise apstrakten. 
+* Nekada je ta klasa toliko apstraktna de se nikada nece napraviti 
+  instanca te klase.
+* Primer `Osoba` moze da bude superklasa za `Zaposlenog`
+```java
+    public abstract class Osoba {
+        private String name;
+        public abstract String getOpis();
+    }
+```
+* Abstraktne metode sluze za opisivanje metoda koje trebaju implementirati
+  podklase.
+* Kada se nasledjuje abstraktna klase:
+  1. Moguce je ostaviti neke, ili sve abstraktne metode nedefinisane,
+     ali tada ta klasa takodje mora da bude apstraktna.
+  2. Ili da definisemo sve metode, tada podklasa nije vise apstraktna.
+
 
 # Interfejs, Lambda Izrazi, i Unutrasnje Klase
 
