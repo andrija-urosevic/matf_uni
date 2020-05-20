@@ -1738,6 +1738,283 @@ for (Zaposleni radnik : radnici) {
      ali tada ta klasa takodje mora da bude apstraktna.
   2. Ili da definisemo sve metode, tada podklasa nije vise apstraktna.
 
+### Zasticeni pristup
+
+* Kada zelimo da dozovolimo podklasi da pristupa poljima super
+  klase, tada deklarisemo to polje kao `protected`.
+* `protected` treba koristite oprezno!
+  * Pretpostavimo da je klasa ima `protected` polja.
+  * Neko moze da nasledi tu klasu i time dobije pristup tim poljima.
+  * Ako zamenimo to polja u `private` remetimo sve te podklase
+    koje koriste ta polja.
+* Vise misla imaju `protected` metode.
+* Ukratko o svim pristupajucim modifikatorima:
+  1. Vidljiv samo svojoj klasi (`private`)
+  2. Vidljiv svetu (`public`)
+  3. Vidljiv paketu i svim podklasama (`protected`)
+  4. Vidljiv paketu (Modifikator nije potreban).
+
+## Object: Kosmicna Superklasa
+
+* Klasa `Object` je ultimativni naslednik, tj. svaka klasa u Javi
+  nasledjuje `Object`.
+* Moguce je koristiti promenljivu tipa `Object` za referisanje 
+  objekta bilo kog tipa:
+```java
+    Object obj = new Zaposleni("Pera Peric", 3400);
+```
+* Ali ovo koristimo samo za cuvanje bilo kog tipa, ako hocemo da koristimo
+  taj objekat moramo ga pre toga kastovati.
+* U Javi, samo *primitivni tipovi* (brojevi, karakteri, i `boolean` vrednosti)
+  nisu objekti!
+* Svi nizovi nasledjuju `Object` klasau.
+
+### Metod `equals`
+
+* Metod `equals` u `Object` klasi ispituje da li se jedan objekat
+  smatra jednakim sa drugim objektom.
+  * Tacnije u `Object` klasi je implementirao tako sto proverava da li
+    objektna promenljiva referisa na isti objekat kao neka druga objektna
+    promenljiva.
+* Ali u vecini slucajeva nas zanima da je je stanje nekog objekta
+  isto kao i stanje nekog drugog objekta.
+  * Zbog toga mi implementiramo metod `equal` za nasu klasu.
+```java
+    public boolean equals(Object drugiObjekat) {
+        if (this == drugiObjekat) {
+            return true;
+        } 
+
+        if (drugiObjekat == null) {
+            return false;
+        }
+
+        if (getClass() != drugiObjekat.getClass()) {
+            return false;
+        }
+
+        Zaposleni drugi = (Zaposleni) drugiObjekat;
+
+        return name.equals(drugi.name) &&
+               plata == drugi.plata;
+    }
+```
+* Kada se definise `equals` metoda za podklasu, dobra praksa je 
+  pozvati `equals` superklase.
+```java
+    public boolean equals(Object drugiObject) {
+        if (!super.equals(drugiObject)) {
+            return false;
+        } 
+
+        Menadzer drugi = (Menadzer) drugiObject;
+        return bonus == drugi.bonus;
+    }
+```
+
+### Testiranje jednakosti i nasledjivanja
+
+* Kako se `equals` metod ponasa ako implicitni i eksplicitni parametar
+  ne pripadaju istoj klasi?
+* Ako je odgovor `false`:
+  * Mnogi koriste `instanceof` ako hoce da provere da li je neki
+    objekat neke klase:
+```java
+    if (!(drugiObjekat instanceof Zaposleni)) return false;
+```
+* Ovo znaci da se ostavlja mogucnost `drugiObjekat` moze da pripada
+  nekoj podklasi. Ovo nije dobro! `equals` metod mora da ima sledece osobine:
+  1. *Refleksivnost*: Za bilo koju ne-null referencu `x`, `x.equals(x)` vraca
+     `true`.
+  2. *Simetricnost*: Za bilo koju referencu `x` i `y`, `x.equals(y)` 
+     vraca `true` akko `y.equals(x)` vraca `true`.
+  3. *Tranzitivnost*: Za bilo koje reference `x`, `y`, i `z`, ako `x.equals(y)`
+     vraca `true` i `y.equals(z)` vraca `true, onda i `x.equals(z)` mora
+     da vraca `true`.
+  4. *Koinzistentnost*: Ako se objekti na koje `x` i `y` referisu nisu
+     promenili, tada novi poziv `x.equals(y)` vraca istu vrednost
+     kao i pre.
+  5. Za bilo koju ne-null referencu `x`, `x.equals(null)` vraca `false`.
+* Nas primer sa `instanceof` krsi Simetricnost!
+* Neki programeri smatraju da `getClass` test nije dobar, zato sto krsi
+  princip substitucije. 
+  * Primer: `AbstractSet` je superklasa za `TreeSet` i `HashSet`. 
+    Ako hocemo da uporedimo dva skupa koja su implementira pomocu drveta
+    ili pomocu hash tabele, metod sa getClass uvek vraca `false`.
+* Zbog toga imamo 2 razlicita scenarija:
+  1. Ako podklasa moze da ima svoj metod `equals`, zvog simetricnosti
+     koristimo `getClass`.
+  2. Ako je metod `equals` fiksan u superklase, tada koristimo `instanceof`
+     test da bi omogucili razlicitim podklasama da bude jednake.
+* Uputstvo za pisanje perfektnog `equals` metoda:
+  1. Nazovemo eksplicitni parametar `drugiObjekat`.
+  2. Proveravamo da li je `this` identican sa `drugObjekat`.
+  3. Proveravamo da li je `drugiObjekat` `null`.
+  4. Uporedjujemo klasu objekta `this` i `drugiObjekat`.
+     Koristimo `getClass` ili `instanceof`, u zavisnosti od gore navedenog.
+  5. Kastujemo `drugiObjekat` klasu obejkta `this`.
+  6. Uporedjujemo polja.
+
+### Metod `hashCode`
+
+* Hash kod je celi broj izveden iz objekta.
+* Ako su `x` i `y` dva razlicita objekta, tada njihovi hash codovi su 
+  razliciti sa velikom verovatnocom. 
+  (Moze da se desi da budu isti *rodjendanski paradox*)
+  * Za stringove hash kod se racuna hornerovom metodom.
+```java
+    public int hashCode() {
+        return Objects.hash(name, plata);
+    }
+```
+* `equals` i `hashCode` moraju biti kompitablilni:
+  * Ako `x.equals(y)` vraca `true`, tada mora da vazi 
+    `x.hashCode() == y.hashCode()`, sa velikom verovatnocom naravno.
+
+### Metod `toString`
+
+* `toString` metod klase `Object` vraca string reprezentaciju tog objekta.
+* Obicno `toStrgin` metod prati sledeci format: ime klase, pa polja 
+  (ime, vrednost) u kockastim zagradama:
+```java
+    public String toString() {
+        return super.toString() +
+               "[bonus="  + this.bonus +
+               "]";
+    }
+```
+* `toString` je koristan iz 2 razloga:
+  1. Kada nadovezemo na neki string sa operatorom `+` objekat `o` 
+     automacki se pozova `o.toString()` koji se onda nadovezuje.
+  2. Kada ispisujemo objekat `o` isto se automacki poziva `o.toString()`,
+     te se ispisuje taj string.
+
+## Dinamicki nizovi
+
+* U javi obicno nizovi nisu dinamicki. Pa se zbog toga koristi `ArrayList` 
+  klasa.
+* `ArrayList` je *genericka klase* sa *tipiziranim parametrom*.
+```java
+    ArrayList<Zaposleni> radnici = new ArrayList<Zaposleni>();
+    ArrayList<Zaposleni> radnici = new ArrayList<>(); // moze i ovako od SE 7
+```
+* Ovo se zove *dijamant* sintaksa zato sto zagrade `<>` lice na dijamant.
+* Metod `add` sluzi da se doda novi element u `ArrayList`.
+```java
+    radnici.add(new Zaposleni("Pera Peric", 3000));
+    radnici.add(new Zaposleni("Mara Peric", 3000));
+```
+* Kada se niz popuni do kraja, i hocemo da dodamo novi element,
+  automacki se kreira veci niz i kopira sve elemente iz manjeg u veci niz.
+* `size()` metod vraca broj popunjenih elemenata.
+* `ensureCapacity(int velicina)` postavlja duzinu na `velicina`.
+* `trimToSize()` smanjuje duzinu niza do zadnjeg popunjenog elementa.
+  * Koristiti samo kada sigurno nece biti dodatnih elementa.
+
+### Pristupanje Array List elementima
+
+* Umesto `[]` sintakse za pristup ili promenu elementa u nizu, koriste
+  se `get` i `set` metodi.
+* Ako se prolazi kroz ceo niz umesto `get` i `set` lakse je 
+  koristiti *for each*.
+* Moguce je i brisanje elementa na nekoj poziciji sa `remove(int index)`
+  metodom, ali nije efikasno za velike Array Liste, zato sto
+  mora da kopira sve posle njega za jedno mesto.
+
+## Objektni Zapakivaci (Wrappers) i Samozapakivanje (Autoboxing)
+
+* Svi primitivni tipovi imaju odgovarajuce klase.
+  * Primer: klasi `Integer` odgovara primitivni tip `int`.
+* Ove klase se nazivaju *zapakivaci* (eng. *wrappers*).
+* Imena: `Integer, Long, Short, Flaot, Double, Byte, Character, Boolean`.
+  * Prvih sest nasledjuju zajednicku superklasu `Number`.
+* Svi *zapakivaci* su imutabilni, tj. nije moguce promeniti vrednost
+  nakon sto je vrednost zapakovana zapakivacem.
+* Takodje su i `final`, pa ih nije moguce naslediti.
+* Kako nije moguce formirati `ArrayList<int>` sa primitivnim tipom `int`,
+  moguce je to uraditi sa zapakivacem `Integer`: `ArrayList<Integer>`.
+* Na srecu lako je dodati novi element u `ArrayList<Integer> list`:
+```java
+    list.add(3); <-- samozapakivanje
+    list.add(Integer.valueOf(3)); <-- rucno zapakivanje
+```
+* Ovo omogucuje konverzija koja se naziva *samozapakivanje* (engl. 
+  *autoboxing*).
+* Slicno vazi i za otpakivanje: `int n = list.get(i);`
+* Operator `==`, testira samo da li objekti imaju identicnu memorijsku 
+  lokaciju, pa sledece daje nedefinisano ponasanje:
+```java
+    Integer a = 1000;
+    Integer b = 1000;
+    if (a == b) ...
+```
+* Zbog toga koristimo metod `equals` za uporedjivanje upakovanih objekata.
+* Zapakivanje i otpakivanje pruza *kompajler*, a ne virtualna masina.
+* U Zapakivacima se nalaze neke osnovne metode, kao sto je konvertovanje
+  stringa cifara u broj.
+```java
+    int x = Integer.parseInt(s);
+```
+
+## Metodi sa Promenljivim Brojem Parametara
+
+* Ovi metodi se nekada zovu *varargs*.
+  * Primer ovih metoda je `printf`. On je definisan kao:
+```java
+    public PrintStream printf(String format, Object... args);
+```
+  * `...` Oznacava da metod moze da primi bilo koliko objekata.
+  * `printf`, zaprvaro, prima samo 2 parametara, od kojih je jedan `format`
+    tipa `String`, a drugi `args` tipa `Object[]`.
+* Kompajler svaki put transformise kod poziva metode sa promenljivim
+  brojem parametra u parametra oblika `new Object[] {parm1, parm2,..., parmn}`
+  pomocu samozapakivanja.
+* Primer implementacije:
+```java
+    public static double max(double... values) {
+        double maximum = Double.NEGATIVE_INFINITY;
+        for (double val : values) {
+            if (maximum < val) {
+                maximum = val;
+            }
+        }
+        return maximum;
+    }
+
+    double m = max(3.14, 40.4, -5); // kompajler ovo prevodi u:
+    double m = max(new double[] { 3.14, 40.4, -5 });
+```
+
+## Enumeracione Klase
+
+* Primer:
+```java
+    public enum Velicina { SMALL, MEDIUM, LARGE, EXTRA_LARGE };
+```
+* Ovako definisan tip je zapravo klasa, i ima tacno 4 instance, i nije moguce
+  kreirati nove objekte.
+* Za poredjenje je dovoljno koristiti `==`.
+* Moguce je dodati konstruktore, metode, i polja u enumeracione klase:
+```java
+    public enum Size {
+        SMALL("S"), MEDIUM("M"), LARGE("L"), EXTRA_LARGE("XL");
+
+        private String abbreviation;
+
+        private Size(SMALL abbreviation) {
+            this.abbreviation = abbreviation;
+        }
+
+        public String getAbbraviation() {
+            return abbreviation;
+        }
+    }
+```
+* Svi enumerisani tipovu su podklasa klase `Enum`.
+  * Nasledjuju mnoge metode: `toString`, `valueOf`, `values`, `original`
+
+## Refleksije
+
 
 # Interfejs, Lambda Izrazi, i Unutrasnje Klase
 
