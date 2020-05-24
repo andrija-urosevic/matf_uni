@@ -1731,10 +1731,10 @@ for (Zaposleni radnik : radnici) {
         public abstract String getOpis();
     }
 ```
-* Abstraktne metode sluze za opisivanje metoda koje trebaju implementirati
+* Apstraktne metode sluze za opisivanje metoda koje trebaju implementirati
   podklase.
 * Kada se nasledjuje abstraktna klase:
-  1. Moguce je ostaviti neke, ili sve abstraktne metode nedefinisane,
+  1. Moguce je ostaviti neke, ili sve apstraktne metode nedefinisane,
      ali tada ta klasa takodje mora da bude apstraktna.
   2. Ili da definisemo sve metode, tada podklasa nije vise apstraktna.
 
@@ -2015,7 +2015,449 @@ for (Zaposleni radnik : radnici) {
 
 ## Refleksije
 
+* *Biblioteka refleksije* pruza veoma velik broj alata za pisanje programa
+  koji manipulisu Java kod dinamicno.
+* Program koji analiza mogucnosti klasa nazivamo *reflektivan*.
+* Koristi se za:
+  * Analizu mogunosti klasa za vreme izvrsavanja
+  * Ispitivanje objekata za vreme izvrsavanja
+  * Implementiranje genericnog niza
+  * Koristi `Method` objekat, koji radi kao funkcijskim pokazivaci
+* Mocan je i kompleksan mehanizam, ali se samo koristi za pravljenje alata,
+  ne za pravljenje aplikativnih programa.
+
+## Hintovi za Dizajniranje Nasledjivanja 
+
+1. *Stravi zajednicke operacije i polja u superklasu.*
+2. *Ne koristi protected polja.*
+3. *Koristi nasledjivanje za modeliranje 'je' relazije.*
+4. *Ne koristi nasledjivanje sem ako svi nasledjeni metodi imaju smisla.*
+5. *Ne menjaj ocekivano ponasanje pri redefinisanju metoda.*
+6. *Koristi polimorfizam, ne informaciju tipa.*
+7. *Ne koristi preterano refleksiju.*
 
 # Interfejs, Lambda Izrazi, i Unutrasnje Klase
 
+* *Intefejs* sluzi da bi se opisalo *sta* klase treba da rade, bez opisivanja
+  *kako* to rade.
+  * Klase *implementiraju* jedan ili vise interfejsa.
+* *Lambda izrazi* su nacin za da opise blok coda koji moze da se izvrsi 
+  kasnije.
+* *Unitrasnje klase* definisu se unutar neke druge klase, i njihovi metodi
+  mogu da pristupe poljima te druge klase.
+
+## Interfejs
+
+### Koncept Interfejsa
+
+* Interfejs nije klasa, ali jeste skup *zahteva* za klase koje ih 
+  implementiraju.
+* Primer: `sort` metod klase `Arrays` obecava da ce sortirati objekte niza, 
+  ali pod jednim uslovodom, da ti objekti pripadaju klasi koja implementira
+  `Comparable` interfejs.
+```java
+public interface Comparable {
+    int compareTo(Object other);
+}
+```
+* Ovo znaci da svaka klasa koja implementira `Comparable` mora da ima
+  implementiran metod `compareTo` deklarisan u `Comparable`.
+  * Naravno `x.compareTo(y)` vraca negativnu vrednost, ako je `x` manje
+    od `y`, 0, ako je `x` jednako `y`, ili pozitivnu vrednost ako je `x` vece
+    od `y`.
+* Svi metodu u interfejsu su `public`.
+* Interfejs nikada nemaju instance polja.
+* Do Java SE 8, metodi nikada nisu implementirani u interfejsu.
+  * Ali to je moguce: staticni metodi i defailt metodi.
+* Pretpostavimo da hocemo da sortiramo niz `Zaposleni`. 
+  * `Zaposleni` moraju da *implementiraju* interfejs `Comparable`.
+    1. Deklarisemo da clasa implementira dati interfejs
+```java
+        class Zaposleni implements Comparable`
+```
+    2. Definisemo sve metode interfejsa.
+```java
+        public int compareTo(Object otherObject) {
+            Zaposleni drugi = (Zaposleni) otherObject;
+            return Double.compare(plata. drugi.plata);
+        }
+```
+```java
+        // Bolji nacin:
+        class Zaposleni implements Comparable<Zaposleni> {
+
+            public int compareTo(Zaposleni drugi) {
+                return Double.compare(plata. drugi.plata);
+            }
+
+        }
+```
+
+### Osobine Interfejsa
+
+* Interfejs nije klasa pa sledeci kod proizvodi gresku:
+```java
+    x = new Comparable(); // Greska!!!
+```
+* Moguce je deklarisati interfejs promenljivu:
+```java
+    Comparable x;
+```
+* Ta promenljiva mora da referise na neki objekat koji implementira
+  taj interfejs:
+```java
+    x = new Zaposleni(..);
+```
+* Moguce je koristiti `instanceof` da proverimo da li neki objekat 
+  implementira neki interfejs.
+* Postoje i hijerarhije interfejsa, pa je moguce naslediti neki interfejs.
+* Instance mogu sadrzati konstante
+  * Polja su automacki `public static final`, kao sto su metode `public`.
+* Klase mogu da implementiraju *vise* interfejsa.
+
+
+### Interfejs i Apstraktne Klase
+
+* Zasto postoje interfejsi i apstraktne klase?
+* Nije moguce naslediti vise apstraktnih klasa, dok je moguce implementirati
+  vise interfejsa.
+  * Java ne podrzava *visestruko nasledjivanje*.
+
+### Staticki Metodi
+
+* Od SE 8 moguce je imati staticke metode u interfejsu.
+* Do sada je bilo zgodno imati posebno interfejs i klasu sa statickim 
+  funkcijama, na primer: `Collection/Collections` ili `Path/Paths`.
+* Te razdvajanje idalje postoji zbog odrzavanja koda, ali noviji programi
+  imaju samo interfejs.
+
+### Default Metodi
+
+* Moguce je imati *default* implementaciju za interfejs metod. Taj metod
+  mora imati `default` modifikator:
+```java
+    public interface Comparable<T> {
+
+        default int compareTo(T other) { 
+            return 0; 
+        }
+
+    }
+```
+* Postoje slucaji kada je ovo korisno!
+
+### Rezolucija Default Metoda
+
+* Sta se desi ako se isti metod definise kao default metod nekog interfejsa
+  i kao metod superklase ili drugog interfejsa?
+  1. Superklasa pobedjuje, ako superklasa pruza metod, default metod 
+     sa istim imenom i parametrima se igrnorise. (*class win*)
+  2. Interfejs sukob nastaje ako, superinterrfejs pruza default metod i drugi
+     interfejs pruza metod istog imena i parametara (nije bitno da li default).
+* Zbog sukoba ostavlja se programeru da ga resi, tako sto ce da pruzi
+  taj isti metod u klasi koja nasledjuje te interfejse.
+
+## Primeri Interfejsa
+
+### Interfejs i Povrati Pozivi
+
+* Povrati pozivi (engl. *callback*) opisuju akciju koja se desava kadgod
+  se neki odredjeni dogadjaj desi.
+  * Primer: Kada se pretisne neko dugme itd...
+
+### `Comparator` Interfejs
+
+* Ako hocemo da sortiramo stringove po duzini, nije moguce jednostavno
+  zameniti implementaciju `compareTo` metoda u `String` klasi.
+* Zbog toga postoji jos jedan metod `Arrays.sort` koji ima dva parametra
+  prvi je niz, a drugi *comparator*, instanca klase koja implementira
+  `Comparator` interfejs.
+```java
+    public interface Comparator<T> {
+    }
+
+    class Lenght Comparator implements Comparator<String> {
+        
+        public int compare(String first, String second) {
+            return frist.length() - second.length();
+        }
+
+    }
+
+    String[] names = { "Pera", "Ana", "Marko" };
+    Arrays.sort(names, new LengthComparator());
+```
+
+### Kloniranje Objekara
+
+* `Cloneable` interfejs pruza klasi siguran `clone` metod.
+* Ako hocemo da *kopiramo* neki objekat, ali ne u smilu njegove reference
+  nego hocemo da dabijemo novi objekat koji je istog stanja kao originalni
+  koristimo `clone` metod.
+* `clone` metod je `protected` metod klase `Object`, sto znaci da nije moguce
+  jednostavno pozvati ga, tj. samo jedna klase moze da klonira samu sebe.
+  * Ovo ima slila zato sto je metod `clone` implementira tako da da pravi
+    duplikate polja. 
+  * Ako je polje primitivni tip, kopiranje je ok
+  * Ako je polje neki objekat, onda stvara samo novu referencu na 
+    isti objekat, pa oni idelje dele informacije.
+  * Ovo se naziva *plitko kopiranje*.
+* Da li je vazno sto je kopiranje plitko?
+  * Ako je podobjekat deljen izmedju originalnog i plitkog klona *imputabilan*
+    tada je deljenje sigurno.
+  * Ali u vecini slucaja oni su *mutabilni*, zbog toga se mora redefinisati
+    `clone` metod da bi pruzao *duboko kopiranje*, tj. klonirao i 
+    podobjekte.
+* Za svaku klasu potrebno je odluciti da li je:
+  1. Default `clone` dovoljno dobar.
+  2. Default `clone` se moze zakrpiti pozivanje `clone` na mutabilni
+     podobjekat.
+  3. `clone` se ne sme pokusavati
+* Za prvo ili drugi klasa mora:
+  1. Implementirati `Cloneable` interfejs, i
+  2. Redefinisati `clone` metod sa `public` pristupajucim modifikatorom.
+* U ovom slucaju interfejs sluzi samo kao labela, koja pokazuje da dizajner
+  klase poznaje koncept kloniranja.
+```java
+    public Zaposleni clone() throws CloneNotSupportedException {
+        Zaposleni cloned = (Zaposleni) super.clone();
+        // kloniramo mutabilna polja kojih trenutno nema
+        return cloned;
+    }
+```
+* Da li treba implementirati `clone` u sopstvenim klasama? 
+  * Ako nam treba duboko kloniranje, onda verovatno treba.
+  * Neki misle da se `clone` treba izbegavati, ali dobijamo slicne probleme
+    ako probamo da implementiramo nas metod za kloniranje.
+
+## Lambda Izrazi
+
+### Zasto lambda?
+
+* Lamda izraz je blok koda koji se moze slati negde da bi se izvrsavanje 
+  odlozilo, ili izvrsi jednom ili vise puta.
+* Dugo se cekalo da bi se ovo na kraju implementiralo u javi. Nije bilo
+  pitanje da li ce se to desiti, nego kako ce se implementirati.
+
+### Sintaksa Lambda 
+
+* Za primer sortiranje od malopre saljemo kod koji proverava da li je 
+  neki string kraci od nekog drugog stringa, tj. racunamo:
+```java
+  (String first, String second)
+    -> first.length() - second.length()
+```
+* Kod koji se dobija se naziva *lambda izraz*, koji je jednostavno blok koda,
+  zajedno sa specifikacijom promenljivih koje se koriste.
+* Pre mnogo godina, Alonzo Cerc je hteo da formalizuje sta znaci da
+  matematicka funkcija bude efikasno izracunata (sa druge strane postoje
+  funkcije za koje se zna da postoje, ali niko ne zna kako da izracuna 
+  njihove vrednosti). Koristio je grcko slovo lambda za parametre.
+  * Zasto lambda? Pa video je ^ oznaku koja oznacava slobodnu promenljivu,
+    pa se bio inspirisan za veliko Lambda, koje je onda postalo malo lambda.
+* Ako imamo komplikovaniji izraz koristimo `{}` i `return`.
+```java
+    (String first, String second) -> {
+        if (first.length() < second.length()) return -1;
+        else if (first.length() > second.length()) return 1;
+        else return 0;
+    }
+```
+* Ako nema parametre moze jos uvek se koriste `()`.
+```java
+    () -> { for (int i = 100; i >= 0; i--) System.out.println(i); }
+```
+* Moguce je izostaviti tip parametra ukoliko se on nasledjuje.
+* Ako ima samo jedan parametar moguce je izostaviti zagrade `()` i/ili `{}`
+
+### Funkcionalni Interfejsi
+
+* Moguce je pruziti lambda izraz kadgod je objekat interfejsa sa jednim
+  apstraktnim metodom ocekivan. Takvi interfejsi se nazivaju
+  *funkcionalni interfejsi*.
+* Za demonstraciju konverzija u funkcionalni interfejs, razmotrimo
+  `Arrays.sort` metod.
+  * Za drugi parametar oceju se instanca od `Comparator` interfejsa sa 
+    jednim metodom.
+```java
+    Array.sort(names, (first, second) -> first.length() - second.length()) 
+```
+* Primamljivi su zato sto su jednostavi i eleganti, i jedino je moguce
+  koristiti konverziju u funkcionalne interfejse sa lambda izrazima.
+
+### Reference metoda
+
+* Nekada postoji metod koji nosi odredjenu akciju koji zelimo da prosledimo
+  na nekom drugom delu koda.
+* Pretpostavimo da hocemo da ispisujemo dogadjaj kad god se dogodi timer
+  dogadjaj.
+```java
+    Timer t = new Timer(1000, event -> System.out.println(event));
+    // Ekvivalentne linije
+    Timer t = new Timer(1000, System.out::println); 
+```
+* Druga linija koristi izraz koji se naziva *referenca metoda* koji je
+  ekfivalentan lambda izrazu.
+* Sortiranje bez obracanja paznje na velika i mala slova:
+```java
+    Array.sort(strings, String::compareToIgnoreCase);
+```
+* Postoje 3 slucaja:
+  1. *objekat`::`instancaMetode*
+  2. *Klasa`::`statickaMetoda*
+  3. *Klasa`::`instancaMetode*
+* Prva dva su ekvivalentna lambda izrazu koji pruza parametre metodi.
+* U trecem, nad prvim parametrom se poziva metod, dok su ostali parametri.
+  * moguce je koristiti `this` i `super`: *`super::`instancaMetode*.
+
+### Reference Konstruktora
+
+* Referenca konstruktora je slicna referenci metoda, samo sto je ime
+  metoda `new`. Primer: `Zaposleni::new``.
+
+### Doseg Promenljivih
+
+* Razmotrimo primer:
+```java
+    public static void repeatMessage(String text, int delay) {
+        ActionListener listener = event -> {
+            System.out.printf("%s\n", text);
+            Toolkit.getDefaultToolkit().beep();
+        };
+        new Timer(delay, listener).start();
+    }
+```
+* Kako lambda izraz zna za promenljivu `text`.
+* Lambda izraz ime 3 dela:
+  1. Blok koda
+  2. Parametre
+  3. Vrednosti za `slobodne` promenljive, tj. promenljive koji nisu paremetri
+     i nisu definisane u bloku.
+* U nasem slucaje `text` je slobodna promenljiva.
+* Moramo cuvati vrednosti tih promenljivih, tj. kazemo da su takve vrednosti
+  *uhvacene* lambda izrazom.
+* Moguce je koristiti samo promenljive cije se vrednosti ne menjaju, tj.
+  samo imputabilne promenljive kao slobodne promenljive.
+  * Bilo koje uhvacene promenljive u lambda izrazu moraju biti *efektivno
+    finalne*.
+* Telo lambda izraza ima *isti doseg kao i udjezdeni blok*.
+  * Nije moguce imati dve lokalne promenljive sa istim imenom.
+* Kada se koristi `this` u lambda izrazu, `this` referise na parametar
+  metoda koji se stvorio lambda.
+
+### Procesiranje Lambda Izraza
+
+* Pogledajmo sada kako se pisu metodi koji mogu da koriste lambda izraze.
+* Poenta lambda izraza je *drugacije izvrsavanje* neke metode:
+  * Izvrsavanje koda u zasebnoj niti.
+  * Izvrsavanje koda vise puta.
+  * Izvrsavanje koda na odredjenom mestu u algoritmu. (cmp za sort..)
+  * Izvrsavanje koda kada se nesto desi. (kada neko pretisne dugme..)
+  * Izvrsavanje koda samo kada je neophodno.
+* Pretpostavimo da hocemo da ponavljamo nesto:
+```java
+    public static void repeat(int n, Runnable action) {
+        for (int i = 0; i < n; i++) {
+            action.run();
+        }
+    }
+
+    public static void main (String[] args) {
+        repeat(10, () -> System.out.printf("Hello!\n"));
+    }
+```
+* Moramo izavrati funkcionalni interfejs iz Java API. U ovom slucaju
+  koristimo `Runnable` interfejs.
+  * telo lambda izraza se izvrsava kada se pozove `action.run()`.
+
+### Nesto jos o Komparatorima
+
+* `Comparator` interfejs ima puno zgodnih statik metoda za uporedjivanje.
+  * Oni se koriste sa lambda izrazima.
+```java
+    // Uporedjujemo osobe leksikografski po imenu.
+    Arrays.sort(people, Comparator.comparing(Person::getName));
+    // Uporedjujemo osobe leksikografski po prezimenu pa po imenu.
+    Arrays.sort(people, Comparator.comparing(Person::getLastName)
+                                  .thenComparing(Person::getFirstName));
+    // Uporedjivanje po duzini imena.
+    Arrays.sort(people, Comparator.comparingInt(p -> p.getName().length()));
+```
+
+## Unutrasnje Klase
+
+* *Unutrasnja klasa* je klase koja se definise unutar druge klase. Zasto?
+  * Metodi unutrasnje klase mogu da pristupe podacima iz desega u kome
+    su definisane, zajedno sa privatnim podacima.
+  * Unutrasnje klase mogu biti sakrivene od drugih klasa u istom paketu.
+  * *Anonimne* unutrasnje klase su zgodne kada hocemo da definisemo
+    callback bez pisanja puno koda.
+
+### Koriscenje Unutrasnjih Klasa za Pristup Stanja Objekata
+
+```java
+
+class TalkingClock {
+
+    private int interval;
+    private boolean beep;
+
+    public TalkingClock(int interval, boolean beep) {
+        this.interval = interval;
+        this.beep = beep;
+    }
+
+    public void start() {
+        ActionListener listener = new TimePrinter();
+        Timer t = new Timer(interval, listener);
+        t.start();
+    }
+
+    public class TimePrinter implements ActionListener {
+        // Unutrasnja klasa...
+
+        public void actionPerformed(ActionEvent event) {
+            System.out.printf("At beep time is: %s\n", new Date());
+            if (beep) Toolkit.getDefaultToolkit().beep();
+        }
+
+    }
+
+}
+```
+* `TimerPrinter` klasa nema instance polja ili promenljivu nazvanu `beep`.
+  * Tacnije, `beep` referisa na polje `TalkingClock` objekta, koji kreira
+    objekat `TimePrinter`.
+* Tradicionalno metod moze jedino referisati na polja objekta nad kojim
+  je pozvan.
+* Metodi unutrasnje klase mogu da pristupe i svojim poljima i 
+  poljima spoljasnjeg objekta koji je stvara.
+
+### Specijalna Sintaksna Pravila za Unutrasnje Klase
+
+* `OuterClass.this` je referenca na spoljasnji objekat.
+* `spoljasnjiObjekat.new UnutrasnjaKlasa(parametri)` pozivanje konstruktora 
+  unutrasnje klase.
+
+### Lolane Unutrasnje Klase
+
+* Moguce je definisati klase *lokalno u jednoj metodi*.
+* Njihov doseg je samo doseg bloka metoda, tako da nema smisla koristiti
+  `public` ili `private` modifikatore.
+
+### Pristupanje Promenljiva iz Spoljasnje Metode.
+
+* Lokalne klase imaju jos mogucnusti nad drugim unutrasnjim klasama.
+  * Mogu pristupati i lokalnim promenljivama, ali one moraju biti `final`.
+* Da bi razlotrili zbog cega promenljiva mora biti `final` posmatramo
+  kontrolu toka pazljivije:
+  1. Metoda je pozvana
+  2. Unutrasnji objekat se kreira.
+  3. Taj objekat se mozda prosledi nekom drugom objektu.
+  4. Izlazi se iz funkcije (samim tim se brisu i lokalne promenljive).
+  5. Kreirani objekat idalje postoji i poziva metod unutrasnje funkcije
+     koja zahteva lokalnu promenljivu koja vise ne postoji.
+* Zbog tih razloga promenljiva mora biti `final`. (Ne uvek zapravo...)
+
+### Anonimne Unutrasnje Klase
 
