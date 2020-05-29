@@ -2439,7 +2439,7 @@ class TalkingClock {
 * `spoljasnjiObjekat.new UnutrasnjaKlasa(parametri)` pozivanje konstruktora 
   unutrasnje klase.
 
-### Lolane Unutrasnje Klase
+### Lokane Unutrasnje Klase
 
 * Moguce je definisati klase *lokalno u jednoj metodi*.
 * Njihov doseg je samo doseg bloka metoda, tako da nema smisla koristiti
@@ -2461,3 +2461,217 @@ class TalkingClock {
 
 ### Anonimne Unutrasnje Klase
 
+* Ako hocemo da napravimo samo jedan objekat unutrasnje klase, ne moramo
+  da joj dajemo ime. Te kase nazivamo *anonimne klase*.
+```java
+     public void start() {
+        ActionListener listener = new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                System.out.printf("At beep time is: %s\n", new Date());
+                if (beep) Toolkit.getDefaultToolkit().beep();
+            }
+        };
+        Timer t = new Timer(interval, listener);
+        t.start();
+    }
+```
+* Generalno sintaksa je:
+```java
+    new SuperType(construction parametars) {
+        // metodi unutrasnje klase i podaci
+    }
+```
+* `SuperType` moze da bude interfejs, kao u nasem slucaju, tada je
+  * unutrasnja klasa implementira taj interfejs
+* `SuperType` moze da bude klase, tada
+  * unutrasnja klasa nasledjuje tu klasu
+* Anonimna klase ne moze imati konstruktor kako nema ima
+
+### Staticke Unutrasnje Klase
+
+* Nekada hocemo da unutrasnja klase jednostavno bude sakrivena u nekoj
+  drugoj klase, ali bez instanciranja objekta spoljasnje klase.
+  * To mozemo spreciti deklarisanje unutrasnje klase kao `static`.
+* Tipican primer, racunanje minimalnih i maksimalnih vrednosti niza.
+  * Umesto da racunamo min i max vrednost u posebnim metodama, mozemo da
+    imamo jednu metodu koja racuna obe vrednosti.
+    * Samim tim ustedjujemo na vremenu jer prolazimo jednom kroz ceo niz.
+```java
+class ArrayAlgorithms {
+
+    public static class Pair {
+
+        private double first;
+        private double second;
+
+        public Pair(double first, double second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public double getFirst() {
+            return first;
+        }
+
+        public double getSecond() {
+            return second;
+        }
+
+    }
+
+    public static Pair minmax(double[] values) {
+        double min = Double.POSITIVE_INFINITY;
+        double max = Double.NEGATIVE_INFINITY;
+        for (double v : values) {
+            if (min > v) {
+                min = v;
+            }
+            if (max < v) {
+                max = v;
+            }
+        }
+
+        return new Pair(min, max);
+    }
+
+}
+```
+* Verovatno je vec neki programer napravio klasu `Pair`, koja predstavlja, 
+  na primer, par dva `int`a, ali nama zapravo treba par dve `double` vrednsoti.
+  * Zato javna unutrasnja klase resava problem jer ona dobija ime 
+    `ArrayAlgorithms.Pair`.
+* Ali ne zelimo da pravimo instancu objekta `ArrayAlgorithms` da bi pristupili
+  `Pair` objektu.
+  * To nam omogucava `static`.
+
+# Izuzeci, Tvrdnje i Logovanje
+
+* Kada dodje do greske potrebno je:
+  * Obavestiti korisnika o gresci
+  * Sacuvati sve sto je do sada radjeno
+  * Dozvoliti korisniku da stopira program
+* Kada dodje do nekih gresaka java koristi *obradu izuzetaka*
+  (eng. exception handling)
+
+## Pristup Greskama
+
+* Pretpostavimo da dodje do greske dok se izvrsava Java program.
+* Ako se operacija ne moze zavrsiti zbog greske, program bi trebalo da se
+  * vrati u sigurno stanje i omoguci korisniku da izvrsi komandu, ili
+  * prepusti korisniku da sacuva podatke i da terminise program.
+* Obrada izuzetaka treba da transferuje kontrolu od mesta gde desila greska
+  do obrade greske koja ce se pozabaviti situacijom.
+* Moguci problemi?
+  * *Pogresan korisnicki unos*
+  * *Greska sa uredjajem*
+  * *Fizicka limitacija*
+  * *Greska u kodu*
+* Ako neka metoda ne moze da nadje resenje, tradicionalno je vracala -1, ili
+  `null` sto ukazuje na gresku.
+  * To nije moguce uvek nekada -1 moze da bude greska ali i potpuno korektan 
+    izlaz metode.
+  * Jedna mogucnost je `throw` koja baca objekat koji sadrzi informaciju
+    o gresci. Tada metod ne vraca normalnu vrednost.
+  * Kada se to desi program se ne nastavlja dalje nego trazi 
+    *obradu izuzetaka* kako bi se pozabavio greskom.
+
+### Klasifikacija Izuzetaka
+
+* Izuzetak je uvek instanca klase izvedene iz `Throwable`.
+* `Exception` i `Error` nasledjuju `Throwable`.
+* `Error` opisuje unutrasnju gresku ili nedostatak resursa u Java runtime.
+  * Ne mozemo nista sem da cekamo da izadje nova verzija koja resava
+    taj problem.
+* `Exception` se deli `RuntimeException` i `IOException`
+* `RantimeException` nasledjuju problemi kao sto je
+  * Lose kastovanje
+  * Pristupanje van granica
+  * Pristupanje null pokazivacu
+* One koje ne nasledjuju `RuntimeException` su:
+  * Citanje posle kraja fajla
+  * Otvaranje fajla koji ne postoji
+* Vazi pravilo: Ako je `RuntimeException` onda si *ti* kriv.
+  * Pristupanje van granica, ili null pokazivacu moze da se zaustavi
+    jednostavnim uslovom da li smo u granicama i da li tome sto pristupamo
+    nije null.
+  * Dok u slucaju otvaranja fajla koji ne postoji, ukoliko proverimo
+    da li postoji pre otvaranja, moguce je da neko obrise fajl pre
+    nego sto ga otvorima, pa to ne zavisi od nas (od koda) nego od okruzenja.
+* Svi izuzeci koji nasledjuju klasu `Error` ili `RuntimeException` su
+  *neprovereni* izuzeci.
+* Svi ostali se nazivaju *provereni* izuzeci.
+* Kompajler proverava da li smo prozili obradu izuzetaka za svaki
+  provereni izuzetak.
+
+### Deklarisanje Proverenog Izuzetka
+
+* Java metod moze da izbaci izuzetak ako se susretne sa situacijom koju
+  ne moze da obradi.
+  * Metod nece vratiti nikakvu vrednosti, ali ce reci kompajleru o kakvoj
+    se gresci radi.
+* U deklaraciji metode ukazujemo da metod moze da izbaci izuzetak.
+```java
+    public FileInputStream(String name) throws FileNotFoundException
+```
+* Dobijamo `FileInputStream` ali takodje moze doci do greske, i to
+  izbacivanje `FileNotFoundException`.
+* Izuzetak se izbacuje u sledecim situacijama:
+  * Pozivamo metod koji izbacuje provereni izuzetak.
+  * Detektujemo gresku i izbacuje provereni izuzetak sa `throw` izrazom
+  * Napravimo programsku gresku (a[-1] = 0)
+  * Unutrasnja greska se desi u virtualnoj masini ili u runtime biblioteci.
+* U prva dva slucaja, treba ukazati programerima koji koriste funkciju o
+  mogucem izuzetku
+* Slicno ne treba obavestavati da nasa funkcija nije dobra jer smo napravili,
+  na primer `ArrayIndexOutOfBoundsException`. Kao i da je moguce doci
+  do izuzetka koji se nasledjuje iz `Error`.
+* Ukratko treba deklarisati sve *proverene* izuzetke koje funkcija moze da 
+  izbaci.
+
+### Kako Baciti Izuzetak
+
+* Pretpostavimo da se nesto uzasno desilo. Imamo metod `readData`, koji
+  cita iz fajla ciji je header obecao duzinu `1024`, ali
+  imamo `EOF` nakon `892` karaktera. 
+* Zbog toga biramo iz dokumentaciju odgovarajuceg naslednika `IOException`.
+* Nakon trazenja nalazimo da je u nasem slucaju perfektan `EOFException`.
+```java
+    throw new EOFException(); // bacamo EOF izuzetak
+```
+* Ovaj izuzetak ima jos jedan konstruktor koji kao parametar sadrzi string
+  koji moze da sadrzi korisne informacije o gresci, u nasem slucaju je to
+```java
+    throw new EOFException("Procitano: " + len); // bacamo EOF izuzetak
+```
+* Ako postoji klasa odgovarajuceg izuzetka:
+  1. Nalazimo tu klasu
+  2. Pravimo objekat te klase
+  3. Bacamo ga
+
+### Kreiranje Klasa Izuzetaka
+
+* U slucaju da vec ne postoji odgovarajuca klasa za nas izuzetak, mozemo
+  napraviti nasu klasu izuzetka.
+* Dovoljno je naslediti je od neke klase izuzetka koji vec postoji:
+```java
+    class FileFormatException extends IOException
+    {
+        public FileFormatException() {}
+        public FileFormatException(String gripe)
+        {
+            super(gripe);
+        }
+    }
+```
+
+## Hvatanje Izuzetaka
+
+## Hintovi za Koriscenje Izuzetaka
+
+## Koriscenje 
+
+## Tvrdnje
+
+## Logovanje
+
+# Genericno Programiranje
