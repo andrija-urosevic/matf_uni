@@ -2666,9 +2666,146 @@ class ArrayAlgorithms {
 
 ## Hvatanje Izuzetaka
 
+* Kada bacimo izuzetak, neki drugi deo koda treba da uhvati taj izuzetak.
+
+### Hvatanje Izuzetka
+
+* Ako dodje do izuzetka i on se ne uhvati program terminise.
+* Za hvatanje izuzetka, postavlja se `try/catch` blok.
+```java
+    try {
+        code
+        ...
+        code
+    } catch (ExceptionType e) {
+        // obrada izuzetka datog tipa
+    }
+```
+* Ako unutar `try` bloka izbaci izuzetak, koji je istog tipa kao i 
+  `ExceptionType` (naravno moze da bude njegov naslednik), onda se
+  1. Preskace ostatak koda u `try` bloku
+  2. Izvrsava se obrada u `catch` bloku
+* Ako se unutar `try` bloka ne izbaci izuzetak, program preskace `catch` blok.
+* Primer:
+```java
+    public static void read(String filename) throws IOException {
+        InputStream in = new FileInputStream(filename);
+        int b;
+        while ((b = in.read()) != -1) {
+            System.out.printf("%d\n", b);
+        }
+        in.close();
+    }
+
+    public static void main (String[] args) {
+        try {
+            read("test.txt");
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+```
+* Kako odrediti kada je dobro koristiti throw i odlagati obradjivanje greske,
+  a kada je dobro obraditi tu gresku?
+  * Generalno bolje je *uvek* obraditi gresku ako *znamo kako*, ako to nije 
+    slucaj bolje je odlagati koriscenjem `throw`.
+* Postoji jedan izuzetak: Ako redefinisemo metod superklase koja ne izbacuje
+  ni jedan izuzetak, tada moramo obraditi sve izuzetke u toj metodi, jer
+  nije moguce menjati deklaraciju metode superklase.
+
+### Hvatanje Vise Izuzetaka
+
+```java
+    try {
+    } catch (FileNotFoundException e | UnknownHostException e) { // nadovezivanje od SE7
+        System.out.printf("%s", e.getClass().getName());
+    } catch (IOException e) {
+        System.out.printf("%s", e.getMessage());
+    }
+```
+
+### Ponovno Bacanje i Lancanje Izuzetaka
+
+* Moguce je baciti izuzetak u `catch` bloku.
+  * Obicno ovo se radi ako hocemo da promenimo tip izuzetka.
+
+### Finally Blok
+
+* Kada neki deo koda u `try` bloku izbaci izuzetak, prestaje procesiranje
+  ostatka koda u bloku. Ovo moze da bude problem.
+  * Sta ako je neki deo koda pre izbacivanje izuzetka, zauzeo neki resurs,
+    taj resurs mora biti oslobodjen kasnije, ali kako smo preskocili
+    ostatak koda koji to radi moramo nekako pruziti mogucnost za to.
+* Java ima resenje u vidu `finally` bloka.
+  * Taj blok se izvrsava uvek bez obzira na to da li se izbacio izuzetak
+    ili nije.
+```java
+InputStream in = new FileInputStream(...);
+try {
+    // 1
+    // moguce je izbaciti izuzetak
+    // 2
+} cathc(IOException e) {
+    // 3
+    // obrada greske
+    // 4
+} finally {
+    // 5
+    in.close();
+}
+// 6
+```
+1. Nemamo izuzetak:
+  * Izvrsi se ceo `try` blok, pa se izvrsi `finally` blok.
+  * Prolazimo kroz 1, 2, 5, 6.
+2. Izbaci se izuzetak koji se hvata u `catch` bloku.
+  * Izvrsi se sve u `try` bloku dok ne dodje do izbacivanja greske, ostak se
+    preskace, pa se izvrsava `catch` blok, i na kraju `finally`.
+  * Prolazimo kroz 1, 3, 4, 5, 6.
+3. Izbaci se izuzetak koji se ne hvata u `catch` bloku.
+  * Izvrsi se sve u `try` bloku dok ne dodje do izbacivanja greske, ostak se
+    preskace, pa se izvrsava samo `finally`, te se program terminira.
+  * Prolazimo kroz 1, 5.
+* Mozemo koristiti `finally` blok bez `catch` bloka.
+
+### Try-with-Resources izraz
+
+* Sta ako kod u `finally` bloku izbaci gresku?
+  * Moramo imati ugnjezdene blokove, ali na srecu:
+```java
+// Otvori resurse
+try {
+    // radi sa resursima
+} finally {
+    // zatvori resurse
+}
+```
+* Java SE7 pruza zgodan izraz , ako pri tome resursi implementiraju 
+  `AutoClosable` interfejs.
+  * tj. imaju samo jedan metod `void close() throws Exception`.
+* Tipican primer:
+```java
+try (Scanner in = new Scanner(new FileInputStream("text.txt")), "UTF-8") {
+    while (in.hasNext()) {
+        System.out.println(in.next());
+    }
+}
+```
+* Nije bitno da li dodje do izbacivanje izuzetka ili ne `in` se svakako
+  zatvara.
+
 ## Hintovi za Koriscenje Izuzetaka
 
-## Koriscenje 
+1. *Obradjivanje izuzetaka ne sme zameniti jednostavnu proveru*.
+  * Bolje je proveriti da li je stek prazan pre skidanja sa vrha nego hvatati 
+    hvatati gresku ako pokusamo da skinemo sa vrha, a stek prazan.
+2. *Ne koristiti `try/catch` za svaku liniju, vec obuhvatiti vise linija
+   jednim `try/cathc` blokom.*
+3. *Koristi dobro hijerarhiju izuzetaka*
+4. *Ne prigusuj greske samo zato sto kompajler kaze da trebas da obradis gresku.*
+5. *Ne koristi glupe pormenljive kao povratne greske.*
+6. *Odlaganje gresaka nije ne znanje obrade, vec je pozeljno ukoliko nije
+   poznato kako obraditi tu gresku u datom trenutku.*
 
 ## Tvrdnje
 
