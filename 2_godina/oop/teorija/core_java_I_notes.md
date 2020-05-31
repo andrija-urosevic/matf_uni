@@ -2811,4 +2811,499 @@ try (Scanner in = new Scanner(new FileInputStream("text.txt")), "UTF-8") {
 
 ## Logovanje
 
-# Genericno Programiranje
+# Generiko Programiranje
+
+## Zasto genericko programiranje
+
+* *Genericko programiranje* znaci pisanje koda koji moze da se iskoristi za
+  objekte drugacijih tipova.
+
+### Prednosti Tipiziranih parametara
+
+* Pre generickih klase u Javi takvo programiranje se postizalno 
+  *nasledjivanjem*.
+```java
+public class ArrayList {
+    privete Object[] elementData;
+    ...
+    public Object get(int i) { ... }
+    public void add(Object o) { ... }
+}
+```
+* Dva problema:
+  * Kastovanje je neophodno.
+    * Ako koristimo `get` moramo kastovati iz `Object` u zeljni tip.
+  * Nema provere gresaka.
+    * Ako koristimo `add` mozemo da ubacimo bili koji tip.
+* Resenje nudi genericko programiranje i to *tipizorani parametri*.
+  * `ArrayList` moze da ima svoj sopstveni tip parametara koji ukazuje 
+    na tip elemenata
+```java
+    ArrayList<String> files = new ArrayList<String>();
+```
+  * Slicno nema potrebe za kastovanjem jer `get` ne vraca `Object` vec
+    dati objekat datog tipa (u gorenjem primeru to je `String`).
+  * Takodje, docice do greske ako se pozove `add` sa nekim parametrom
+    koji nije `String` u nasem slucaju.
+
+### Ko hoce da bude genericki programer?
+
+* Lako je koristiti genericke klase kao sto su `ArrayList`. 
+* Tesko je implementirati genericku klasu. Koliko tesko?
+  * Primer hocemo da dodamo sve iz `ArrayList<Menadzer>` u 
+    `ArrayList<Zaposleni>` i to koriscenjem `addAll`, sto je ok ali nije 
+    ok raditi obrnuto.
+  * Postoji koncept `wildcard type` koji resava ovaj problem.
+* Postoje 3 nivoa generickog programiranja:
+  1. Osnovni: Samo koristimo genericke klase, bez znanja kako one rade.
+  2. Srednji: Ako nesto krene naopako moramo nauciti nesto o generickim klasama.
+  3. Napredni: Implementiramo sopstvene genericke klase i metode.
+
+## Definisanje Jednostvane Genericke Klase.
+
+* *Genericka klase* je klasa sa jednom ili vise promenljivih tipova.
+* Konstruisemo jednostavu genericku klase `Par`.
+```java
+public class Par<T> {
+
+    private T prvi;
+    private T drugi;
+
+    public Par() {
+        this.prvi = null;
+        this.drugi = null;
+    }
+
+    public Par(T prvi, T drugi) {
+        this.prvi = prvi;
+        this.drugi = drugi;
+    }
+
+    public T getPrvi() {
+        return prvi;
+    }
+
+    public T getDrugi() {
+        return drugi;
+    }
+
+    public void setPrvi(T prvi) {
+        this.prvi = prvi;
+    }
+
+    public void setDrugi(T drugi) {
+        this.drugi = drugi;
+    }
+
+}
+```
+* Genericke klase moguce da imaju i vise od dve promenljive tipa.
+  * `public class Pair<T, U> { ... }`
+* Promenljiva tipa se koristi kroz definiciju klse.
+* *Instanciranjem* generickog tipa vrsi se supstitucija promenljivih tipova.
+  * Instanciranjem: `Pair<String>` dobijamo:
+```java
+    // polja postaju
+    private String prvi;
+    private String drugi;
+
+    // konstruktori postaju
+    Par<String>()
+    Par<String>(String, String)
+
+    // metodi postaju
+    String getPrvi()
+    String getDrugi()
+    void setPrvi(String)
+    void setDrugi(String)
+```
+* Ukratko genericke klase su kao uputstvo za pravljenje obicnih klasa.
+
+## Genericke Metode
+
+* Moguce je i definisati genericke funkcije
+```java
+class Algoritmi {
+    public static <T> T getSrednji(T... a) {
+        return a[a.length / 2];
+    }
+}
+```
+* Pozivanje generickih metoda je jednostavno:
+```java
+// Od 3 Pere dobijamo drugog Peru
+String srednji = Algoritmi.<String>getSrednji("Pera", "Pera2", "Pera3");
+```
+
+## Ogranicenja za Promenljive Tipove
+
+* Razmotrimo sledeci primer:
+```java
+    public static <T> T min(T[] a) {
+        if (a == null || a.length == 0) return null;
+        T m = a[0];
+        for (int i = 1; i < a.length; i++) {
+            if (m.compareTo(a[i]) > 0) {
+                m = a[i];
+            }
+        }
+        return m;
+    }
+```
+* U ovom slucaju kompajler upozorava na gresku da `compareTo` mozda ne postoji
+  za tip `T`.
+  * Resenje je restrikcija `T` na klase koje implementiraju `Comparable`
+    interfejs.
+* Moguce je dati ogranicenje promenljivoj tipa T kao
+```java
+    public static <T extends Comparable> T min(T[] a) ...
+```
+* Kompajler i dalje ukazuje na gresku, ali to resavaju wildcard tipovi.
+* Mozda se pitate zvog cega koristimo kljucno rec `extends` umesto
+  kljucne reci `implements` jer je `Comparable` interfejs.
+  * Ovo znaci da je `T` *podtip* ogranicenog tipa.
+  * Rec `extends` je izabrana zato sto vise odgovara reci *pod-* nego rec
+    `implements`.
+* Moguce je ograniciti promenljivu na sa vise tipova
+```java
+    T extends Comparable & Serializable
+```
+
+## Genericki Kod i Virtualna Masina
+
+### Brisanje Tipova
+
+* Kada se definise genericki tip, odgovarajuci *sirovi* tip se odmah pruza.
+* Tip promenljive se *brise* i zamenjuje za svojim ogranicavajucim tipom.
+  (`Object` tipom ako promenljivi tip nema ogranicenje).
+  * Na primer `Par<T>` postaje:
+```java
+public class Par<Object> {
+
+    private Object prvi;
+    private Object drugi;
+
+    public Par() {
+        this.prvi = null;
+        this.drugi = null;
+    }
+
+    public Par(Object prvi, Object drugi) {
+        this.prvi = prvi;
+        this.drugi = drugi;
+    }
+
+    public Object getPrvi() {
+        return prvi;
+    }
+
+    public Object getDrugi() {
+        return drugi;
+    }
+
+    public void setPrvi(Object prvi) {
+        this.prvi = prvi;
+    }
+
+    public void setDrugi(Object drugi) {
+        this.drugi = drugi;
+    }
+
+}
+```
+* Da smo implementirali `Par<T extends Comparable>` dobili bi slicno samo
+  svuda gde je `Object` nalazilobi se `Comparable`.
+
+### Prevodjenje Generickih Izraza
+
+* Kada program pozove genericki metod, compajler doda castovanje nakon 
+  sto se povratni tip obrise.
+```java
+    Par<Zaposleni> drugari = ...;
+    Zaposleni drug = drugari.getPrvi();
+```
+* Brisanjem tipa za `getPrvi()` metod vraca `Object`. Kompajler ubacuje
+  kastovanje u Zaposleni, tj. dolazi do dve instrukcije:
+  1. Pozove se sirovi metod `Par.getPrvi()`.
+  2. Kastuje se povratna vrednost `Object` u tip `Zaposleni`.
+
+### Prevodjenje Generickog Metoda.
+
+* Brisanje se takodje desava i za genericke metode.
+```java
+    public static <T extends Comparable> T min(T[] a)
+    // dobijamo sledece:
+    public static Comparable min(Comparable[] a)
+```
+* Ovo dovodi do nekih komplikacija...#TODO
+* Ukratko:
+  * Nemamo genericke klase u virtualnom masini, samo obicne klase i metode
+  * Svi tipovi parametara su zamenjeni njihovim ogranicenjima.
+  * Premostivi metodi su sintetizovani da ocuvaju polimorfizam.
+  * Kastovanje se dodaje da ocuva sigurnost tipa.
+
+### Pozivanje Legacy Koda
+
+## Restrikcije i Limitacije
+
+* Vecinja njih je posledica brisanja tipova.
+
+### Tip Parametara Ne Biti Instanciran sa Primitivinm Tipovima
+
+* Nije moguce zameniti primitivni tip za tip parametra.
+  * Ne postoji `Par<int>`, vec samo `Par<Integer>`.
+* Razlog: Brisanje tipova
+  * Naime nije moguce dodeliti `Object` tipu `int` vrednost.
+
+### Ispitivanje Tipova za Vreme Izvrsavanja Radi Samo sa Sirovim Tipovima
+
+```java
+    if (a instanceof Par<String>) // Greska!
+    if (a instanceof Par<T>) // Greska!
+    Par<String> p = (Par<String>) a; // Upozorenje!
+
+    Par<String> stringPar = ... ;
+    Par<Zaposleni> zaposleniPar = ... ;
+    if (stringPar.getClass() == zaposleniPar.getClass()) // uvek vazi
+```
+
+### Nije Moguce Kreiranje Nizova sa Parametrizovanim Tipom
+
+```java
+    Par<String>[] tabela = new Par<String>[10]; // Greska!
+```
+
+### Varargs Upozorenja
+
+* Razmotrimo sledeci problem:
+  * Prosledjivanje instance generickog tipa metodi sa promenljivim brojem
+    argumenata.
+```java
+    public static <T> void addAll(Collection<T> coll, T... ts) {
+        for (t : ts) {
+            coll.add(t);
+        }
+    }
+
+    Collection<Par<String>> tabela = ... ;
+    Par<String> par1 = ... ;
+    Par<String> par2 = ... ;
+    addAll(tabela, par1, par2);
+```
+* Ovde se pravi niz `Par<String>` sto nije moguce.
+* Ali na srecu ovde dobijamo samo upozoronje koje moze da se prigusi sa:
+  `@SuppressWarnings("unchecked")` anotacijom na poziv `addAll`.
+  * Ili anotacijom metoda `addAll` sa `@SafeVarargs`.
+
+### Nije Moguce Instanciranje Promenljivih Tipova
+
+```java
+    public Par() { prvi = new T(); drugi = new T(); } // Greska! (new Object())
+    Par<String> p = Par.napraviPar(String::new) // Ovo moze
+
+    // pritom  je funkcija definisana kao
+    public static <T> Par<T> napraviPar(Supplier<T> constr) {
+        return new Par<>(constr.get(), constr.get());
+    }
+```
+
+### Nije Moguce Konstruisati Genericki Niz
+
+```java
+    // Greska!!!
+    public static <T extends Comparable> T[] minmax(T[] a) {
+        T[] mm = new T[2]; ...
+    }
+```
+
+### Promenljivi Tipovi Nisu Validne u Statickom Kontekstu Genericke Klase
+
+```java
+    public static T name; // Greska!!!
+    public static T getName() { // Greska!!!
+        if (name == null) {
+            // konstruisi novu instanuce od T
+        }
+        return name;
+    }
+```
+
+### Nije Moguce Baciti ili Uhvatiti Instance Genericke Klase
+
+```java
+    public class Problem<T> extends Exception { /*...*/ } // Greska!!!
+```
+```java
+    public static <T extends Throwable> void doWork(T t) throws T { // OK
+        try {
+            // do work
+        } cathc (Throwable e) { // Ovde ne sme da bude (T e)
+            t.initCause(e);
+            throw t;
+        }
+    }
+```
+
+### Budeti Svsni Sudaranja posle Brisanja
+
+* Ilegalno je kreirati uslov koji stvara sudar kada se genericki tip obrise.
+```java
+public class Par<T> {
+    public boolean equals(T vrednost) {
+        return prvi.equals(vrednost) && drugi.equals(vrednost);
+    }
+}
+
+// Posle brisanja
+boolean equals(Object); // Ovaj metod vec postoji u Object klasi!!!
+```
+* Za podrzavanje prevodjenja brisanje uvodimo restrikcije koje klase ili
+  promenljivi tipovi onemogucavaju da budu u isto vreme podtip dva tipa
+  interfejsa koji su razlicitih parametara. STA?
+```java
+class Zaposleni implements Comparable<Zaposleni> { /* ... */ }
+class Menadzer extends Zaposleni implements Comparable<Menadjer> { /* ... */}
+// Ovo je greska!!!
+```
+* U Ovom slucaju `Menadzer` nasledjuje i `Comparable<Zaposleni>` i
+  `Comparable<Menadzer>`, koji su razlicitih parametara istog interfejsa.
+  
+## Pravilo Nasledjivanja za Genericke Tipove
+
+* Posmatramo klasu, podklasu i njihove parove:
+  * `Zaposleni`, `Menadzer`. Da li je `Par<Menadzer>` podklasa od 
+    `Par<Zaposleni>`? Odgovor je Ne?
+```
+    Zaposleni   Par<Zaposleni>
+       ^
+       |     Oni nemaju nikakvu relaciju
+       |
+    Menadzer    Par<Menadzer>
+```
+* Ali genericke klase mogu da prosire ili implementiraju druge genericke klase.
+  * Na primer: `ArrayList<T>` implementira interfejs `List<T>`.
+```
+                   interfejs
+         --------->   List  <--------
+        /           (sirov)          \
+        |              ^             |
+    interfejs          |         interfejs
+      List             |           List
+    <Menadzer>         |        <Zaposleni>
+        ^              |             ^ 
+        |          ArrayList         |
+        |       /-> (sirov) <-\      |
+        |      /               \     |
+        |     /                 \    |
+     ArrayList                   ArrayList
+     <Menadzer>                 <Zaposleni>
+        ^                            ^
+        |                            | 
+        \------nemaju relaciju-------/
+```
+
+## Wildcard Tipovi
+
+### Koncept Wildcard Tipova
+
+* Wildcard tip moze da varira.
+```java
+    Par<? extends Zaposleni>
+```
+* Kako koristiti ovo?
+```java
+public static void printDrugove(Par<Zaposleni> p) {
+    Zaposleni prvi = p.getPrvi();
+    Zaposleni drugi = p.getDrugi();
+    System.out.println(prvi.getName() + " I " + dugi.getName());
+}
+```
+* Ako pozovovemo ovu funkciju sa argumentom tipa `Par<Menadzer>`, dobicemo
+  gresku, ovo mozemo jednostavno da resimo koriscenjem wildcard tipa.
+```java
+public static void printDrugove(Par<? extends Zaposleni> p) {
+```
+```
+               Par
+             (sirov)
+                ^
+                |
+                |
+               Par
+       <? extends Zaposleni>
+                ^
+                |
+                |
+    --------------------------
+    |                        |
+   Par                      Par
+<Menadzer>              <Zaposleni>
+```
+
+### Supertip Ogranicenje za Wildcards
+
+* Pored gornjeg ogranicenja, wildcard imaju specijalno *supertip ogranicenj*
+  * Ogranicenje za sve super tipove od Menadzer.
+```java
+    ? super Menadzer
+```
+
+### Wildcards bez ogranicenja
+
+* Postoje i wildcard bez ogranicenja: `Par<?>`
+  * Tip `Par<?>` ima sledece metode:
+```java
+    ? getPrvi()
+    void setPrvi(?)
+```
+* Povratna vrednost `getPrvi` moze se dodeliti *samo* `Object`.
+* `setPrvi` se *nikada* ne moze pozvati, ni sa `Object` parametrom.
+
+### Wildcard Capture
+
+## Refleksija i Genericke klase
+
+* Refleksija omogucava analizu objekata u izvrsavanju. Ako su objekti
+  instance genericke klase nije moguce dobiti puno informacija o 
+  generickim tipovima parametara zato sto bivaju obrisani.
+
+### Genericka Klasa `Class`
+
+* `String.class` je zapravo ovjekat klase `Class<String>`.
+```java
+T newInstance() // vraca instancu klase
+T cast(Object obj) // vraca dati objekat u tipu T ako je on podtip od T
+T[] getEnumConstants() // vraca null ako nije enum klasa ili 
+                       // niz enumerisanih vrednosti koje su tipa T
+Class<? super T> getSuperclass()
+Constructor<T> getConstructor(Class... parameterTypes)
+Constructor<T> getDeclaredConstructor(Class... parameterTypes)
+```
+
+### Koriscenje `Class<T>` Parametara za Uparivanje Tipova
+
+```java
+public static <T> Par<T> napraviPar(Class<T> c) throws InstantiationException,
+    IllegalAccessException
+{
+    return new Par<>(c.newInstance(), c.newInstance());
+}
+```
+
+### Genericki Tip Informacija u Virtualnoj Masini
+
+// TODO
+
+# Kolekcije
+
+## Java Framework Kolekcija
+
+## Konkretne Kolekcije
+
+## Mape
+
+## Pregledi i Wrapperi
+
+## Algoritmi
+
+## Legacy Kolekcije
