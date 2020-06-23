@@ -3296,11 +3296,234 @@ public static <T> Par<T> napraviPar(Class<T> c) throws InstantiationException,
 
 # Kolekcije
 
+* Kolekcije podrazumevaju strukture podataka koje su potrebne za ozbiljno
+  programiranje.
+
 ## Java Framework Kolekcija
+
+### Odvajanje Kolekcija Interfejsom i Implementacijom
+
+* Posmatrajmo sturukturu *red*.
+* *Interfejs reda* sadrzi samo odgovarajuce metode.
+```java
+public interface Red<E> {
+   void dodaj(E element);
+   E izbaci();
+   int velicina();
+}
+```
+* Implementacija ovog intefejsa moze se uraditi na vise nacina.
+  * Primer: `NizRed, ListaRed`.
+* Kada se korisit nije nam bitna implementacija, dovoljno je da znamo
+  koje sve metode odabrana kolekcija podrzava.
+```java
+    Red<Potrosac> potrosaci = new NizRed<>();
+    potrosaci.dodaj(new Potrosac("Pera"));
+
+    Red<Potrosac> potrosaci = new ListaRed<>();
+    potrosaci.dodaj(new Potrosac("Pera"));
+```
+
+### `Collection` Interfejs
+
+```java
+   public interface Collection<E> {
+   boolean add(E element);
+   Iterator<E> iterator();
+   . . .
+}
+```
+* `add` metod dodaje element u kolekciju i vraca tu ako je element dodat.
+* `iterator` metod vraca objekat koji implementira `Iterator` interfejs.
+
+### Iteratori
+
+```java
+public interface Iterator<E> {
+   E next();
+   boolean hasNext();
+   void remove();
+   default void forEachRemaining(Consumer<? super E> action);
+}
+
+Collection<String> c = . . .;
+Iterator<String> iter = c.iterator();
+while (iter.hasNext()) {
+   String element = iter.next();
+   // iteriranje kroz sve elemente kolekcije
+}
+
+// foreach petlja
+for (String element : c) {
+    // iteriranje kroz sve elemente kolekcije
+}
+```
+
+### Genericke Korisne Metode
+
+* `Collection` i `Iterator` interfejsi su genericki, sto znaci da mozes
+  napisati bili koji korisne metode koji operisu na bili kojoj kolekciji.
+```java
+public static <E> boolean contains(Collection<E> c, Object obj) {
+   for (E element : c)
+      if (element.equals(obj))
+        return true;
+   return false;
+}
+```
+
+### Interfejsi u Kolekcijskom Frameworku
+
+* Fundamentalni interfejsi: `Collection` i `Map`.
+* Kod mapa umesto `add` imamo `V put(K key, V value)`.
+* Dobijanje vrednosti elementa kljucem `key` koristimo `V get(key)`.
+* `List` je *uredjena kolekcija*.
+  * Mozemo da pristupamo elementima sa iteratorom ili po indeksu.
+```java
+void add(int index, E element)
+void remove(int index)
+E get(int index)
+E set(int index, E element)
+ ```
+* `ListIterator` interfejs je subinterfejs od `Iterator`.
+* `Set` interfejs je slican `Collection` interfesju.
+  * `add` metod ne dodaje duplikate.
+  * `equals` metod proverava da li dva skupa imaju iste elemente
+    ali ne moraju da budu u istom redu.
+  * `hashCode` metod koji daje isti hes kod ako su elementi dva skupa isti.
+* `SortedSet` i `SortedMap` interfejs pridruzuju comparator objekat
+  koji se korisit za sortiranje.
+* `NavigaleSet` i `NavihableMap` sadrzi dodatne metode za trazenje i
+  obilazenje u sortiranim skupovima i mapama.
+  * `TreeSet` i `TreeMap` implementiraju ove interfejse.
 
 ## Konkretne Kolekcije
 
+### Linked Lists
+
+* Povezane liste `LinkedList` su zapravo dvostruko povezane liste.
+  * Zbog toga brisanje elementa kod ovih lista je efikasno.
+* Povezane liste su *uredjena kolekcija*.
+
+### Array Lists
+
+* `ArrayList` implementira interfejs `List` tako da ima random pristup
+  sa `get` i `set` metodama.
+* `ArrayList` enkapsulira dinamicki alociran niz objekata.
+
+### Hash Sets
+
+* Nekada nam je potreban direktan pristup nekom elementu ali ne zelimo
+  da imamo uredjenu kolekciju.
+* *Hash table* je struktura podataka koja nam treba.
+* Za svaki objekat racuna se `hashCode`.
+* U Javi has tabele su implementirane kao nizovi povezane liste.
+  * Svaku listu nazivamo korpa.
+  * Ostalo je standardno...
+
+### Tree Sets
+
+* `TreeSet` je slicna `HashSet` sem sto su u njoj u uredjnoj kolekciji.
+* Implementacija `TreeSet` koristi *crveno-crna stabla*.
+
+### Queues i Deque
+
+* `Queue<E>`
+  * `boolean add(E element)`
+  * `boolean offer(E element)`
+  * `E remove()`
+  * `E poll()`
+  * `E element()`
+  * `E peek()`
+* `Deque<E>`
+  * `void addFirst(E element)`
+  * `void addLast(E element)`
+  * `boolean offerFirst(E element)`
+  * `boolean offerLast(E element)`
+  * `E removeFirst(E element)`
+  * `E removeLast(E element)`
+  * `E pollFirst(E element)`
+  * `E pollLast(E element)`
+  * `E getFirst(E element)`
+  * `E getLast(E element)`
+  * `E peekFirst(E element)`
+  * `E peekLast(E element)`
+
+### Priority Queues
+
+* `PriorityQueue` implementira *heap*.
+* `add` i `remove` metode.
+  * `PriorityQueue()`
+  * `PriorityQueue(int initalCapacity)`
+  * `PriorityQueue(int initalCapacity, Comparator<? super E> c)`
+
 ## Mape
+
+### Osnovne Map Operacije
+
+* Fundamentalne implementacija za mape: `HashMap` i `TreeMap`.
+  * Obe implementiraju `Map` interfejs.
+* `HashMap` se koristi ako hocemo da imamo brzi pristup elementima
+  pomocu kljuca bez uredjenja, dok `TreeMap` radi isto ali sa uredjenjem.
+* `Map`
+  * `V get(Object key)`
+  * `default V getOrDefault(Object key, V defaltValue)`
+  * `V put(K key, V key)`
+  * `void putAll(Map<? exrends K, ? extends V> entries)`
+  * `boolean containsKeys(Object key)`
+  * `boolean containsValue(Object value)`
+
+### Azuriranje Entiteta Mape
+
+```java
+counts.put(word, counts.getOrDefault(word, 0) + 1);
+// Moze bolje
+counts.putIfAbsent(word, 0);
+counts.put(word, counts.get(word) + 1);
+// Moze bolje
+counts.merge(word, 1, Integer::sum);
+```
+
+### Pregled Mape
+
+* `Map` interfejs nije kao `Collection`, tj. nije moguce iterirati kroz
+  `Map` objekat.
+* Za resenje ovog problema imamo metode:
+```java
+    Set<K> keySet()
+    Collection<V> values()
+    Set<Map.Entry<K, V>> entrySet()
+```
+
+### Weak Hash Maps
+
+* `WeakHashMap` je dizajnirana da resi problem:
+  * Sta se desi sa kljucevima koji se ne koriste nigde u programu.
+* `WeakHashMap` koristi *slabe reference* za cuvanje kljuceva.
+* `WeakReference` objekat cuva referencu na drugi objekat, u ovom slucaju,
+  na hes tabelu.
+  * Normalno ako nemamo referencu na neki objekat garbage collector 
+    jednostavno oslobodi objekat, ali ako je objekat dostizan *jedino* 
+    preko `WeakReference`, garbage collector, takodje, oslobodi objekat.
+
+### Linked Hash Sets i Maps
+
+* `LinkedHashSet` i `LinkedHashMap` klase pamte red kojim se elementi
+  dodati u mapu.
+
+### Enumerisani Sets i Maps
+
+* `EnumSet` je efikasna implementacija skupa sa elementima koji pripadaju
+  nekom enumerisanom tipu.
+  * Implementiran je jednostavno kao sekvenca bitova. Bit je 1 ako
+    je odredjena vrednost u skupu.
+```java
+enum Weekday { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY };
+EnumSet<Weekday> always = EnumSet.allOf(Weekday.class);
+EnumSet<Weekday> never = EnumSet.noneOf(Weekday.class);
+EnumSet<Weekday> workday = EnumSet.range(Weekday.MONDAY, Weekday.FRIDAY);
+EnumSet<Weekday> mwf = EnumSet.of(Weekday.MONDAY, Weekday.WEDNESDAY, Weekday.FRIDAY);
+```
 
 ## Pregledi i Wrapperi
 
