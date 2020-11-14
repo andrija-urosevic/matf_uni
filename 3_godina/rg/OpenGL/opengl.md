@@ -102,3 +102,137 @@ void glBind*(GLenum target, GLuint object);
   3. Transform Feedback Objekti
   4. Vertex Array Objekti
   
+# Vertex Specifikacija
+
+* *Vertex Spesifikacija* je proces postavljanja neophodnih objekta
+  za renderovanje zajedno sa odgovarajucim shader programom za 
+  njega, kao i proces koriscenja tih objekata za renderovanje.
+
+## Teorija
+
+* Pruzanje vertex podataka za renderovanje zahteva kreiranje streama
+  vertexa, i onda treba reci OpenGLu kako da interpretira taj stream.
+
+### Vertex Stream
+
+* Vertex Shader korisnicki definisane ulazne promenljive su lista
+  ocekivanih *vertex atributa* za njega, gde se svaki atribut mapira
+  na korisnicki definisan ulaznu promenljivu.
+* Red vertexa u strimu je vrlo bita, jer na osnovu njega OpenGL 
+  procesuira podatke i renderuje Primitive. Drugi nacin na koji se
+  oni renderuju je pomocu liste indeksa koji definisu red.
+* Neka su vertexi dati kao 3d pozicije:
+```
+{ {1, 1, 1}, {0, 0, 0}, {0, 0, 1} }
+```
+* Ako se one prime kao stream, OpenGL ce ih primiti i procesuirati ih
+  po redu od leve ka desnoj.
+* Moguce je specifikovati jos jednu listu indeksa koja ce birati
+  koji od gornjih vertexa da koristi.
+* Neka je lista indeksa data sa:
+```
+{2, 1, 0, 2, 1, 2}
+```
+* Onda ce OpenGL dobiti sledeci stream verteksa:
+```
+{ {0, 0, 1}, {0, 0, 0}, {1, 1, 1}, {0, 0, 1}, {0, 0, 0}, {0, 0, 1} }
+```
+
+### Primitive
+
+* Stream kao takav nije dovoljan za renderovanje, mora se navasti
+  OpenGLu kako da interpretira taj stream, tj. navasti koju primitivu
+  da koristi.
+* Postoje mnoge primitive: trouglovi, tacke, linije...
+* Primer: Imamo 12 vertexa. 
+  * 4 nezavisna trougla, svaka 3 vertexa odgovaraju trouglu
+  * 10 zavisnih trougla, svaka groupa od 3 uzastopna vertexa cina    
+    trouglo.
+
+## Vertex Array Objekat
+
+* *Vertex Array Objekat (VAO)* je OpenGL objekat koji cuva sva 
+  potrebna stanja vertex podataka.
+  * Cuva format vertex podataka, kao i Buffer Objekti, pruzajuci 
+    vertex data arrays.
+  * VAO ne kopira, zamrzava ili cuva same podatke na koje referise.
+    * Ako se oni promene preko VAO, one ce biti vidjene i drugim VAO.
+* Kako je OpenGL objekat koriste se funkicje
+```
+glGenVertexArrays, glDeleteVertexArrays, glBindVertexArray
+```
+* Vertex atributi su oznaceni brojem od ``0`` do 
+  ``GL_MAX_VERTEX_ATTRIBS - 1``. 
+* Svaki atribut se moze ukljuciti ili iskljuciti za pristup.
+  * Kada je iskljucen citanje u vertex shaderu ce proizvesti 
+    konstantne vrednosti.
+```c
+void glEnableVertexAttribArray(GLuint index);
+void glDisableVertexAttribArray(GLuint index);
+```
+
+## Vertex Buffer Objekat
+
+* *Vertex Buffer Objekat (VBO)* je izraz za normalan Buffer Objekat,
+  koji se koristi za izvorne podatke niza vertexa.
+* Kada se on napravi i poveze mogu se koristiti sledece funkcije:
+```c
+void glVertexAttribPointer( GLuint index, GLint size, GLenum type,
+   GLboolean normalized, GLsizei stride, const void *offset);
+ void glVertexAttribIPointer( GLuint index, GLint size, GLenum type,
+   GLsizei stride, const void *offset);
+ void glVertexAttribLPointer( GLuint index, GLint size, GLenum type,
+   GLsizei stride, const void *offset);
+```
+* Primer koriscenja:
+```c
+glBindBuffer(GL_ARRAY_BUFFER, buf1);
+glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+glBindBuffer(GL_ARRAY_BUFFER, 0);
+```
+
+## Vertex Format
+
+* ``glVertexAttribPointer`` pokazuje indeksu odakle da dobija 
+  podatke. Ali takodje i kako da ih interpretira, tj njihov format.
+* Format parametri opisuju kako interpretirati jedan vertex od 
+  informacija iz niza. 
+* Tip u atributu koji se koristi u vertex shaderu mora se poklopiti
+  sa tipom koju koristi ``glVertexAttribPointer`` funkcija.
+  * Za float se koristi ``glVertexAttribPointer``
+  * Za int se koristi ``glVertexAttribIPointer``
+  * Za double se koristi ``glVertexAttribLPointer``
+* ``size`` parametar specifikuje boj komponenti vektora koji se
+  pruza funkciji.
+
+## Vertex Buffer offset i stride
+
+* Vertex format nije dovoljan za za potpunu informaciju o jednom
+  vertexu, jer nam on samo kaze koliko je jedan vertex velik, i kako
+  konvertovati njegove vrednosti u atribute.
+  * Potreban nam je jos i pocetak baffer objekta tj. njegov prvi
+    element (offset). Ali takodje je potrebna i stride, koji 
+    predstavlja koliko bajtova ima od pocetka jednog elementa do
+    pocetka drugog elementa.
+* *offset* definise buffer objekat offset. Mora da se kastuje u 
+  ``(void*)`` zbog legacy stvari.
+* *stride* se koristi da otkrije da li postoji razmaka izmedju      
+  vertexa.
+  * Ako je 0, onda ce OpenGL predpostaviti da je sve lepo 
+    spakovono. Ako je size 3 i tip ``GL_FLOAT``, onda ce on biti 12.
+    (4 bajta po floatu, i 3 floata po atributu).
+
+## Index Buffers
+
+* Indexno renderovanje, opisano gore, zahteva indexe.
+* On se pruza kao Buffer Objekat sa targetom 
+  ``GL_ELEMENT_ARRAY_BUFFER``.
+
+
+
+
+
+
+
+
+
