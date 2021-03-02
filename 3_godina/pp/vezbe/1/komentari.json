@@ -1,0 +1,1 @@
+{"oneline": ["Primer jednolinijskog komentara", "Na ovaj nacin se ispisuje novi red"], "multiline": ["* Na ovaj nacin ispisujemo tekst\n     * na standardni izlaz koristeci jezik C", "* Ukoliko se funkcija uspesno zavrsila\n     * vracamo 0 kao njen rezultat"]}

@@ -1,0 +1,35 @@
+print('Stek!')
+stack = []
+print(stack)
+stack.append('a')
+print(stack)
+stack.append('b')
+print(stack)
+stack.append('c')
+print(stack)
+stack.pop()
+print(stack)
+stack.pop()
+print(stack)
+stack.append('d')
+print(stack)
+
+print('Skup!')
+skup = set()
+for ime in ['Pera', 'Laza', 'Maza', 'Pera']:
+    skup.add(ime)
+print(skup)
+print(set(['Pera', 'Laza', 'Maza', 'Pera']))
+
+print('Mapa!')
+mapa = {'BG': 10000, 'NS': 2000, 'NI': 2000}
+print(mapa)
+print(type(mapa))
+print(mapa.keys())
+print(mapa.values())
+print('BG' in mapa)
+
+print('Torka!')
+torka = ('BG', 10000, 2000, 'glavni_grad')
+print(torka)
+print(torka[1:3])
