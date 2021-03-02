@@ -167,3 +167,84 @@ jer predstavlja potencionalnog kradljivca.
 
 # Podaci
 
+Postoje nekoliko probleme koji su vezani za podatke:
+1. **Tipovi podataka**. Atributi koji opisuju podatke mogu biti 
+   drugacijeg tipa. Neki podaci mogu imati posebne karakteristike,
+   pokazuju na druge objekte, ili sadrze neke vremenske nizove.
+2. **Kvalitet podataka**. Podaci su daleko od prefektnog. Ako
+   se poboljsa kvalitet podataka vrlo cesto se boljsa i rezultat 
+   analize. Treba otkloniti prisustvo suma, autlajere, duplikate,
+   podatke zasnivane na sklonosti, ili druge fenomene.
+3. **Koraci preprocesiranje kako bi napravili zgodnije podatke za
+   istrazivanje podataka**. Treba modifikovati podatke tako da
+   se uklope u odgovarajuci algoritam.
+4. **Analiziranje podataka u smislu njegovih relacija**. Jedan pristu
+   analiziranju podataka je pronalazenje relacija izmedju podataka
+   i primenjivanje anlize nad tim relacijamo, a ne na samim 
+   objektima.
+
+## Tipovi podataka
+
+**Skup podataka** je kolekcija **objekta podataka** (*slogova*, 
+*tacaka*, *sablona*, *dogadjaja*, *slucaja*, *uzorka*, *posmatranja*,
+ili *pristupa*). **Objekti podataka**. Objekti podataka se opisuju
+**atributima** (*promenljivima*, *karakteristikama*, *poljima*,
+*osobinama*, ili *dimenzijama*).
+
+**Primer (Jednostavi skup informacija o studentu)**
+| Student ID | Godina | Prosecna Ocena | ... |
+|:----------:|:------:|:--------------:|-----|
+| mi18083    |   1    |  9.32          | ... |
+| mi17083    |   4    |  6.21          | ... |
+| ...        | ...    | ...            | ... |
+
+### Atributi i Mere
+
+**Sta je atribut?**
+
+**Definicija**: **Atribut** je osobina ili karakteristika objekta
+koja moze da varira, ili iz jednog objeta u drugi ili iz jednog
+vremena u drugo.
+
+Primer: Boja ociju varira od osobe do osobe (objekta), dok 
+temperatura osobe varira vremenom.
+
+**Definicija**: **Merna skala** je pravilo (funkcija) koja je 
+pridruje numericku ili simbolicku vrednost atributu objekta.
+
+**Tip atributa**
+
+Osobine nekog atributa ne moraju biti isti kao osobine vrednosti
+koje je ga mere, tj vrednosti koje predstavljaju atribut mogu imati
+osobine koje nisu osobine samog atributa, i obrnuto.
+
+**Primer (Zaposleni: Godine i ID)**. Dva atributa su *ID* i *Godine*
+koja mogu da se pridruze zaposlenom. Ovi atributi se mogu predstaviti
+kao celi brojevi. Razumno je pricati o prosecnoj godini zaposlenih,
+ali nije razumno pricati o prosecnom IDu. Zapravo, jednino sto
+hocemo da znamo pomocu ID atributa je da li su isti ili razliciti, 
+tj. jedina operacija koja moze da se pridruzi ID atributu je 
+provera jednakost.
+
+**Primer (Duzina linijskog segmenata)**. Svakom linijskom segmentu
+mozemo da dodelimo neku vrednost koja ce oznacavati njegovu duzinu.
+Postoji bar dva nacina da ovo uradimo. Jedan je da ih mapiramo 
+tako da se ocuvamo poredak duzina. Drugi nacin je da ocuvamo
+odnos izmedju duzina. Drugi nacin jasno opisuje i prvi nacin, pa
+atribut mozemo meriti na nacin na koji ne opisuje sve osobine
+atributa.
+
+Tip atributa treba da nam kaze koje osobine atributa se reflektuju
+u vrednosti koje ga mere. Zbog toga se referise na tipove atributa
+kao **tipove merne skale**.
+
+**Razliciti tipovi atributa**
+
+Sledece osobine (operacije) brojeva se koriste za opisivanje atributa
+1. **Razlicitost**: $=$ i $\neq$
+2. **Poredak**: $<$, $\leq$, $>$, i $\geq$
+3. **Sabiranje**: $+$, $-$
+4. **Mnozenje**: $\cdot$, i $/$
+
+
+
