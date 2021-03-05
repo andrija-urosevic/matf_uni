@@ -1,12 +1,12 @@
 ---
 title: Istrazivanje Podataka 1 - Belekse
 author: Andrija Urosevic
-output: html_document 
+output: pdf_document 
 ---
 
 # Uvod
 
-Sakupljanje ogromnog broja podataka neverovatno brzo raste, ali
+Sakupljanje podataka neverovatno brzo raste, u smislu kolicine, ali
 sta nedostaje jestu metodi za izvlacenje korisnih informacijama 
 iz velikog skupa podataka. Zbog toga tradicionalni alati za analizu
 podataka nisu dovoljno sufisticirani, i novi moraju biti razvijeni.
@@ -532,5 +532,104 @@ sa skupovima podataka koji imaju nedostajuce vrednosti.
 
 **Nekoinzistentne vrednosti**
 
+Skup podataka moze da ima nekoinzistentne vrednosti. Moguce je da je
+doslo do zamene dve cifre pri unosu podataka, ili je pogresno
+seknirana rucno napisana cifra, itd. Za ovakve probleme moramo
+da imamo odgovarajuce metode pronalazenja i ispravljanje ovih 
+gresaka. Neki nekoinzistentne vrednosti se lako otklanjaju, kao
+sto je, na primer, broj godina neke osobe ne moze biti negativan.
+Za lakse otkrivanje ovih gresaka dobro je znati domen svakog 
+atributa. Za ispravljanje obicno moramo imati dodatnu informaciju
+o vrednostima nekog atributa.
+
 **Duplikati**
+
+Skup podataka, takodje, moze imati objekte podataka koji su 
+duplikati, ili su skoro duplikati. Za pronalazenje duplikata, prvo
+se mora ispitati da li dva sloga koja imaju slice
+vrednosti atributa predstavljaju isti objekat, a drugo moramo
+biti sigurni da dva slicna sloga zapravo predstavljaju dva
+razlicita objekta.
+
+### Problemi pri primenama podataka
+
+Skup podataka je visokog kvaliteta ako se moze koristiti za svoje 
+nemene. Ovakav pristu se pokaza veoma korisnim. Ali, takodje i
+za ovakve skupove podataka postoje problemi:
+
+**Starost**. Puno podataka postaje staro cim se prikupi, kao sto je
+na primer, pretrazivanje weba. Ako su podaci stari, onda je bilo
+kakv model ili sablon prepoznat nad njima takodje star. 
+
+**Relevantnost**. Dostupni skupovi podataka moraju biti relevantni
+za svoju primernu. Ako na primer ispitujemo saobracajne nesrece,
+onda ukoliko nemamo informaciju o broju godina vozaca i/ili o polu
+vozaca, vrlo verovatno nasa analiza nece biti toliko tacna. Takodje,
+kao sto su atributi bitni, bitni su i slogovi, jer moze doci do
+**pristrasnosti pri uzorkovanju**, tj. ako pri uzorkovanju dobijamo
+podatke od osoba koje hoce raditi anketu.
+
+**Znanje o Podacima**. Najbolje bi bilo da skupovi podataka idu 
+zajedno sa dokumentacijom, koja opisuje taj skup podataka, tipove 
+njegovih atribute, i domene vrednosti atributa, skalu merenja, 
+poreklo i preciznost podataka. Pa tako ukoliko $-999$ 
+predstavlja nedostajucu vrednost, onda ce nasa analiza zasigurno biti
+pogresna ukoliko nemamo tu informaciju.
+
+## Predprocesiranje podataka
+
+Predprocesiranje podataka je siroka oblast koja ima brojne tehnike
+i strategije, neke od kojih su:
+
+* Agregacija
+* Uzorkovanje
+* Redukcija dimenzija
+* Odabir podskupa karakteristika
+* Kreiranje karakteristika
+* Diskretizacija i binarizacija
+* Transformacija promenljivih
+
+### Agregacija
+
+Agregacija je proces u kome se dva ili vise objekta spajaju u jedan
+objekat. Razmotrimo skup podataka koje predstavlja transakcije 
+u prodavnicama u raznim gradovima za razlicite dane u godini. Jedan
+nacin da se izvrsi agregacija jeste da se sve prodavnice iz jednog
+grada zamene sa jednom prodavnicom koja predstavlja ceo grad. 
+
+| ... | Grad | Cena     | Datum      | ... |
+|:---:|:----:|:--------:|:----------:|:---:|
+| ... | BG   | $590din$ | 05/03/2021 | ... |
+| ... | NS   | $230din$ | 05/03/2021 | ... |
+| ... | NI   | $540din$ | 05/03/2021 | ... |
+| ... | BG   | $240din$ | 05/03/2021 | ... |
+| ... | NI   | $100din$ | 08/03/2021 | ... |
+| ... | ...  | ...      | ...        | ... |
+
+Ovde dolazi do jednog ociglednog problema, sta ce biti ostale 
+vrednosti atributa, kao sto je cena, i proizvod. Cene mozemo 
+sumirati, dok proizvode mozemo spojiti u novi skup koji sadrzi 
+proizvode iz svih gradova. Kvantitivni atributi se spajaju
+sumiranjem ili prosekom, dok se kvalitativni atributi spajaju 
+uniraju.
+
+| ... | Grad | Cena     | Datum      | ... |
+|:---:|:----:|:--------:|:----------:|:---:|
+| ... | BG   | $830din$ | 05/03/2021 | ... |
+| ... | NS   | $230din$ | 05/03/2021 | ... |
+| ... | NI   | $540din$ | 05/03/2021 | ... |
+| ... | NI   | $100din$ | 08/03/2021 | ... |
+| ... | ...  | ...      | ...        | ... |
+
+Prednosti agregacije su to sto ce istrazivanje podataka da se vrsi
+na skupu podataka koji je dosta manji, pa ce zauzimati menje 
+memorijskog prostora i samim tim ce izracunavanje biti brze. Takodje,
+agregacija moze da posluzi kao menjanje oblasti koje podaci 
+pokrivaju, sa uskog na siroko. Agregacija poboljsava stabilnost 
+podataka. Mane agregacije su to sto mozemo izgubiti detalje koji
+mogu biti bitni.
+
+### Uzorkovanje
+
+
 
