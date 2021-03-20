@@ -1,0 +1,6 @@
+[ 
+    {"oznaka": 34587, "naziv_autor": "Learning Python, Mark Lutz", "kolicina": 4, "cena": 40.95},
+    {"oznaka": 98762, "naziv_autor": "Programming Python, Mark Lutz", "kolicina": 5, "cena": 56.80},
+    {"oznaka": 77226, "naziv_autor": "Head First Python, Paul Barry", "kolicina": 3, "cena": 32.95},
+    {"oznaka": 88112, "naziv_autor": "Einfuhrung in Python3, Bernd Klein","kolicina": 3, "cena": 24.99} 
+]
