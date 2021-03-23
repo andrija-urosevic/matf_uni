@@ -235,5 +235,165 @@ Prelude> :t (==)
 
 ### Pattern Matching
 
+## Funkcije viseg reda
 
+* Funkcije mogu primite druge funkcije kao argumente, i mogu vratiti 
+  funkcije kao izlaz.
 
+### Prenesene funkcije
+
+* Svaka funkcija u haskelu ima jedan parametar!
+  * Kako se onda definisu funkcije koje imaju vise parametara?
+* Sve funkcije koje primaju vise parametara se nazivaju *prenesene funkcije*.
+* `max 5` vraca funkciju koja vraca `5` ako je vrednost njenog argument 
+  manja od `5` ili vraca vrednost tog argumenta. Pa je onda `max 5 2` 
+  ekvivalentno sa `(max 5) 2`.
+    * Postavljanje razmaka izmedju dve stvari je **primenjivanje funkcije**.
+* Tip funkcije `max` je `(Ordering a) => a -> a -> a` sto je efektivno
+  `(Ordering a) => a -> (a -> a)`.
+* Ako pozovemo funkciju sa manje parametara nego sto ona prima, dobijemo
+  **parcijalno primenjenju funkciju**, koja prima ostatak parametara.
+
+### Vise od viseg reda
+
+* Funkcije mogu primiti druge funkcije kao parametre.
+
+```haskell
+applyTwice :: (a -> a) -> a -> a
+applyTwice f x = f (f x)
+```
+* U ovom slucaju funckija prima drugu funkciju tipa `(a -> a)`, i od nje
+pravi funkciju tipa `a -> a`.
+
+### Mape i Filteri
+
+* `map` prima funkciju i listu i na svaki element liste primenjuje tu funkciju.
+```haskell
+map' :: (a -> a) -> [a] -> [a]
+map' _ [] = []
+map' f (x:xs) = f x : map' f xs
+```
+
+* `filter` je funkcija koja prima predikat i listu i generise novu listu 
+  sa elementima za koje vazi predikat.
+```haskell
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' pred (x:xs) 
+    | p x       = x : filter' xs
+    | otherwise = filter' xs
+```
+
+* `takeWhile` je funkcija koja prima predikat i listu i generise novu listu
+  sve dok na trenutnom elementu vazi predikat.
+
+### Lambde
+
+* Lambda funkcije su anonimne funkcije (nemaju ime), koje se koriste samo
+  jednom pa nam njihovo ime nije potrebno.
+* Sintaksa lambda funkcije je da se na pocetku stavi simbol `\` zato sto 
+  nekako lici na lambdu, a da se onda navedu argumenti razdvojeni razmakom, 
+  nakon cega je `->` i onda telo funkcije.
+  * Obicno lambda funkcije zagradjujemo zagradama sem ako se ne prostiru do 
+    kraja naredbe.
+* Primeri: 
+  * `(\xs -> length xs > 15)`
+  * `(\a b -> a + b)`
+  * `addThree x y z = x + y + z` je ekvivalentno sa `addThree \x -> \y -> \z -> x + y + z`
+
+### Fold
+
+* Kao sto se moze primetiti `(x:xs)` je vrlo cest patern, pa kako se ne bi
+  pisao stalno i kako bi se smanjila rekurzija koriste se funkcije koje
+  zovemo *foldovi*.
+* Foldovi uzimaju binarnu funkciju (funkciju dva argumenta), startnu vrednost
+  (akumulator), i listu vrednosti. Binarna funkcija se poziva na prvi element
+  i akumulator i dobija se novi akumulator, ovaj proces se nastavlja za o
+  statak liste, sve dok se ne dodje do poslednjeg elementa, i ostane samo
+  akumulator.
+* `foldl` je funkcija koja se jos i naziva levi fold. On umotava listu sa
+  leve strane. Binarna funkcija se primenjuje na pocetnu vrednost i glavu
+  funkcije i dobija se novi akumulator. Binarna funkcija se dalje primenjuje
+  na sledeci element i akumulator, te se opet dobija novi akumulator, itd...
+```haskell
+sum' :: (Num a) => [a] -> a
+sum' xs = foldl (\acc x -> acc + x) 0 xs
+sum' = foldl (+) -- kompaktniji zapis
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y xs = foldl (\acc x -> if x == y then True else acc) False xs
+```
+
+* `foldr` je slican funckiji `foldl` sem sto se umotavanje izvrsava sa 
+  desne strane. Binarna funkcija za prvi parametar ima zadnji element liste
+  dok je drugi parametar akumulator, sto i ima smisla jer akumulator 
+  umotava sa desne strane.
+  * `foldr` moze da radi na beskonacnim listama, dok `foldl` ne moze, 
+    sto ima smisla.
+
+```haskell
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldl (\acc x -> acc ++ [f x]) []  -- ++ je skupa operacija
+map' f = foldr (\x acc -> f x : acc) []     -- : je jeftina operacija
+```
+
+* **Foldovi se mogu koristiti za implementiranje bili kojih funkcija koje
+  prolaze kroz listu jednum, element po element, i vracaju nesto na osnovu
+  toga. Kad god prolazis kroz listu i zelis da vratis nesto, velike su 
+  sanse da hoces da koristis fold.**
+
+* `foldl1` i `foldr1` su funkcije slicne kao `foldl` i `foldr` sem sto
+  nemaju pocetnu vrednost akumulatora vec je pocetna vrednost akumulatora
+  prvi element liste.
+  
+```haskell
+maximum' :: (Ord a) => [a] -> a
+maximum' = foldl1 (\acc x -> if x > acc then x else acc)
+
+reverse' :: [a] -> [a]
+reverse' = foldr (\x acc -> x : acc) []
+
+product' :: (Num a) => [a] -> a
+product' = foldl1 (*)
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' pred = foldr (\x acc -> if pred x then x : acc else acc) []
+
+head' :: [a] -> a
+head' = foldr1 (\_ acc -> acc)
+
+last' :: [a] -> a
+last' = foldl1 (\x _ -> x)
+```
+
+* `scanl` i `scanr` su slicni `foldl` i `foldr` sem sto oni 
+  vracaju listu trenutnih stanja akumulatora u svakom koraku.
+  * Takodje, postoje odgovarajuci `scanl1` i `scanr1`.
+
+### Primenjivanje funkcije sa `$`
+
+* Funkcija `$` se naziva *funkcija primene* i definisana je kao
+```haskell
+($) :: (a -> b) -> a -> b
+f $ x = f x
+```
+* Ova funkcija sluzi da bi se promenio prioritet primene funkcija
+  tako da normalno primenjivanje funkcija je levo asocijativno,
+  primenjivanje funkcija pomocu simbola `$` je desno asocijativno.
+  * Zbog toga je `sum (map sqrt [1..10])` ekvivalentno sa 
+    `sum $ map sqrt [1..10]`
+
+### Kompozicija funkcija
+
+* Kompozicija funkcija u haskelu je ista kao i u matematici.
+* Operator kompozicije `.` je definisan kao:
+```haskell
+(.) :: (b -> c) -> (a -> b) -> a -> c
+f . g = \x -> f (g x)
+```
+* Izraz `negate . (*3)` je funkcija koja uzima broj mnozi ga sa 3
+  i onda ga negira.
+* Zapisimo ovo preko kompozicija funkcija 
+  `f x = ceiling (negate (tan (cos (max 50 x))))`
+  * Dobijamo
+  `f = ceiling . negate . tan . cos . max 50
