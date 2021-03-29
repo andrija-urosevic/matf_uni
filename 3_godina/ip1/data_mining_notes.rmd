@@ -63,7 +63,8 @@ podataka sa vise izvora, ciscenje podataka od suma i duplikata,
 biranje karakteristika koji su relevantni za istrazivanje podataka.
 
 Takodje nakon instrazivanja podataka potrebno je rezultat 
-interpretirati, i ovaj proces se naziva **postprocesiranje**. Primeri je vizualizacija.
+interpretirati, i ovaj proces se naziva **postprocesiranje**. 
+Primeri je vizualizacija.
 
 ## Izazovi u istrazivanju podataka
 
@@ -631,5 +632,1104 @@ mogu biti bitni.
 
 ### Uzorkovanje
 
+Uzorkovanje je odabir podskupa od skupa podataka nad kojim ce se 
+vrsiti analiza. Uzorkovanje u statistici i istrazivanju podataka se 
+razlikuje u tome sto kod statistickih analiza vremenski je ogranice
+sakupljanje podataka, dok je u istrazivanju podataka to iz razloga
+zato sto vremenski zahtevno procesuirati ogroman broj podataka.
+
+Analizom uzorka dobijamo iste rezultate kao i analizom celog skupa
+podataka sve dok je uzorak reprezentativan. Uzorak je 
+**reprezentativan** ako ima priblizne vrednosti osobina kao i
+originalan skup podataka. Ako nam je osobina ocekivanja bitna, onda
+je uzorak reprezentativan ako ima priblizno ocekivanje celom skupu
+podataka.
+
+**Pristupi uzorkovanju**
+
+Najjednostavnija tehnika uzorkovanja je **nasumicno biranje uzorka**.
+Njegova karakteristika je to da svaki objekat skupa podataka moze
+biti izabran sa istom verovatnocom. Postoje dve varijante:
+
+1. **Bez** vracanja --- kada izaberemo neki objekat ne
+   vracamo ga nazan u **populaciju**.
+2. **Sa** vracanjem --- objekte ne izbacujemo iz populacije, pri
+   odabiru.
+
+Kada populacija sadrzi objekte koji su drugacijeg tipa, i pri tome
+imamo veliku razliku u broju tipova, nasumicno biranje uzorka nece
+lepo raditi, kako moze da ne izabere objekte nekog tipa koji su 
+znacajni za analizu, na primer, pri klasifikaciji. Zato se koristi
+**stratifikovano uzorkovanje**, koje uzima u obzir grupe u kojima
+objekti pripadaju. Najednostavnije je birati isti broj objekta iz
+svake grupe. Malo slozenija varijacija je biranje objekata 
+proporcionalno velicini grupe.
+
+**Primer (Uzorkovanje i Gubitak informacije)**. Kada se izabere
+tehnika, ostaje izabrati kolika ce biti velicina uzoraka. Ako
+je velicina uzoraka velika gubimo lepa svojstva uzorkovanja, dok
+ukoliko je velicina uzoraka mala mozemo izgubiti bitne informacije.
+
+**Progresivno uzorkovanje**
+
+Odgovarajucu velicinu uzorka je tesko odrediti, pa se **adaptivno**
+ili **progresivno uzorkovanje** koristi. Ovaj pristup podrazumeva
+da se krene sa malim uzorkom, i da se velicina uzorka progresivno
+povecava vremenom, dok se ne dobije odgovarajuca velicina. Iako se
+ova tehnika cini jednostavnom, tesko je odrediti kada stati sa 
+povecavanjem velicine. Na primer, ako imamo prediktivni model,
+sa povecanjem velicine uzorka dobijamo bolju tacnost, ali
+ako dodjemo do tacke preloma, tacnost modela ce se smanjivati, a
+model ce postati pretreniran. Zato je od kljucne vaznosti znati
+gde je prelomna tacka i gde treba prestati sa treniranjem.
+
+### Redukcija dimenzija
+
+Postoji mnogo skupova podataka koji imaju mnogo karakteristika 
+(dimenzija). Jedan on benefita smanjivanja dimenzije je to sto
+mnogi algoritmi rade bolje nad podacima koji imaju manje dimenzija,
+tj. mnoge dimenzije samo dodaju sum na podacima. Takodje smanjivanje
+dimenzija moze da se koristi pri vizuelizaciji podataka, a i ima
+memorijsku i vremensku optimalnost.
+
+Redukcija dimenzija se odnosi na tehniku smanjivanja dimenzionalnosti
+skupa podataka tako sto se novi atributi kreirao kombinacijom starih.
+
+**Prokletstvo dimenzionalnosti**
+
+Izraz prokletstvo dimenzionalnosti se odnosi na fenomen da mnogi 
+tipovi analiza postaju tezi kada se dimenzionalnost povecava. 
+Ovo je najizrazitije kod klasifikacije, i klasterovanja.
+
+**Tehnike linearne algebre za redukciju dimenzija**
+
+**Principal Components Analysis (PCA)** je tehnika linearne algebre
+za neprekidne atribute koje nalaze nove atribute koji su:
+
+1. linearna kombinacija originalnih atributa;
+2. ortohonalni jedni na druge; i
+3. opisuju maksimalno varijacije u podacima 
+
+**Definicija**. Za datu $\mathbf{D}_{mxn}$ matricu podataka, 
+kovarijansa matrice $\mathbf{D}$ je matrica $\mathbf{S}$, 
+cije su $s_{ij}$ definisani kao
+
+$$s_{ij} = cov(\mathbf{d}_{*i}, \mathbf{d}_{*j})$$
+
+Kovarijansom dobijamo koliko su atributi zavisni jedni na druge.
+
+Cilj PCA je da nadje transformaciju podataka tako da zadovoljava
+sledece osobine:
+
+1. Svaki razliciti par novih atributa ima 0 kovarijance.
+2. Atributi su uredjeni u odnosu na to koliko razlicitosti podataka
+   oni opisuju (mera je disperzija).
+3. Prvi atributu opisuje najvise razlicitosti moguce podatak (mera
+   je disprezija).
+4. Svaki sledeci atribut opisuje sto je vise moguce preostalih 
+   razlicitosti (mera je disprezija).
+
+Ove osobine mozemo dobiti tako sto koristimo sopstvene vrednosti
+matrice kovarijanse. Neka su $\lambda_1,\dots,\lambda_n$ kao
+sopstvene vrednosti od $\mathbf{S}$. Sopstvene vrednosti su 
+ne-negativne, i mogu se urediti tako da 
+$\lambda_1 \geq \lambda_2 \geq \dots\ \geq \lambda_n$.
+Neka je $\mathbf{U} = [\mathbf{u}_1, \dots\, \mathbf{u}_n]$ matrica
+sopstvenih vektora $\mathbf{S}$, tako da $i$-ti sopstveni vektor
+odgovara $i$-toj sopstvenoj vrednosti.
+Konacno, predpostavmo da je matrica $\mathbf{D}$ preprocesirana tako
+da je ocekivanje svakog atributa (kolone) jednako 0. Onda vazi 
+sledece:
+
+* Matrica podataka $\mathbf{D}' = \mathbf{D}\mathbf{U}$ je skup
+  transformisanih podataka koji zadovoljavaju uslove navedene gore.
+* Svaki novi atribut je linearna kombinacija originalnih atributa,
+  cije su tezine za $i$-ti atributa $i$-ti sopstveni vektor, a to
+  imamo iz definicije mnozenja matrica.
+* Disprerzija novog $i$-tog atributa je $\lambda_i$.
+* Suma disperzija originalnih atributa je jednaka sumi disperzija
+  novih atributa.
+* Novi atributi se zovi **glavne komponenta**, tj. prvi novi
+  atribut je prva glavna komponenta, drugi novi atribut je 
+  druga glavna komponenta, itd...
+
+### Diskretizacija i Binarizacija
+
+Mnogi algoritmi istrazivanja podataka zahtevaju da podaci imaju
+kategoricke atribute (binarne atribute). Zbog toga je cesto neophodno
+konvertovati atribute koji su neprekidni u kategoricke 
+(**diskretizacija**), ili neprekidne i kategoricke u binarne.
+
+**Binarizacija**
+
+Ako imamo $m$ kategorickih aktributa, onda svakom od atributa, 
+dodelimo jedan ceo broj iz intervala $[0,m-1]$. Sada konvertujemo 
+tih $m$ celih brojeva u $n=[\log_{2}(m)]$ binarnih atributa.
+
+| Kategoricka vrednst | Celi Broj | $x_1$ | $x_2$ |
+|:-------------------:|:---------:|:-----:|:-----:|
+|   dobar             |     0     |   0   |   0   |
+|   low               |     1     |   0   |   1   |
+|   zao               |     2     |   1   |   0   |
+
+Kod ovakve transformacije moze da dodje do probleme, i stvaranja
+veza imezju transformisanih atributa. Stavise, kod nekih analiza
+su nam potrebani asimetricni binarni atributi. Zbog toga kod
+asimetricnih binarnih atributa moramo da uvedemo atribut $x_3$, kako
+bi svaki atribut predstavljao po jednu kategoricku vrednost.
+
+| Kategoricka vrednst | Celi Broj | $x_1$ | $x_2$ | $x_2$ |  
+|:-------------------:|:---------:|:-----:|:-----:|:-----:|
+|   dobar             |     0     |   1   |   0   |   0   |
+|   low               |     1     |   0   |   1   |   0   |
+|   zao               |     2     |   0   |   0   |   1   |
+
+
+**Diskretizacija neprekidnih atributa**
+
+Transformacija neprekidnih atributa u kategoricke atribute zahteva:
+odredjivanje broja kategorija i odredjivanje mapiranje vrednosti
+neprekidnoh atributa u te kategorije. Kada se vrednosti neprekidnog
+atributa sortiraju, onda se oni dele na $n$ intervala tako se
+se odrede $n-1$ **razdvojnih tacaka**. Onda se sve vrednosti
+jednog intervala mapiraju na istu kategoricku vrednost. Pa se
+diskretizacija svodi na odredjivanje koliko razdvojnih tacaka 
+hocemo da imamo i gde da ih postavimo. Rezultat se predstavlja
+kao niz nejednakosti $x_0 < x_1 < \dots < x_n$.
+
+**Neinformisana diskretizacija**. Diskretizacija u kojoj se ne
+koristi infromacija klase. Na primer, pristup **jednake duzine**
+deli domen atributa u odredjeni broj intervala koji su iste duzine.
+Pristu **jednake frekvencije (jednake dubine)** se koristi kako bi
+se izbegli autlajeri pri pristupu jednakih duzina, tako sto
+u svakom intervala proba da stavi isti broj objekta. Jos jedna
+tehnika diskretizacije je preko algoritma **K-sredine**.
+
+**Informisana diskretizacija**. Informisana diskretizacija koristi
+dodatne informacije o klasama, te cesto ima bolje rezultate.
+Primer je pristup diskretizacije sa entropijom. Neka je $k$ broj
+razlicitih labele klasa, $m_i$ broj vrednosti u $i$-tom intervalu
+particije, i $m_{ij}$ broj vrednosti klase $j$ u intervalu $i$. Onda
+je entropija $e_i$ intervala $i$ data sa
+
+$$e_i = \sum_{i=1}^k p_{ij}\log_2(p_{ij}),$$
+
+gde je $p_{ij} = m_{ij} / m_i$ verovatnoca da je klase $j$ u 
+intervalu $i$. Potpuna entropija $e$ particije je tezinski prosek
+individualnih entropije intervala, tj.
+
+$$e = \sum_{i=1}^n w_i e_i,$$
+
+gde je $w_i = m_i / m$ odnost broja vrednosti u intervalu $i$ i 
+ukupnog broja vrednosti $m$, i $n$ je broj intervala.
+Intuitivno, entropija intervala je mera cistoce tog intervala.
+Ako interval sadrzi samo vrednosti jedne klase (onda je cist),
+tada je entropija 0 i ne doprinosi potpunoj entropiji. Ako su 
+klase vrednosti u intervalu pojavljuju jednako cesto 
+(onda je prljav), tada je entropija maksimalna.
+
+Pristup particionisanja neprekidnog atributa pocinje tako sto se
+inicijalne vrednosti dele u 2 intervala sa minimalnom entropijom.
+Ova tehnika se nastavlja nad intervalom sa najvecom entropijom, sve
+dok se ne zadovolji neki kriterijum ili ne dodjemo do odredjenog
+broja intervala.
+
+**Kategoricki atributi sa previse vrednosti**
+
+Ako su kategoricki atributi ordinalni(redni) atributi, onda
+mozemo koristiti tehnike slicne onim za neprekidne atribute. Ali ako
+imamo nominalne(imenske) atribute, onda su nam potrebni drugi
+pristupi. Na primer, hocemo da diskretizujemo fakultete nekog
+univerziteta. Znamo da mozemo da ih podelimo u vece grupe, kao sto
+su to *prirodne nauke*, *drustvene nauke*, i *umetnost*. Ako nemamo
+dodatna znanja o kategorijama, onda moramo koristiti neke empirijske
+tehnike kao sto je nasumicno grupisanje koje nam daje najbolji 
+rezultat.
+
+## Mere slicnosti i razlicitosti
+
+Mere slicnosti i razlicitosti su bitne za mnoge tehnike istrazivanja
+podataka, kao sto je klasterovanje, klasifikacije i otkrivanje
+anomalnija. U mnogim slucajevima, inicijalni skup podataka nije
+bitan nakon sto se izracunaju slucnosti i razlicitost, tj. prelazi
+se sa prostora skupa podataka na prostor slicnosti i razlicitosti
+i na tom prostoru se primenjuju analize.
+
+### Osnove
+
+**Definicije**
+
+**Slicnost** izmedju dva objekta je numericka mera kojom se meri
+koliko 2 objekta lice jedan na drugi. Slicnost je *veca* ako 2 
+objekta vise lice jedan na drugi. Slicnost je obicno ne-negativna i 
+izmedju 0 (nema slicnosti) i 1 (kompletna slicnost).
+
+**Razlicitost** imedju dva objekta je numericka mera kojom se meri
+koliko 2 objekta imaju razlika. Razlicitost je *manja* ako 2
+objekta vise lice jedan na drugi. Izraz **rastojanje (distanca)** se
+koristi kao sinonim razlicitosti, ali je ustvari on specijalna
+klasa razlicitosti. Razlicitost je obicno u intervalu od $0$ do $1$ 
+ili od $0$ do $\infty$.
+
+**Blizina (Proximity)** je mera koja oznacava slicnost i razlicitost.
+
+**Transformacije**
+
+Transformacije se obicno primenjuju za konvertovanje slicnosti u
+razlicitost, i obrnuto, ili da blizinu iz nekog intervala preslikaju
+u $[0,1]$.
+
+Transormacija slicnosti/razlicitost u interval $[0,1]$ je data 
+izrazima:
+
+$$s' = (s - s_{min})/(s_{max} - s_{min})$$
+$$d' = (d - d_{min})/(d_{max} - d_{min})$$
+
+gde je $s_{min}, s_{max}$ minimalna i maksimalna vrednost za 
+slicnost, i $d_{min}, d_{max}$ minimalna i maksimalna vrednost za 
+razlicitost. Za mere blizine iz intervala $[1, \infty]$, moramo 
+koristite neke ne-linearne transformacije kao sto je $d'=d/(1+d)$.
+Pri ovoj transformaciji veliki brojevi se gomilaju oko 1, sto 
+moze da smeta, ali i ne mora u zavisnosti da li to hocemo ili ne.
+Takodje, ako transformisemo iz intrvala $[-1, 1]$ u interval $[0, 1]$
+apsolutnom vrednoscu, takodje moze doci do gubitka informacije.
+
+Transformacija izmedju slicnosti i razlicitosti je jednostavna ako
+se nalaze u intervalu $[0, 1]$ i moze se definisati kao $d = 1 - s$
+($s = 1 - d$). U slucaju da ne upadaju u interval $[0,1]$ mogu se 
+primeniti neke druge transformacije kao sto su:
+
+$$s = 1/(d + 1), s = e^{-d}, s = 1 - (d - d_{min}) / (d_{max} - d_{min}).$$
+
+### Slicnost i Razlicitost izmedju jednostavih atributa
+
+Blizina objekata sa vecim brojem atributa je tipicno kombinacija
+blizina indivudualnih atributa, pa zbog toga razmotrimo blizine
+imedju objekata koji imaju samo jedan atribut.
+
+Neka su objekti opisani jednim nominalnim (imenskim) atributom.
+Sta onda znaci da su ta dva objekta slicna ili razlicita? Kako
+nominalni (imenski) atributi sadrze samo informaciju o tome da li
+su dva objekta ista ili razlicita, onda slucnost i razlicitost 
+definisemo kao:
+
+$$ s = 
+\begin{cases} 
+    1 & \mbox{ako } x = y \\
+    0 & \mbox{ako } x \neq y 
+\end{cases}$$
+$$ d = 
+\begin{cases} 
+    0 & \mbox{ako } x = y \\
+    1 & \mbox{ako } x \neq y 
+\end{cases}$$
+
+Za objekte sa jednim ordinalnim (rednim) atributom informacija o
+uredjenju se mora postovati. Razmotrimo primer ${dobar, los, zao}$.
+Razumno je ako je osoba $dobar$ da se nece druziti sa osobom $zao$, 
+ali da ce se mozda druziti sa osobom $los$, slicno i za osobu $zao$,
+dok ce se $los$ mozda druziti sa osobom $dobar$ ili $zao$. Zbog toga
+prvi korak je dodeliti cele brojeve ovom vrednostima atributa, tj.
+${dobar = 0, los = 1, zao = 2}$. Onda je razlictost izmedju ovih
+osoba data kao d(zao, dobar) = (2-0)/2 = 1, a slicnost je data kao
+s = 1 - d = 0 (dobar i zao su kompletno razliciti, tj. nema 
+slicnosti). U opstem slucaju dobijamo:
+
+$$d = |x - y| / (n - 1), s = 1 - d$$
+
+Za intervale ili razmere, prirodna mera razlike izmedju dva objekta
+je apsolutna razlika njegovih vrednosti. Za ovakve atribute obicno 
+se koristi interval $[1, \infty]$. Slicnost se dobija 
+nekom transformacijom iz razlicitosti. Formalno:
+
+$$d = |x - y|, s = -d; s = 1/(1+d); s = e^{-d}; s = 1 - (d - d_{min})/(d_{max} - d_{min})$$
+
+### Razlicitosti izmedju objekta podataka
+
+**Rastojanja**
+
+**Euklidsko rastojanje** $d$, izmedju dve tacke $\mathbf{x}$, i
+$\mathbf{y}$, u $n$-dimenzionalnom prostoru je dato sa:
+
+$$d(\mathbf{x},\mathbf{y})=\sqrt{\sum_{k=1}^n (x_k - y_k)^2}$$
+
+**Rastojanje Minkovskog** je generalizacija euklidskog rastojanja:
+
+$$d(\mathbf{x},\mathbf{y})= \left( \sum_{k=1}^n |x_k - y_k|^r \right)^{1/r}$$
+
+* Za $r=1$ imamo Manhetn rastojanje ($L_1$ norma)
+* Za $r=2$ imamo Euklidsko rastojanje ($L_2$ norma)
+* Za $r \rightarrow \infty$ imamo Supremum rastojanje 
+  ($L_{max}$ ili $L_{\infty}$ norma)
+
+**Definicija** Funkciju $d:X \times X \mapsto \mathbb{R}$ zovemo
+**metrikom** ako vazi $\forall \mathbf{x}, \mathbf{y}, \mathbf{z} \in X$:
+
+1. $d(\mathbf{x}, \mathbf{y}) \geq 0$
+2. $d(\mathbf{x}, \mathbf{y}) = 0 \mbox{ akko } x = y$
+3. $d(\mathbf{x}, \mathbf{y}) = d(\mathbf{y}, \mathbf{x})$
+4. $d(\mathbf{x}, \mathbf{y}) \leq d(\mathbf{x}, \mathbf{z}) + d(\mathbf{z},\mathbf{x})$
+
+Za mnoge razlicitosti, hocemo da vazi da su metrike, jer nam to 
+garantuje tacnost nekih algoritama. Za rastojanje Minkovskog vazi
+da je metrika, dok mnoge razlicito ne zadovoljavaju jednu ili vise
+osobina metrike.
+
+**Primer (Ne-metricka razlicitost: Razlika skupova)**. Definisemo
+rastojanje $d$ imedju dva skupa $A$ i $B$ kao $d(A, B) = |A-B|$.
+Ovako definisano rastojanje ne zadovoljava samo osobinu pozitivnosti.
+Ali za funkciju $d(A,B) = |A-B| + |B-A|$, vazi da je metrika.
+
+**Primer (Ne-metricka razlicitost: Vreme)**. Definisimo meru
+rastojanja izmedju casova u danu kao:
+
+$$
+d(t_1, t_2) = 
+\begin{cases} 
+    t_2 - t_1        & \mbox{ako } t_1 \leq t_2 \\
+    24 + (t_2 - t_1) & \mbox{ako } t_1 \geq t_2
+\end{cases}
+$$
+
+### Slicnosti izmedju objekta podataka
+
+Ako je $s(\mathbf{x}, \mathbf{y})$ mera slicnosti izmedju dve tacke
+$\mathbf{x}$ i $\mathbf{y}$, onda su njene tipicne osobine
+$\forall \mathbf{x}, \mathbf{y} \in X$:
+
+1. $s(\mathbf{x}, \mathbf{y}) = 1 \mbox{ akko } \mathbf{x} = \mathbf{y}$
+2. $s(\mathbf{x}, \mathbf{y}) = s(\mathbf{y}, \mathbf{x})$.
+
+**Primer (Ne-simetricne mere slicnosti)**. Neka se vrsi eksperiment
+klasifikovanja napisanih slova nad ljudima. **Matrica konfuzije**
+sadrzi u sebi slogove koliko se puta neko slovo javlja i koliko
+se puta zamenilo sa nekim drugim karakterom. Na primer, '0' se 
+pojavljuje 200 puta, ali je klasifikovana kao '0' 160 puta, i kao
+'o' 40 puta, slicno, 'o' se pojavljuje 200 puta, ali je 
+klasifikovano 170 puta kao 'o', i 30 puta kao '0'. Jasno je da
+ovde ne vazi simetrija. Zbog toga u ovakvim situacijama koristimo
+novu meru slicnosti 
+$$s'(\mathbf{x}, \mathbf{y}) = (s(\mathbf{x}, \mathbf{y}) + s(\mathbf{y}, \mathbf{x}))/2.$$
+
+### Primeri mera blizine
+
+**Mera slicnosti za binarne podatke**
+
+Mera slicnosti imedju objekta koji sadrze samo binarne atribute
+se nazivaju **keoficijenti slicnosti**, i tipicno imaju vrednosti
+imezju 0 i 1. Neka su $\mathbf{x}$ i $\mathbf{y}$ dva objekta koja
+imaju $n$ binarnih atributa. Njihovim uporedjivanjem dobijamo:
+$$f_{00} = \mbox{ broj atributa gde je } \mathbf{x} \mbox{ 0 i } \mathbf{y} \mbox{ je 0}$$
+$$f_{01} = \mbox{ broj atributa gde je } \mathbf{x} \mbox{ 0 i } \mathbf{y} \mbox{ je 1}$$
+$$f_{10} = \mbox{ broj atributa gde je } \mathbf{x} \mbox{ 1 i } \mathbf{y} \mbox{ je 0}$$
+$$f_{11} = \mbox{ broj atributa gde je } \mathbf{x} \mbox{ 1 i } \mathbf{y} \mbox{ je 1}$$
+
+**Jednostavno uparivanje keoficijenata**. (Simple matching 
+coefficient --- SMC)
+
+$$SMC = \frac{f_{11} + f_{00}}{f_{00} + f_{01} + f_{10} + f_{11}}$$
+
+**Zakardov keoficijent**. Koristi se kada imamo asimetricne 
+atribute, jer bi u tom slucaju SMC racunao i one koji nam 
+nisu od znacaja. 
+
+$$J = \frac{f_{11}}{f_{01} + f_{10} + f_{11}}$$
+
+**Primer (SMC i Zakardov koeficijent)**. Neka su 
+$\mathbf{x}=(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)$ i 
+$\mathbf{y}=(0, 0, 0, 0, 0, 0, 1, 0, 0, 1)$, onda imamo da je
+$f_{00} = 7, f_{01} = 2, f_{10} = 1, f_{11} = 0$, te sledi da je
+
+$$SMC = \frac{0 + 7}{7 + 2 + 1 + 0} = 0.7$$
+$$J = \frac{0}{2 + 1 + 0} = 0$$
+
+**Kosinusna slicnost**
+
+Ako posmatramo skupove podataka koji dokumenti, takodje kao kod
+Zakardovih koeficijenata ne posmatramo kada su uparnene dve nule,
+ali pored toga moramo da znamo da poredimo dva ne-binarna vektora.
+**Kosinusna slicnost** je mera slucnosti dokumenata definisana nad
+dva vektora $\mathbf{x}$ i $\mathbf{y}$ kao
+
+$$\cos(\mathbf{x}, \mathbf{y}) = \frac{\mathbf{x} \cdot\mathbf{y}} {\lVert \mathbf{x} \rVert \lVert \mathbf{y} \rVert}$$
+
+**Primer (Kosinusna slicnost imedju dva vektora dokumenta)**. Neka
+su 
+$\mathbf{x} = (3, 2, 0, 5, 0, 0, 0, 2, 0, 0)$, i 
+$\mathbf{y} = (1, 0, 0, 0, 0, 0, 0, 1, 0, 2)$, onda je 
+$$\mathbf{x} \cdot \mathbf{y} = 5$$
+$$\lVert \mathbf{x} \rVert = \sqrt{(3 \cdot 3 + 2 \cdot 2 + 5 \cdot 5 + 2 \cdot 2)} = 6.48$$
+$$\lVert \mathbf{y} \rVert = \sqrt{(1 \cdot 1 + 1 \cdot 1 + 2 \cdot 2)} = 2.24$$
+$$cos(\mathbf{x}, \mathbf{y})= 0.31$$
+
+**Prosireni Zakardov keoficijent**
+
+Prosireni Zakardov koeficijenata se koristi za skup podataka koji
+je dokument i koji postaje Zakardov koeficijent u slucaju da je
+skup podataka binarnih atributa. Definisan je kao:
+
+$$EJ(\mathbf{x},\mathbf{y})=
+\frac{\mathbf{x} \cdot \mathbf{y}}
+{{\lVert \mathbf{x} \rVert}^2 + 
+ {\lVert \mathbf{y} \rVert}^2 - 
+ \mathbf{x} \cdot \mathbf{y}}$$
+
+**Korelacija**
+
+Korelacija izmedju dva objekta podataka koji imaju binarne ili
+neprekidne atribute je mera linearne zavisnosti izmedju atributa
+objekta. **Pirsonov koeficijent korelacije** izmedju dva objekta 
+podataka $\mathbf{x}$ i $\mathbf{y}$, je definisan kao
+$$\rho_{\mathbf{x}, \mathbf{y}} = 
+\frac{cov(\mathbf{x}, \mathbf{y})}
+{\sigma_{\mathbf{x}} \sigma_{\mathbf{y}}}$$
+
+**Primer (Savrsene Korelacija)**. Korelacija je uvek u intervalu
+$[-1, 1]$. Korelacije od 1 (ili -1) znaci da su $\mathbf{x}$ i $\mathbf{y}$
+Savrseno pozitivne linearne kombinacije, tj. $x_k = a y_k + b$, gde
+su $a$ i $b$ konstante.
+
+**Primer (Savrseno Nekolerisane)**. Korelacija je **nekorelisana**,
+ako je $\rho_{\mathbf{x}, \mathbf{y}} = 0$, sto znaci da nema
+nikakve linearne zavisnosti izmedju dva objekta. Ali to ne znaci
+da ne postoji neka ne-linearna zavisnost.
+
+**Bregmanova divergencija**
+
+Bregmanova divergencija je familija funkcija blizine koji imaju
+neke zajednicke osobine. To su funkcije gubitka ili distorzije.
+Neka su $\mathbf{x}$ i $\mathbf{y}$ dve tacke, gde je $\mathbf{y}$
+originalna tacka i $\mathbf{x}$ neka distorzija ili aproksimacija
+tacke $\mathbf{y}$. Cilj je odrediti meru distorzije ili gubitka
+koji se javlja kada se $\mathbf{y}$ aproksimira sa $\mathbf{x}$.
+
+**Definicija (Bregmanova divergencija)**. Neka je data strogo
+konveksna funkcija $\phi$, Bergmanova divergencija (funkcija 
+gubitka) $D(\mathbf{x}, \mathbf{y})$ generisana funkcijom $\phi$
+je data kao:
+$$D(\mathbf{x}, \mathbf{y}) = \phi(\mathbf{x}) - \phi(\mathbf{y}) -
+\langle \nabla \phi(\mathbf{y}), (\mathbf{x} - \mathbf{y}))\rangle$$
+gde je $\nabla \phi(\mathbf{y})$ gradijent funkcije $\phi$ u 
+tacki $\mathbf{y}$, i $\langle \nabla \phi(\mathbf{y}), 
+(\mathbf{x} - \mathbf{y}))\rangle$ je unutrasnji proizvod izmedju
+$\nabla \phi(\mathbf{y})$ i $(\mathbf{x} - \mathbf{y})$.
+
+$D(\mathbf{x}, \mathbf{y})$ moze da se zapise kao
+$D(\mathbf{x}, \mathbf{y}) = \phi(\mathbf{x}) - L(\mathbf{x})$, gde
+je $L(\mathbf{x}) = \phi(\mathbf{y}) + 
+\langle 
+    \nabla \phi(\mathbf{y}), 
+    (\mathbf{x} - \mathbf{y}))
+\rangle$ jednacina ravni koja je tangentna da funkciju $\phi$ u 
+tacki $\mathbf{y}$. Pa je Bregmanova divergencija samo razlika
+izmedju funkcije i njene linearne aproksimacije.
+
+### Problemi pri racunanju blizine
+
+1. Kako resiti slucaj kada atributi imaju drugacije domene i/ili
+   su korelisani?
+2. Kako izracunati blizinu objekta koji imaju drugacije tipove
+   atributa?
+3. Kako izracunati blizinu kada atributi imaju drugacije tezine,
+   tj. kada svi atributi uticu drugacije na blizinu objekata?
+
+**Standardizacija i Korelacija za mere rastojanja**
+
+Problem moze da nastane kada se meri rastojanje kada atributi
+nemaju isti opsteg vrednosti. Na primer, jedan atribud ime domen
+u intervalu $[0, 100]$, dok drugi ima domen u intervalu 
+$[1000, 100000]$. Pri racunanju Euklidskog rastojanja, veci uticaj
+ima drugi atribut.
+
+Generalizacija Euklidovog rastojanja je **Mahalanobijevo 
+rastojenje**, koje se koristi kada su atributi korelisani,
+imaju drugacije domene, i kada je distribucija podataka priblizna
+normalnoj (Gausovoj).
+
+**Definicija**: Mahalanobijevo rastojanje izmedju dva objekta 
+$\mathbf{x}$ i $\mathbf{y}$ je dato sa
+$$mahalanobis(\mathbf{x}, \mathbf{y}) = 
+(\mathbf{x} - \mathbf{y})
+\mathbf{\sum}^{-1}
+(\mathbf{x} - \mathbf{y})^T$$
+gde je $\mathbf{\sum}^{-1}$ je inverz matrice konvergencije 
+podataka.
+
+**Spajanje slicnosti za heterogene atribute**
+
+Prethodne definicje slicnosti su bile bazirane na pristupe koji
+pretpodstavljaju da su atributi istog tipa. Generalni pristup je 
+potreban kada su tipovi atributi razliciti. Najjednostavniji 
+pristup je izracunati slicnosti za svaki od atributa i onda 
+nekako spojiti (sabrati ili uzeti prosek) taj rezultat u slicnost 
+izmedju 0 i 1. Ovaj pristup moramo izmeniti kako bi radio i za 
+asimetricne atribute.
+
+**Algoritam (Slicnosti heterogenih atributa)**
+
+1. $\forall k$ izracunati slicnost $k$-tog atributa 
+   $s_k(\mathbf{x}, \mathbf{y})$, u intervalu $[0, 1]$
+2. Definisati indikatorsku promenljivu $\delta_k$ za $k$-ti atribut
+   $$\delta_k = 
+   \begin{cases}
+        0 & \mbox{ako je k-ti atrbut asimetrican i ima vrednost 0, ili ako nedostaje vrednost k-tog atributa} \\
+        1 & \mbox{inace} 
+   \end{cases}
+   $$
+3. Izracunati totalnu slicnost izmedju dva objekta kao:
+   $$sim(\mathbf{x}, \mathbf{y}) = 
+     \frac{\sum_{k=1}^n \delta_k s_k(\mathbf{x}, \mathbf{y})}
+     {\sum_{k=1}^n \delta_k}$$
+
+**Koriscenje Tezina**
+
+Cesto ne zelimo da nam svi atributi vrede isto pri racunanju
+slicnosti pa zato definisemo tezinu atribute $k$ sa realnom
+vrednoscu $w_k \in [0, 1]$. Takodje moramo izmeniti totalnu
+slicnost i to tako da ukljucuje tezinu $w_k$:
+$$sim(\mathbf{x}, \mathbf{y}) = 
+\frac{\sum_{k=1}^n w_k \delta_k s_k(\mathbf{x}, \mathbf{y})}
+{\sum_{k=1}^n \delta_k}$$
+
+# Pretrazivanje Podataka
+
+# Klasifikacija: Osnovni koncepti, drveta odlucivanja
+
+Klasifikacija ima za zadatak da dodeli jednu ili vise klasa nekom 
+objektu. Neki primeri su klasifikovanje celija, galaksija, 
+detekcija spam email poruka.
+
+## Osnove definicije
+
+Ulazn podatak za klasifikaciju je kolekcija slogova. Svaki slog,
+takodje nazvan i instanca ili primer, se kategorizuje torkom
+$(\mathbf{x}, y)$, gde je $\mathbf{x}$ skup atributa i $y$ je 
+specijalni atribut (kategoricki/ciljani/target atribut). 
+Sledeca tabela sadrzi skup podataka za klasifikovanje zivotinja
+u sledece kategorije: mamut, gmizavac, riba, vodozemac, ptica.
+Skup atributa moze imati i neprekidne vrednosti, ali klasna oznaka
+mora da bude diskretni atribut. Ako je $y$ neprikidni atribut, onda
+se ovaj postupak naziva **regresija**.
+
+| Ime      | Temperatura tela | Zenka radja |Koza      | Morska stvorenja | Vazdusna stvorenja | Ima noge | Hibernira | Klasa     |
+|:--------:|:----------------:|:-----------:|:--------:|:----------------:|:------------------:|:--------:|:---------:|:---------:|
+| covek    | toplo-krvni      | da          | dlake    | ne               | ne                 | da       | ne        | mamut     |
+| piton    | hladno-krvni     | ne          | krljosti | ne               | ne                 | ne       | da        | gmizavac  |
+| losos    | hladno-krvni     | ne          | krljosti | ne               | da                 | ne       | da        | riba      |
+| kit      | toplo-krvni      | da          | dlake    | da               | ne                 | ne       | ne        | mamut     |
+| zaba     | hladno-krvni     | ne          | nista    | semi             | ne                 | da       | da        | vodozemci |
+| komodo   | hladno-krvni     | ne          | krljosti | ne               | ne                 | da       | ne        | gmizavac  |
+| papagaj  | toplo-krvni      | ne          | perije   | ne               | da                 | da       | ne        | ptica     |
+| macka    | toplo-krvni      | da          | krzno    | ne               | ne                 | da       | ne        | mamut     |
+| kornjaca | hladno-krvni     | ne          | krljosti | semi             | ne                 | da       | ne        | gmizavac  |
+| pingvin  | toplo-krvni      | ne          | perije   | semi             | ne                 | da       | ne        | ptica     |
+
+**Definicija (Klasifikacija)**. Klasifikacije je zadatak ucenja
+**ciljne funkcije** $f$ koja slika svaki skup atributa $\mathbf{x}$
+u jednu predefinisanu klasnu oznaku $y$. Funkcija $f$ se takodje
+naziva i **klasifikacioni model**.
+
+**Opisno modelovanje**. Klasifikacioni model moze da sluzi za 
+opisivanje razlika imezju objekata drugih klasa. U primeru gore
+dobro je znati koje osobine ima mamut, ptica, riba, itd...
+
+**Model predvidjanja**. Klasifikacioni model moze da se koristi
+za predvidjanje klase nepoznatih slogova. Na primer mozemo 
+predvideti klasu za zivotinju gila monstrum:
+
+| Ime           | Temperatura tela | Koza     | Morska stvorenja | Vazdusna stvorenja | Ima noge | Hibernira | Klasa |
+|:-------------:|:----------------:|:--------:|:----------------:|:------------------:|:--------:|:---------:|:-----:|
+| gila monstrum | hladno-krvni     | krljosti | ne               | ne                 | da       | da        | ?     |
+
+Klasifikacione tehnike daju najbolje rezultate za predvidjanje 
+ili opisivanje skupova podataka sa binarnim ili nominalnim(imenskim)
+kategorijama. Manje su efikasne za ordinalne(redne) kategorije
+zato sto ne razmatraju implicitan poredak izmedju kategorija.
+
+## Generalni pristup resavanja klasifikacionih problema
+
+Klasifikaciona tehnika je sistemacki pristup pravljenja
+klasifikacionoh modela od ulaznog skupa podataka. Neki primeri su
+drveta odlucivanja, neuronske mreze, pomocne vektor masine, 
+naivni Bajesov klasifikator, klasifikator zasnovan na pravilima.
+Svaka tehnika pruza **algoritam ucenja** koji identifikuje model 
+koji najbolje odgovara vezama izmedju skupa atributa i klasne 
+oznake ulaznih podataka. Ovaj model treba da odgovara ulaznim 
+podacima, ali takodje mora i da tacno predviti klasne oznake
+slogova koje jos nije video. Zbog toga je kljucni zadatak 
+algoritma ucenja da napravi dobru model sa dobrom generalizacijom,
+tj. model koji tacno predvidja klasne oznake za nepoznate slogve.
+
+**Skup za treniranje** sadrzi slogove cije su klasne oznake poznate.
+On sluzi za pravljenje klasifikacionog modele, koji se nakon toga
+primenjuje na **skup za testiranje**, koji sadrzi slogove sa 
+nepoznatim klasnim oznakama.
+
+Performanse klasifikacionog modele se dobijaju brojanjem test 
+slogova koje je model predvideo tacno i netacno. Ove vrednosti
+se cuvaju u **matrici konfuzije**.
+
+|           | class=1   | class=0   |
+|-----------|-----------|-----------|
+| class=1   | $f_{11}$  | $f_{10}$  |
+| class=0   | $f_{01}$  | $f_{00}$  |
+
+Ova tabela predstavlja matricu konfuzije za binarnu klasifikaciju.
+Svaki element matrice $f_{ij}$ predstavlja broj slogova iz klase
+$i$, koji su predvidjeni da budu u klasi $j$. Ukupan broj tacnih
+predvidjanja modela je $f_{11} + f_{00}$, i ukupan broj netacnih
+predvidjanja modela je $f_{01} + f_{10}$.
+
+Matrica konfuzije nam daje dovoljno informacija da odreditmo
+performance naseg modele. **Metrika performanse** moze biti:
+$$\mbox{Tacnost } = \frac{f_{11} + f_{00}}{f_{11} + f_{10} + f_{01} + f_{00}}$$
+$$\mbox{Greska } = \frac{f_{10} + f_{01}}{f_{11} + f_{10} + f_{01} + f_{00}}$$
+
+## Drvo odlucivanja uvod
+
+### Kako radi drvo odlucivanja?
+
+Razmotrimo primer od malopre, samo sto cemo klasifikovati zivotinje
+u dve grupe: mamuti i ne-mamuti. Postavlja se pitanje kako odrediti
+da li je novo pronadjena zivotinja mamut ili nije? Jedan pristup
+je postavljati niz pitanja o karakteristikama te zivotinje.
+Prvo pitanje da li je hladno-krvna ili toplo-krvna? Ako je 
+hladno-krvna definitivno nije mamut. Inace, je ili ptica ili mamut.
+Sledece pitanje moze biti da li zenke radjaju? Ako je odgovor
+pozitivan onda su sigurno mamuti, inace vrlo verovatno nisu.
+
+Iz primera vidimo da problem klasifikacije mozemo da resimo tako
+sto pazljivo postavljamo odgovarajuca pitanja o atributima sloga.
+Svaki put kada dobijemo odgovor, postavimo sledece pitanje, sve
+dok ne dodjemo do resenja. Ova pitanja i odgovori mogu se 
+predstaviti drvetom odlucivanja, koje je hijerarhijska struktura 
+koja sadrzi cvorove i usmerene grane.
+
+```
+                temperatura
+                   tela
+                  /    \
+           toplo /      \ hladno
+                /        \
+             zenka    ne-mamut
+             radja
+             /   \
+         da /     \ ne
+           /       \
+        mamut   ne-mamut
+```
+
+Ovo drvo ima tri tipa cvorova:
+
+1. **Koreni cvor** nema ulazne grane i ima nula ili vise izlaznih 
+   grana.
+2. **Unutrasnji cvorovi**, imaju tacno jednu ulaznu granu i dve
+   ili vise izlazne grane.
+3. **Listovi** ili **terminali**, imaju tacno jednu ulaznu granu
+   i nemaju izlaznih grana.
+
+U drvetu odlucivanja, svakom listu se dodeljuje klasna oznaka. 
+Ne-terminali, sadrze uslov atributa za odvajanje slogova koji imaju
+drugacije karakteristike.
+
+Jedno kada napravimo drvo odlucivanja testiranje slogova je 
+jednostavno. Krenemo od korenog cvora, primenimo test uslova nad
+atributima i pratimo granu na osnovu rezultata testiranja. Ovaj
+proces ponavljamo sve dok ne dodjemo do nekog terminala, koji
+u sebi sadrzi klasnu oznaku koja nam daje resenje.
+
+### Kako napraviti drvo odlucivanja?
+
+Postoji eksponencionalno mnogo drveta odlucivanja koja se mogu
+dobiti za dati skup atributa. Neka od njig su tacnija od drugih, pa
+pronalazenje optimalnog drveta je racunski tesko. Zbog toga
+postoje efikasni algoritmi koji se koriste da pronalazenje, 
+dovoljno tacnog, suboptimalnig drveta odlucivanja u razumnom 
+vremenu. Ovi algoritmi cesto koriste gramzivu strategiju za rast
+drveta odlucivanja tako sto stvaraju niz lokalno optimalnih odluka
+o izboru atributa za particionisanje podataka. Jedan takav 
+algoritam je **Hantov algoritam**, koji je osnova za mnoge 
+naprednije algoritme kao sto su ID3, C4.5, i CART.
+
+**Hantov algoritam**
+
+Neka je $D_t$ skup slogova za treniranje koji su povezani sa cvorom
+$t$ i $y=\{y_1, y_2, \ldots, y_c\}$ budu klasne oznake. Sledi
+rekurzivna definicija Hantovog algoritma.
+
+1. Ako svi slogovi iz $D_t$ pripadaju istoj klasi $y_t$, onda je
+   $t$ list oznacen sa $y_t$. 
+2. Ako $D_t$ sadrzi slogove koji pripadaju vise od jedne klase,
+   **test uslova atributa** se bira za particionisanje slogova u
+   manje podskupove. Dete se kreira za svako resenje test uslova
+   i slogovi iz $D_t$ se dele deci u zavisnosti od ishoda testa.
+   Algoritam se onda rekurzivno primenjuje na svako dete.
+
+**Primer (Primena Hantovog algoritma na predvidjanje isplate 
+kredita)**. Hocemo da predvidimo da li ce nekao osoba isplatite
+kredit u zavisnosi od njenih osobina. Neka je skup za treniranje
+dat sledecom tabelom podataka:
+
+| ID | Ima kucu | Bracni status | Godisnja plata | Isplatio |
+|---:|:--------:|:-------------:|---------------:|:--------:|
+| 1  | da       | neozenjen     | 125k           | da       | 
+| 2  | ne       | ozenje        | 100k           | da       | 
+| 3  | ne       | neozenjen     | 70k            | da       | 
+| 4  | da       | ozenjen       | 120k           | da       | 
+| 5  | ne       | razveden      | 95k            | ne       | 
+| 6  | ne       | ozenjen       | 60k            | da       | 
+| 7  | da       | razveden      | 220k           | da       | 
+| 8  | ne       | neozenjen     | 85k            | ne       | 
+| 9  | ne       | ozenjen       | 75k            | da       | 
+| 10 | ne       | neozenjen     | 90k            | ne       | 
+
+```
+                    Ima kucu                 Ima kucu                   Ima kucu         
+                     /    \                   /    \                     /    \
+Isplatio=da      da /      \ ne           da /      \ ne             da /      \ ne
+    (a)            /        \               /        \                 /        \
+            Isplatio=da  Isplatio=ne Bracni status Isplatio=ne Bracni status Isplatio=ne
+                       (b)               /    \                    /    \     
+                                ozenjen /      \          ozenjen /      \                   
+                                       /        \                /        \        
+                                Isplatio=da Isplatio=ne Isplatio=da Godisnja plata 
+                                          (c)                           /    \        
+                                                                  <80k /      \ >=80k
+                                                                      /        \      
+                                                                Isplatio=da Isplatio=ne
+                                                                          (d)
+                                                                 
+```
+
+Inicijalno konstruisemo drvo sa jednim cvorom, koji ima klasnu
+oznaku `Isplatio=da` (a). Drvo moramo da rekonstruisemo kako
+koreni cvor ima one slogovi za koje vazi da je `Isplatio=ne`. 
+Slogove zbog toga delimo na dve grupe pitanjem da li `Ima kucu`?
+Ako `Ima kucu=ne` onda znamo da sigurno `Isplatio=ne`, ali
+ako `Ima kucu=da` onda ne znamo da li je `Isplatio=da` (b).
+Onda dalje cvorove delimo sa pitanjem `Bracni status`?
+Ako `Bracni status=ozenjen` onda sigurno `Isplatio=da`, ali
+ako `Bracni status=neozenje, razveden`, onda ne znamo da je
+sigurno `Isplatio=ne` (c), pa postavljamo pitanje `Godisnja plata`?
+Ako je `Godisnja plata<80k` onda vazi `Isplatio=da`, u suprotnom
+vazi `Isplatio=ne` (d).
+
+Hantov algoritam radi ako se svaka kombinacija vrednosti atributa
+nalazi u skupu za treniranje, sa jedinstvenom klasom oznakom. Ovo
+u praksi nije moguce. Pa se dodaju sledeci uslovi:
+
+1. Moguce je da neko dete u koraku 2. bude prazno, tj. ne postoji
+   slog koji mu odgovara. U tom slucaju se taj cvor deklarise 
+   klasnom oznakom koju ima najveci broj slogova roditeljskog 
+   cvora. 
+2. U koraku 2. ako svi slogovi odgovaraju $D_t$ imaju identicne
+   atribute (osim klasne oznake), nije moguce dalje ih razdvojiti.
+   I u ovom slucaju taj cvor se postavlja za list, a njemu
+   odgovara klasna oznaka koju ima najveci broj slova tog cvora.
+
+**Problemi pri indukovanju drveta odlucivanja**
+
+1. **Kako podeliti slogove iz skupa za treniranje?**
+   Svaki rekuzivni korak u rastu drveta mora odabrati uslov
+   testiranja atributa da podelu slogova u manje podskupove.
+   Mora se implementirati algoritam za specifikaciju uslova 
+   testiranja atributa, kao i mera za racunanje koliko je 
+   svaki od uslova testiranja atributa dobar.
+2. **Kako zaustaviti proceduru deljenja?**
+   Uslov zaustavljanja je potreban da bi se zaustavio rast drveta.
+   Jedna od strategija je siriti cvor sve dok svi slogovi cvora
+   ne pripadaju istoj klasi ili svi slogovi imaju identicne
+   vrednosti atributa. Postoji i takozvana prevremena terminacija.
+
+### Metodi za izrazavanje uslova testiranja atributa
+
+**Binarni atributi**. Uslov testiranja za binarne atribute 
+generise dva potencijalna resenja.
+```
+         Ima kucu        
+          /    \         
+         /      \      
+        /        \       
+ Ima kucu=da  Ima kucu=ne
+```
+
+**Nominalni(Imenski) atributi**. (a) Visestruko razdvajanja 
+podrazumeva da broj resenja zavisi od broja razlicitih vrednosti 
+za odgovarajuci nominalni (imenski) atribut. (b) Binarno razdvajanje
+podrazumeva $2^{k-1} - 1$ nacina da se naprave binarne particije
+od $k$ vrednosti atributa.
+```
+       Bracno stanje        
+        /    |    \         
+       /     |     \      
+      /      |      \       
+neozenjen ozenjen razveden
+            (a)
+
+ Bracno stanje         Bracno stanje        Bracno stanje    
+    /    \                /    \               /    \        
+   /      \    ili       /      \     ili     /      \      
+  /        \            /        \           /        \      
+ozenjen  neozenjen  neozenjen   ozenjen   razveden  neozenjen
+         razveden               razveden             ozenjen 
+                            (b)
+```
+
+**Ordinalni(Redni) atributi**. Takodje, pruzaju binarno ili
+visestruko razdvajanje. Vrednosti se grupisu tako da cuvaju 
+uredjenje. Razdvajanja koja civaju uredjenje su (a) i (b), a 
+razdvajanje koje ne cuva uredjenje je (c).
+```
+
+Velicina kosulje   Velicina kosulje   Velicina kosulje
+    /    \             /    \             /    \    
+   /      \     ili   /      \     ili   /      \    
+  /        \         /        \         /        \    
+S, M      L, XL     S      M, L, XL   S, L      M, XL  
+     (a)                (b)                 (c)
+```
+
+**Neprekidni atributi**. Uslov testiranja moze biti kompozicija
+testa $(A < v)$ ili $(A \geq v)$ sa binarnim rezultatima, ili
+kompozicija testova $(v_i \leq A < v_{i+1}), i=1,\ldots,k$.
+```
+      Godisnja plata
+          /    \         
+         /      \      
+        /        \       
+     <80k       >=80k 
+```
+
+### Mera za odabir najboljeng deljenja
+
+Mere za odabri najboljeng deljenja se definisu u terminima 
+klasne distribucije slogova pre i posle deljenja.
+
+Neka je $p(i|t)$ je frakcija slogova koja pripada klasi $i$ za 
+dati cvor $t$. Za dvoklasne probleme, klasna distribucija bilo
+kog cvora je $(p_0, p_1)$, gde $p_1 = 1 - p_0$. Pre deljenja
+klasna distribucija je $(0.5, 0.5)$, pri deljenju zelimo da 
+klasna dristribucija bude sa *nula necistoca*, tj. $(0, 1)$.
+Primeri mera necistoca su:
+$$\mbox{Entropy}(t)= - \sum_{i=0}^{c-1} p(i|t) \log_2 p(i|t)$$
+$$\mbox{Gini}(t)= 1 - \sum_{i=0}^{c-1} [p(i|t)]^2$$
+$$\mbox{Classification error}(t)= 1 - \max_{i} [p(i|t)]$$
+gde je $c$ broj klasa i $0 \log_2 0 = 0$.
+Maksimalne vrednosti mera necistoca se dobijaju kada je klasna
+distribucija oblika $(0.5, 0.5)$, dok je $0$ za $p=0 (p=1)$.
+
+| Cvor $N_1$ | Broj |
+|:----------:|:----:| 
+| Klasa=0    | 0    | 
+| Klasa=1    | 6    |
+
+$\mbox{Gini} = 1 - (0/6)^2 - (6/6)^2 = 0$\
+$\mbox{Entropy} = - (0/6) \log_2 (0/6) - (6/6) \log_2 (6/6) = 0$\
+$\mbox{Error} = 1 - \max [0/6, 6/6]  = 0$\
+
+| Cvor $N_1$ | Broj |
+|:----------:|:----:| 
+| Klasa=0    | 1    | 
+| Klasa=1    | 5    |
+
+$\mbox{Gini} = 1 - (1/6)^2 - (5/6)^2 = 0.278$\
+$\mbox{Entropy} = - (1/6) \log_2 (1/6) - (5/6) \log_2 (5/6) = 0.650$\
+$\mbox{Error} = 1 - \max [1/6, 5/6]  = 0.167$\
+
+| Cvor $N_1$ | Broj |
+|:----------:|:----:| 
+| Klasa=0    | 3    | 
+| Klasa=1    | 3    |
+
+$\mbox{Gini} = 1 - (3/6)^2 - (3/6)^2 = 0.5$\
+$\mbox{Entropy} = - (3/6) \log_2 (3/6) - (3/6) \log_2 (3/6) = 1$\
+$\mbox{Error} = 1 - \max [3/6, 3/6]  = 0.5$\
+
+Da bi odredili kolike su performanse uslova testiranja, moramo da 
+uporedimo stepen necistoce roditeljskog cvore pre rezdvajanja
+sa stepenom necistoce deteta nakon razdvajanja. Sto je veca 
+njihova razlika uslov testiranja je bolji:
+$$\Delta = I(\mbox{parent}) - \sum_{j=1}^k \frac{N(v_j)}{N} I(v_j)$$
+gde je $I(\cdot)$ mera necistoce za dati cvor, $N$ broj slogova
+u roditeljskom cvoru, $k$ je broj atributa, i $N(v_j)$ broj
+slogova koji odgovaraju detetu, $v_j$. Algoritmi indukovanja 
+drveta odlucivanja pokusavaju da maksimizije vrednost $\Delta$, tj.
+ekvivalentno da minimizuju tezinsku sredinu mere necistoce deteta.
+Kada je $I = \mbox{Entropy}$ onda se $\Delta_{\mbox{info}}$ naziva
+**dobitak informacije**.
+
+**Razdvajanje binarnih podataka**
+
+|    |  Roditelj  | 
+|:--:|:----------:|
+| C0 | 6          |
+| C1 | 6          |
+||     Gini=0.500 |
+
+| A  |  N1 | N2  | 
+|:--:|:---:|:---:|
+| C0 |  4  |  2  |
+| C1 |  3  |  3  |
+|| Gini=0.486   ||
+
+| B  |  N1 | N2  | 
+|:--:|:---:|:---:|
+| C0 |  1  |  5  |
+| C1 |  4  |  2  |
+|| Gini=0.375   ||
+
+Tezinska sredina za Gini indeks nakon deljenja atributom $A$ je 
+$0.486$, dok je $0.375$ nakon deljenja atributom $B$. Kako deljenjem
+atributom $B$ dobijamo manji Gini indeks on se preferira u odnosu
+na atribut $A$.
+
+**Razdvajanje nominalnih (imenskih) atributa**
+
+Kod nominalnih (imenskih) atributa sa binarnih razdvajanje Gini
+indeks se racuna isto kao i kod binarnih atributa, dok za 
+visestruko razdvajanje racunamo Gini indeks za svaku vrednost 
+atributa (dete), pa je ukupni Gini indeks tezinska sredina 
+pojedinacnih Gini indeksa. Gini indeks je manji za visestruko
+razdvajanje.
+
+**Razdvajanje neprekidnih atributa**
+
+Treba odrediti mesto razdvajanja $v$, koje ce podeliti slogove 
+na one za koje vazi $\mbox{atrname} \leq v$ i $\mbox{atrname} > v$
+Jedan nacin da se odredi $v$ jeste da se svaka vrednost atributa
+od $N$ slogova razmatra kao potencijalni $v$, i za svaku od njih
+da se izracuna Gini indeks, te da se za $v$ uzme ona vrednost 
+sa najmanjim Gini indeksom. Slozenost ovog pristupa je $O(N^2)$.
+Drugi nacin da se odredi $v$, jeste da se prvo sortiraju vrednosti
+atributa slogova. To ce smanjiti slozenost racunanja Gini indeksa
+za pojedinacne atribute, jer se moze koristiti info o Gini indeksu
+prethodnog razdvajanja $v$. Slozenost ovog pristupa je $O(N \log N)$
+za sortiranje i $O(N)$ za racunanje najmanjeg Gini indeksa, pa je
+ukupna slozenost $O(N \log N)$.
+
+**Odnos dobitka**
+
+Mere necistoce kao sto je entropija i Gini indeks favorizuju 
+atribute koji imaju veliki broj razlicitih vrednosti. Na primer,
+`Tip automobila` se favorizuje u odnosu na `Pol`, ili jos gore
+`ID` se favorizuje u odnosu na `Tip automobila`. Ali `ID` je 
+jedinstveni tako da se ne moze koristiti u predvidjanju.
+
+Postoje dve strategije da se ovo resi. Prva strategija je 
+restrikcija uslova testiranja na samo binarno razdvajanje. Druga
+strategija je modifikovanje kriterijuma za razdvajanje tako da
+uzme u racun broj rezultata koje uslov testiranja atributa 
+proizvodi. Na primer, **odnos dobitaka** se koristi za odredjivanje
+koliko je neko razdvajanje dobro:
+$$\mbox{Gain ration} = \frac{\Delta_{\mbox{info}}}{\mbox{Split Info}}$$
+Ovde je $\mbox{Split Info} = - \sum_{i=1}^k P(v_i) \log_2 P(v_i)$
+i $k$ je ukupan broj razdvajanja. Na primer, ako se svaka vrednost
+atributa pojavljuje isti broj puta u slogovima, onda 
+$\forall i : O(v_i) = 1/k$, te je onda 
+$\mbox{Split Info} = \log_2 k$. Ovaj primer pokazuje da ako 
+atribut ima veliki broj razdvajanja, njegova informacija razdvajanja
+bice velika, sto smanjuje odnos dobitka.
+
+### Algoritam indukovanja drveta odlucivanja
+
+```Python
+def tree_growth(E, F):
+
+    if stopping_cond(E, F):
+        leaf = create_node()
+        leaf.label = classify(E)
+        return leaf
+
+    root = create_node()
+    root.test_cond = find_best_split(E, F)
+    # V sadrzi sva moguca vrednosti koja mogu
+    # biti resenja uslova testiranja
+    V = [v for v in root.test_cond.res]
+    for v in V:
+        # E_v sadrzi sve slogove ciji je rezultat 
+        # uslova testiranja dati v
+        E_v = [e for e in E if root.test_cond(e) = v]
+        child = tree_growth(E_v, F)
+        root.children[v] = child
+
+    return root
+```
+
+Nakon indukovanje drveta odlucivanja, mozemo da izvrsimo 
+**potkresivanje drveta** da bi smanjili njegovu velicinu. Drveta
+odlucivanja koja su veoma velika su podlozna fenomenu koji se 
+naziva **preprilagodjavanje**. Takodje potreksivanje drveta 
+odlucivanja pomaze u generalizaciji te ce i sama klasifikacija
+biti bolja.
+
+### Karakteristike indukovanja drveta odlucivanja
+
+1. Indukovanje drveta odlucivanje ne korisit ni jedan parametar
+   za kreiranje klasifikacionog modela.
+2. Nalazenje optimalnog drveta odlucivanje je NP-kompletan problem.
+   Zbog toga se za indukovanje drveta odlucivanja koriste neke
+   heuristicke metode.
+3. Tehnike za indukovanje drveta odlucivanja su racunski jeftine
+   cak i na velikim skupovima za treniranje. Stavise, jednom
+   kada se drvo odlucivanja napravi klasifikovanje sloga je 
+   ekstremno brzo, cija je slozenost $O(w)$ gde je $w$ dubina
+   drveta odlucivanja.
+4. Mala drveta odlucivanje se lako interpretisu. Takodje drveta
+   odlucivanje se dobro nose sa drugim tehnikama kalsifikacije.
+5. Drveta odlucivanja pruzaju ekspresivni reprezentaciju za
+   ucenje diskretnih funkcija.
+6. Drveta odlucivanja dobro podneso sum, pogotovo kada se koriste
+   metodi protiv preprilagodjavanja.
+7. Prisustvo jako povezanih atributa ne remeti tacnost drveta 
+   odlucivanja. Ali ako skup za treniranje sadrzi mnogo atributa
+   koji nisi kornisni za klasifikaciju, onda moze doci do toga
+   da se oni izaberu pri razdvajanju pa se time drvo nepotrebno
+   povecava. Postoje metodi za izbacivanje irelevantnih atributa
+   u preprocesiranju.
+8. Algoritmi drveta odlucivanja particionisu podatke, te sa dubinom
+   drveta imamo sve manje i manje podataka. Zbog toga se gubi na
+   generalizaciji i ovaj problem se zove **fragmentacija podataka**.
+   Jedno od resenja jeste postavljanje odredjenje granice ispod
+   koje podaci ne mogu biti particionisani.
+9. Moguce je dobiti drvo odlucivanja koje ima ekvivalentna pod
+   drveta, sto drvo odlucivanja cini kompleksnijim nego sto jeste.
+10. Uslovi testiranja atributa se odnose samo na jedan atribut, pa
+    zbog toga imamo granice izmedju dva komsijska regiona drugih
+    klasa. Te granice se nazivaju **granice odluke**. Ove granice
+    se prostiru paraleno sa kordinatnim osama pa probleme gde
+    granice trebaju da prime neki linearni oblik drvo odlucivanja
+    tesko resava. **Zakrivljeno drvo odlucivanja** se koristi
+    da bi se uskratile ove limitacije jer dopusta da se za
+    uslov testiranja atributa koriste vise od jednog atributa.
+    Ovaj nacin je racunski dosta skuplji od klasicnog indukovanja
+    drveta odlucivanja.
+    **Konstruktivna indukcija** pruza jos jedan nacin 
+    particionisanja podataka u homogene, nepravougaone regione.
+    Ovaj pristup kreira nove atribute koji predstavljaju
+    aritmeticku ili logicku kombinaciju postojanih atributa.
+    Ovo je racunski jeftinije kako ne moramo dinamicki da trazimo
+    grupu atributa koji mogu biti relevantni vec njihove kombinacije
+    sracunamo pre samog indukovanja drveta. Mana ovog pristupa je 
+    to sto moze da kreira atribute koji su veoma povezani. 
+11. Izabir mere necistoce ima vrlo mali efekat na performanse 
+    drveta odlucivanja. 
+
+## Preprilagodjavanje modela
+
+### Preprilagodjavanje zbog prisustva suma
+
+### Preprilagodjavanje zbog nedostatka reprezentativnih uzoraka 
+
+### Preprilagodjavanje i procedura visestrukog poredjenja
+
+### Procenjivanje greske generalizacije
+
+### Preprilagodjavanje u indukovanje drveta odlucivanja
+
+## Racunanje performanse klasifikatora
+
+## Metodi za uporedjivanje klasifikatora
+
+# Klasifikacije: Alternativne tehnike
 
 
