@@ -1716,19 +1716,568 @@ biti bolja.
 
 ## Preprilagodjavanje modela
 
+Greske u klasifikacionom modelu se dele na dva tipa: 
+**greske treniranja** i **greske generalizacije**.
+Greska treniranja, ili **greska resubstitucije**, ili **ocigledna
+greska**, je broj promaseno klasifikovanih slogova za treniranje.
+Greska generalizacije je ocekivana greska modela za prethodno
+ne vidjene slogove.
+
+Dobar klasifikacioni model, pored male greske treniranja, mora da 
+ima i malu gresku generalizacije. Model koji odgovara previse
+skupu za treniranje moze da ima veliku gresku generalizacije,
+za takav model kazemo da je **preprilagodjen**.
+
+**Primer (Dvodimenzionalni podaci)**. Neka je dat dvodimenionalni
+skup podataka, gde svaki slog pripada ili klasi `o` ili klasi `x`.
+Za ovakav skup podataka zelimo da napravimo klasifikacioni model
+koriscenjem drveta odlucivanja. Model se pravi po broju cvorova.
+Pokazuje se da sa brojem cvorova u modelu greska treniranja opada,
+dok greska testiranja opada do nekog trenutka od kog pocinje 
+da raste. Za mali broj cvorova obe greske su velike te za model
+kazemo da je **podprilagodjen**. Od trenutka kada greska treniranja
+opada, a greska testiranja raste kazemo da je model 
+**preprilagodjen**.
+
+Za razumevanje ovog fenomena, primetimo da se greska treniranja
+smanjuje kada se povecava kompleksnost modela. Na primer, 
+listovi drveta rastu sve dok im skup treniranje ne odgovara
+perfektno. Ovime dobijamo da je greska testiranja 0, ali u isto 
+vreme kompleksnost ovog modela raste te se gubi na generalizaciji.
+
 ### Preprilagodjavanje zbog prisustva suma
+
+Neka je dat skup za treniranje i testiranje za klasifikacioni 
+problem mamuta.
+
+Skup podataka za treniranje, koji ima dva objekta koja su pogresno
+klasifikovana i ona su oznacena sa \*:
+
+| Ime               | Temperatura tela | Zenka radja | Cetvoronozna | Hibernira | Klasa |
+|:-----------------:|:----------------:|:-----------:|:------------:|:---------:|:-----:|
+| bodljikavo prase  | toplo-krvni      | da          | da           | da        | da    |
+| macka             | toplo-krvni      | da          | da           | ne        | da    |
+| slepi mis         | toplo-krvni      | da          | ne           | da        | ne\*  |
+| kit               | toplo-krvni      | da          | ne           | ne        | ne\*  |
+| komodo zmaj       | hladno-krvni     | ne          | da           | ne        | ne    |
+| salamander        | hladno-krvni     | ne          | da           | da        | ne    |
+| piton             | hladno-krvni     | ne          | ne           | da        | ne    |
+| losos             | hladno-krvni     | ne          | ne           | ne        | ne    |
+| orao              | toplo-krvni      | ne          | ne           | ne        | ne    |
+| gupi              | hladno-krvni     | da          | ne           | ne        | ne    |
+
+Skup podataka za testiranje:
+
+| Ime               | Temperatura tela | Zenka radja | Cetvoronozna | Hibernira | Klasa |
+|:-----------------:|:----------------:|:-----------:|:------------:|:---------:|:-----:|
+| covek             | toplo-krvni      | da          | ne           | ne        | da    |
+| papagaj           | toplo-krvni      | ne          | ne           | ne        | ne    |
+| slon              | toplo-krvni      | da          | da           | ne        | da    |
+| ajkula            | hladno-krvni     | da          | ne           | ne        | ne    |
+| kornjaca          | hladno-krvni     | ne          | da           | ne        | ne    |
+| pingvin           | hladno-krvni     | ne          | ne           | ne        | ne    |
+| jegulja           | hladno-krvni     | ne          | ne           | ne        | ne    |
+| delfin            | toplo-krvni      | da          | ne           | ne        | da    |
+| jez               | toplo-krvni      | ne          | da           | da        | da    |
+| gila monstrum     | hladno-krvni     | ne          | da           | da        | ne    |
+
+Razmotrimo sledeca dva modela klasifikacije za problem klasifikacije mamuta:
+
+```
+             temperatura             temperatura
+                tela                    tela
+               /    \                  /    \
+        toplo /      \ hladno   toplo /      \ hladno
+             /        \              /        \
+          zenka    ne-mamut       zenka    ne-mamut
+          radja                   radja
+          /   \                   /   \
+      da /     \ ne           da /     \ ne
+        /       \               /       \
+     cetiri   ne-mamut       mamut   ne-mamut         
+      nogu                              (M2)
+     /    \
+ da /     \ ne
+   /       \
+ mamut   ne-mamut
+               (M1)
+```
+
+Model `M1` savrseno odgovara skupu podataka za treniranje, te
+nema gresku treniranje. Sa druge strane greska testiranja je 
+$30\%$: Covek i delfin su pogresno klasifikovani kako jesu mamuti
+ali nisu cetvoronozni, dok je jez objekat koji se izuzetak u
+klasnoj tabeli. Greske pri izuzecima su neizbezne i one 
+postavljaju donju granicu greske bilo kog klasifikatora.
+
+Model `M2` ima gresku treniranja $10\%$, dok je greska testiranja
+nesto veca $20\%$. Jasno je da je prvi model `M1` preprilagodio
+za dati skup treniranja. 
 
 ### Preprilagodjavanje zbog nedostatka reprezentativnih uzoraka 
 
+Modeli klasifikacije koji se treniraju na malo broju slgova
+su takodje podlozni preprilagodjavanju. Ovi se ne mogu 
+generalizovati zbog nedostatka reprezentativnih uzoraka.
+
+Neka je dat sledeci skup podataka za treniranje:
+
+| Ime               | Temperatura tela | Zenka radja | Cetvoronozna | Hibernira | Klasa |
+|:-----------------:|:----------------:|:-----------:|:------------:|:---------:|:-----:|
+| salamander        | hladno-krvni     | ne          | da           | da        | ne    |
+| gupi              | hladno-krvni     | da          | ne           | ne        | ne    |
+| orao              | toplo-krvni      | ne          | ne           | ne        | ne    |
+| golub             | toplo-krvni      | ne          | ne           | da        | ne    |
+| kljunar           | toplo-krvni      | ne          | da           | da        | da    |
+
+Treniranjem dobijamo sledeci model:
+```
+             temperatura     
+                tela         
+               /    \        
+        toplo /      \ hladno
+             /        \      
+        hibernira    ne-mamut  
+          /   \              
+      da /     \ ne          
+        /       \            
+     cetiri   ne-mamut       
+      nogu                   
+     /    \
+ da /     \ ne
+   /       \
+ mamut   ne-mamut
+```
+
+Greska treniranja ovog modela je nula, dok ge greska testranja 
+$30\%$: Covek, slon, i delfin su pogresno klasifikovani kako
+ovaj model klasifikuje zivotinje koje su toplo-krvene i ne 
+hiberniraju kao ne-mamute. Jasno je da dobijamo pogresna 
+predvidjanja kada nemamo reprezentativne slogove.
+
 ### Preprilagodjavanje i procedura visestrukog poredjenja
+
+Preprilagodjavanje modela moze nastati u algoritmima ucenja koji
+koriste proceduru visestrukog poredjenja. Razmotrimo predvidjanje
+da li ce nekretnine na berzi rasti ili padati u sledecih 10 dana.
+Ako predvidjanje vrsimo nasumicno, verovatnoca da ce predvidjanje 
+negog dana biti tacno je $0.5$. Ali verovatnoca da ce predvidjanje
+bar 8 od 10 puta biti tacno je
+$$\frac{\binom{10}{8} + \binom{10}{9} + \binom{10}{10}}{2^{10}} = 0.0547$$
+Zbog toga angazujemo nekog analizatora koji ce predvideti najvise
+tacnih u sledecih 10 dana. Ako svi analizatori koriste nasumicno
+predvidjanje, verovatnoca da je bar jedan on njih imao 8 tacnih
+predvidjanje je
+$$1-(1-0.0547)^{50} = 0.9399$$
+Ako znamo da ce jedan analizator tesno predvideti tacno, kada ih
+spojimo zajedno oni sigurno uspevaju da nadju tacno predvidjanje
+nasumicnim pokusavanjem.
+
+Kako se procedura visestrukog poredjanje odnosi na 
+preprilagodjavanje modela? Mnogi algoritmi ucenja istrazuju skup 
+nezavisnih alternativa, $\{\gamma_i\}$, i onda biraju onu koja
+maksimizuje dati kriterijum $\gamma_{\max}$. Algoritam ce onda
+dodati $\gamma_{\max}$ i trenutni model da bi poboljsao njegove
+performanse. Ova procedura se nastavlja sve dok se sledece
+poboljsanje ne primeti. Na primer, indukovanje drveta odulicvanja
+koristi vise testova da odredi koji atributi ce dati najbolje
+razdvajanje skupa treniranja. Oni koji najbolje razdvajaju atribute
+se dalje biraju te prosiruju drvo sve dok se ne primeti poboljsanje
+koje je statisticki znacajno.
+
+Neka je $T_0$ inicijalno drvo odlucivanje i $T_x$ novo drvo nakon
+dodavanja unutrasnjeg covora za atribut $x$. $x$ se moze dodati u
+drvo ako je primeceni dobitak, $\Delta(T_0, T_x)$, veci od
+nekog predefinisanog ogranicenja $\alpha$. Ako postoji samo jedan
+uslov testiranja atributa koji moze da se primeni, onda mozemo
+izbeci ubacivanje cvora, tako sto odaberemo dovoljno veliko 
+$\alpha$. Ali, obicno je vise od jednog uslov testiranja atributa
+dostupno i algoritam indukovanja drveta odlucivanja mora da 
+odabere najbolji atribut $x_{\max}$ iz skupa kandidata, 
+$\{x_1, x_2,\ldots, x_k\}$, za particionisanje podataka. U ovom
+trenutku algoritam koristi proceduru visestrukog poredjenja da 
+odluci da li drvo odlucivanja treba biti prosireno. Tacnije,
+testira se $\Delta(T_0, T_{x_{\max}}) > \alpha$ umesto 
+$\Delta(T_0, T_x) > \alpha$. Ako broj alternativa, $k$ raste, tako
+raste i sansa da nadjemo $\Delta(T_0, T_{x_{\max}}) > \alpha$.
+Osim ako se funkcija $\Delta$ ili ogranicenje $\alpha$ ne
+modifikuju taok da uracunaju broj alternativa $k$, algoritam moze
+neadekvatno dodavati superiorne cvorove u model sto dovodi
+do preprilagodjenja.
+
+Ovaj efekat je izrazeniji kada je broj slogova za treniranje
+mali, jer ce disperzija $\Delta(T_0, T_{x_{\max}})$ biti velika
+kada ima manje slgova mogucih za treniranje. Kao rezultat
+verovatnoca da nadjemo $\Delta(T_0, T_{x_{\max}}) > \alpha$ raste
+sa manjim brojem slogova treniranja. Ovo se desava kada drvo
+odlucivanja raste u dubinu, sto smanjuje slogove koje pokrivaju 
+cvorovi i povecava sansu dodavanja nepotrebnih cvorova u drvo.
 
 ### Procenjivanje greske generalizacije
 
+Kompleksnost modela ima uticaj na preprilagodjavanje modela.
+Postavlja se pitanje kako odrediti pravu kompleksnost modela?
+Idealna kompleksnost je onda koja proizvodi najmanju gresku
+generalizacije.
+ 
+**Procenjivanje resuptitucijom**
+
+Pristup resupstitucijom podrazumeva da je skup za treniranje 
+reprezentativan. Onda greska treniranje, ili greska resupstitucije
+se moze istoristi za optimalno procenjivanje greske generalizacije.
+Ali greska treniranja je obicno losa procena greske generalizacije.
+
+**Primer**: Greska drveta odlucivanja `Tl` je $e(T_l)=4/24=0.167$,
+dok je greska drveta odlucivanja `Tr` je $e(T_r)=6/24=0.25$. Zbog 
+toga na osnovu procenjivanja resuptitucije, levo drvo je bolje
+od desnog drveta.
+
+```
+            ___                       ___
+            / \                       / \
+           /   \                     /   \
+          /     \                   /     \
+       ---       ---             ---       ---
+      /  \       /  \           /  \       /  \
+     /    \     /    \         /    \     /    \
+    /      \   /      \       /      \   /      \
+  ---    ---  +:3    ---    +:5     +:1 +:3     +:3
+ /   \  /   \ -:0   /   \   -:2     -:4 -:0     -:6
++:3 +:2 +:0 +:1   +:3  +:0
+-:1 -:1 -:2 -:2   -:1  -:5            (Tr)
+        
+            (Tl)                    
+```
+
+**Inkorporiranje kompleksnosti modela**
+
+**Definija: (Okamov brijac)** Za dva modela sa istom greskom
+generalizacije, jednostavniji model se preferira u odnosu na 
+kompleksniji model.
+
+**Pesimisticna procena greske** Eksplicitno se racuna greska
+generalizacije kao suma greske treniranje i dodatnog kaznena
+vrednost kompleksnosti modela. Neka je $n(t)$ broj slogova 
+treniranja klasifikacijom cvora $t$ i $e(t)$ broj pogresno
+klasifikovanih slogova. Pesimisticka procena greske drveta 
+odlucivanja $T$ je:
+$$e_g(T)=
+\frac{\sum_{i=1}^k [e(t_i) + \Omega(t_i)]}{\sum_{i=1}^k n(t_i)}=
+\frac{e(T) + \Omega(T)}{N_t}$$
+gde je $k$ broj listova, $e(T)$ greska treniranja drveta odlucivanja
+$T$, $N_t$ broj slogova za treniranja, i $\Omega(t_i)$ kaznena 
+vrednost za svaki cvor $t_i$.
+
+**Primer** Za primer od malopre i $\Omega(t_i)=0.5$ vazi sledece:
+$$e_g(T_l) = \frac{4 + 7 \times 0.5}{24} = \frac{7.5}{24} = 0.3125$$
+$$e_g(T_r) = \frac{6 + 7 \times 0.5}{24} = \frac{8}{24} = 0.3333$$
+Pa levo drvo ima bolju pesimisticku gresku od desnog drveta.
+Za binarna drveta, kaznena vrednost od $0.5$ znaci da cvor treba
+uvek biti prosiren u dva deteta svo dok se klasifikacija poboljsava
+za bar po jedan slog.Za $\Omega(t_i)$ = 1$ imamo da je 
+$e_g(T_l)=11/24=0.458$, dok je $e_g(T_l)=10/24=0.417$. U ovom 
+slucaju bolju pesimisticku gresku ima levo drvo. Pa cvor se ne sme 
+sirti u decu sem ukoliko to smanjuje pogresne klasifikacije za 
+vise od jednog sloga.
+
+**Princim minimalno opisane duzine**. Razmotrimo primer gde su
+`A` i `B` dati skupovi slogova sa poznatim vrednostima atributa 
+$\mathbf{x}$. Dodatno, za skup `A` znamo tacno svaku klasnu oznaku
+za svaki slog, dok za skup `B` ne znamo ni jednu klasnu oznaku.
+`B` moze da klasifikuje svaki slog tako sto zatrazi od `A` da mu
+posalje svaku klasnu oznaku sekvencijalno. Ova poruka zahteva
+$\Theta(n)$ bitova informacija, gde je $n$ ukupan broj slogova.
+
+Alternativno, `A` moze da napravi klasifikacioni model veza izmedju
+$\mathbf{x}$ i $y$. Model se moze enkodirati u kompaktnu formu 
+pre nego sto se posalje u `B`. Ako je model $100%$ tacan, tada
+ce cena prebacivanja biti ekvivalentna ceni enkodiranja modela.
+U suprotnom, `A` mora prebaciti informaciju o slogu koji je 
+klasifikovan pogresno sa tim modelom. Pa je ukupna cena prebacivanja
+$$Cost(model, data) = Cost(model) + Cost(data | model)$$
+Trazimo model koji minimizuje ukupni cenu. 
+
+**Procenjivanje statistickih granica**
+
+Kako je greska generalizacije tipicno veca od greske treniranja,
+statisticka korekcija se obicno racuna kao gornja granica
+greske treniranja, koja uzima broj slogova treniranja koji
+dostignu odredjeni list.
+
+**Primer** Posmatramo primer od ranije, i primetimo da se najlevlji
+list drveta $T_r$ prosiruje u dva detata u drvetu $T_l$. 
+Pre razdvajanja greska cvora je $2/7=0.286$. Aproksimiranje binomne
+distribucije sa normalnom, gornja granica greske $e$ je:
+$$e_{upper}(N,e,\alpha)=
+\frac{
+    e + 
+    \frac{z_{\alpha/2}^2}{2N} + 
+    z_{\alpha/2}
+    \sqrt{
+        \frac{e(1-e)}{N} + \frac{z_{\alpha/2}^2}{4N^2}
+    }}
+    {1 + \frac{z_{\alpha/2}^2}{N}}$$
+gde je $\alpha$ nivo samopouzdanja, $z_{\alpha/2}$ standardizovana
+vrednost standardne normalne distribucije, i $N$ je ukupan broj
+slogova za treniranje koji se koristi da se izracuna $e$. Za
+$\alpha=25%, N=7, e=2/7$, imamo $e_{upper}=0.503$ pa imamo
+$7 \times 0.503 = 3.521$ gresaka. Ako prosirimo cvor u decu cvorove,
+greske treniranja dece su $1/4=0.250$ i $1/3=0.333$, respektivno.
+Gornje granice ovih gresaka su $e_{upper}=0.537$ i $e_{upper}=0.650$,
+respektivno. Pa je ukupna greska deteta cvorova $4 \times 0.537 + 
+3 \times 0.650 = 4.098$, sto je vece nego procenjena greska
+odgovarajuceg cvora u $T_r$.
+
+**Koriscenje skupa validacija**
+
+U ovom pristupu, umesto koriscenja skupa za treniranje pri 
+odredjivanje greske generalizacije, originalni skup za treniranje 
+se deli u dva manja podskupa. Jedan se koristi za treniranje, dok
+se drugi koristi za procenu greske generalizacije. Drugi skup se
+jos i naziva skup validacija. Tipicno se jedna trecina skupa koristi
+za skup validacija. Kompleksnost modela se moze odrediti na osnovu 
+parametara algoritama ucenja, pa tako u zavisnosti od greske
+skupa validacija mozemo menjati te parametre kako bi dobili 
+najmanju gresku na tom skupu (na primer, potkresivanje drveta
+odlucivanja). 
+
 ### Preprilagodjavanje u indukovanje drveta odlucivanja
+
+**Predpotkresivanje (Pravilo ranog zaustavljanja)**
+
+Algoritam rasta drveta odlucivanja se zaustavlja pre nego sto
+drvo potpuno poraste i savrseno odgovara celokupnom skupu podataka
+za treniranje. U ovom pristupu se koristi stroziji uslov 
+zaustavljanja, kao na primer, prestani da siris listove kada se
+primeti da rast u meri necistoce padne ispod odredjene linije.
+Prednosti ovog pristupa je to sto izbegavamo generisanje kompleksnog
+poddrveta koje moze da bude preprilagodjeno. Ali tesko je odrediti
+pravu granicu zaustavljanja. Prevelika granica moze razultovati
+u neprilagodjenom modelu, dok mala moze biti nedovoljno da 
+prebrodi problem preprilagodjavanja. Stavise, iako trenutno
+sirenje mozda nema uticaja, mozda ce neko sirenje u njegovom 
+poddrvetu imati ogroman uticaj na rezultat.
+
+**Postpotkresivanje**
+
+Inicijalno drvo odlucivanja raste u potpunosti, nakon cega sledi
+proces potresivanje, koje odseca drvo odozdo nagore. Odsecanjem
+zamenjujemo poddrvo sa:
+1. Novim listom cija klasna oznaka odgovara vecini slogova
+   poddrveta.
+2. Najcesce koriscenom granom poddrveta.
+Ovaj postupak se zaustavlja kada nema poboljsanja. Obicno 
+postpotkresivanje daje bolje rezultate, kako odlucuje nad potpuno
+izraslim drvetom, ali zbog toga je racunski skuplje.
 
 ## Racunanje performanse klasifikatora
 
+Procenjivanje greske pruza algoritmu ucenja da odradi **odabir
+modela**, tj. da nadje model koji je odgovarajuce kompleksnosti
+tako da ne bude podlozan preprilagodjavanju.
+
+Cesto je bitno izmeriti performanse modela na skup za testiranje
+kako mera pruza nepristransu procenu greske generalizacije.
+Tacnost ili greska izracunata nad skupom za testiranje moze
+se uporedjivati sa relativnim performansama drugih klasifikatora 
+istog domena. Medjutim, klasne oznake slogova za testiranje moraju
+biti poznata.
+
+### Metod zadrzavanja
+
+Originalni podaci sa oznacenim klasana su podeljeni na dva 
+disjunktna skupa, nazvana skup za treniranje i skup za testiranje.
+Klasifikacioni model se onda indukuje iz skupa za treniranje i 
+njegove performanse se racunaju nad skupo za testiranje. Proporcija
+podataka za treniranje u odnosu na podatke za testiranje je
+je sklona ka podacima za treniranje, tj. na primer $50\%:50\%$ ili 
+$70\%:30\%$. Tacnost klasifikatora se moze dobiti od tacnosti
+indukovanog modela nad skupom za testiranje.
+
+Ovaj metod ima nekoliko ogranicenja. (1) Imamo manje oznacenih
+primerza za treniranje jer neki slogovi za cuvaju za testiranje.
+(2) Model moze biti veoma zavisan na strukturu skupova za treniranje
+i testiranje. Sto je manji skup za treniranje, veca je disperzija
+modela. Sa druge strane, ako je skup za treniranje velik, onda je 
+procena tacnosti izracunata od manjeg skupa za testiranje manje
+relevantna. Za takva procenu tacnosti se kaze da ima siroki interval
+samopouzdanje. (3) Skup za treniranje i testiranje nisu vise 
+nezavisni. Klasa koja je previse zastupna u jednom skupu bice 
+manje zastupna u drugom skupu, i obrnuto.
+
+### Nasumicno uzorkovanje
+
+Ako ponavljamo metod zadrzavanja nekoliko puta time povoljsavamo
+procenu performanse klasifikatora. Ovaj pristup se zove 
+nasumicno uzorkovanje. Neka je $acc_i$ tacnost modela u $i$-toj
+iteraciji. Ukupna tacnost je data sa $acc = \sum_{i=1}^k acc_i / k$.
+Nasumicno uzorkovanje, takodje, ima svoje probleme, kao sto je
+ne iskoriscavanje svih podataka za treniranje. Isto tako nema
+ni kontrolu nad brojem koriscenja nekog sloga u testiranje ili
+treniranju, zbog toga neki slogovi mogu biti korisceni vise u 
+treniranju od drugih.
+
+### Unakrsna-Validacija
+
+Za razliku od nasumicnog uzorkovanje, unakrsna-validacija 
+podrazumeva da je svaki slog koriscen isti broj puta za treniranje 
+i tacno jednom za testiranje. 
+
+Pretpostavimo da su podaci podeljeni u dva jednaka podskupa. 
+(1) Odaberemo jedan podskup za treniranje i drugi za testiranje.
+(2) Onda zamenimo ulogu podskupova za treniranje i testiranje.
+Ovaj postupak se naziva dvostruko preklapanje unakrsne-validacije.
+Ukupna greska se dobija sumiranje sresaka u oba slucaja. Svaki
+slog se koristi tacno jednom za treniranje i tacno jednom za 
+testiranje.
+
+$k$-tostruko preklapanje unakresne-validacije generalizije ovaj 
+pristup tako sto particionise podatke u $k$ jednakih particija.
+Tokom svakog pokretanja, jedna particija se bira za testiranje,
+dok se ostale koriste za treniranje. Ova procedura se ponavlja $k$
+puta tako da se svaka particija iskoristi tacno jednom. Ukupna
+greska se dobija sumiranjem gresaka za svaki od $k$ pokretanja.
+
+Specijalni skucaj %k%-tostrukog preklapanje unakrsne-validacije
+je za $k=N$, gde je $N$ ukupan broj slogova. U ovom slucaju svaki
+skup za testiranje sadrzi samo jedan slog (**izbaci jedan**). 
+Ovaj pristup ima za to da iskoristi sto vise podataka za bolje
+treniranje. Takodje, skupovi za testiranje se iskljucuju i
+njihova efikasnost pokriva celokupan skup podataka. Mali nedestatak
+ovog pristupa je to sto je racunski skupo, jer se procedura 
+ponavlja $N$ puta.
+
+### Bootstrap
+
+Ovaj metod omogucava da se slogovi dupliraju tako da se nalaze
+i u skupu za treniranje i testiranje. Bootstrap metod uzima
+slogove za treniranje *sa vracanjem*. Verovatnoca da se odabere
+neki slog bootstrap metodom je $1 - (1 - 1/N)^N$. Kada 
+$N \rightarrow \infty$, onda se ova verovatnoca ponasa kao
+$1 - e^{-1} = 0.632$, pa iz toga imamo da ce skup zadrzati oko
+$63.2%$ slogova iz originalnog skupa. Tacnost indukovanog modela 
+dobijenog koriscenjem bootstrap tehnike je $\epsilon_i$. Ova
+procedura moze da ima $b$ ponavljanja.
+
+Postoje nekoliko mogucnosti za racunanje ukupne tacnosto. Jedna
+od najpopularnijih je **.632 bootstrap**, koja racuna ukupnu tacnost
+modela kao:
+$$acc_{boot} = \frac{1}{b} \sum_{i=1}^b (0.632 \times \epsilon_i +
+0.368 \times acc_s)$$
+gde je $acc_s$ tacnost izracunata iz skupa za treniranje koji 
+sadrzi sve oznacene slogove iz originalnih podataka.
+
 ## Metodi za uporedjivanje klasifikatora
+
+Cesto je korisno uporediti performanse drugacijih klasifikatora, da
+bi odredilo koji klasifikator bolje odgovara datom skupu podataka.
+
+Neka je dat par klasifikacionih modela $M_A$ i $M_B$. Pretpostavimo
+da $M_A$ ima $85\%$ tacnosti kada se primeni na skup za testiranje
+koji sadrzi $30$ slogova, dok $M_B$ dostize $75\%$ tacnosti na
+drugaciji skup za testiranje koji sadrzi $5000$ slogova. Da li je
+onda model $M_A$ bolji od modela $M_B$?
+
+Ovime dolazimo do dva kljucna pitanje:
+
+1. Iako model $M_A$ ima vecu tacnost od modela $M_B$, on je testiran
+   na manjem skupu za treniranje. Koliko poverenja mozemo da imamo
+   na tacnost modela $M_A$?
+   Ovo pitanje se odnosi na problem procene pouzdanja intervala 
+   tacnosti za dati model.
+2. Da li je moguce objasniti razlike u tacnosti kao rezultat
+   varijacija u skupovima za testiranje?
+   Ovo pitanje se odnosi na problem statisticke znacajnosti 
+   skupa za testiranje
+
+### Procenjivanje intervala pouzdanja za tacnost modela
+
+Da bi odredili interval pouzdanja, moramo odrediti raspodelu 
+mere tacnosti. Neka:
+
+1. Eksperiment sadrizi $N$ nezavisnih pokusaja, gde svaki pokusaj
+   ima dve mogucnosti: *uspeh* ili *neuspeh*.
+2. Verovatnoca uspeha je $p$, za svaki pokusaj.
+
+Ako je $X$ broj uspeha od $N$ pokusaja, onda je verovatnoca da 
+$X$ ima odredjenu vrednost data **Binomnom raspodelom**, cije 
+je ocekivanje $Np$, disperzija $Np(1-p)$, i vazi:
+$$P(X = k) = \binom{N}{k}p^k(1-p)^{N-k}$$
+
+Zadatak predvidjanja klasne oznake sloga za testiranje moze se
+posmatrati kao binomni eksperiment. Za dati skup za testiranje
+koji ima $N$ slogova, neka je $X$ broj slogova koji je predvidjen
+tacno datim modelom, i neka je $p$ prava tacnost modela. U ovom
+slucaju $X$ ima binomnu raspodelu, pa i $acc=X/N$ takodje ima 
+binomnu raspodelu sa ocekivanjem $p$ i disperzijom $p(1-p)/N$.
+Iz toga mozemo odrediti interval pouzdanja kao:
+$$P(-Z_{\alpha/2} \leq \frac{acc - p}{\sqrt(p(1-p)/N)} \leq Z_{1 - alpha/2}) = 1 - \alpha$$,
+gde su $Z_{\alpha/2}$ i $Z_{1-\alpha/2}$ gornja i donja granica
+standardne normalne distribucija nivao pouzdanja $(1-\alpha)$.
+Iz prethodne jednacine mozemo dobiti sledecu tabelu:
+
+| $(1-\alpha)$   | 0.99 | 0.98 | 0.95 | 0.9  | 0.8  | 0.7  | 0.5  |
+|:--------------:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
+| $Z_{\alpha/2}$ | 2.58 | 2.33 | 1.96 | 1.65 | 1.28 | 1.04 | 0.67 |
+
+**Primer**: Neka je dat model koji ima tacnost $80\%$ koja je
+izracunata nad skupom za testiranje od $100$ slogova. Koji je 
+interval pouzdanja za stvarnu tacnost u $95\%$ nivou pouzdanja.
+Nivo pouzdanja od $95\%$ odgovara $Z_{\alpha/2}=1.96$ iz tabele.
+Iz ovoga dobijamo da je interval pouzdanja izmedju $71.1\%$ i 
+$86.7\%$. Kako broj slogova skupa za testiranja $N$ raste tako
+interval pouzdanja postaje sve uzi i uzi.
+
+### Racunanje performansi dva modela
+
+Neka je dat par modela $M_1$ i $M_2$, koji su dobijeni od dva
+nezavisna skupa podataka $D_1$ i $D_2$, respektivno. Neka je $n_1$
+broj slogova u $D_1$ i $n_2$ broj slogova u $D_2$. Takodje naka je
+$e_1$ greska modela $M_1$ nad $D_1$, i $e_2$ greska modela $M_2$ 
+nad $D_2$. Cilj je odrediti da li je razlika izmejdu $e_1$ i $e_2$
+statisticki znacajna.
+
+Neka su $n_1$ i $n_2$ dovoljno veliki, onda se greske $e_1$ i $e_2$
+mogu aproksimirati normalnom raspodelom. Neka je $d=e_1-e_2$,
+onda $d$ ima normalnu raspodelu sa ocekivanjem 
+(pravom razlikom) $d_t$, i disperzijom $\sigma_d^2$.
+Disperzija i ocekivanje od $d$ mogu se izracunati kao:
+$$\hat\sigma_d^2 = \frac{e_1(1-e_1)}{n_1} + \frac{e_2(1-e_2)}{n_2};\
+d_t = d \pm z_{\alpha/2} \hat\sigma_d.$$
+
+**Primer** Posmatrajmo problem opisan na pocetku. Model $M_A$ ima
+greksu $e_1=0.15$ kada se primeni na $N_1=30$ test slogova, dok
+$M_B$ ima gresku $e_2=0.25$ kada se primeni na $N_2=5000$ slogova.
+Onda je $d=|0.15-0.25|=0.1$. Dalje imamo da je:
+$$\hat\sigma_d^2 = 
+\frac{0.15(1-0.15)}{30} + 
+\frac{0.25(1-0.25)}{5000}=0.0043;\
+d_t = 0.1 \pm 1.96 \times 0.00655 = 0.1 \pm 0.128,$$
+za nivo intervala pouzdanja $95\%$, te je onda $z_{\alpha/2}=1.96$.
+
+### Uperedjivanje performansi dva klasifikatora
+
+Pretpostavimo da hocemo da uporedimo performanse dva klasifikatora
+koja koriste $k$-tostruko preklapanje unakrsne-validacije. 
+Inicijalno skup podataka $D$ se deli u $k$ jednakih particija. Onda
+svaki od klasifikatora indukuje model nad $k-1$ particija i 
+testira ga na neiskoriscenoj particiji. Ovaj korak se ponavlja $k$
+puta, i svaki put se koristi druga particija kao skup za testiranje.
+
+Neka je $M_{ij}$ model koji je indukovan klasifikacionom tehnikom 
+$L_i$ tokom $j$-te iteracije. Svaki par $M_{1j}$ i $M_{2j}$ je
+testiran na istoj particiji $j$. Neka su $e_{1j}$ i $e_{2j}$
+njihove greske, respektivno. Razlika greske tokom $j$-te iteracije
+je $d_j = e_{1j} - e_{2j}$. Ako je $k$ dovoljno veliko, onda
+$d_j$ ima normalnu raspodelu sa ocekivanje $d_t^{cv}$, sto je
+prava razlika njihih greski, i disperziju $\sigma^{cv}$.
+Celokupna disperzija i ocekivanje mogu da se procene kao:
+$$\hat\sigma_{d^{cv}}^2=\frac{\sum_{j=1}^k(d_j-\bar d)^2}{k(k-1)};\
+d_t^{cv} = \bar d \pm t_{(1-\alpha), k-1} \hat\sigma_{d^{cv}}$$
+gde je $\bar d$ prosecna razlika, i koeficijent 
+$t_{(1-\alpha), k-1}$ je dobijen iz tablice verovatnoce dva 
+parametra, nivoa pouzdanosti $(1-\alpha)$ i broja stepena slobode
+$k-1$.
 
 # Klasifikacije: Alternativne tehnike
 
