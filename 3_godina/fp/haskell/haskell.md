@@ -396,4 +396,264 @@ f . g = \x -> f (g x)
 * Zapisimo ovo preko kompozicija funkcija 
   `f x = ceiling (negate (tan (cos (max 50 x))))`
   * Dobijamo
-  `f = ceiling . negate . tan . cos . max 50
+  `f = ceiling . negate . tan . cos . max 50`
+
+## Konstrukcija tipova i Klasnih tipova
+
+### Algebarske tiovi podatak
+
+* Jedan nacin definisanja tipa je koriscenjem kljucne reci `data`
+```haskell
+data Bool = True | False
+
+data Int = -2147483648 | -2147483647 | ... | -1 | 0 | 1 | 2 | ... | 2147483647
+
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+```
+
+* `data` znaci da definisemo novi tip, nakon cega sledi ime tipa
+  koje se pise velikim slovom, a nakon imena je `=`, nakon cega 
+  je **konstruktor vrednosti**. Simbol `|` se cita *ili*.
+* `Shape` predstavlja ili `Circle` ili `Rectangle`, ali nakon
+  njim imamo Float tipve. (Zasto?) Kako bih obezbedili nacin
+  na koji se konstruise `Circle` specifikujemo dodatna tri `Float`
+  nakon definisanja njegovog imena, slicno za `Rectangle`.
+* `Circle` i `Rectangle` su nista drugo no funkcije od kojih 
+  se dobija `Shape`.
+```haskell
+Prelude> :t Circle
+Circle :: Float -> Float -> Float -> Shape
+Prelude> :t Rectangle
+Rectangle :: Float -> Float -> Float -> Float -> Shape
+```
+
+### Slog sintaksa
+
+```haskell
+data Person = Person { firstname :: String
+                     , lastname :: String
+                     , age :: Int
+                     , height :: Float
+                     , number :: String
+                     , icecream :: String
+                     } deriving (Show)
+```
+
+```haskell
+*Main> let guy = Person "Pera" "Peric" 32 180.0 "0641112233" "Vanila"
+*Main> lastname guy
+"Peric"
+*Main> icecream guy
+"Vanila
+*Main> guy
+Person {firstname = "Pera", lastname = "Peric", age = 32, height = 180.0, number = "0641112233", icecream = "Vanila"}
+```
+
+### Tipovski parametri
+
+* **Tipovksi konstruktor** uzima tipove kao parametre i od njih 
+  pravi nove tipove.
+```haskell
+data Maybe a = Just a | Nothing
+```
+* U ovom primeru je `Maybe` tipovski konstruktor koji uzima 
+  parametar `a`.
+  * Sve sto je levo od `=` je tipovski konstruktor, a sve sto je
+    desno od `=` je konstruktor vrednosti razdvojen sa `|`.
+```haskell
+data Vector a = Vector a a a deriving (Show)
+
+vecSum :: (Num a) => Vector a -> Vector a -> Vector a
+vecSum (Vector x y z) (Vector a b c) = Vector (x+a) (y+b) (z+c)
+
+vecMult :: (Num a) => Vector a -> a -> Vector a
+vecMult (Vector x y z) a = Vector (a*x) (a*y) (a*z)
+```
+
+### Izvedene instance
+
+* Tip je **instanca** neke tipovske klase ako podrzava to ponasanje.
+* Za izvodjenje neke klase kao instance nekog tipa koristi se
+  kljucna rec `deriving` a nako nje u zagradima se navode
+  tipovske klase koja onda izvodi razdvojene zarezom.
+* Primer bez definisanje operacija `==` i `/=` kada `Person` izvodi
+  klasu `Eq`.
+  * U ovom slucaju se koristi *default* operacija `==` i 
+    `/=` primitivnih tipova.
+```haskell
+*Main> let guy1 = Person "Pera" "Peric" 32 180.0 "0641112233" "Vanila"
+*Main> let guy2 = Person "Pera" "Zdera" 32 180.0 "0641112233" "Vanila"
+*Main> guy1 == guy2
+False
+```
+```haskell
+data Dan = Ponedeljak | Utorak | Sreda | Cetvrtak | Petak | Subota | Nedelja deriving (Show, Read, Eq, Ord, Bounded, Enum)
+```
+```haskell
+*Main> Nedelja
+Nedelja
+*Main> show Nedelja
+"Nedelja"
+*Main> read "Nedelja" :: Dan
+Nedelja
+*Main> compare Nedelja Ponedeljak
+GT
+*Main> Nedelja == Ponedeljak
+False
+*Main> minBound :: Dan
+Ponedeljak
+*Main> maxBound :: Dan
+Nedelja
+*Main> pred Nedelja
+Subota
+*Main> succ Ponedeljak
+Utorak
+*Main> [Ponedeljak .. Petak]
+[Ponedeljak,Utorak,Sreda,Cetvrtak,Petak]
+```
+
+### Tipovski sinonimi
+
+* `[Char]` i `String` su ekvivalentni i mogu se koristiti bilo kako.
+* Ovi tipovi se nazivaju **sinonimi**. Sluze samo za drugo imenovanje
+  istog tipa.
+* Definisu se pomocu kljucne reci `type` nakon cega je ime sinonima,
+  nakon cega je `=`, nakon cega je neki drugi vec definisan tip.
+```hasekll
+type Ime = String
+type Broj = String
+type Imenik = [(Ime, Broj)]
+
+uImeniku :: Ime -> Broj -> Imenik -> Bool
+uImeniku ime broj imenik = elem (ime, broj) imenik
+```
+* Sinonimi takodje mogu biti parametrizovani
+```haskell
+type AsoccList k v = [(k,v)]
+```
+* Jos jedan kul tip je `Either a b`:
+```haskell
+data Either a b = Left a | Rigth b deriving (Show, Read, Eq, Ord)
+```
+* Dok se `Maybe` koristi kao povratna vrednost neke funkcije koja
+  moze da se ne izracuna, `Either` se koristi u funkcijama za koje
+  zelimo da znamo zbog cega nesto nije mogulo da se izracuna.
+  Pa tako povratnu vrednost postavljamo na `Right`, dok razlog greske
+  ukoliko postoji postavljamo na `Left`.
+```hasekll
+data OrmaricStanje = Zauzeto | Slobodno deriving (Show, Eq, Ord)
+
+type Kod = String
+type OrmaricMapa = Map.Map Int (OrmaricStanje, Kod)
+
+pregledOrmarica :: Int -> OrmaricMapa -> Either String Kod
+pregledOrmarica brojOrmarica mapa =
+    case Map.lookup brojOrmarica mapa of
+        Nothing -> Left $ "Ormaric broj " ++ show brojOrmarica ++ " ne postoji!"
+        Just (stanje, kod) ->
+            if stanje == Zauzeto
+                then Left $ "Ormaric broj " ++ show brojOrmarica ++ " je zauzet!"
+                else Right kod
+```
+
+
+### Rekurzivne strukture podataka
+
+```haskell
+infixr 5 :+:
+data Lista a = Prazna | a :+: (Lista a) deriving (Show, Read, Eq, Ord)
+
+data Drvo a = PraznoDrvo | Cvor a (Drvo a) (Drvo a) deriving (Show, Read)
+
+noviCvor :: a -> Drvo a
+noviCvor x = Cvor x PraznoDrvo PraznoDrvo
+
+ubaciCvor :: (Ord a) => a -> Drvo a -> Drvo a
+ubaciCvor x PraznoDrvo = noviCvor x
+ubaciCvor x (Cvor a levo desno)
+    | x == a = Cvor x levo desno
+    | x < a  = Cvor a (ubaciCvor x levo) desno
+    | x > a  = Cvor a levo (ubaciCvor x desno)
+
+elemtCvor :: (Ord a) => a -> Drvo a -> Bool
+elemtCvor x PraznoDrvo = False
+elemtCvor x (Cvor a levo desno)
+    | x == a = True
+    | x < a  = elemtCvor x levo
+    | x > a  = elemtCvor x desno
+```
+
+### Tipovske klase 102
+
+```haskell
+class Eq a where
+    (==) :: a -> a -> Bool
+    (/=) :: a -> a -> Bool
+    x == y = not (x /= y)
+    x /= y = not (x == y)
+
+data Semafor = Crveno | Zuto | Zeleno deriving (Show)
+
+instance Eq Semafor where
+    Crveno == Crveno    = True
+    Zuto   == Zuto      = True
+    Zeleno == Zeleno    = True
+    _      == _         = False 
+
+instance Show Semafor where
+    show Crveno = "Crveno svetlo"
+    show Zuto   = "Zuto svetlo"
+    show Zeleno = "Zeleno svetlo"
+```
+
+### Da-Ne klasa tipova
+
+```haskell
+class DaNe a where
+    dane :: a -> Bool
+
+instance DaNe Int where
+    dane 0 = False
+    dane _ = True
+
+instance DaNe [a] where
+    dane [] = False
+    dane _  = True
+
+instance DaNe Bool where
+    dane = id
+
+instance DaNe (Maybe a) where
+    dane Nothing  = False
+    dane (Just _) = True
+
+instance DaNe (Drvo a) where
+    dane PraznoDrvo = False
+    dane _          = True
+
+instance DaNe Semafor where
+    dane Crveno = False
+    dane _      = True
+```
+```haskell
+*Main Map> dane Crveno
+False
+*Main Map> dane (Just 3)
+True
+*Main Map> dane (Nothing)
+False
+*Main Map> dane (PraznoDrvo)
+False
+*Main Map> dane (noviCvor 2)
+True
+*Main Map> dane True
+True
+*Main Map> dane False
+False
+*Main Map> dane []
+False
+*Main Map> dane [1,2,3]
+True
+```
+
+### Funktor tipovska klasa
