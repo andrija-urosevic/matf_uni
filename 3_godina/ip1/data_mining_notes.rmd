@@ -4,6 +4,8 @@ author: Andrija Urosevic
 output: pdf_document 
 ---
 
+\tableofcontents
+
 # Uvod
 
 Sakupljanje podataka neverovatno brzo raste, u smislu kolicine, ali
@@ -1206,21 +1208,21 @@ takodje nazvan i instanca ili primer, se kategorizuje torkom
 $(\mathbf{x}, y)$, gde je $\mathbf{x}$ skup atributa i $y$ je 
 specijalni atribut (kategoricki/ciljani/target atribut). 
 Sledeca tabela sadrzi skup podataka za klasifikovanje zivotinja
-u sledece kategorije: mamut, gmizavac, riba, vodozemac, ptica.
+u sledece kategorije: sisar, gmizavac, riba, vodozemac, ptica.
 Skup atributa moze imati i neprekidne vrednosti, ali klasna oznaka
 mora da bude diskretni atribut. Ako je $y$ neprikidni atribut, onda
 se ovaj postupak naziva **regresija**.
 
 | Ime      | Temperatura tela | Zenka radja |Koza      | Morska stvorenja | Vazdusna stvorenja | Ima noge | Hibernira | Klasa     |
 |:--------:|:----------------:|:-----------:|:--------:|:----------------:|:------------------:|:--------:|:---------:|:---------:|
-| covek    | toplo-krvni      | da          | dlake    | ne               | ne                 | da       | ne        | mamut     |
+| covek    | toplo-krvni      | da          | dlake    | ne               | ne                 | da       | ne        | sisar     |
 | piton    | hladno-krvni     | ne          | krljosti | ne               | ne                 | ne       | da        | gmizavac  |
 | losos    | hladno-krvni     | ne          | krljosti | ne               | da                 | ne       | da        | riba      |
-| kit      | toplo-krvni      | da          | dlake    | da               | ne                 | ne       | ne        | mamut     |
+| kit      | toplo-krvni      | da          | dlake    | da               | ne                 | ne       | ne        | sisar     |
 | zaba     | hladno-krvni     | ne          | nista    | semi             | ne                 | da       | da        | vodozemci |
 | komodo   | hladno-krvni     | ne          | krljosti | ne               | ne                 | da       | ne        | gmizavac  |
 | papagaj  | toplo-krvni      | ne          | perije   | ne               | da                 | da       | ne        | ptica     |
-| macka    | toplo-krvni      | da          | krzno    | ne               | ne                 | da       | ne        | mamut     |
+| macka    | toplo-krvni      | da          | krzno    | ne               | ne                 | da       | ne        | sisar     |
 | kornjaca | hladno-krvni     | ne          | krljosti | semi             | ne                 | da       | ne        | gmizavac  |
 | pingvin  | toplo-krvni      | ne          | perije   | semi             | ne                 | da       | ne        | ptica     |
 
@@ -1231,7 +1233,7 @@ naziva i **klasifikacioni model**.
 
 **Opisno modelovanje**. Klasifikacioni model moze da sluzi za 
 opisivanje razlika imezju objekata drugih klasa. U primeru gore
-dobro je znati koje osobine ima mamut, ptica, riba, itd...
+dobro je znati koje osobine ima sisar, ptica, riba, itd...
 
 **Model predvidjanja**. Klasifikacioni model moze da se koristi
 za predvidjanje klase nepoznatih slogova. Na primer mozemo 
@@ -1290,13 +1292,13 @@ $$\mbox{Greska } = \frac{f_{10} + f_{01}}{f_{11} + f_{10} + f_{01} + f_{00}}$$
 ### Kako radi drvo odlucivanja?
 
 Razmotrimo primer od malopre, samo sto cemo klasifikovati zivotinje
-u dve grupe: mamuti i ne-mamuti. Postavlja se pitanje kako odrediti
-da li je novo pronadjena zivotinja mamut ili nije? Jedan pristup
+u dve grupe: sisari i ne-sisari. Postavlja se pitanje kako odrediti
+da li je novo pronadjena zivotinja sisar ili nije? Jedan pristup
 je postavljati niz pitanja o karakteristikama te zivotinje.
 Prvo pitanje da li je hladno-krvna ili toplo-krvna? Ako je 
-hladno-krvna definitivno nije mamut. Inace, je ili ptica ili mamut.
+hladno-krvna definitivno nije sisar. Inace, je ili ptica ili sisar.
 Sledece pitanje moze biti da li zenke radjaju? Ako je odgovor
-pozitivan onda su sigurno mamuti, inace vrlo verovatno nisu.
+pozitivan onda su sigurno sisari, inace vrlo verovatno nisu.
 
 Iz primera vidimo da problem klasifikacije mozemo da resimo tako
 sto pazljivo postavljamo odgovarajuca pitanja o atributima sloga.
@@ -1311,12 +1313,12 @@ koja sadrzi cvorove i usmerene grane.
                   /    \
            toplo /      \ hladno
                 /        \
-             zenka    ne-mamut
+             zenka    ne-sisar
              radja
              /   \
          da /     \ ne
            /       \
-        mamut   ne-mamut
+        sisar   ne-sisar
 ```
 
 Ovo drvo ima tri tipa cvorova:
@@ -1556,7 +1558,7 @@ slogova koji odgovaraju detetu, $v_j$. Algoritmi indukovanja
 drveta odlucivanja pokusavaju da maksimizije vrednost $\Delta$, tj.
 ekvivalentno da minimizuju tezinsku sredinu mere necistoce deteta.
 Kada je $I = \mbox{Entropy}$ onda se $\Delta_{\mbox{info}}$ naziva
-**dobitak informacije**.
+**informaciona dobit**.
 
 **Razdvajanje binarnih podataka**
 
@@ -1619,7 +1621,7 @@ Postoje dve strategije da se ovo resi. Prva strategija je
 restrikcija uslova testiranja na samo binarno razdvajanje. Druga
 strategija je modifikovanje kriterijuma za razdvajanje tako da
 uzme u racun broj rezultata koje uslov testiranja atributa 
-proizvodi. Na primer, **odnos dobitaka** se koristi za odredjivanje
+proizvodi. Na primer, **odnos dobiti** se koristi za odredjivanje
 koliko je neko razdvajanje dobro:
 $$\mbox{Gain ration} = \frac{\Delta_{\mbox{info}}}{\mbox{Split Info}}$$
 Ovde je $\mbox{Split Info} = - \sum_{i=1}^k P(v_i) \log_2 P(v_i)$
@@ -1748,7 +1750,7 @@ vreme kompleksnost ovog modela raste te se gubi na generalizaciji.
 ### Preprilagodjavanje zbog prisustva suma
 
 Neka je dat skup za treniranje i testiranje za klasifikacioni 
-problem mamuta.
+problem sisara.
 
 Skup podataka za treniranje, koji ima dva objekta koja su pogresno
 klasifikovana i ona su oznacena sa \*:
@@ -1781,7 +1783,7 @@ Skup podataka za testiranje:
 | jez               | toplo-krvni      | ne          | da           | da        | da    |
 | gila monstrum     | hladno-krvni     | ne          | da           | da        | ne    |
 
-Razmotrimo sledeca dva modela klasifikacije za problem klasifikacije mamuta:
+Razmotrimo sledeca dva modela klasifikacije za problem klasifikacije sisara:
 
 ```
              temperatura             temperatura
@@ -1789,23 +1791,23 @@ Razmotrimo sledeca dva modela klasifikacije za problem klasifikacije mamuta:
                /    \                  /    \
         toplo /      \ hladno   toplo /      \ hladno
              /        \              /        \
-          zenka    ne-mamut       zenka    ne-mamut
+          zenka    ne-sisar       zenka    ne-sisar
           radja                   radja
           /   \                   /   \
       da /     \ ne           da /     \ ne
         /       \               /       \
-     cetiri   ne-mamut       mamut   ne-mamut         
+     cetiri   ne-sisar       sisar   ne-sisar         
       nogu                              (M2)
      /    \
  da /     \ ne
    /       \
- mamut   ne-mamut
+ sisar   ne-sisar
                (M1)
 ```
 
 Model `M1` savrseno odgovara skupu podataka za treniranje, te
 nema gresku treniranje. Sa druge strane greska testiranja je 
-$30\%$: Covek i delfin su pogresno klasifikovani kako jesu mamuti
+$30\%$: Covek i delfin su pogresno klasifikovani kako jesu sisari
 ali nisu cetvoronozni, dok je jez objekat koji se izuzetak u
 klasnoj tabeli. Greske pri izuzecima su neizbezne i one 
 postavljaju donju granicu greske bilo kog klasifikatora.
@@ -1837,22 +1839,22 @@ Treniranjem dobijamo sledeci model:
                /    \        
         toplo /      \ hladno
              /        \      
-        hibernira    ne-mamut  
+        hibernira    ne-sisar  
           /   \              
       da /     \ ne          
         /       \            
-     cetiri   ne-mamut       
+     cetiri   ne-sisar       
       nogu                   
      /    \
  da /     \ ne
    /       \
- mamut   ne-mamut
+ sisar   ne-sisar
 ```
 
 Greska treniranja ovog modela je nula, dok ge greska testranja 
 $30\%$: Covek, slon, i delfin su pogresno klasifikovani kako
 ovaj model klasifikuje zivotinje koje su toplo-krvene i ne 
-hiberniraju kao ne-mamute. Jasno je da dobijamo pogresna 
+hiberniraju kao ne-sisare. Jasno je da dobijamo pogresna 
 predvidjanja kada nemamo reprezentativne slogove.
 
 ### Preprilagodjavanje i procedura visestrukog poredjenja
@@ -1887,7 +1889,7 @@ koje je statisticki znacajno.
 
 Neka je $T_0$ inicijalno drvo odlucivanje i $T_x$ novo drvo nakon
 dodavanja unutrasnjeg covora za atribut $x$. $x$ se moze dodati u
-drvo ako je primeceni dobitak, $\Delta(T_0, T_x)$, veci od
+drvo ako je primecena dobit, $\Delta(T_0, T_x)$, veci od
 nekog predefinisanog ogranicenja $\alpha$. Ako postoji samo jedan
 uslov testiranja atributa koji moze da se primeni, onda mozemo
 izbeci ubacivanje cvora, tako sto odaberemo dovoljno veliko 
@@ -1980,7 +1982,7 @@ slucaju bolju pesimisticku gresku ima levo drvo. Pa cvor se ne sme
 sirti u decu sem ukoliko to smanjuje pogresne klasifikacije za 
 vise od jednog sloga.
 
-**Princim minimalno opisane duzine**. Razmotrimo primer gde su
+**Princip minimalno opisane duzine**. Razmotrimo primer gde su
 `A` i `B` dati skupovi slogova sa poznatim vrednostima atributa 
 $\mathbf{x}$. Dodatno, za skup `A` znamo tacno svaku klasnu oznaku
 za svaki slog, dok za skup `B` ne znamo ni jednu klasnu oznaku.
@@ -2280,5 +2282,700 @@ parametra, nivoa pouzdanosti $(1-\alpha)$ i broja stepena slobode
 $k-1$.
 
 # Klasifikacije: Alternativne tehnike
+
+## Klasifikator zasnovan na pravilima
+
+Klasifikator zasnovan na pravilima koristi kolekciju 'if..then..'
+pravila.
+```
+r1: (Radja=ne) and (Leti=da) -> Ptica
+r2: (Radja=ne) and (Pliva=da) -> Riba
+r3: (Radja=da) and (Tempteratura=toplo-krvna) -> Sisar
+r4: (Radja=ne) and (Leti=ne) -> Gmizavci 
+r5: (Pliva=semi) -> Vodozemac
+```
+Pravila se predstavljaju u disjunktnoj normalnoj formi 
+$R=(r_1 \lor r_2 \lor \ldots \lor r_k)$, gde se $R$ naziva 
+**skup pravila** i $r_i$ se nazivaju klasifikaciona pravila ili
+disjunktni. Svako klasifikaciono pravilo moze da se napise kao
+$$r_i:\ (Condition_i) \rightarrow y_i$$
+Leva strana pravila se naziva **preduslov**, i oblika je
+$$Condition_i = (A_1\ op\ v_1) \land (A_2\ op\ v_2) \land \ldots \land (A_k\ op\ v_k)$$
+gde je $(A_j, v_j)$ par atribut-vrednost i gde je $op$ 
+odgovarajuca logicka operacija iz skupa 
+$\{=, \neq, <, >, \leq, \geq \}$.
+Desna strana pravila se naziva **posledica pravila**, koja sadrzi
+klasu $y_i$.
+
+Pravilo $r$ *prekriva* slog $x$ ako se preduslov od $r$ poklapa sa
+atributima od $x$. Takodje za $r$ se kaze da *pali* ili *pokrece* 
+sve slogove koje pokriva. Neka su data sledeca dva sloga, za sokola 
+i grizlija:
+
+| Ime    | Temperatura tela | Zenka radja | Koza   | Morska stvorenja | Vazdusna stvorenja | Ima noge | Hibernira |
+|:------:|:----------------:|:-----------:|:------:|:----------------:|:------------------:|:--------:|:---------:|
+| sokol  | toplo-krvna      | ne          | perije | ne               | da                 | da       | ne        |
+| grizli | toplo-krvna      | da          | krzno  | ne               | ne                 | da       | da        |
+
+Kazemo da $r_1$ prekriva prvu zivotinju, sokola, zato sto je
+preduslod zadovoljen sokolovim atributima. Ali ovo pravilo ne 
+prekriva drugu zivotinju, grizlija, zato sto grizli radja i ne
+moze da leti, pa krsi pravilo $r_1$.
+
+Kvalitet klasifikacionog pravila moze se izracunati merama kao
+sto su prekrivenost i tacnost. Za dati skup podataka $D$ i 
+klasifikaciono pravilo $r: A \rightarrow y$, *prekrivenost pravila*
+se definise kao odnost broja slogova iz $D$ koja pravilo $r$ 
+pokrece i ukupnog broja slogova iz $D$. Dok je *tacnost* ili
+*faktor samopuzdanja* se definisa kao odnost broja slogova koje
+pokrece $r$ i cija je klasna oznaka jednaka $y$, i ukupnog broja
+slogova iz $D$:
+$$\mbox{Coverage}(r) = \frac{|A|}{|D|};\
+  \mbox{Accuracy}(r) = \frac{|A \cap y|}{|D|}$$
+
+### Kako klasifikator zasnovan na pravilima radi?
+
+Razmotrimo sledece slogove:
+
+| Ime       | Temperatura tela | Zenka radja | Koza     | Morska stvorenja | Vazdusna stvorenja | Ima noge | Hibernira |
+|:---------:|:----------------:|:-----------:|:--------:|:----------------:|:------------------:|:--------:|:---------:|
+| lemur     | toplo-krvna      | da          | krzno    | ne               | ne                 | da       | da        |
+| kornjaca  | hladno-krvna     | ne          | krljosti | semi             | ne                 | da       | ne        |
+| ajkula    | hladno-krvna     | da          | krljosti | da               | ne                 | ne       | ne        |
+
+* Prva zivotinja, lemur, je toplo-krvna i radja mlade. Ovo pali
+  pravilo $r_3$, pa se klasifikuje kao sisar.
+* Druga zivotinja, kornjaca, pali praviloa $r_4$ i $r_5$. Kako
+  su posledica ovih pravila dve razlicite klase, onda moramo
+  razresiti ovaj problem.
+* Treca zivotinja, ajkula, ne pali ni jedno pravilo. U ovom slucaju
+  moramo ipak napraviti nekakvo predvidjanje klase za slogove
+  koji nisu pokriveni pravilom.
+
+**Medjusobno iskljuciva pravila**. Pravila u skupu pravila $R$ su
+medjusobno iskljuciva ako se ni koja dva pravila iz $R$ ne 
+pokrecu istim slogom. Ovime se omogucava da svaki slog bude
+pokriven najvise jednim pravilom iz $R$.
+
+**Iscrpljujuca pravila**. Skup pravila $R$ ima iscrpljujuce
+pokrivanje ako postoji pravilo za svaku kombinaciju vrednosti
+atributa. Ovo omogucava da svaki slog bude pokriven
+bar jednim pravilom iz $R$.
+
+Primer skupa pravila $R$ za koji vazi da je medjusobno iskljuciv
+i iscrpljujuc:
+```
+r1: (Temperatura=hladno-krvna) -> ne-sisar
+r2: (Temperatura=toplo-krvna) and (Radja=da) -> sisar
+r3: (Temperatura=toplo-krvna) and (Radja=ne) -> ne-sisar
+```
+Ukoliko skup nije iscrpljiv moramo dodati defaultno pravilo
+$r_d : () \rightarrow y_d$, koje ce pokriti sve ostale slucaje.
+Ovde $y_d$ nazivamo defaultnom klasom.
+
+Ako skup pravila nije medjusobno iskljuciv, onda neki slog moze da
+trigeruju vise pravila, koji za posledicu pravila imaju razlicitu
+klasnu oznaku. Ovaj konflik moramo resiti:
+
+**Uredjena pravila**. Skup pravila uredjujemo po prioritetu.
+Uredjeni skup pravila se jos i naziva **lista odlucivanja**. 
+Dati slog se klasifikuje najvecim pravilom koje ga prekriva.
+
+**Neuredjena pravila**. Ovaj pristup dopusta da se vise 
+klasifikacionih pravila pokrenu i razmatra svako od njih kao
+tezinski glas neke klase. Slog se onda klasifikuje klasnom oznakom
+koja ima najveci broj glasova.
+
+### Seme uredjenja-pravila
+
+**Seme uredjenja baziranie na pravilima**. Ovaj pristup uredjuje
+pravila po nekoj meri kvaliteta pravila. Potencijalna opasnos ovog 
+pristupa je interpretacija pravila koja su rangirana nisko. Njih
+posmatramo kao negaciju svih pravila iznad njega i njega samog.
+
+**Seme uredjenja baziranie na klasama**. Pravila koja imaju istu
+posledicu, tj. predvidjaju istu klasu, se grupisu jedna do drugog.
+Relativno uredjenje unutar jedne grupe nije bitno. Ovima je
+interpretacija pravila jednostavnija.
+
+### Kako napraviti klasifikator zasnovan na pravilima?
+
+Da bi napravili klasifikator zasnovan na pravilima moramo izdvojimo
+skup pravila koje indentifikuju veze izmedju atributa skupa podataka
+i oznaka klasa. Postoje dva nacina za izdvajanje klasifikacionih 
+pravila: (1) *Direktni metod* - izdvaja pravila direktno iz skupa 
+podataka, i (2) *Indirektni metod* - izdvaja pravila iz nekih drugih
+klasifikatora.
+
+### Direktni metodi za izdvajanje pravila
+
+Algoritam **sekvencijalnog pokrivanja** se koristi za izdvajanje
+pravila direktno iz skupa podataka. Algoritam je zasnivan na
+gramzivoj tehnici, i izdvaja pravila jedne po jedne klase za
+skup podatak koji sadrzi vise od dve klase. Kriterium odlucivanja
+redosleda klasa zavisi od broja slogova koji pripadaju odredjenoj
+klase, i cene slogova koji su pogresno klasifikovani za datu klasu.
+```python
+def sequential_covering(training_records, attribute_value, classes, default_class):
+    rule_list = []
+    for y in oredered(classes):
+        while stop_cond():
+            rule = learn_one_rule(training_records, attribute_value, y)
+            training_records.remove_records_covered_by(rule)
+            rule_list.append(rule)
+    default_rule = make_default_rule(default_class)
+    rule_list.append(default_rule)
+    return rule_list
+```
+
+```
+    |-------------------|    |-------------------|
+    |  -  + +  -    -   |    |  -|----| -    -   |
+    | -  + +  -   -     |    | - | r1 |-   -     |
+    |  -  +   -  -    - |    |  -|----|-  -    - |
+    |      -    -   -   |    |      -    -   -   |
+    | -  -    -   + +   |    | -  -    -   + +   |
+    |  +  + -   -  +    |    |  +  + -   -  +    |
+    |-------------------|    |-------------------|
+
+    |-------------------|    |-------------------|
+    |  -|----| -    -   |    |  -|----| -    -   |
+    | - | r1 |-   -     |    | - | r1 |-   -     |
+    |  -|----|-  -    - |    |  -|----|-  -    - |
+    |      -    -   -   |    |      -    -   -   |
+    | -  -    -   |--|  |    | -__-_   -   |--|  |
+    |  +  + -   - |r2|  |    | | r3 |-   - |r2|  |
+    |-------------|--|--|    |-|----|------|--|--|
+```
+
+**Funkcija** `learn_one_rule`
+
+Glavni cilj `learn_one_rule` funkcije je da izdvoji klasifikaciono
+pravilo koje poklapa mnoge pozitivne primere, a ne poklapa
+negativne primere iz skupa za treniranje. Ali nalazenje optimalnog
+pravila je racunski skupo. Prvo se generise inicijalno pravilo $r$
+koje se obradjuje dok uslov zaustavljanja nije zadovoljen. 
+To pravilo se onda potkresuje za poboljsanje greske generalizacije.
+
+**Strategija rasta pravila**. Postoje dva nacina za rast 
+klasifikacionog pravila: generalno-u-specificno ili 
+specificno-u-generalno. 
+
+U slucaju generalno-u-specificno, inicijalno pravilo je 
+$r:\{\} \rightarrow y$. Nova konjukcija se dodaje u preduslovu
+da bi poboljsala kvalitet. Svaka naredna konjukcija se ispituje
+i gramzivo se bira ona koja najbolje poboljsava kvaliteta pravila.
+Ovaj proces staje kada se zadovolji neki uslov, na primer, 
+dodata konjukcija ne poboljsava kvalitet pravila.
+
+U slucaju generalno-u-specificno, inicijlano se nasumicno biraja
+jedno pravilo. U toku poboljsavanje ovog pravila, izbacuje se
+jedna po jedna konjukcija takoda pravilo pokriva vise pozitivnih
+slogova. Ovaj proces staje kada se zadovolji neki uslov, na primer,
+kada pravilo pocne da pokriva negativne slogove. 
+
+Ova dva postupka ne daju optimalno pravilo, jer koriste gramzicu
+tehniku. Zbog toga algoritam moze odrzavati $k$ najboljih kandidata.
+Svaki kandidat za pravilo raste posebno tako sto mu se dodaju ili
+izbacuju konjukcije. Kvalitet kandidata se racuna i $k$ najboljih
+se bira za sledecu iteraciju.
+
+**Evaluacija pravila**. Evaluaciona metrika se koristi za 
+odredjivanje konjukcije koju treba dodati ili izbaciti tokom
+rasta pravila. Jedna od mera koja moze da se koristi jeste
+tacnost pravila. Ali tacnost ne uzima u obzir broj primera koje 
+pokriva pravilo. 
+```
+Skup: 60 pozitivnih primera i 100 negativnih primera
+r1: poklapa 50 pozitivnih primera i 5 negativnih primera
+r2: poklapa  2 pozitivna  primera i 0 negativnih primera
+```
+Tacnosti za $r_1$ i $r_2$ su $90.9\%$ i $100\%$, respektivno. Ali
+$r_1$ je bolje pravilo bez obzira sto ima manju tacnost.
+Ovo mozemo resiti na vise nacina:
+
+1. Mozemo koristiti statisticki test za potkresivanje pravila
+   koje ima jadno pokrivanje. 
+   $$R=2 \sum_{i=1}^k f_i \log(f_i/e_i)$$
+   gde je $k$ broj klasa, $f_i$ je frevenvija pojave primera
+   klase $i$ koji su pokriveni pravilom, i $e_i$ ocekivana
+   frekvencija pravila koje pravi nasumicno predvidjanje.
+   Za pravilo $r_1$ imamo da je:
+   $e_{+} = 55 \times 60/160=20.625$, i 
+   $e_{-} = 55 \times 100/160=34.375$.
+   Onda je 
+   $$R(r_1) = 2 \times [50 \times \log_2 (50/20.625) 
+                       + 5 \times \log_2 (5/34.375)] = 99.9.$$
+   Dok je za pravilo $r_2$:
+   $e_{+} = 2 \times 60/160=0.75$, i 
+   $e_{-} = 2 \times 100/160=1.25$.
+   Onda je 
+   $$R(r_2) = 2 \times [2 \times \log_2 (2/0.75) 
+                       + 0 \times \log_2 (0/1.25)] = 5.66.$$
+   Pa je jasno pravilo $r_1$ bolje od pravila $r_2$.
+2. Evaluacione metrike koje uzimaju u racun pokrivenost pravila.
+   $$\mbox{Laplace} = \frac{f_{+}+1}{n+k};\
+     \mbox{m-estimate} = \frac{f_{+}+kp_{+}}{n+k}$$
+   gde je $n$ broj primera pokrivenih pravilom, $f_{+}$ broj
+   pozitivnih primera pokrevenih pravilom, $k$ ukupan broj klasa,
+   $p_{+}$ prvobitna verovatnoca pozitivne klase.
+   Za $r_1$ imamo da je Laplasova mera $51/57=89.47\%$, dok je 
+   Laplasova mera za $r_2$ jednaka $3/4=75\%$.
+3. Evaluaciona metrika koja uzima u racu broj pozitivnih primera
+   koje poklapa pravilo. Primer ove metrike je **FOILova 
+   informaciona dobit**. Neka pravilo $r:A \rightarrow +$ poklapa 
+   $p_0$ pozitivnih primera i $n_0$ negativnih primera. Nakon 
+   dodavanja nove konjukcije $B$, prosireno pravilo 
+   $r' : A \land B \rightarrow +$ pokriva $p_1$ pozitivnih primera
+   i $n_1$ negativnih primera. Onda je FOILova informaciona dobit
+   prosirenog pravila definisan kao
+   $$\mbox{FOIL's information gain} = p_1 \times 
+        (\log_2 \frac{p_1}{p_1 + n_1} - \log_2 \frac{p_0}{p_0 + n_0})$$
+
+**Potkresivanje pravila**. Pravilo koje dobijamo funkcijom 
+`learn_one_rule` mozemo da potkresemo kako bi dobili bolju
+gresku generalizacije. 
+
+**Uklanjanje instanci**
+
+Nakon sto je pravilo izdvojene, algoritam sekvencionalnog poklapanja
+mora eliminisati sve pozitivni i negativne primere koje poklapa
+pravilo.
+```
+    |-------------------|
+    |  -|R1--| -    -   |
+    | - |+ -+|-   -     |
+    |  -| |--|R2|-    - |
+    |   | |- |  |   -   |
+    | - |-|--|- |  -    |
+    |  +  |-----|  + +  |
+    |-------------------|
+```
+U ovom slucaju prvo je generisan pokrican $R_1$, ukoliko ne
+eliminisemo pozitivni i negativne primere koje on poklapa moze se
+desiti da se u sledecoj generaciji generise pokrivac $R_2$, koji
+takodje pokriva neka pravila koja je pokrivao $R_1$. Ako
+se pozitivni primeri poklopljeni sa $R_1$ ne eliminisu, onda
+mozemo da *procenimo* tacnost nekog sledeceg $R_k$, slicno ako ne
+ukonimo negativne primere poklopljene sa $R_2$, onda mozemo da
+procenimo *podcenimo* tacnost nekog sledeceng $R_k$.
+
+**RIPPER Algorithm**
+
+RIPPER je direktan metod izdvajanja pravila. Ovaj algoritam
+se skalira linearno sa brojem primera za treniranje i dobar je za
+podatke koji imaju nebalansirane distribucije, takodje, radi dobro
+za skupove podataka koji imaju sum.
+
+Za dvoklasne probleme, RIPPER bira klasu vecine, i uci
+pravila tako sto opaza klasu manjine. Za viseklasne probleme,
+klase se uredjuju prema njihovoj frekvenciji. Neka je 
+$(y_1, y_2,\ldots,y_c)$ uredjene klase, gde je $y_1$ najmanje
+frekventna klasa i $y_c$ najvise frekventna klasa. Tokom prve
+iteracije, instance koje pripadaju u $y_1$ se oznace kao pozitivni
+primere, dok se sve druge oznace kao negativni primeri. Algoritam
+sekvencionalnog pokrivanja se onda koristi za generisanje pravila
+koja prekrivaju pozitivne i negativne primere. RIPPER, dalje, 
+izdavaja pravila koja razdvajaju $y_2$ od ostalih klasa. Ovo
+ponavljamo svo dok ne dodjemo do $y_c$, koja je defaultna klasa.
+
+**Rast pravila**. RIPPER koristi strategiju generalno-u-specificno
+za rast pravila i FOILova informaciona dobit za meru naboljeg 
+konjukta kojeg dodajemo u pravilo. Prestajemo da dodajemo konjukte
+kada pravilo pocne da prekriva negativne primere. Pravilo se onda
+potkrese na osnovu njegove performanse nad skupom za validaciju.
+Sledeca metrisa se koristi za odredjivanje da li potkresivanje 
+potrebno: $(p-n)/(p+n)$, gde je $p(n)$ broj pozitivnih(negativnih) 
+primera u skupu za validaciju koje pokriva pravila. Potkresivanje
+se zapocinje od zadnje dodatog pravila. Na primer, za pravilo
+$ABCD \rightarrow y$, RIPPER proverava da li $D$ treba potresati,
+nakon toga proverava $CD$, pa $BCD$, itd. Potkresano pravilo, onda,
+moze da pokriva i neka negativna pravila.
+
+**Gradjenje skupa pravila**. Nakon generisanja pravila, svi 
+pozitivni i negativni primeri koji su pokriveni pravilom su 
+uklonjeni. Pravilo se dodaje u skup ravila sve dok ne krsi
+uslov zaustavljanja, koji se bazira na principut minimalno opisane
+duzine. Ako novo pravilo povecava ukupno opisanu duzinu skupa 
+pravila za bar $d$ bita, onda RIPPER prestaje da dodaje novo pravilo
+u skup pravila ($d=64bits$). Drugi uslov zaustavljanja koji koristi
+RIPPER jeste da odnos greske pravila nad validacionim skupom ne
+premasuje $50\%$.
+
+### Indirektni metodi za izdvajanje pravila
+
+Svaka putanje od korena do lista u drvetu odlucivanja moze da se
+predstavi kao klasifikaciono pravila. Svaki uslov testiranja
+na top putu predstavlja jednu konjukciju pravila, dok klasna
+oznaka lista predstavlja posledicu pravila.
+```
+           P
+         /   \
+      ne/     \da
+       /       \                
+      Q         R               r1: (P=ne) i (Q=ne) -> -
+     / \       / \              r2: (P=ne) i (Q=da) -> +
+  ne/   \da ne/   \da    --->   r3: (P=da) i (R=ne) -> +
+   /     \   /     \            r4: (P=da) i (R=da) i (Q=ne) -> -
+  -       + +      Q            r5: (P=da) i (R=da) i (Q=da) -> +
+                  / \
+               ne/   \da
+                /     \
+               -       +
+```
+
+**Primer**: Razmotrimo pravila:\
+    $r_2: (P=ne) \land (Q=da) \rightarrow +$\
+    $r_3: (P=da) \land (R=ne) \rightarrow +$\
+    $r_5: (P=da) \land (R=da) \land (Q=da) \rightarrow +$\
+Pravila $r_2$ i $r_5$ mozemo da zamenimo sa jednim pravilom, jer
+kad god je $Q=da$, to klasifikujemo kao $+$. Pa dobijamo:\
+$r_2' : (Q=da) \rightarrow +$\
+$r_3: (P=da) \land (R=ne) \rightarrow +$\
+
+**Generisanje pravila**. Klasifikaciona pravila se prosiruje za 
+svaku putanju od korena do jednog od listova drveta odlucivanja.
+Za dato pravila $r:A \rightarrow y$, razmatramo pojednostavljeno
+pravilo $r': A' \rightarrow y$, gde je $A'$ dobijeno izbacivanjem
+nekih konjukcija iz $A$. Pojednostavljeno pravila sa najmanjom
+pesimistickom greskom se zadrzava, sa tim da je odnos greske manji
+od originalnog pravila. Nakon potkresivanja mozemo dobiti identicna
+pravila, pa duplikate izbacujemo iz skupa pravila.
+
+**Uredjivanje pravila**. Nakon generisanja skupa pravila, koristimo
+semu uredjivanje baziranu na klasama za uredjivanje izdvojenih 
+pravila. Pravila koja predvidjaju iste klase se grupisu zajedno u
+neki podskup. Ukupna opisna duzina za svaki podskup se racuna, i 
+klase se uredjuju u rastucem poretku po ukupnoj opisnoj duzini.
+Klase sa najmanjom opisnom duzinom imaju najveci prioritet zato
+sto se ocekuje da sadrze najbolji skup pravila. Ukupna opisna duzina
+za klase je data sa $L_{\mbox{exception}} + g \times L_{\mbox{model}}$, gde je $L_{\mbox{exception}}$ broj bitova 
+potrebnih za enkodiranje pogresno klasifikovanih primera, 
+$L_{\mbox{model}}$ je broj bitova potrebnih za enkodiranje modela,
+i $g$ je parametar sa default vrednoscu od $0.5$.
+
+### Karakteristike klasifikatora zasnovanog na pravilima
+
+* Izrazitost skupa pravila je skoro ekvivalentna onoj od drveta
+  odlucivanja, zato sto se svako drvo odlucivanja moze predstaviti
+  kao skup uzajamno iskljucivih i iscrpljujucih pravila. 
+  Klasifikacije bazirane na pravilima i drvetima odlucivanja 
+  kreiraju pravougaonastu particiju prostora atributa i dodeljuju
+  klasu svakoj particiji. 
+* Klasifikatori bazirani na pravilima se generalno koristi za
+  modele koji su opisne prirode, ali daje slicne performanse
+  klasifikatorima baziranim na drvetima odlucivanja.
+* Klasifikacija zasnova na uredjenju, kao sto je RIPPER, je dobra
+  za skupove podataka koji imaju nebalansiranu distribuciju klasa.
+
+## Klasifikator: Najblizi sused
+
+Postupak klasifikacije moze se opisati u dva koraka:
+(1) induktivni korak za konstruisanje modele pomocu podataka za 
+treniranje, i (2) dekuktivni korak za primenu modela nad podacima
+za testiranje. Drveta odlucivanja i klasifikatori bazirani na
+pravilima su primeri **zeljnog uceneja**, jer uce model koji
+mapira ulazne atribute u neku klasnu oznaku cim su im podaci iz
+skupa za treniranje dostupni. Druga strategija bi bila da odlazemo
+proces modelovanja podataka za treniranje sve dok nam nije potrebno
+da klasifikujemo podatke za testiranje (**lenjo ucenje**).
+Jedan primer lenjog ucenja je **ucenje napamet**, ova strategija
+memorise sve instance iz skupa za treniranje i klasifikuje samo
+ako se atributi instance iz skupa za testiranje poklope sa nekom
+instancom iz skupa za treniranje. Ovom metodom mnogi slogovi nece
+biti klasifikovani ukoliko se ne nalaze u skupu za treniranje.
+
+Ucenje napamet moze da se relaksira, u smislu da se pronalaze
+instance iz skupa za treniranje koje su relativno bliske 
+instanci iz skupa za testiranje. Ovoj pristup je poznat kao
+**najblizi sused**. Ideja ovog pristupa dolazi iz poslovice:
+"*Ako nesto hoda kao patka, kvace kao patka, i izgleda kao patka,
+onda je to verovatno patka.*" 
+
+Klasifikator najblizeg suseda predstavlja svaki objekat kao 
+$d$-dimenzionu tacku u prostoru, gde je $d$ broj atributa. Za datu 
+instancu iz skupa za testiranje, racunamo meru slicnosti sa svim 
+ostalim instancama iz skupa za treniranje. $k$-najblizih suseda 
+date instance $z$ referise na $k$ tacaka koje su najslicnije 
+instanci $z$. Instanca $z$ se klasifikuje kao vecinom klasnih oznaka
+podataka koje pripadaju u tih $k$ tacaka. U slucaju neresenih 
+glasova, mozemo nasumicno izabrati jednu od te dve klasne oznake.
+
+Bitno je izabrati odgovarajucu vrednost za $k$. Ako je $k$ previse
+malo, onda je najblizi sused moze biti osetljiv na pretreniranje
+zbog suma u skupu za treniranje. Sa druge strane, ako je $k$ previse
+velika, najblizi sused moze pogresno klasifikovati podatke, jer
+u $k$ najblizih mogu se naci o oni koji nisu toliko slicni instanci
+$z$.
+
+### Algoritam
+
+```python
+def k_nearest_neighbor(trening_set, test_set, k):
+    for z in test_set:
+        dist_z = {y: d(z, y) for y in trening_set}
+        k_nearest = find_k_nearest(trening_set, dist_z)
+        y_winner = most_frequent(k_nearest)
+        z.y = y_winner
+```
+
+### Karakteristeke klasifikatora: najblizi sused
+
+* Najblizi sused spada u tehnike poznate kao ucenje bazirano na
+  instancama, koje koristi instance skupa za treniranje da bi 
+  napravilo predikciju bez pravljenja abstraktnog modela. Ucenje
+  bazirano na instancama zahteva meru slicnosti za bi pronaslo
+  slicnost ili razdaljinu izmedju instanci i klasifikacionu funkciju
+  koja vraca predvidjenu klasu instance iz skupa za testiranje, 
+  baziranoj na slicnosti drugih instanci.
+* Lenjo ucenje ne zahteva pravljenje modele. Ali zbog toga
+  klasifikovanje instanci iz skupa za testiranje moze biti veoma
+  skupa operacija, kako zahteva racunanje mere slicnosti sa svakom 
+  instancom iz skupa za treniranje. Sa druge strane zeljno ucenje
+  zahteva puno vremena za pravljenje modele, ali jednom kada se 
+  napravi model klasifikacija instanci iz skupa za testiranje
+  je veoma brza.
+* Najblizi sused klasifikuje tako sto koristi lokalne informacije,
+  dok drveta odlucivanja i klasifikatori zasnivani na pravilima
+  pokusavaju da pronadju globalni model koji se uklapa u celokupni
+  ulazni prostor. Zbog lokalnosti najblizi sused je osetljv na sum.
+* Klasifikator najblizi sused moze da proizvede granicu odlucivanja
+  bilo kog oblika, sto je vise fleksibilnije od drveta odlucivanja
+  i klasifikatorima zasnovanim na pravilima, cije su granice 
+  odlucivanja pravougaone.
+* Klasifikator najblizi sused moze da pogresno klasifikuje podatke
+  ukoliko se izabere neodgovarajuca mera slicnosti i ukoliko
+  se ne izvrsi predprocesiranje podataka na odgovarajuci nacin.
+  Na primer, ako klasifikujemo ljude po tezini i visini, domen 
+  za tezinu je od $50kg$ do $150kg$, dok je domen za visinu od
+  $1.5m$, do $2m$. Ako se ne racunaju skale u meri slicnosti, 
+  razlika u kilogramima imace mnogo vise uticaja od razlike u 
+  visini.
+
+## Bajasov klasifikator
+
+U mnogim slucajevima veza imezju skupa atributa i klasne promenljive
+nije deterministicka. Drugim recima, klasa oznaka sloga iz skupa za 
+testiranje ne moze se predvideti sa sigurnoscu iako je njegov skup 
+atributa identican nekom slogu iz skupa za treniranje. Na primer,
+razmotrimo zadatak predvidjanja: Da li osoba ima rizik od dobijanja
+srcanog napada na osnovu njene dijete i ucestalosti treniranja?
+Iako mnogi ljudi koji jednu zdravo i treniraju regularno imaju manje
+sanse da dobiju srcane probleme, postoje i ostali faktori kao 
+sto je genetika, pusenje, alkohol. Takodje ispitivanje da li 
+osoba ima zdravu ishranu i da li trenira regularno je takodje 
+osetljiva tema, sto takodje moze da proizvede neodredjenost.
+
+### Bajasova teorema
+
+Neka su $X$ i $Y$ slucajne promenljive. Verovatnoca $P(X=x,Y=y)$ je
+verovatnca da promenljiva $X$ uzme vrednost $x$, i promenljiva $y$
+uzme vrednost $y$. Uslovna verovatnoca $P(Y=y|X=x)$ je verovatnoca 
+da ce slucajna promenljiva $Y$ uzete vrednost $y$, pod uslovom
+da znamo da je slucajna promenljiva $X$ uzela vrednost $x$.
+Veza izmedju ovih verovatnoca je data formulom mnozenja:
+$$P(X,Y)=P(X)P(Y|X) = P(Y)P(X|Y)$$
+Iz formule mnozenja sledi Bajasova teorema:
+$$P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}$$
+
+### Bajasova teorema u klasifikaciji
+
+Neka je $\mathbf{X}$ skup atributa i $Y$ klasna promenljiva. Ako
+klasna promenljiva nema deterministicku vezu sa atributima, onda
+su $\mathbf{X}$ i $Y$ slucajne promenljive, i mozemo njihovu vezu
+predstaviti verovatnocom $P(Y|\mathbf{X})$. Ova uslovna verovatnoca
+$P(Y|\mathbf{X})$ se zove **zadnja verovatnoca** za $Y$ 
+(verovatnoca dodeljivanja opazanja grupama za date podatek), 
+dok je  njoj suprotna $P(Y)$ poznata kao **prednja verovatnoca**
+(verovatnoca da ce nego zapazanje upasti u grupu pre nego sto
+se prikupe podaci).
+
+Tokom ucenja moramo nauciti zadnju verovatnocu $P(Y|\mathbf{X})$
+za svaku kombinaciju $\mathbf{X}$, i $Y$ na osnovu informacije
+sakupnjene u skupu za treniranje. Ako znamo ovu verovatnocu,
+slog iz skupa za testiranje $\mathbf{X}'$ se moze klasifikovati
+nalazenjem klase $Y'$ koja maksimizuje zadnju verovatnocu 
+$P(Y'|\mathbf{X}')$.
+
+Posmatrajmo sledeci skup za treniranje sa atributima: `Ima kucu`,
+`Bracni Status`, `Godisnja plata`, i klasnom oznakom: `Isplatio`.
+
+| ID | Ima kucu | Bracni status | Godisnja plata | Isplatio |
+|---:|:--------:|:-------------:|---------------:|:--------:|
+| 1  | da       | neozenjen     | 125k           | da       | 
+| 2  | ne       | ozenje        | 100k           | da       | 
+| 3  | ne       | neozenjen     | 70k            | da       | 
+| 4  | da       | ozenjen       | 120k           | da       | 
+| 5  | ne       | razveden      | 95k            | ne       | 
+| 6  | ne       | ozenjen       | 60k            | da       | 
+| 7  | da       | razveden      | 220k           | da       | 
+| 8  | ne       | neozenjen     | 85k            | ne       | 
+| 9  | ne       | ozenjen       | 75k            | da       | 
+| 10 | ne       | neozenjen     | 90k            | ne       | 
+
+Predpostavimo da je dat slog u skupu za testiranje sa sledecim
+atributima: 
+$\mathbf{X}=($`Ima kucu=ne`, `Bracni status=ozenjen`, `Godisnja plata=120k`$)$
+Da bi klasifikovali ovaj slog potrebno je izracunati 
+zadnju verovatnocu $P($`da`$|\mathbf{X})$ i $P($`ne`$|\mathbf{X})$
+na osnovu informacija iz skupa za treniranje. Ako je 
+$P($`da`$|\mathbf{X}) > P($`ne`$|\mathbf{X})$, onda se slog 
+klasifikuje kao `da`, inace se klasifikuje kao `ne`.
+
+Kako je tacno procenjivanje zadnje verovatnoce veoma tezak problem,
+mozemo iskoristiti Bajesovu teoremu, ako se zadnja verovatnoca
+moze predstaviti u terminima prednje verovatnoce $P(Y)$, i
+**klasno-uslovne** verovatnoce $P(\mathbf{X}|Y)$, i dokaz, 
+$P(\mathbf{X})$:
+
+$$P(Y|\mathbf{X}) = \frac{P(\mathbf{X}|Y)P(Y)}{P(\mathbf{X})}$$
+
+Kada se racuna zadnja verovatnoca za razlicite vrednosti $Y$, 
+verovatnoca $P(\mathbf{X})$ je uvek ista i konstanta, te se moze
+ignorisati. Prednja verovatnoca $P(Y)$ se moze lako proceniti
+pomocu skupa za treniranje, kao odnost slugova koji pripadaju
+klasi $Y$ i ukupan broj slogova. Za procenjivanje klasno-uslovne
+verovatnoce $P(\mathbf{X}|Y)$ imamo dve implementacije naivni
+Bajasov klasifikator i Bajasova mreza poverenja.
+
+### Naivni Bajasov klasifikator
+
+Naivni Bajasov klasifikator procenjuje klasno-uslovnu verovatnocu
+tako sto predpostavlja da su atributi uslovne nezavisni, za datu
+klasnu oznaku $y$. Atributni su uslovno nezavisni, za datu klasnu
+oznaku $y$, akko:
+$$P(\mathbf{X}|Y) = \prod_{i=1}^d P(X_i|Y=y),$$
+gde svaki skup atributa $\mathbf{X} = \{X_1, X_2,\ldots, X_d\}$
+sadrzi $d$ atributa.
+
+**Uslovna nezavisnost**
+
+Neka su $\mathbf{X}$, $\mathbf{Y}$, i $\mathbf{Z}$ tri skupa 
+slucajne promenljive. Promenljive u $\mathbf{X}$ su uslovno
+nezavisne od $\mathbf{Y}$, za dato $\mathbf{Z}$, ako vazi:
+$$P(\mathbf{X}|\mathbf{Y},\mathbf{Z}) = P(\mathbf{X}|\mathbf{Z}).$$
+
+Primer uslovne nezavisnosti je veza izmedju duzine ruke i vestine
+citanja. Mozemo primetiti da ljudi sa duzim rukama citaju bolje.
+Ova veza se objasnjava tako da ljudi koji imaju kratke ruke spadaju
+u decu ili bebe, pa losije citaju od odraslih ljudi koji imaju
+duze ruke. Ako je godina ljudi fiksirana, onda ova veza nestaje.
+Pa su duzina ruke i vestina citanja uslovno nezavisne kada su
+godine fiksirane.
+
+Uslovna nezavisnost izmedju $\mathbf{X}$ i $\mathbf{Y}$ moze se
+zapisati kao:
+
+$$
+\begin{aligned}
+P(\mathbf{X}, \mathbf{Y}|\mathbf{Z}) &= \frac{P(\mathbf{X}, \mathbf{Y}, \mathbf{Z})}{P(\mathbf{Z})}\\
+&= \frac{P(\mathbf{X}, \mathbf{Y}, \mathbf{Z})}{P(\mathbf{Y}, \mathbf{Z})} \frac{P(\mathbf{Y}, \mathbf{Z})}{P(\mathbf{Z})}\\
+&= P(\mathbf{X}|\mathbf{Y}, \mathbf{Z}) P(\mathbf{Y}|\mathbf{Z})\\
+&= P(\mathbf{X}|\mathbf{Z}) P(\mathbf{Y}|\mathbf{Z})\\
+\end{aligned}
+$$
+    
+**Kako radi naivni Bajasov klasifikator?**
+
+Zbog uslovne nezavisnosti, umesto da racunamo klasno-uslovnu 
+verovatnocu za svaku kombinaciju od $\mathbf{X}$, procenjujemo
+uslovni verovatnocu svakog $X_i$, za dati $Y$.
+
+Za klasifikovanje test slogova, naivni Bajasov klasifikator racuna
+zadnju verovatnocu za svaku klasu $Y$ kao:
+
+$$P(Y|\mathbf{X}) = 
+\frac{P(Y)\prod_{i=1}^d P(X_i|Y)}{P(\mathbf{X})}$$
+
+Kako je $P(\mathbf{X})$ fiksno za svaki $Y$, dovoljno je odabrati 
+klasu koja maksimizuje brojilac $P(Y)\prod_{i=1}^d P(X_i|Y)$.
+
+**Procenjivanje uslovne verovatnoce za kategoricke atribute**
+
+Za kategoricke atribute $X_i$, uslovna verovatnoca 
+$P(X_i=x_i|Y=y)$ se procenjuje kao odnos instanci iz skupa za
+treniranje u klasi $y$ koji uzimaju odredjene vrednosti 
+atribute $x_i$ sa ukupnim brojem instanci iz skupa za treniranje. 
+Na primer, u skupu za treniranje gore, tri od sedam ljudi koji su
+isplatili kredit, takodje poseduju i kucu. Kao rezultat,
+uslovna verovatnoca je $P($`Ima kucu=da`$|$`da`$)=3/7$. Slucno,
+uslovna verovatnoca onih koji nisu isplatili kredit, i koji su
+neozenjeni je $P($`Bracni status=neozenjen`$|$`ne`$)=2/3$.
+
+**Procenjivanje uslovne verovatnoce za neprekidne atribute**
+
+Postoje dva pristupa kada se procenjuje klasno-uslovna verovatnoca
+za neprekidne atribute:
+
+1. Mozemo zameniti neprekidne atribute sa odgovarajucim ordinalne 
+   metodom diskretizacije. Onda je uslovna verovatnoca $P(X_i|Y=y)$
+   procenjena racunanjem odnosa slogova treniranje koji pripadaju
+   klasi $y$ koja upada u odgovarajuci interval za $X_i$. Procenjena
+   greska zavisi od strategije diskretizacije, kao i od broja
+   diskretnih intervala. Ako je broj diskretnih intervala previse
+   velik, onda imamo manje slogova za treniranje u svakom od 
+   intervala pa dobijamo pogresku procenu za $P(X_i|Y)$. Sa druge
+   strene, ako je broj intervala previse mali, onda neki intervali
+   mogu agregirati slogovi iz drugih klasa i mozemo promasiti
+   tacne granice odlucivanja.
+
+2. Mozemo koristiti odredjenu distribuciju za neprekidne atribute
+   i proceniti parametre distribucije na osnovu skupa za treniranje.
+   Gausova distribucija se obicno koristi za predstavljanje 
+   klasno-uslovne verovatnoce za neprekidne atribute. Distribuciju
+   karakterisu dva parametra, ocekivanje $\mu$, i disperzija 
+   $\sigma^2$. Za svaku klasu $y_j$, klasno-uslovna verovatnoca
+   atributa $X_i$ je
+   $$P(X_i=x_i|Y=y_j)=\frac{1}{\sqrt{2 \pi \sigma_{ij}^2}}\exp{\left(-\frac{(x_i - \mu_{ij})^2}{2\sigma_{ij}^2}\right)}$$
+   Parametri $mu_{ij}$ i $\sigma_{ij}^2$ se mogu proceniti
+   kao ocekivanje i disperzija od atributi $X_i$ svih slogova 
+   treniranja koji pripadaju klasi $y_j$. Na primer jednostavno
+   ocekivanje i disperzija za atribute sa klasom `da` je
+
+   $$\bar{x} = \frac{125 + 100 + 70 + \ldots + 75}{7} = 110$$
+   $$\sigma^2 = \frac{(125 - 110)^2 + (100 - 110)^2 + \ldots + (75 - 110)^2}{7}=2550$$
+   $$\sigma = 50.5$$
+
+    Za dati slog iz testiranje sa godisnjom platom od $120k$, mozemo
+    izracunati njegovu klasno-uslovnu verovatnocu kao:\
+    $P($`Godisnja plata=120`$|$`da`$) = \frac{1}{\sqrt{2\pi 2550}}
+    \exp\left(-\frac{(120-110)^2}{2 \cdot 2550}\right)=0.0077$
+
+    Desni deo ove jednacine se naziva 
+    **funkcija gustine verovatnoce** 
+    $f(X_i; \mu_{ij}, \sigma_{ij}^2)$. Kako je ova funkcija 
+    neprekidna, verovatnoca da slucajna promenljiva $X_i$ uzme 
+    odredjenu vrednost je nula. Zbog toga racunamo uslovnu 
+    verovatnocu da $X_i$ upada u neki interval izmedju $x_i$ i
+    $x_i + \epsilon$, gde je $\epsilon$ neka mala konstanta, pa je:
+
+    $$
+    \begin{aligned}
+    P(x_i \leq X_i \leq x_i + \epsilon | Y=y_j) 
+    &= \int_{x_i}^{x_i + \epsilon} f(X_i; \mu_{ij}, \sigma_{ij}^2) dX_i\\
+    &= f(x_i; \mu_{ij}, \sigma_{ij}^2) \epsilon
+    \end{aligned}
+    $$
+
+    Kako je $\epsilon$ konstantan multiplikativni faktor za svaku
+    klasnu oznaku, on se skracuje kada normalizujemo zadnju
+    verovatnocu za $P(Y|\mathbf{X})$. Zbog toga, aproksimiramo
+    klasno-uslovnu verovatnocu $P(X_i|Y)$, kao funkciju gustine
+    u datoj tacki.
+
+**Primer naivnog Bajasovog klasifikatora**
+
+**M-procene uslovne verovatnoce**
+
+**Karakteristike naivnog Bajasovog klasifikatora**
+
+### Bajasova greska
+
+### Bajasova mereza poverenja
+
+
+## Vestacke neuronske mreze
+
+## Metod potpunih vektora (Support Vector Machine --- SVM)
 
 
