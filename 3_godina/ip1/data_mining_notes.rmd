@@ -2965,16 +2965,303 @@ za neprekidne atribute:
 
 **Primer naivnog Bajasovog klasifikatora**
 
+Neka je data sledece tabela za koju racunamo klasno-uslovne 
+verovatnoce za svaki kategoricki atribut, zajedno sa jednostavnom
+sredinom i varijansom za neprekidne atribute metodom iz prethodnog
+poglavlja.
+
+| ID | Ima kucu | Bracni status | Godisnja plata | Isplatio |
+|---:|:--------:|:-------------:|---------------:|:--------:|
+| 1  | da       | neozenjen     | 125k           | da       | 
+| 2  | ne       | ozenje        | 100k           | da       | 
+| 3  | ne       | neozenjen     | 70k            | da       | 
+| 4  | da       | ozenjen       | 120k           | da       | 
+| 5  | ne       | razveden      | 95k            | ne       | 
+| 6  | ne       | ozenjen       | 60k            | da       | 
+| 7  | da       | razveden      | 220k           | da       | 
+| 8  | ne       | neozenjen     | 85k            | ne       | 
+| 9  | ne       | ozenjen       | 75k            | da       | 
+| 10 | ne       | neozenjen     | 90k            | ne       | 
+
+```
+P(Ima kucu=da|da) = 3/7
+P(Ima kucu=ne|da) = 4/7
+
+P(Ima kucu=da|ne) = 0
+P(Ima kucu=ne|ne) = 3/3=1
+
+P(Bracni status=neozenjen|da) = 2/7
+P(Bracni status=ozenjen|da) = 4/7
+P(Bracni status=razveden|da) = 1/7
+
+P(Bracni status=neozenjen|ne) = 2/3
+P(Bracni status=ozenjen|ne) = 0
+P(Bracni status=razveden|ne) = 1/3
+
+Godisnja plata:
+da -> jednostavna sredina = 110
+      jednostavna varijansa = 2550
+ne -> jednostavna sredina = 90
+      jednostavna varijansa = 16.6
+```
+
+Neka je $\mathbf{X}=($`Ima kucu=ne`, `Bracni status=ozenjen`, 
+`Godisnja plata=120k`$)$ slog iz skupa za testiranje ciju klasu 
+hocemo da predvidimo, tj. hocemo da izracunamo zadnje verovatnoce
+$P($`da`$|\mathbf{X})$ i $P($`ne`$|\mathbf{X})$. Znamo da je
+$P($`da`$)=0.7$ i $P($`ne`$)=0.3$, a klasno-uslovnu verovatnocu 
+racunamo kao:\
+$P(\mathbf{X}|$`da`$) = P($`Ima kucu=ne`$|$`da`$) 
+                       P($`Bracni status=ozenjen`$|$`da`$)
+                       P($`Godisnja plata=120k`$|$`da`$)
+                     = 0.0018$\
+$P(\mathbf{X}|$`ne`$) = P($`Ima kucu=ne`$|$`ne`$) 
+                       P($`Bracni status=ozenjen`$|$`ne`$)
+                       P($`Godisnja plata=120k`$|$`ne`$)
+                     = 0.$\
+
+Na osnovu toga imamo za zadnju verovatnocu klase `da` da je
+$P($`da`$|\mathbf{X})=\alpha \times 0.7 \times 0.0018=0.00126$,
+gde je $\alpha=1/P(\mathbf{X})$. Slicno, zadnja verovatnoca
+klase `ne` je $P($`ne`$|\mathbf{X})=\alpha \times 0.3 \times 0 = 0.$
+Kako vazi $P($`da`$|\mathbf{X})>P($`ne`$|\mathbf{X})$, onda
+slog $\mathbf{X}$ klasifikujemo kao `da`.
+
 **M-procene uslovne verovatnoce**
+
+Prethodni primer ilustruje potencijalni problem procenjivanja
+zadnje verovatnoce odnosom pomocu skupa za treniranje. Ako je 
+klasno-uslovna verovatnoca nula onda je zadnja verovatnoca takodje
+nula. Ovo dobijamo ukoliko je skup podataka za treniranje velik,
+i pri tome ima malo podataka koji pripadaju trazenoj klasi, pa je 
+odnos izmedju njih blizak nuli. 
+
+Ekstrimniji problem je slog za koji dobijemo da su obe 
+klasno-uslovne verovatnoce nula. Onda naivni Bajasov klasifikator 
+nece moci da klasifikuje dati slog. Ovaj problem mozemo resiti
+pomocu *m-procene* uslovne verovatnoce:
+
+$$P(x_i|y_j)=\frac{n_c + mp}{n+m},$$
+
+gde je $n$ ukupan broj instanci klase $y_j$, $n_c$ je broj
+instanci treniranje sa klasom $y_j$ koji uzima vrednost $x_i$,
+$m$ je parametetar koji se naziva ekvivalent uzoracke velicine,
+i $p$ je korisnicki definisan parametar. Ako je $n=0$, tj. nema
+skupa za treniranje onda $P(x_i|y_j)=p$, pa je zbog toga $p$
+zadnja verovatnoca atributa $x_i$ unutar slogova klase $y_j$.
+Ekvivalent uzoracke velicnine odredjuje razmenu izmedju zadnje
+verovatnoce $p$ i primecene verovatnoce $n_c/n$.
 
 **Karakteristike naivnog Bajasovog klasifikatora**
 
+* Naivni Bajasov klasifikator je dobar kada imamo podatke 
+  sa puno suma, ili nedostajucih vrednosti, jer se oni tokom
+  pravljenja modela pripoje proseku, ili eliminisu.
+* Ako $\mathbf{X}$ sadrzi neki atribut $X_i$ koji je irelevantan
+  za klasifikaciju, onda $P(X_i|Y)$ ima uniformnu distribuciju.
+  Zbog toga klasno-uslovna verovatnoca za $X_i$ nema uticaj na
+  ukupnu vrednost zadnje verovatnoce.
+* Korelisani atributi smanjuju performanse naivnog Bajasovog
+  klasifikatora, kako uslovna nezavisnost onda ne vazi za takve
+  atribute. Razmotrimo sledeci primer:
+  $$
+  \begin{aligned}
+  P(A=0|Y=0)=0.4 &, P(A=1|Y=0)=0.6,\\
+  P(A=0|Y=1)=0.6 &, P(A=1|Y=1)=0.4,
+  \end{aligned}
+  $$
+  gde je $A$ binarni atribut i $Y$ binarna klasna promenljiva. 
+  Sada predpostavimo da je drugi binarni atribut $B$ savrseno
+  korelisan sa atributom $A$ kada je $Y=0$, ali je nezavistan od $A$
+  kada je $Y=1$. Takodje neka su klasno-uslovne verovatnoce za $B$
+  iste kao i za $A$. Neka je dat slog sa atributom $A=0,B=0$. 
+  Za njega mozemo izracunati zadnju verovatnocu kao:
+  $$
+  \begin{aligned}
+  P(Y=0|A=0,B=0) &= \frac{P(A=0|Y=0)P(B=0|Y=0)P(Y=0)}{P(A=0,B=0)}\\
+                 &= \frac{0.16P(Y=0)}{P(A=0,B=0)}\\
+  P(Y=1|A=0,B=0) &= \frac{P(A=0|Y=1)P(B=0|Y=1)P(Y=1)}{P(A=0,B=0)}\\
+                 &= \frac{0.36P(Y=1)}{P(A=0,B=0)}\\
+  \end{aligned}
+  $$
+  Pa naivni Bajasov klasifikator slogu dodeljuje klasu 1. Medjutim,
+  kako su $A$ i $B$ savrseno korelisane kada je $Y=0$, pa je:
+  $$P(A=0,B=0|Y=0)=P(A=0|Y=0)=0.4$$
+  Pa kao rezultat imamo da je
+  $$P(Y=0|A=0,B=0)=\frac{0.4P(Y=0)}{P(A=0,B=0)}$$
+  sto znaci da slogu treba dodeliti klasu 0.
+
 ### Bajasova greska
+
+**Primer (Klasifikovanje aligatora i krokodila)**. Hocemo da 
+klasifikujemo aligatore i krokodile na osnovu njihove duzine. 
+Prosecna duzina krokodila je oko $5m$, dok je prosecna duzina 
+aligatora oko $4m$. Predpostavljamo da duzina aligatora i krokodira
+ima normalnu raspodelu cije je standardno odstupanje 1:\
+$P(X|$`Krokodil`$)=\frac{1}{\sqrt{2\pi}}\exp{[-\frac{1}{2}\left(X-5\right)^2]}$\
+$P(X|$`Aligator`$)=\frac{1}{\sqrt{2\pi}}\exp{[-\frac{1}{2}\left(X-4\right)^2]}$\
+
+Ako predpostavimo da su njihove verovatnoce iste, onda je idealna
+gradica odlucivanja neka duzina $\hat{x}$ takva da je 
+$P(X=\hat{x}|$`Krokodil`$)=P(X=\hat{x}|$`Aligator`$)$, tj.
+$$\left(\hat{x}-5\right)^2 = \left(\hat{x}-4\right)^2$$
+Kada resimo ovu kvadratnu jednacinu dobijamo da je $x=4.5$. U ovam
+slucaju to je sredina izmedju dve sredine.
+
+Kako je idealna granica odlucivanja duzina $\hat{x}$ za koju su
+manje vrednosti klasifikuju kao aligatori, a vece kao krokodili,
+mozemo izracunati gresku koja nastaje prilikom klasifikovanja.
+Greska klasifikatore je data sumom povrsine ispod zadnje verovatnoce
+za krokodile i povrsine ispod zadnje verovatnoce za aligatore:\
+$\mbox{Error}=
+    \int_0^{\hat{x}} P($`Krokodil`$|X)dX + 
+    \int_{\hat{x}}^\infty P($`Aligator`$|X)dX$\
+Ukupna greska se naziva **Bajasova greska**.
 
 ### Bajasova mereza poverenja
 
-
 ## Vestacke neuronske mreze
+
+Vestacke neuronske mreze (ANN) su inspirisane simuliranjem bioloskog
+neuronskog sistema. Ljudski mozak sadrzi nerve koji se nazivaju
+**neuroni**. Neuron je povezan sa drugim neuronom preko vlakna
+koja se naziva **akson**. Aksoni sluze da prebace impulse jednog
+neurona na drugi. Neuroni su povezani preko aksona jednog neurona,
+i **dendrita**, drugog neurona. Mesto na kome se dendriti spaja
+sa aksonom se nazivaju **sinapse**. Ljudski mozak uci tako sto
+menja jacinu sinapsnih veza izmedju neurona.
+
+### Perceptron
+
+Neka je dat sledeci skup podataka, gde su ulazne promenljive
+$(x_1, x_2, x_3)$ bulove promenljive, i izlazna promenljiva $y$
+uzima vrednost $-1$ ako su bar dve od tri ulazne promenljive nula,
+inace uzima vrednost $+1$.
+
+| x1 | x2 | x3 | y  |
+|:--:|:--:|:--:|:--:|
+| 1  | 0  | 0  | -1 |
+| 1  | 0  | 1  | +1 |
+| 1  | 1  | 0  | +1 |
+| 1  | 1  | 1  | +1 |
+| 0  | 0  | 1  | -1 |
+| 0  | 1  | 0  | -1 |
+| 0  | 1  | 1  | +1 |
+| 0  | 0  | 0  | -1 |
+
+Perceptron predstavlja najjednostavniju arhitekturu vestacke 
+neuronske mreze. Perceptron sadrzi dva tipa cvora: ulazne cvorove,
+koji predstavljaju ulazne atribute, i izlazni cvor, koji predstavlja
+izlazni atribut. Cvorovi u mrezi su poznati kao neuroni ili 
+jedinice. U perceptronu, svaki ulazni cvor je povezan preko
+tezinske grane sa izlaznim cvorom. Tezinska grane predstavljaju
+jacinu sinapsa izmedju neurona. Treniranje perceptrona zasniva se na
+adaptiranju tezina grana sve dok ne odgovaraju relaciji ulaza i
+izlaza. 
+
+```      
+         0.3    0.4
+x1 -> O ------   |
+         0.3  \  v
+x2 -> O ------- sum -> sng -> y
+         0.3  /  
+x3 -> O ------
+
+```
+
+Perceptron racuna svoju izlaznu vrednost, $\hat{y}$, tako
+sto primeni tezinsko sumiranje svoji ulaza i oduzimanjem faktora
+pristrasnosti $b$ od sume, te posmatranjem znaka rezultata:
+
+$$
+\hat{y} = 
+\begin{cases} 
+    +1 & \mbox{ako } 0.3x_1 + 0.3x_2 + 0.3x_3 - 0.4 > 0 \\
+    -1 & \mbox{ako } 0.3x_1 + 0.3x_2 + 0.3x_3 - 0.4 < 0 
+\end{cases}
+$$
+
+Primetimo razliku izmedju ulaznih i izlaznih cvorova perceptrona.
+Ulazni cvor jednostavno prosledjuje vrednosti koje primi na
+ilaznu granu bez primene bilo kakve transformacije. Izlazni cvor,
+sa druge strane, je matematicki aparat koji racuna tezinsku sumu
+ulaza, oduzima pristrasnost, te primenjuje funkciju znaka. 
+Tacnije, izlazni cvor se moze predstaviti matematicki kao:
+
+$$\hat{y}=sign(w_dx_d+w_{d-1}x_{d-1}+\ldots+w_2x_2+w_1x_1 - b),$$
+
+gde su $w_1,w_2,\ldots,w_d$ tezine ulaznih grana i 
+$x_1,x_2,\ldots,x_d$ ulazne vrednosti atributa. Funkcija znaka 
+deluje kao **aktivaciona funkcija** za izlazne neurone. Model
+perceptrona mozemo zapisati i krace kao:
+
+$$\hat{y}=sign[w_dx_d+w_{d-1}x_{d-1}+\ldots+w_2x_2+w_1x_1+w_0x_0]=sign(\mathbf{w}\cdot\mathbf{x}),$$
+
+gde je $w_0=-t, x_0=1$ i $\mathbf{w}\cdot\mathbf{x}$ skalarni
+prizvod izmedju vektora tezina $w$ i ulaznih atributa $\mathbf{x}$.
+
+**Ucenje modela perceptrona**
+
+```python
+def learn_perceptron(training_set, lambda):
+    w = [random(-1,1) for _ in range(len(training_set))]
+    while stop_condition(w):
+        for x_i, y_i in D:
+            y_i_hat = scalar_product(w, x)
+            for w_j in w:
+                w_j += lambda * (y_i - y_i_hat) * x_i[j]
+
+```
+
+Kljucan deo ovog algoritma je azuriranje tezina koje se radi
+po formuli:
+
+$$w_j^{(k+1)}=w_j^{(k)} + \lambda(y_i - \hat{y}_i^{(k)})x_{ij},$$
+
+gde je $w_i^{(k)}$ tezina u $i$-te grane nakon $k$-te iteracije,
+$\lambda$ je parametar koji se zove **brzina ucenja**, i $x_{ij}$
+je vrednost $j$-tog atributa za instancu treniranje $\mathbf x_i$.
+Do ove formule se dolazi intuitivno, tj. zavisi vecinom od
+greske predvidjanja $(y - \hat{y})$. Ako je predvidjanje korektno,
+onda tezina ostaje ista. Inace, menja na sledeci nacin:
+
+* Ako je $y=+1$ i $\hat{y}=-1$, onda je greska predvidjanja
+  $(y-\hat{y})=2$. Da bi ublazili gresku moramo povecati vrednost 
+  predvidjenog izlaza, tako sto povecamo tezinu svih grana
+  sa pozitivnim ulazom i smanjimo tezinu svih grana sa negativnim
+  ulazom.
+* Ako je $y=-1$ i $\hat{y}=+1$, onda je greska predvidjanja
+  $(y-\hat{y})=-2$. Da bi ublazili gresku moramo smanjiti vrednost 
+  predvidjenog izlaza, tako sto smanjimo tezinu svih grana
+  sa pozitivnim ulazom i povecamo tezinu svih grana sa negativnim
+  ulazom.
+
+Tezinu u svakom azuriranju ne smemo povecati previse, kako ne bi
+doslo do pregazivanje prethodnih azuriranje, pa se zbog toga
+koristi parametar brzine ucenja $\lambda$, koji uzima vrednost
+izmedju 0 i 1. Ako je $\lambda$ bizu nule, onda stara tezina veoma
+utice na novu tezinu, sa druge strane, ako je $\lambda$ blizu 
+jedinice, onda nova tezina puno zavisi od greske predvidjanja.
+Moze se koristiti i adaptivna vrednost parametra $\lambda$, na 
+primer, na pocetku moze biti umereno velika, a da se svakom 
+sledecom iteracijom smanjuje.
+
+Kako je model perceptrona iz gornjeg primera bio linearan po
+atributima $\mathbf{x}$ i tezinama $\mathbf{w}$, granica 
+odlucivanja je linearna hiperravan koja dele podatke na dve klase
+$-1$ i $+1$. Perceptron zbog toga daje optimalna resenje ako je
+problem klasifikacije linearno odvojiv. Ako problem nije
+linearno odvojiv onda algoritam ne konvergira. Jedan takav primer
+je XOR funkcija.
+
+### Viseslojne vestacke neuronske mreze
+
+**Ucenje ANN modela**
+
+**Problemi pri dizajniranju ANN ucanja**
+
+### Karakteristike vestacke neuronske mreze
+
 
 ## Metod potpunih vektora (Support Vector Machine --- SVM)
 
