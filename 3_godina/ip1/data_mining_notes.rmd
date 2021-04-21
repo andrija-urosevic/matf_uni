@@ -3256,12 +3256,114 @@ je XOR funkcija.
 
 ### Viseslojne vestacke neuronske mreze
 
+Viseslojne vestacke neuronske mreze imaju kompikovaniju strukturu
+od modela perceptrona:
+
+1. Mreza moze sadrzati nekoliko slojeva imedju ulaznog i izlaznog
+   sloja. Takvi unutrasnji slojevi se nazivaju **skriveni slojevi**
+   i cvorovi unutar ovih slojeva se nazivaju **skriveni cvorovi**.
+   Takva struktura se naziva viseslojna neuronska mreza. U
+   neuronskoj mrezi sa **propagacijom-unapred**, cvorovi jednog
+   sloja su povezani samo sa cvorovima sledeceg sloja. Perceptron
+   je jednoslojna neuronska mreza sa propagacijom-unapred, jer
+   ima samo jedan sloj cvorova i izlazni cvor se ponasa kao
+   matematicka funkcija. U **rekurentnim** neuronskim mrezama
+   moguce je imati grane koje povezuju cvor nekog sloja, sa cvorom
+   iz nekog prethodnog sloja.
+2. Mreza moze da koristi i druge tipove aktivacionih funkcija
+   koje nisu sinusne funkcije. Primeri drugih aktivacionih funkcija
+   ukljucuju linearnu, sigmoid (logisticku), i hiperbolicku tangens
+   funkciju. Ove aktivacione funkcije dozvoljavaju skrivenim i 
+   izlaznim cvorovima da imaju izlaznu vrednost koja nije
+   linearna u odnosu na ulazne parametre.
+   
+Zbog ove kompleksnosti mozemo da resimo neodvojive probleme kao 
+sto je XOR problem. Ako konstruisemo mrezu koja ima dva ulazna 
+cvora, dva skrivena cvora, i jedan izlazni cvor, svaki od slojeva
+mozemo posmatrati kao jedan perceptron koji generise hiperravan
+nad prostorom. Kombinacija tih hiperravni generise granicu 
+odlucivanja.
+
+Da bi naucili odgovarajuce tezine za ANN model, treba nam efikasan
+algoritam koji konvergira u tacno resenje kada imamo dovoljno
+podataka u skupu za treniranje. Jedno resenje koje se namece jeste
+da koristimo istu tehniku kao za perceptron i da pri tome delimo
+mrezu na perceptrone. Ovaj metod nece raditi kako nemamo nikakvo
+znanje od izlazima skrivenog sloja, pa ne mozemo da izracunamo
+gresku $(y-\hat{y})$ za svaki od skrivenih cvorova.
+
 **Ucenje ANN modela**
+
+Ucenje tezina neuronske mreze se zasniva na gradijentnom spustu,
+tj. cilj nam je da minimizujemo ukupnu kvadriranu gresku:
+
+$$E(\mathbf{w})=\frac{1}{2}\sum_{i=1}^N (y_i - \hat{y_i})^2$$
+
+Primetimo da je $\hat{y_i}$ zavisi od $\mathbf{w}\cdot\mathbf{x}$. 
+
+Kako je minimum za nelinearnu funkciju $E(\mathbf{w})$ tesko naci,
+koristimo gramzivu tehniku gradijentnog spusta gde ce formula
+azuriranja tezina biti:
+
+$$w_j \leftarrow w_j - \lambda \frac{\partial E(\mathbf{w})}{\partial w_j}$$
+
+Ova formula znaci da se u svakoj iteraciji pomeramo malo u smeru tak
+da smanjujemo celokupnu gresku. Moguce je zaglaviti se u lokalnom
+minimumu.
+
+Za skrivene cvorove, racunanje greske nije lako kako moramo da
+racunamo faktor greske $\partial E/partial w_j$, iako ne znamo
+koje vrednosti njihov izlaz trebe da bude. Zbog toga se koristi
+tehnika koja se zove **propagacija unazad**. Postoje dve faze u 
+svakoj iteraciji algoritma: propagacije unapred i propagacije 
+unazad. Tokom propagacije unapred, tezine iz prethodne iteracije
+se koriste za racunanje izlazne vrednosti svakog neurona u mrezi.
+Racunanje izlaza neurona se propagira kroz slojeve od ulaznog, do
+izlaznog sloja, pa otuda ima propagacija unapred. Tokom propagacije
+unazad, azuriranje tezina se primenjuje u suprotnom smeru.
+Propagacije unazad omogucava da greske neurona na $k+1$-om sloju
+procenjuju greske neurona na $k$-tom sloju.
 
 **Problemi pri dizajniranju ANN ucanja**
 
+1. Treba odrediti broj cvorova za ulazni sloj. Svakom ulaznom 
+   cvoru dodeljujemo numericku ili binarnu ulaznu promenljivu.
+   Ako je ulazna promenljiva kategoricka, onda ili imamo
+   onoliko ulaznih promenljivih koliko ima kategorija ili 
+   enkodiramo $k$-arnu promenljivu pomocu $[\log_2 k]$ ulaznih
+   cvorova.
+2. Broj cvorova izlaznog sloja treba odrediti. Za dvoklasne 
+   probleme, dovoljno je koristiti jedan izlazni cvor. Za $k$-klasni
+   problem, imamo $k$ izlaznih cvorova.
+3. Treba odrediti topologiju mreze, tj. treba odrediti broj
+   skrivenih slojeva, broj cvorova u svakom sloju, i nacin
+   povezivanja cvorova izmedju slojeva.
+4. Tezine i pristrasnosti treba inicijalizovati. Nasumicno 
+   dodeljivanje vrednosti je prihvatljivo.
+5. Instance iz skupa za treniranje sa nedostajucim vrednostima
+   treba obrisati ili zameniti sa najcescom vrednoscu.
+
 ### Karakteristike vestacke neuronske mreze
 
+1. Viseslojne vestacke neuronske mreze sa bar jednim skrivenim
+   slojem su **univerzalni aproksimatori**, tj. mogu se koristiti
+   da aproksimisu bilo koju ciljnu funkciju. Kako neuronska mreza
+   ima veoma ekspresivan hipoteticki prostor, vazno je odrediti
+   odgovarajucu topologiju mreze za dati problem kako bi izbegli
+   pretreniranje modela.
+2. Vestacke neuronske mreze se mogu nositi sa redudantnim 
+   osobinama zato sto su tezine automacki uce tokom treniranja.
+   Tezine za redudantne osobine su veoma male, pa tako ne uticu.
+3. Neuronske mreze su veoma senzitivne na prisustvo suma u
+   skupu za treniranje. Jedan pristup je validacija skupa za
+   odredjivanje generalne greske modela. Dok je drugi pristup
+   smanjivanje tezina sa nekim faktorom u svakoj iteraciji.
+4. Gradijentni spust se koristi za ucenje tezina za mrezu, a on
+   vrlo cesto konvergira ka lokalnom minimumu. Jedan nacin da se
+   izbegne loklni minimum jeste da se doda momentum za azuriranje
+   tezina formula.
+5. Treniranje vestacke neuronske mreze je vremenski zahtevan proces,
+   posebno kada je broj skrivenih cvorova velik. 
 
 ## Metod potpunih vektora (Support Vector Machine --- SVM)
 
