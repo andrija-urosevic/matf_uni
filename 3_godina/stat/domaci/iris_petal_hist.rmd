@@ -1,0 +1,72 @@
+---
+title: Ispitivanje duzine latica iris skupa podataka
+author: Andrija Urosevic
+output: pdf_document
+---
+
+# Iris skup podataka pregled
+
+```{r}
+head(iris)
+```
+
+```{r}
+summary(iris)
+```
+
+# Izdvajanje podskupova po svim vrstama
+
+Vidimo da postoje 3 vrste, svaka po 50 instanci: 
+
+* `setosa`
+* `versicolor`
+* `virginica`
+
+```{r}
+iris_setosa <- iris[iris$Species=="setosa",]
+iris_versicolor <- iris[iris$Species=="versicolor",]
+iris_virginica <- iris[iris$Species=="virginica",]
+
+head(iris_setosa)
+head(iris_versicolor)
+head(iris_virginica)
+```
+
+# Histogram latica
+
+```{r}
+hist(iris_setosa$Sepal.Width, main="Histogram sirine setosa latica", xlab="Sirina latica")
+hist(iris_versicolor$Sepal.Width, main="Histogram sirine versicolor latica", xlab="Sirina latica")
+hist(iris_virginica$Sepal.Width, main="Histogram sirine virginica latica", xlab="Sirina latica")
+```
+
+
+```{r}
+hist(iris_setosa$Sepal.Length, main="Histogram duzine setosa latica", xlab="Sirina latica")
+hist(iris_versicolor$Sepal.Length, main="Histogram duzine versicolor latica", xlab="Sirina latica")
+hist(iris_virginica$Sepal.Length, main="Histogram duzine virginica latica", xlab="Sirina latica")
+```
+
+# Zakljucak
+
+Vidima da duzine i sirine latica unutar svake od vrsta imaju normalnu raspodelu. 
+
+Mean: 
+```{r}
+mean(iris_setosa$Sepal.Width)
+mean(iris_versicolor$Sepal.Width)
+mean(iris_virginica$Sepal.Width)
+mean(iris_setosa$Sepal.Length)
+mean(iris_versicolor$Sepal.Length)
+mean(iris_virginica$Sepal.Length)
+```
+
+Standard Deviation:
+```{r}
+sd(iris_setosa$Sepal.Width)
+sd(iris_versicolor$Sepal.Width)
+sd(iris_virginica$Sepal.Width)
+sd(iris_setosa$Sepal.Length)
+sd(iris_versicolor$Sepal.Length)
+sd(iris_virginica$Sepal.Length)
+```

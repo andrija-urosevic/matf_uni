@@ -2140,7 +2140,7 @@ dok se ostale koriste za treniranje. Ova procedura se ponavlja $k$
 puta tako da se svaka particija iskoristi tacno jednom. Ukupna
 greska se dobija sumiranjem gresaka za svaki od $k$ pokretanja.
 
-Specijalni skucaj %k%-tostrukog preklapanje unakrsne-validacije
+Specijalni skucaj $k$-tostrukog preklapanje unakrsne-validacije
 je za $k=N$, gde je $N$ ukupan broj slogova. U ovom slucaju svaki
 skup za testiranje sadrzi samo jedan slog (**izbaci jedan**). 
 Ovaj pristup ima za to da iskoristi sto vise podataka za bolje
@@ -2185,37 +2185,37 @@ Ovime dolazimo do dva kljucna pitanje:
 1. Iako model $M_A$ ima vecu tacnost od modela $M_B$, on je testiran
    na manjem skupu za treniranje. Koliko poverenja mozemo da imamo
    na tacnost modela $M_A$?
-   Ovo pitanje se odnosi na problem procene pouzdanja intervala 
+   Ovo pitanje se odnosi na problem procene intervala poverenja 
    tacnosti za dati model.
 2. Da li je moguce objasniti razlike u tacnosti kao rezultat
    varijacija u skupovima za testiranje?
    Ovo pitanje se odnosi na problem statisticke znacajnosti 
-   skupa za testiranje
+   skupa za testiranje.
 
-### Procenjivanje intervala pouzdanja za tacnost modela
+### Procenjivanje intervala poverenja za tacnost modela
 
-Da bi odredili interval pouzdanja, moramo odrediti raspodelu 
+Da bi odredili interval poverenja, moramo odrediti raspodelu 
 mere tacnosti. Neka:
 
 1. Eksperiment sadrizi $N$ nezavisnih pokusaja, gde svaki pokusaj
    ima dve mogucnosti: *uspeh* ili *neuspeh*.
 2. Verovatnoca uspeha je $p$, za svaki pokusaj.
 
-Ako je $X$ broj uspeha od $N$ pokusaja, onda je verovatnoca da 
-$X$ ima odredjenu vrednost data **Binomnom raspodelom**, cije 
+Ako je $X$ broj uspeha od $N$ pokusaja, onda je 
+$X$ data **Binomnom raspodelom**, cije 
 je ocekivanje $Np$, disperzija $Np(1-p)$, i vazi:
 $$P(X = k) = \binom{N}{k}p^k(1-p)^{N-k}$$
 
-Zadatak predvidjanja klasne oznake sloga za testiranje moze se
-posmatrati kao binomni eksperiment. Za dati skup za testiranje
-koji ima $N$ slogova, neka je $X$ broj slogova koji je predvidjen
-tacno datim modelom, i neka je $p$ prava tacnost modela. U ovom
-slucaju $X$ ima binomnu raspodelu, pa i $acc=X/N$ takodje ima 
-binomnu raspodelu sa ocekivanjem $p$ i disperzijom $p(1-p)/N$.
-Iz toga mozemo odrediti interval pouzdanja kao:
-$$P(-Z_{\alpha/2} \leq \frac{acc - p}{\sqrt(p(1-p)/N)} \leq Z_{1 - alpha/2}) = 1 - \alpha$$,
+Zadatak predvidjanja klasne oznake sloga iz skupa za testiranje 
+moze se posmatrati kao binomni eksperiment. Za dati skup za 
+testiranje koji ima $N$ slogova, neka je $X$ broj slogova koje 
+model predvidja kao tacne, i neka je $p$ prava tacnost modela. 
+U ovom slucaju $X$ ima binomnu raspodelu, pa i $acc=X/N$ takodje 
+ima binomnu raspodelu sa ocekivanjem $p$ i disperzijom $p(1-p)/N$.
+Iz toga mozemo odrediti interval poverenja kao:
+$$P\left(-Z_{\alpha/2} \leq \frac{acc - p}{\sqrt(p(1-p)/N)} \leq Z_{1 - \alpha/2}\right) = 1 - \alpha,$$
 gde su $Z_{\alpha/2}$ i $Z_{1-\alpha/2}$ gornja i donja granica
-standardne normalne distribucija nivao pouzdanja $(1-\alpha)$.
+standardne normalne distribucija nivao poverenja $(1-\alpha)$.
 Iz prethodne jednacine mozemo dobiti sledecu tabelu:
 
 | $(1-\alpha)$   | 0.99 | 0.98 | 0.95 | 0.9  | 0.8  | 0.7  | 0.5  |
@@ -2224,11 +2224,11 @@ Iz prethodne jednacine mozemo dobiti sledecu tabelu:
 
 **Primer**: Neka je dat model koji ima tacnost $80\%$ koja je
 izracunata nad skupom za testiranje od $100$ slogova. Koji je 
-interval pouzdanja za stvarnu tacnost u $95\%$ nivou pouzdanja.
-Nivo pouzdanja od $95\%$ odgovara $Z_{\alpha/2}=1.96$ iz tabele.
-Iz ovoga dobijamo da je interval pouzdanja izmedju $71.1\%$ i 
+interval poverenja za stvarnu tacnost u $95\%$ nivou poverenja? 
+Nivu poverenja od $95\%$ odgovara $Z_{\alpha/2}=1.96$ iz tabele.
+Iz ovoga dobijamo da je interval poverenja izmedju $71.1\%$ i 
 $86.7\%$. Kako broj slogova skupa za testiranja $N$ raste tako
-interval pouzdanja postaje sve uzi i uzi.
+interval poverenja postaje sve uzi i uzi.
 
 ### Racunanje performansi dva modela
 
@@ -2255,7 +2255,7 @@ $$\hat\sigma_d^2 =
 \frac{0.15(1-0.15)}{30} + 
 \frac{0.25(1-0.25)}{5000}=0.0043;\
 d_t = 0.1 \pm 1.96 \times 0.00655 = 0.1 \pm 0.128,$$
-za nivo intervala pouzdanja $95\%$, te je onda $z_{\alpha/2}=1.96$.
+za nivo intervala poverenja $95\%$, te je onda $z_{\alpha/2}=1.96$.
 
 ### Uperedjivanje performansi dva klasifikatora
 
@@ -2278,8 +2278,146 @@ $$\hat\sigma_{d^{cv}}^2=\frac{\sum_{j=1}^k(d_j-\bar d)^2}{k(k-1)};\
 d_t^{cv} = \bar d \pm t_{(1-\alpha), k-1} \hat\sigma_{d^{cv}}$$
 gde je $\bar d$ prosecna razlika, i koeficijent 
 $t_{(1-\alpha), k-1}$ je dobijen iz tablice verovatnoce dva 
-parametra, nivoa pouzdanosti $(1-\alpha)$ i broja stepena slobode
+parametra, nivoa poverenja $(1-\alpha)$ i broja stepena slobode
 $k-1$.
+
+## Razni Algoritmi Zasnovani na Drvetima Odlucivanja
+
+### ID3
+
+ID3 (interative Dichotomiser 3) je algoritam zasnovan na drvetima odlucivanja koji je nastao je 1986. godine. Koristi entropiju kao
+meru u informacionu dobit kao kriterijum podele. Kriterijum 
+zastavljanja se zasniva na tome da svi podaci u cvoru pripadaju
+istoj klasi ili kada da je najveca informaciona dobit manja ili
+jednaka nuli. Ne vrsi se potreksivanje drveta. Ovaj algoritam ne
+radi sa numerickim atributima i/ili nedostajucim vrednostima.
+Razmatra samo jedan atribut pri odlucivanju. Rezultat ovog algoritma
+je drvo odlucivanja koje je binarno.
+
+### C4.5
+
+C4.5 predstavlja skup algoritama C4.5, C4.5 bez potkresivanja,
+i C4.5-pravila, koji su nastali 1993. i predstavljaju prosirenje 
+osnovnog ID3 algoritma. Takodje koriste entropiju kao meru i 
+informacionu dobit kao kriterijum podele. Kriterijum zausavljanja
+se zasniva na tome da je broja razlicitih instanci ispod zadate
+granice ili da svih podaci u cvoru pripadaju istoj klasi.
+Koristi diskretne atribute, dok numericke atribute prebacuje
+u diskretne metodom diskretizacije. Za klasu datog lista bira se
+najbrojnija klasa metodom glasanja. Algoritam vrsi naknadno
+potresivanje drveta koristeci (1) smanjenje nivoa greske, (2) 
+pesimisticku procenu greske, (3) intervale poverenja.
+Rezultat ovog algoritma je n-arno drvo odlucivanja, kako ovaj
+algoritam radi kategorickim atributima.
+
+**C4.5 Nedostajuce Vrednosti**
+
+Izbor atributa za deobu u cvoru koji sadrzi nedostajucu vrednost
+koristi informacinu dobit pomnozeno sa procenatom poznatih 
+vrednosti. Ako atribut za podelu sadrzi nedostajucu vrednosti
+instance sa nedostajucim vrednostima dodeljujemo svakoj grani
+procentualno prema broju poznatih vrednosti atributa u granama.
+Novu instancu sa nedostajucom vrednosti klasifikujemo tako sto
+distribuira u grane prema relativnoj verovatnoci dobijenom
+kombinovanje rezultata simultanog pretrazivanja za sve moguce
+isgode testiranje. Konacna klase je klasa sa najvecom verovatnocom
+u ukupnoj distribuciji u drvetu.
+
+**C4.5 Naslednici**
+
+Naslednici su J4.8 (Java) i C5.0. C5.0 karakterise manji skup 
+pravila sa istom preciznoscu, poboljsanje zasnovano na boosting 
+metodama (kombinovanje razlicitih klasifikatora radi povecanja
+preciznosi). Radi sa tezinama atributa.
+
+### CART
+
+CART (Classification And Regression Trees)  je algoritam zasnovan
+na drvetima odlucivanja koji je nastao teorijski 1984. godine.
+Sadrzi resenja za klasifikacioni problem i za regresivn problem.
+Podrzava razlicite metode za meru podele: Ginni, twoing, uredjeni
+twoing, simetricni Ginni, entropija, chisq,... Koristi binarnu
+podelu, tj. instance koje se presludjuju levo imaju ispunjen uslov.
+Automacki uklanja nebalansirane klase mehanizmom prethodnika --- 
+verovatnoca svake ciljne kategorije u materijalu za trening koriste
+se kao tezine, bez uticaja na krajnju distribuciju klasa
+Nedostajuce vrednosti se resavaju tako sto se posmatra atribut
+koji najbolje podrzava atribut po kome se deli.
+
+**CART Potkresivanje drveta**
+
+Originalna verzija konstruise kompletno drvo, a tek iza toga se 
+ide na potkresivanje. Formira se vise mogucih drveta sa potkresanim
+granama za svaka dva lista koja imaju zajednikog pretka. 
+Cost complexity pruning znatno smanjuje broj drveta koji se 
+razmatraju. Optimalno drvo je potkresano drvo sa najmanjom cenom
+za podatke iz skupa za treniranje. Novije verzije rade i 
+pre-potkresivanje.
+
+Odredjivanje vaznosti atributa dobija se kao zbir dobiti svih
+cvorova u kojima se atribut koristi za deobu pomnozen sa procentom
+traning podataka u cvoru, gde se atributi sa nedostajucim 
+vrednostima uzimaju u obzir. Takodje koristi matrice cene, i tezine.
+
+### CHAID
+
+CHAID (Chi-Squared Automatic Interaction Detector) je razvijen 1980.
+godine. Koristi samo kategoricke klase, dok ostali atributi
+mogu biti imenski, redni, kategoricki, neprekidni koji se 
+transformisu u redne. 
+
+Sastoji se od tri koraka: uparivanje, podela,
+i zaustavljanje. Drvo klasifikacije se formira uzastopnom primenom
+ovih pravila na svaki cvor, pocev od korenog. Za svaki atribut $A$
+odredjuje se par vrednosti $V_A$ sa najmanje znacajnom razlikom. 
+Znacajnost razlike se racuna preko $p$-test, tako sto se racuna 
+$p$-vrednost u odnosu na atribut klase. Za podelu se bira atribut sa
+najmanjom $p$-vrednoscu statistickog testa. Provera se da li je
+$p$-vrednost veca od praga $\alpha$, i ako jeste par se uparuje 
+u jednu slozenu kategoriju i tarzi se sledeci par vrednosti. Ovo
+se ponavlja sve dok ima znacajnih parova.
+
+Statisticke test zavisi od tipa atributa klase. Ako je to:
+(1) neprekidan atribut, onda se koristi $F$-test, (2) nominalan
+atribut, onda se koristi $\chi^2$-test, (3) redni atribut, onda
+se koristi test odnosa verovatnoca.
+
+Kriterijum zaustavljanja je ne postojanje znacajnog par, dostignuta
+najveca dubina drveta, distignut najmanji broj elemenata u cvoru.
+Dobija se $n$-arno drvo odlucivanja.
+
+### QUEST
+
+QUEST (Quick, Unbiased, Efficient Statistical Trees) podrzava
+univarijantne i linearne kombinacije podela vrednosti u cvoru. 
+Vezu izmedju atributa klase i aributa pri podeli je
+(1) ANOVA F-test za redne i neprekidne atribute i $\chi^2$-test
+za kategoricke atribute. Vrsi post-potresivanje drveta. Atribut
+klase moze biti samo kategoricki, dok su ostali atributi imenski,
+redni, kategoricki, neprekidni. Vrsi binarnu podelu cvorova.
+
+### SLIQ
+
+SLIQ (Supervised Learning In Quest) je varijanta QUEST algoritma
+za klasifikaciju velikih traning podataka. Efikasno radi sa podacima
+koji ne mogu da stanu u memoriju racunara. Nije zasnovan na
+principu Hantovog algoritma. Koristi tehine rasta drveta u sirinu:
+tehnika presortiranja u fazi rasta drveta. Koristi vertiklani format
+podataka - na pocetku se svi podaci sortiraju i smestaju u listu.
+Podela se vrsi na osnovu Ginni indeksa. Koristi listu klasa: 
+struktura u memoriji koja cuva oznake klasa svake instance.
+Velicina liste klasa je direktno proporcionalna broju
+ulaznih slogova. Moze da koristi i kaegoricke i numericke aribute.
+Potresivanje se zasniva na tehnici MDL.
+Implementacija za serijski i paralelno izvrsavanje
+
+### SPRINT
+
+SPRINT (Scalable PaRallelizable INduction of decision Trees) je
+modifikacija SLIQ algoritma koja uklanja memorijska ogranicanje.
+Oznake klasa pridruzuju identifikatorima instanci. Podrzava
+kategoricke i numericke aribute. I implementirana je za serijsko
+i paralelno izvrsavanje.
 
 # Klasifikacije: Alternativne tehnike
 
@@ -2419,7 +2557,7 @@ klase, i cene slogova koji su pogresno klasifikovani za datu klasu.
 def sequential_covering(training_records, attribute_value, classes, default_class):
     rule_list = []
     for y in oredered(classes):
-        while stop_cond():
+        while not stop_cond():
             rule = learn_one_rule(training_records, attribute_value, y)
             training_records.remove_records_covered_by(rule)
             rule_list.append(rule)
@@ -2468,7 +2606,7 @@ i gramzivo se bira ona koja najbolje poboljsava kvaliteta pravila.
 Ovaj proces staje kada se zadovolji neki uslov, na primer, 
 dodata konjukcija ne poboljsava kvalitet pravila.
 
-U slucaju generalno-u-specificno, inicijlano se nasumicno biraja
+U slucaju specificno-u-generalno, inicijlano se nasumicno biraja
 jedno pravilo. U toku poboljsavanje ovog pravila, izbacuje se
 jedna po jedna konjukcija takoda pravilo pokriva vise pozitivnih
 slogova. Ovaj proces staje kada se zadovolji neki uslov, na primer,
@@ -3250,8 +3388,8 @@ Kako je model perceptrona iz gornjeg primera bio linearan po
 atributima $\mathbf{x}$ i tezinama $\mathbf{w}$, granica 
 odlucivanja je linearna hiperravan koja dele podatke na dve klase
 $-1$ i $+1$. Perceptron zbog toga daje optimalna resenje ako je
-problem klasifikacije linearno odvojiv. Ako problem nije
-linearno odvojiv onda algoritam ne konvergira. Jedan takav primer
+problem klasifikacije linearno razdvojiv. Ako problem nije
+linearno razdvojiv onda algoritam ne konvergira. Jedan takav primer
 je XOR funkcija.
 
 ### Viseslojne vestacke neuronske mreze
@@ -3277,7 +3415,7 @@ od modela perceptrona:
    izlaznim cvorovima da imaju izlaznu vrednost koja nije
    linearna u odnosu na ulazne parametre.
    
-Zbog ove kompleksnosti mozemo da resimo neodvojive probleme kao 
+Zbog ove kompleksnosti mozemo da resimo nerazdvojive probleme kao 
 sto je XOR problem. Ako konstruisemo mrezu koja ima dva ulazna 
 cvora, dva skrivena cvora, i jedan izlazni cvor, svaki od slojeva
 mozemo posmatrati kao jedan perceptron koji generise hiperravan
@@ -3366,5 +3504,1986 @@ procenjuju greske neurona na $k$-tom sloju.
    posebno kada je broj skrivenih cvorova velik. 
 
 ## Metod potpunih vektora (Support Vector Machine --- SVM)
+
+SVM ima mnoge primene, a potice iz teorije statistickog ucenja. Radi dobro za podatke za puno dimenzija. Predstavlja granicu 
+odluke pomocu podskupova instanci za treniranje, koji se zovu
+**potpuni vektor**.
+
+### Hiperravni maksimalne margine
+
+U slucaju da imamo linearno razdvojiv skup podataka, kroz njega 
+mozemo provuci beskonacno mnogo hiperravni koje razdvajaju podatke.
+Za svaki od tih hiperravni vazi da ce greska modela nad trening  
+skupu biti jednaka nuli, ali nemamo nikakvu garanciju da ce ta 
+hiperravan dobro generalizovati, tj. da ce greska nad test skupom
+biti mala.
+
+Razmotrimo sada dve granice odluke, $B_1$ i $B_2$. Svakoj od granica
+odluke je dodeljen par hiperravni $b_i1$ i $b_i2$. Ove hipperravni
+dobijamo tako sto se paralelno razdvajamo $b_i1$ i $b_i2$, sve dok
+one ne dodiruju najblizu instancu treniranja. Distanca izmedju te
+dve hiperravni $b_i1$ i $b_i2$ naziva se **margina** klasifikatora. 
+
+**Rasudjivanje o maksimalnoj margini**
+
+Prirodno je ocekivati da ce granice odluke koje imaju vecu marginu
+bolje generalizovati: Ako je margina mala, onda male promene u
+granici odluke mogu da imaju veliki uticaj na klasifikaciju.
+
+Formalnije, generalizacionu gresku posmatramo kao princip 
+statistickog ucenja: **strukturni rizik minimizacije** (SRM). 
+Ovaj princim pruza gornju granicu generalizacione greske 
+klasifikatora $(R)$ u terminima greske treniranja $(R_e)$,
+broja instanci treniranje $(N)$, i kompleksnosti modela (**kapacitet**) $(h)$:
+
+$$R \leq R_e + \varphi(\frac{h}{N}, \frac{\log(\eta)}{N}),$$
+
+gde je $\varphi$ monotono raste kada raste kompleksnost modela $h$.
+Zbog toga SRM pokazuje da sa porastom kompleksnosti modela greska
+treniranja opada, i obrnuto. Kao i do sada treba naci optimalnu 
+sredinu.
+
+Kompleksnost linearnog modela je obrnuto proporcionalna od njegove 
+margine. Modeli sa malom marginom imaju veliki kapacitet jer su
+vise fleksibilni i mogu se prilagotiti mnogim skupovima za 
+treniranje, za razliku od modela sa velikom marginom. Ali SRM 
+princip pokazuje da sa porastom kompleksnosti, generalizacija 
+opada. Zbog toga, zelimo da napravimo linearni model koji
+maksimizuje marginu da bi minimizovali gresku generalizacije.
+
+### Linearna SVM: Razdvojiv slucaj
+
+**Linearna granica odluke**
+
+Razmotrimo problem binarnu klasifikacije koji ima $N$ instanci za
+treniranje. Svaka instanca je oblika $(\mathbf{x_i},y_i)$, gde je
+$\mathbf{x_i} = (x_{i1}, x_{i2}, \ldots, x_{id})^T$, odgovara
+atributima $i$-te instance. Neka je $y_i \in \{-1, +1\}$ labela 
+klase. Granica odluke linearnog klasifikatora je:
+$$\mathbf{w}\cdot\mathbf{x} + b = 0,$$
+gde su $\mathbf{w}$ i $b$ parametri modela.
+
+Za bilo koje dve tacke $\mathbf{x_a}$ i $\mathbf{x_b}$ na granici 
+odluke vazi:
+$$
+\begin{aligned}
+&\mathbf{w}\cdot\mathbf{x_a} + b = 0,\\
+&\mathbf{w}\cdot\mathbf{x_b} + b = 0.
+\end{aligned}
+$$
+Odatle imamo da je:
+$$\mathbf{w}\cdot(\mathbf{x_a} - \mathbf{x_b}) = 0$$
+Vektor $(\mathbf{x_a} - \mathbf{x_b})$ je paralelan granici odluke,
+pa kako je skalarni proizvod jednak nuli, onda mora biti da je
+$\mathbf{w}$ normalan na granicu odluke.
+
+Za bilo koju instancu $\mathbf{z}$ iznad granice odluke vazi:
+$$\mathbf{w}\cdot\mathbf{z} + b > 0.$$
+Dok za bilo koju instacu $\mathbf{z}$ ispod granice odluke vazi:
+$$\mathbf{w}\cdot\mathbf{z} + b < 0.$$
+Zbog toga ako oznacimo sve instance iznad granice odluke klasom 
+$+1$ i sve instance ispod granice odluke klasom $-1$, onda vazi:
+$$
+y = 
+\begin{cases} 
+    +1 & \mbox{, ako } \mathbf{w}\cdot\mathbf{z} + b > 0; \\
+    -1 & \mbox{, ako } \mathbf{w}\cdot\mathbf{z} + b < 0.
+\end{cases}
+$$
+
+**Margina Linearnog Klasifikatora**
+
+Razmotrimo par najblizih instanci obe klase u odnosu na grenicu
+odluke. Mozemo skalirati parametre $\mathbf{w}$ i $b$ granice
+odlucivanja tako da za dve paralelne vrednosti hiperravni
+$b_{i1}$ i $b_{i2}$ vazi:
+$$
+\begin{aligned}
+b_{i1}&: \mathbf{w}\cdot\mathbf{x}+b=+1,\\
+b_{i2}&: \mathbf{w}\cdot\mathbf{x}+b=-1.
+\end{aligned}
+$$
+
+Margina granice odluke je distanca izmedju dve hiperravni.
+Neka je $\mathbf{x_1}$ tacka na $b_{i1}$ i $\mathbf{x_2}$ tacka
+na $b_{i2}$, onda dobijamo marginu $d$ kao:
+$$
+\begin{aligned}
+\mathbf{w}\cdot(\mathbf{x_1} - \mathbf{x_2}) &= 2 \\
+\|\mathbf{w}\|\times d &= 2 \\
+d &= \frac{2}{\|\mathbf{w}\|} 
+\end{aligned}
+$$
+
+**Ucenje Linearnog SVM Modela**
+
+Ucenje linearnog SVM modela se zasniva na procenjivanje parametara
+$\mathbf{w}$ i $b$ tako da su sledeca dva ogranicanje zadovoljena za
+svaku od instanci za treniranje $(\mathbf{x_i}, y_i)$:
+$$
+\begin{aligned}
+\mathbf{w}\cdot\mathbf{x_i} + b \geq +1 \mbox{ ako } y_i = +1,\\
+\mathbf{w}\cdot\mathbf{x_i} + b \leq -1 \mbox{ ako } y_i = -1.
+\end{aligned}
+$$
+Ova ogranicenja obezbedjuju da ce sve instance skupa za treniranje 
+sa klasom $y=+1$ biti iznad hiperravni 
+$\mathbf{w}\cdot\mathbf{x} + b = +1$, dok ce sve instance skupa
+za treniranje sa klasom $k=-1$ biti ispod hiperravni
+$\mathbf{w}\cdot\mathbf{x} + b = -1$. Oba ova ogranicenja mozemo 
+zapisati kao:
+$$y_i(\mathbf{w}\cdot\mathbf{x} + b) \geq 1,\ i=1,2,\ldots,N.$$
+
+SVM dodaje dodatna ogranicenja koji obezbedjuju da ce margina 
+granice odluke biti maksimalna. To se svodi na minimizaciju sledece 
+funkcije:
+$$f(\mathbf{w}) = \frac{\|\mathbf{w}\|^2}{2}.$$
+
+**Definicija (Linearni SVM: Razdvojiv slucaj)**. Zadatak ucenja
+u SVM moze se formulisati kao sledeci optimizacioni problem:
+$$\min_w \frac{\|w\|^2}{2},$$
+pod ogranicenjima da je
+$\forall i:\ y_i(\mathbf{w}\cdot\mathbf{x_i} + b) \geq 1.$
+
+Kako je funkcija za minimizaciju kvadratna i ogranicenja su linearni
+po parametrima $\mathbf{w}$ i $b$, ovaj optimizacioni problem se
+naziva **konveksan** optimizacioni problem, koji moze da se resi
+metodom **Lagranzovih multiplikatora**. 
+
+Prvo, definisemo novu funkciju za optimizacioni problem koja se
+naziva **Lagranzova funkcija** kao:
+$$L_P = \frac{1}{2} \|\mathbf{w}\|^2 - \sum_{i=1}^N \lambda_i
+\left( y_i(\mathbf{w}\cdot\mathbf{x_i} + b) - 1\right)$$
+gde se parametri $\lambda_i$ nazivaju **Lagranzovi mnozioci**.
+Ciljna funkcija se mora modifikovati zato sto bi minimizacijom 
+funkcije $\frac{\|\mathbf{w}\|^2}{2}$ dobili da je $\mathbf{w}=\mathbf{0}$,
+a to ne zadovoljava ogranicenja 
+$y_i(\mathbf{w}\cdot\mathbf{x_i} + b) \geq 1$
+za bilo koju vrednost parametra $b$.
+
+Da bi minimizovalni Lagranzovu funkciju $L_P$, prvo nalazimo 
+parcijalne izvode od $L_P$ u odnosu na $\mathbf{w}$ i $b$ i
+izjednacavamo ih sa nulom:
+$$
+\begin{aligned}
+\frac{\partial L_P}{\partial \mathbf{w}} = 0 &\implies 
+\mathbf{w} = \sum_{i=1}^{N}\lambda_i y_i \mathbf{x_i};\\
+\frac{\partial L_P}{\partial b} = 0 &\implies \sum_{i=1}^{N} \lambda_i y_i = 0.
+\end{aligned}
+$$
+
+Kako su Lagranzovi mnozioci nepoznati, ne mozemo da nadjemo
+$\mathbf{w}$ i $b$. U slucaju ogranicenja koji su jednakosti, 
+jednostavno ih mozemo dodati u sistem jednacina, ili ekvivalentno mozemo dodati svaku od 
+$\frac{\partial L_p}{\partial \lambda_i} = 0$ jednacina
+u dobijeni sistem. Tako mozemo resiti sistem od $N + 2$ jednacine 
+sa $N + 2$ promenljive (i dobiti $\mathbf{w}$, $b$, 
+$\lambda_1, \ldots, \lambda_N$).
+
+Jedan nacin resavanja ovog problema sa ogranicenja koji su 
+nejednakosti je njihovo transformisanje u jednakosti. 
+Ovo je moguce samo pod dodatnim ogranicenjem da su Lagranzovi 
+mnozioci nenegativni. Ogranicanja postaju 
+(Karush-Kuhn-Tucker ---KKT):
+$$
+\begin{aligned}
+\lambda_i &\geq 0, \\
+\lambda_i [y_i (\mathbf{w} \cdot \mathbf{x_i} + b) - 1] &= 0.
+\end{aligned}
+$$
+
+Cini se da Lagranzovih mnozioca ima koliko i instanca za treniranje.
+Ali ispostavlja se da mnogi Lagranzovi mnozioci postaju nula, iz
+drugog ogranicenja, tj. vazi $\lambda_i = 0$ akko 
+$y_i (\mathbf{w} \cdot \mathbf{x_i} + b) \neq 1$. Sve one 
+instance, za koje vazi $\lambda_i > 0$, leze na hiperravanima
+$b_{i1}$ ili $b_{i2}$ i nazivaju se pomocni vektori. Sve ostale
+instance, za koje vazi $\lambda_i = 0$, ne leze na hiperravnima.
+
+Resavanje ovoh problema je dosta tesko je ukljucuju veliki broj
+parametara i jednacina, tacnije $N + 2$ njih 
+($\mathbf{w}$, $b$, $\lambda_1, \ldots, \lambda_N$). Zbog toga
+ovaj problem stovimo na njegov dualni problem, koji ukljucuju samo
+Lagranzove mnozioce. Zamenicemo 
+$\mathbf{w} = \sum_{i}\lambda_i y_i \mathbf{x_i}$ i
+$\sum_{i}\lambda_i y_i = 0$ u $L_P$:
+$$
+L_D = 
+\sum_{i}\lambda_i - 
+\frac{1}{2}\sum_{i,j} \lambda_i \lambda_j y_i y_j (\mathbf{x_i} \cdot \mathbf{x_j})
+$$
+
+Dve kljucne razlike izmedju dva dualna problema $L_P$ i $L_D$:
+
+1. Dualna Lagranzova funkcija $L_D$ sadrzi samo Lagranzove mnozioce 
+   $\lambda_i$ i instance skupa za treniranje 
+   $(\mathbf{x_i}, y_i)$, dok primarna Lagranzova funkcija $L_P$
+   sadrzi Lagranzove mnozioce $\lambda_i$, instance skupa za 
+   treniranje $(\mathbf{x_i},y_i)$, kao i parametre za granizu 
+   odluke $\mathbf{w}$ i $b$. Resenje oba optimizaciona problema su 
+   ekvivalentna.
+2. Kvadratni clan u dualnoj Lagranzovoj funkciji $L_D$ ima negativan
+   znak ispred, sto znaci da je originalni problem minimizacije
+   koji ukljucuje primarnu Lagranzovu funkciju $L_P$, postaje
+   problem maksimizacije koji ukljucuje dualnu Lagranzovu funkciju 
+   $L_D$.
+
+Dualni problem optimizacije moze se resiti numerickim tehnikama
+kao sto je kvadratno programiranje, ili nekim drugim tehnikama.
+Kada se nadje $\lambda_i$, dobijamo i parametare 
+$$
+\begin{aligned}
+\mathbf{w} &= \sum_{i}\lambda_i y_i \mathbf{x_i}, \\
+b_i &=  1/y_i - \mathbf{w} \cdot \mathbf{x_i}, \\
+b &= \overline{b_N}
+\end{aligned}
+$$
+
+### Linearni SVM: Nerazdvojivi slucaj
+
+Ako je skup za treniranje linearno razdvojiv ukoliko se zanemare
+instance iz skupa koje dovode do nerazdvojivih podataka, moguce je
+dobiti da je granica odluke $B_1$ sa vecom marginom, ima gresku
+nad trening skupom, dok granica odkule $B_2$ sa manjom marginom, 
+nema gresku. Zbog toga $B_1$ se nikada nece dobiti prethodnom 
+procedurom, te model nece lepo generalizovati. Da bi algoritam 
+prepoznao $B_1$ kao potencionalnu ogranicu odluke, koristi se
+metod **mekih margina**. Sta vise ovaj metod dobro radi i za
+podatke koji nisu linearno razdvojivi. Ovim pristupom dobijamo
+fleksibilnost izmedju broja pogresno klasifikovanih instanci iz 
+skupa za treniranje i sirine margine.
+
+Zbog toga moramo relaksirati ogranicenja kako bi se uklopila u
+linearno nerazdvojive podatke tako sto uvodimo dodatnu vrednost:
+**popustivu promenljivu** $(\xi > 0)$. Ogranicenja optimizacionog 
+problema, onda postaju:
+$$
+\begin{aligned}
+\mathbf{w}\cdot\mathbf{x_i} + b \geq +1 - \xi_i\mbox{ ako }y_i=+1,\\
+\mathbf{w}\cdot\mathbf{x_i} + b \leq -1 + \xi_i\mbox{ ako }y_i=-1.
+\end{aligned}
+$$
+
+Neka instanca $\mathbf{x_a}$ krsi ogranicenje 
+$\mathbf{w}\cdot\mathbf{x_a} + b \leq -1$, onda ce $\mathbf{w}\cdot\mathbf{x} + b = -1 + \xi$ biti linija koja je 
+paralelna sa granicom odlucivanja i prolazi kroz tacku 
+$\mathbf{x_a}$. Odatle se dobija duzina izmedju te linije
+i hiperravni $\mathbf{w}\cdot\mathbf{x} + b = -1$:
+$$
+\begin{aligned}
+\mathbf{w}\cdot(\mathbf{x} - \mathbf{x_a}) = \xi, \\
+\|\mathbf{w}\| \times d = \xi, \\
+d = \frac{\xi}{\|\mathbf{w}\|}
+\end{aligned}
+$$
+Zbog toga $\xi$ pruza dobaru procenu greske granice odluke nad
+instancom $\mathbf{x_a}$.
+
+Kako bi se izbegao ogranicen broj gresaka ciljna funkcija se defnise
+kao:
+$$
+f(\mathbf{w}) = 
+\frac{\|\mathbf{w}\|^2}{2} +
+C\left(\sum_{i=1}^{N}\xi\right)^k,
+$$
+gde su $C$ i $k$ korisnici definisani parametri koji predstavljaju
+kaznu pogresno klasifikovanih instanci iz trening skupa. 
+Pretpostavimo da je $k=1$, a da se parametar $C$ moze dobiti na
+osnovu performansa modela na validacionom skupu.
+
+Dobijamo Lagranzovu funkciju kao:
+$$
+L_P = 
+\frac{1}{2}\|\mathbf{w}\|^2 + 
+C\sum_{i=1}^{N}\xi_i - 
+\sum_{i=1}^{N}\lambda_i(y_i(\mathbf{w}\cdot\mathbf{x_i} + b) - 1 + \xi_i) - 
+\sum_{i=1}^N\mu_i\xi_i,
+$$
+sa sledecim KKT ogranicenjima:
+$$
+\begin{aligned}
+\xi_i \geq 0,\ \lambda_i \geq 0,\ \mu_i \geq 0,\\
+\lambda_i(y_i(\mathbf{w}\cdot\mathbf{x_i} + b) - 1 + \xi_i) = 0,\\
+\mu_i\xi_i=0.
+\end{aligned}
+$$
+
+Odatle nalazimo prvi parcijalni izvod od $L_P$ u odnosu na 
+$\mathbf{w}$, $b$, i $\xi_i$.
+
+$$
+\begin{aligned}
+\frac{\partial L_P}{\partial w_j} = w_j - \sum_i \lambda_i y_i x_{ij} = 0 &\implies w_j = \sum_i \lambda_i y_i x_{ij}, \\
+\frac{\partial L_P}{\partial b} = - \sum_i \lambda_i y_i = 0 &\implies \sum_i \lambda_i y_i = 0 \\
+\frac{\partial L_P}{\partial \xi_i} = C - \lambda_i - \mu_i = 0 &\implies \lambda_i + \mu_i = C.
+\end{aligned}
+$$
+
+Odatle problem optimizacije primarne Lagranzove funkcije mozemo da
+svedemo na problem optimizacije dualne Lagranzove funkcije:
+$$
+\begin{aligned}
+L_D &= \frac{1}{2}\sum_{ij}\lambda_i \lambda_j y_i u_j (\mathbf{x_i}\cdot\mathbf{x_j}) \\
+&+ C \sum_i \xi_i \\
+&- \sum_i \lambda_i (y_i (\sum_j \lambda_j y_j (\mathbf{x_i}\cdot\mathbf{x_j}) + b) - 1 + \xi_i) \\
+&- \sum_i (C - \lambda_i) \xi_i \\
+&= \sum_i \lambda_i - \frac{1}{2} \sum_{ij}\lambda_i \lambda_j y_i y_j (\mathbf{x_i}\cdot\mathbf{x_j}).
+\end{aligned}
+$$
+
+
+### Nelinearni SVM
+
+Do sada smo posmatrali samo skupove podataka kod kojih postoji
+linearna granica odluke. Kod skupova sa nelinearnom granicom odluke
+koristimo sledeci trik: Transformisemo podatke iz originalnog 
+koordinatnog prostora $\mathbf{x}$ u novi prostor 
+$\mathbf{\Phi}(\mathbf{x})$ za koji postoji linearna granica odluke.
+
+**Transformacija Atributa**
+
+Da bi pokazali kako se transformacijom atributa dobijaju linearno
+razdvojivi podaci, predpostavimo da imamo binarni skup podataka za 
+treniranje, gde su sve instance sa labelom $y=+1$ van kruga 
+$\mathcal{K}$, dok su sve instance sa labelom $y=-1$ unutar 
+kruga $\mathcal{K}$. Krug $\mathcal{K}:\ (x_1 - 0.5)^2 + (x_2 - 0.5)^2 = 0.2^2$.
+
+Mozemo napraviti model sledecom jednacinom:
+$$
+y(x_1, x_2) =
+\begin{cases}
++1 &,(x_1 - 0.5)^2 + (x_2 - 0.5)^2 > 0.2^2, \\
+-1 &,(x_1 - 0.5)^2 + (x_2 - 0.5)^2 \leq 0.2^2,
+\end{cases}
+$$
+a granica odluke ce u ovom slucaju biti krug $\mathcal{K}$, tj.
+$$
+x_1^2 - x_1 + x_2^2 - x_2 = -0.46.
+$$
+
+Nelinearna transformacija $\mathbf{\Phi}$ treba da preslikava 
+iz originalnog prostora atributa u novi prostor gde ce granica
+odluke biti linearna. Jedna takva transformacija je:
+$$
+\mathbf{\Phi}:(x_1, x_2) \rightarrow (x_1^2, x_2^2, \sqrt{2}x_1, \sqrt{2}x_2, 1).
+$$
+
+U transformisanom prostoru mozemo naci parametar 
+$\mathbf{w}=(w_0, w_1, w_2, w_3, w_4)$ tako da granica odluke 
+postaje:
+$$
+w_4 x_1^2 + 
+w_3 x_2^2 + 
+w_2 \sqrt{2} x_1 + 
+w_1 \sqrt{2} x_2 + 
+w_0 = 0.
+$$
+
+Jedan potencijalni problam ovog pristupa je to sto se 
+dimenzionalnost povecava drasticno sa porastom dimenzija 
+originalnog prostora. Kernel trik resava ovaj problem.
+
+**Ucenje Nelinearnog SVM Modela**
+
+Tehnika transformisanja atributa ima nekoliko problema. Prvi je to 
+sto je veoma tesko odrediti optimalnu transformaciju 
+$\mathbf{\Phi}$. Drugi je to sto resavanje optimizacionog problema
+sa velikom dimenzijom je izracunljivo tezak zadatak.
+
+Pretpostavimo da postoji odgovarajuca funkcija $\mathbf{\Phi}$.
+Nakon transfromisanja takodje treba odrediti linearnu granicu 
+odluke, koja je sledeceg oblika: 
+$\mathbf{w}\cdot\mathbf{\Phi}(\mathbf{x}) + b = 0$.
+
+**Definicija (Nelinearni SVM)**. Zadatak ucenja nelinearnog SVM je
+optimizacioni problem:
+$$
+\min_{\mathbf{w}}\frac{\|\mathbf{w}\|^2}{2}
+$$
+pod ogranicenjem da je $\forall i:\ y_i(\mathbf{w}\cdot\mathbf{\Phi}(\mathbf{x_i}) + b) \geq 1$.
+
+Slicnim postupkom, kao kod linearnog SVM, dobija se dualna 
+Lagranzova funkcija:
+$$
+L_D = \sum_i \lambda_i - \frac{1}{2}\sum_{i,j}\lambda_i \lambda_j y_i y_j (\mathbf{\Phi}(\mathbf{x_i}) \cdot \mathbf{\Phi}(\mathbf{x_j})).
+$$
+
+Kada pronadjemo $\lambda_i$ nekom tehnikom, parametre $\mathbf{w}$
+i $b$ mozemo da izvedemo iz:
+$$
+\begin{aligned}
+&\mathbf{w} = \sum_i \lambda_i y_i \mathbf{\Phi}(\mathbf{x_i})\\
+&\lambda_i \left[y_i \left(\sum_i \lambda_i y_i (\mathbf{\Phi}(\mathbf{x_i}) \cdot \mathbf{\Phi}(\mathbf{x_i})) + b\right) - 1\right] = 0
+\end{aligned}
+$$
+Konacno za klasifikaciju instance testiranja $\mathbf{z}$ koristimo:
+
+$$
+\begin{aligned}
+f(\mathbf{z}) 
+&= sgn(\mathbf{w} \cdot \mathbf{\Phi}(\mathbf{z}) + b) \\
+&= sgn\left(\sum_i \lambda_i y_i (\mathbf{\Phi}(\mathbf{x_i}) \cdot \mathbf{\Phi}(\mathbf{z})) + b \right).
+\end{aligned}
+$$
+
+**Kernel trik**
+
+Skalarni proizvod 
+$\mathbf{\Phi}(\mathbf{x_i}) \cdot \mathbf{\Phi}(\mathbf{x_j})$
+mozemo posmatrati kao meru slicnosti izmedju dve instance,
+$\mathbf{x_i}$ i $\mathbf{x_j}$ u transformisanom prostoru.
+**Kernel trik** je moted koji se koristi za meru slucnosti
+izmedju dve instance u transformisanom prostoru koristeci
+skup atributa. Ovim postupkom resavamo problem prokletstva 
+dimenzionalnosti.
+
+Razmotrimo funkciju $\mathbf{\Phi}$ koju smo gore koristili:
+$$
+\begin{aligned}
+\mathbf{\Phi}(\mathbf{u})\cdot\mathbf{\Phi}(\mathbf{v}) 
+&= (u_1^2, u_2^2, \sqrt{2} u_1, \sqrt{2} u_2, 1) \cdot
+   (v_1^2, v_2^2, \sqrt{2} v_1, \sqrt{2} v_2, 1) \\
+&= u_1^2 v_1^2 + u_2^2 v_2^2 + 2 u_1 v_1 + 2 u_2 v_2 + 1 \\
+&= (\mathbf{u}\cdot\mathbf{v} + 1)^2.
+\end{aligned}
+$$
+Ova formula pokazuje da se skalarni proizvod u transformisanom
+prostoru moze prikazati u terminima skalarnog proizvoda u 
+originalnom prostoru. Ova funkcija naziva se **kernel funkcija**
+i definisana je kao:
+$$
+K(\mathbf{u},\mathbf{v}) =
+\mathbf{\Phi}(\mathbf{u})\cdot\mathbf{\Phi}(\mathbf{v}) = 
+(\mathbf{u}\cdot\mathbf{v} + 1)^2
+$$
+
+Ovime dobijamo da nije potrebno znati preciznu definiciju 
+preslikavanja $\mathbf{\Phi}$, jer kernel funkcija mora da
+zodovoljava **Marcerovu teoremu**. Ona kaze da se kernel funkcija
+moze izraziti preko skalarnog proizvoda izmedju dva ulazna
+vektora u nekom vise-dimenzionom prostoru. Taj transformisani 
+prostor se naziva **reproduktivni kernel Hilbert prostor**.
+
+Instanca iz skupa za testiranje $\mathbf{z}$ se klasifikuje kao:
+$$
+\begin{aligned}
+f(\mathbf{z})
+&= sgn(\sum_i \lambda_i y_i (\mathbf{\Phi}(\mathbf{x_i})\cdot\mathbf{\Phi}(\mathbf{z})) + b) \\
+&= sgn(\sum_i \lambda_i y_i K(\mathbf{x_i}, \mathbf{z}) + b) \\
+&= sgn(\sum_i \lambda_i y_i (\mathbf{x_i}\cdot\mathbf{z} + 1)^2 + b).
+\end{aligned}
+$$
+
+**Teorema (Mercerova Teorema)**. *Kernel funkcija* $K$ *se moze
+izraziti kao*
+$$
+K(\mathbf{u}, \mathbf{v}) = \mathbf{\Phi}(\mathbf{u})\cdot\mathbf{\Phi}(\mathbf{v}).
+$$
+*akko, za bilo koju funkciju* $g(\mathbf{x})$ *takvu da je* 
+$\int g(\mathbf{x})^2 d\mathbf{x}$ *konacno, onda*
+$$
+\int K(\mathbf{x}, \mathbf{y}) g(\mathbf{x}) g(\mathbf{y})\ d\mathbf{x}d\mathbf{y} \geq 0.
+$$
+
+Neke kernel funkcije koje zadovoljavaju Marcerovu teoremu:
+$$
+\begin{aligned}
+K(\mathbf{x}, \mathbf{y}) &= (\mathbf{x}\cdot\mathbf{y} + 1)^p\\
+K(\mathbf{x}, \mathbf{y}) &= e^{-\|\mathbf{x}-\mathbf{y}\|^2/(2\sigma^2)} \\
+K(\mathbf{x}, \mathbf{y}) &= \tanh(k\mathbf{x}\cdot\mathbf{y} - \delta)
+\end{aligned}
+$$
+
+### Karakteristike SVM
+
+1. Problem ucenja SVM modela moze da se formulise kao konveksan 
+   optimizacioni problem, u kome su dostupni efikasni algoritmi
+   za nalazenje globalnog minimuma ciljne funkcije. Dok drugi
+   klasifikacioni modeli kao sto su klasifikatori zasnovani na 
+   pravilima i neuronske mreze, koriste gramzicu strategiju za
+   pretragu prostora, pa se vrlo cesto zaglavljuju u loklanim
+   minimumima.
+2. SVM regulise kapacitet maksimizovanjem margini granice odluke.
+   Ostale parametre kao sto je tip kernel funkcije i funkcija cene
+   $C$ definise korisnik.
+3. SVM se moze koristiti nad kategorickim podacima tako sto
+   se prave glupe promeljive za svaku kategoriju.
+4. Postoje neke metode za prosirivanje SVM na viseklasne probleme.
+
+## Metod Ansambla
+
+## Problem: Nebalansiranih Klasnih Instanci
+
+Skupovi podataka sa nebalansiranom distribucijom klasa su veoma 
+cesti u mnogim primenama. Na primer, broj neispravnih masina tokom
+neke producije je znacajno manji od ispravinh masina. Isto tako,
+broj neovlascenog koriscenja kreditne kartice je veoma manji od
+broja ovlascenih koriscenja. Bez obzira na njihovo retko 
+pojavljivanje, korektno klasifikovanje ovih instanci je veoma 
+vazno. Medjutim, kako ima vise ovih koji nisu od znacaja dobijamo
+da je ocena dosta velika.
+
+Na primer, ako ima $1\%$ neovlascenog koriscenja kreditne kartice,
+a nas model predvidja sve kao ovlasceno koriscenje kreditne kartice,
+ima da je preciznost modela $99\%$, je je veoma visoka ocena, ali
+model je neupotrebljiv.
+
+### Alternativne Metrike
+
+Kod osnovnih metrika, sve klase su jednake, tj. imaju jednake
+tezine. Za binarnu klasifikaciju, retka klasa se obicno oznacava
+kao pozitivna klasa $+$, dok se gusta klasa oznacava kao negativna
+klasa $-$. Na osnovu modela, dobijamo sledecu matricu konfuzije:
+
+|   | +             | -            |
+|:-:|:-------------:|:------------:|
+| + | $f_{++}$ (TP) | $f_{+-}$(FN) |
+| - | $f_{-+}$ (FP) | $f_{--}$(TN) |
+
+* TP(True Positive) $f_{++}$ ima vrednost koji odgovara broju 
+  pozitivnih instanci koje je model predvideo da su pozitivne.
+* FN(False Negative) $f_{+-}$ ima vrednost koja odgovara broju
+  pozitivnih instanci koje je model predvideo da su negativne.
+* FP(False Positive) $f_{-+}$ ima vrednost koja odgovara broju
+  negativnih instanci koje je model predvideo da su pozitivne 
+* TN(True Negative) $f_{--}$ ima vrednost koja odgovara broju
+  negativnih instanci koje je model predvideo da su negativne.
+
+**Definicija**: **True Positive Rate** ili **senzibilitet** 
+je definisan kao odnos izmedju broja korektno klasifikovanih 
+pozitivnih instanci, od ukupnog broja pozitivnih instanci, tj.
+$$
+TPR = \frac{TP}{TP + FN}.
+$$
+
+**Definicija**: **True Negative Rate** ili **specificitet** 
+je definisan kao odnos izmedju broja korektno klasifikovanih 
+negativnih instanci, od ukupnog broja negativnih instanci, tj.
+$$
+TNR = \frac{TN}{TN + FP}.
+$$
+
+**Definicija**: **False Positive Rate** je definisan kao odnos 
+izmedju broja pogresno klasifikovanih pozitivnih instanci, od
+ukupnog broja negativnih instanci, tj.
+$$
+FPR = \frac{FP}{TN + FP}.
+$$
+
+**Definicija**: **False Negative Rate** je definisan kao odnos 
+izmedju broja pogresno klasifikovanih negativnih instanci, od
+ukupnog broja pozitivnih instanci, tj.
+$$
+FNR = \frac{FN}{TP + FN}.
+$$
+
+**Definicija**: **Recall** i **Preciznost**.
+$$
+p = \frac{TP}{TP + FP}
+$$
+$$
+r = \frac{TP}{TP + FN}
+$$
+
+Preciznost odredjuje odnos izmedju korektno pozitivno 
+klasifikovanih instanci i ukupnog broja pozitivno klasifikovanih 
+instanci. Klasifikatori sa malom preciznoscu rezultuju u mnogo 
+pogresno klasifikovanih negativnih instanci.
+Recall je odnos izmedju korektno pozitivno klasifikovanih instanci
+i ukupnog broja pozitivnih instanci. Klasifikatori sa velikim
+recall imaju malo pogresno klasifikovanih pozitivnih.
+
+Kljucna stvar u pravljenju modela je maksimizovanje i preciznosti
+i recolla, jer povecanjem jednog smanjuje se drugo. Zbog toga
+ove dve metrke mozemo spojiti u $F_1$ metriku koja sadrzi obe:
+$$
+F_1 = \frac{2}{\frac{1}{r} + \frac{1}{p}} = \frac{2rp}{r + p}
+$$
+
+### Receiver Operating Characteristic Krive
+
+Receiver Operating Characteristic (ROC) krive su graficki prikaz
+izmedju true positive rate i false positive rate nekog 
+klasifikatora. Svaka tacka na krivi odgovara jednom modelu koji
+je indukovan klasifikatorima.
+
+Postoji nekoliko interpretacija:
+
+* (TPR=0, FPR=0): Model predvidja svaku instancu kao negativne.
+* (TPR=1, FPR=1): Model predvidja svaku instancu kao pozitivne. 
+* (TPR=1, FPR=0): Idealan model.
+
+Dobar klasifikacioni model treba biti sto blizi gornjem desnom 
+uglu, dok je model sa nasumicnim predvidjanjem blizak diagonali.
+Model nasumicnog predvidjanja klasifikuje instancu kao pozitivnu
+klasu sa nekom fiksiranom verovatnocom $p$. Na primer, razmotrimo
+skup podataka koji sadrzi $n_+$ pozitivnih instanci i $n_{-}$ 
+negativnih instanci. Zbog toga, imamo $TPR=(pn_{+})/n_{+}$, dok
+je $FPR = (pn_{-})/p=n_{-}$. Kako su TPR i FPR identicni, ROC kriva 
+za nasumicni klasifikator lezi na glavnoj diagonali.
+
+Dobra mera kvaliteta izmedju dve ROC krive je povrsina ispod ROC 
+krive (AUC). Idealan model ima povrsinu 1, dok nasumicni
+klasifikator ima povrsinu 0.5.
+
+**Generisanje ROC krive**
+
+1. Predpostavimo da su neprekidne-vrednosti definisani za 
+   instance pozitivne klase, sortiramo test instance u rastucem 
+   poretku po njihovim izlazima.
+2. Biramo najnize rangiranu test instancu. Dodeljujemo je svim
+   instancama koje su iznad nje kao pozitivne. Ovo je ekvivalentno
+   sa tim da smo klasifikovali sve test instance kao pozitivne
+   klase. Zato sto su sve pozitivne klase klasifikovane tacno, a
+   sve negativne klase klasifikovane netacno, imamo da je 
+   $TPR=FPR=1$.
+3. Izaberi sledecu test instancu iz sortirane liste. Klasifikujemo
+   izabranu instancu i sve iznad kao pozitivni, dok sve ispod
+   kao negativne. Azuriramo broj $TP$ i $FP$. Ako je prethodno
+   odabrana instanca pozitivna, onda dekrementiramo $TP$ i $FP$
+   ostaje isti kao pre, dok ako je prethodno odabrana instanca
+   negativna, onda dekrementiramo $FP$ i $TP$ ostaje isti.
+4. Ponavljamo Korak 3 i azuriramo $TP$ i $FP$ sve do poslednje
+   test instance.
+5. Plotujemo rezultat klasifikatora.
+
+Primer:
+
+| Klasa |  +   |  -   |  +   |  -   |  -   |  -   |  +   |  -   |  +   |  +   |      |
+|:-----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
+|       | 0.25 | 0.43 | 0.53 | 0.76 | 0.85 | 0.85 | 0.85 | 0.87 | 0.93 | 0.95 | 1.00 |
+| TP    |  5   |  4   |  4   |  3   |  3   |  3   |  3   |  2   |  2   |  1   |  0   |
+| FP    |  5   |  5   |  4   |  4   |  3   |  2   |  1   |  1   |  0   |  0   |  0   |
+| TN    |  0   |  0   |  1   |  1   |  2   |  3   |  4   |  4   |  5   |  5   |  5   |
+| FN    |  0   |  1   |  1   |  2   |  2   |  2   |  2   |  3   |  3   |  4   |  5   |
+| TPR   |  1   | 0.8  | 0.8  | 0.6  | 0.6  | 0.6  | 0.6  | 0.4  | 0.4  | 0.2  |  0   |
+| FPR   |  1   |  1   | 0.8  | 0.8  | 0.6  | 0.4  | 0.2  | 0.2  | 0    |  0   |  0   |
+
+
+```{r, echo=FALSE}
+TPR = c(1, 0.8, 0.8, 0.6, 0.6, 0.6, 0.6, 0.4, 0.4, 0.2, 0)
+FPR = c(1, 1, 0.8, 0.8, 0.6, 0.4, 0.2, 0.2, 0, 0, 0)
+par(pty="s")
+plot(x=FPR, y=TPR, type='l')
+```
+
+
+### Ucenje: Cena-Senzibilitet
+
+Matrica cena kaznjava klasifikovanje instanci jedne klase vise nego
+druge. Neka je $C(i,j)$ cena predvidjanja instance iz klase $i$
+kao klase $j$. Sa ovim notacijom, $C(+,-)$ je cena pravljenja
+false negative greske, dok je $C(-,+)$ cena generisanja pogresne
+uzbune. Za kolekciju od $N$ instanci, ukupna cena modela $M$ je
+$$
+C_t(M) = TP \times C(+,+) 
+       + FP \times C(-,+) 
+       + FN \times C(+,-)
+       + TN \times C(-,-)
+$$
+
+Za jedinicnu matricu cene, tj. $C(+,+)=C(-,-)=0$ i $C(+,-)=C(-,+)=1$
+imamo da je ukupna cena modela ekvivalentna broju gresaka:
+$$
+C_t(M) = 0 \times (TP + TN) + 1 \times (FP + FN) = N \times Err,
+$$
+gde je $Err$ stopa greske klasifikatora.
+
+Kod drveta odlucivanja infromaciju o cenama mozemo koristiti na vise
+nacina:
+
+1. Biranje najboljeg atirbuta za razdvajanje podataka
+2. Odluka o potresivanju drveta
+3. Svaka instanca ima odredjenu cenu, pa algoritam konvergira
+   u drvo odlucivanja sa najmanjom ukupnom cenom
+4. Modifikacija pravila odlucivanja svakog lista.
+
+Objasnimo nacin (4):
+Neka je $p(i|t)$ deo trening instanci iz klase $i$ za 
+klasifikacioni problem koji dodeljuje pozitivnu klasu cvoru $t$ ako 
+vazi sledece:
+$$
+\begin{aligned}
+&p(+|t) > p(-|t)\\
+\implies & p(+|t) > 1 - p(+|t)\\
+\implies & 2p(+|t) > 1\\
+\implies & p(+|t) > 0.5
+\end{aligned}
+$$
+Ovo sugerise na to da ce postupak odlucivanja biti na osnovu glasa
+vecine, tj. listu dodeljujemo klasu na osnovu vecine instanci
+koje se u njemu nalaze.
+
+Kod cena-senzibilitet algoritma klasna oznaka $i$ se dodeljuje
+cvoru $t$ ako minimizuje sledeci izraz:
+$$
+C(i|t) = \sum_j p(j|t)C(j,i).
+$$
+
+Ako je $C(+,+)=C(-,-)=0$, onda se listu $t$ dodeljuje pozitivna
+klasa ako:
+$$
+\begin{aligned}
+&p(+|t)C(+,-) > p(-|t)C(-,+)\\
+\implies &p(+|t)C(+,-) > (1 - p(+|t))C(-,+)\\
+\implies &p(+|t)C(+,-) > C(-,+) - p(+|t)C(-,+)\\
+\implies &p(+|t)(C(+,-)+C(-,+)) > C(-,+)\\
+\implies &p(+|t) > \frac{C(-,+)}{C(+,-)+C(-,+)}\\
+\end{aligned}
+$$
+Ovo sugerise na to da ce postupak odlucivanja zavisiti od 
+$C(-,+)/(C(+,-)+C(-,+))$, tj. ako je $C(-,+) < C(+,-)$, onda ce
+granica biti manja od 0.5.
+
+### Postupak Uzorkovanja
+
+Ideja uzorkovanja je modifikacija distribucije instanci tako da
+retke klase dobro reprezentiju skup za treniranje. Neko od tehnika
+su poduzorkovanje, naduzorkovanje, i hibrid oba pristupa. Neka 
+skup podataka ima 100 pozitivnih i 1000 negativnih instanci.
+
+Kod poduzorkovanja, bira se nasumicni uzorak od 100 negativnih 
+instanci i svih 100 pozitivnih instanci. Jedan potencionalni problem
+ovog uzorkovanja je to da 100 odabranih instanci ne reprezentuju
+dobru celu populaciju pozitivnih instanci. Jedan nacin da se ovo
+resi je pravljenje vise modela sa razlicitim uzorcima negativnih
+instanci, slicno kao kod metoda ansambla. Takodje mogu se koristiti
+dodatna znanja o negativnim instancama za fokusirano poduzorkovanje.
+
+Naduzorkovanje pravi nove pozitivne instance sve dok ih nema
+jednako mnogo kao i negativnih instanci. Jedan potencionalni problem
+ovog uzorkovanje je to da, kod podataka sa sumom, moze doci
+do pretreniranja.
+
+Hibridan pristup koristi kombinaciju poduzorkovanja za mnogobrojne
+klase i naduzorkovanja za retke klase. Ovim pristupom dobijamo
+uniformnu distribuciju klasa. Takodje, i kod ovog pristupa moze
+doci do pretreniranja.
+
+
+## Problem: Viseklasnih Skupova Podataka
+
+Prosirimo binarne klasifikatore na klasifikatore koji mogu da se
+nose sa viseklasnim skupovima podataka. Neka je 
+$Y={y_1, y_2, \ldots, y_K}$ skup klasa ulaznih podataka.
+
+Prvi pristup dekomponovanja viseklasnih problema u $K$ binarnih
+problema. Za svaku klasu $y_i \in Y$, pravimo binarni problem 
+gde su sve instance koje pripadaju klasi $y_i$ pozitivne instance,
+dok su ostale instance negativne. Onda pravimo binarni klasifikator
+za odvajanje instanca klase $y_i$ od ostalih klasa. Ovaj
+pristup je poznat kao *jedan-protiv-svih*.
+
+Drugi pristup, poznat kao *jedan-protiv-jednog*, konstruise
+$K(K-1)/2$ binarnih klasifikatora, gde se svaki klasifikator koristi
+za odavajanje izmedju para klasa, $(y_i, y_j)$. Instance koje na
+pripadaju ni jednoj od $y_i$ i $y_j$ se ignorisu tokom pravljenja
+klasifikatora za $(y_i, y_j)$. 
+
+U oba pristupa test instance se klasifikiju kombinacijom 
+predvidjanja binarnih klasifikatora. Koristi se shema glasanja
+za kombinovanje predvidjanja, u kome klasa koja ima najveci broj
+predvidjanja povedjuje u glasanju. U pristupu jedan-protiv-svih,
+ako se instanca klasifikuje kao negativna, onda sve klase sem
+pozitivne klase dobijaju glas. Ovaj pristup moze da dovede
+do izjednacenih glasova. Drugi pristup je transformisanje izlaza
+binarnih klasifikatora u verovatnoce na osnovu kojih se test 
+instanci dodeljuje klasa sa najvecom verovatnocom.
+
+**Kodiranje Izlaza Pomocu Korekcije Gresaka**
+
+Potencionalni problem prethodna dva pristupa je senzitivnost 
+greske binarnih klasefikatora. Kodiranje izlaza pomocu korekcije
+gresaka je motod koji pruza rebustniji nacin za resavanja 
+viseklasnih problema. Ovaj metod je inspirisan informacionim 
+pristupom slanja poruke preko kanala sa velikim sumom. Zasniva se
+na dodavanju redudandnosti za otkrivanje greske tokom prenosenja 
+poruke, pa cak i njeno obnavljanje.
+
+Za viseklasno ucenje, svaka klasa $y_i$ se predstavlja kao 
+jedinstvani string bitova duzine $n$ i naziva se kodirana rec.
+Onda treniramo $n$ binarnih klasifikatora da predvide svaki bit
+kodirane reci. Za predvidjanje klase test instanca koristimo
+onu klasu cije je Hamingovo rastojanje kodirane reci najmanje 
+u odnosu na predikciju. (Hamingovo rastojanje je broj parova
+bitova koji se razlikuju)
+
+# Klaster Analiza: Osnovni Koncepti i Algoritmi
+
+Klaster analiza deli podatke u grupe (klastere) koji su znacajni,
+korisni, ili oba. Znacajni klasteri hvataju prirodnu strukturu 
+podataka. Korisni klasteri se koriste za neke druge svrhe.
+
+**Klasterovanje radi razumevanja**
+
+Klase, ili konceptualno znacajne grupe objekata koje dele 
+zajednicke karakteristike, imaju vaznu ulogu u razumevanju i 
+analizi sveta. Ljudi imaju vestinu da podele objekte u grupe 
+(klasterovanje) i da im pridruzuju odredjene grupe (klasifikacija). 
+
+* **Biologija**. Biologicari provode mnogo vremena na taksonomiji
+  (hijerarhijsko klasterovanje) svih zivih bica. Zbog toga se i
+  razvila matematicka taksonomija koja moze automacki
+  pronaci takve klasifikacione strukture. Isto tako, klaster analiza
+  se koristi u pronalazenju grupa gena koje imaju slicne funkcije.
+
+* **Pronalazenje infromacija**. Web sadrzi bilione stranice, i
+  rezultati svakog upita mogu vratite hiljade stranica. 
+  Klasterovanje se onda moze koristiti za grupisanje rezultata
+  u mali broj klastera, od kojih svaki sadrzi odredjeni aspekt
+  upita. 
+* **Klima**. Razumevanje klime podrazumeva nalazenje sablona
+  u atmosferi i okeanima. Klaster analiza se koristi za pronalazenje
+  tih sablona.
+* **Psihologija i medicina**. Neka bolest moze imati brojne 
+  varijacije, pa se klaster analiza koristi za pronalazenje tih
+  razlicitih podkategorija.
+* **Biznis**. Biznisi prikupljaju veliku kolicinu informacija od
+  trenutnih i potencijalnih potrosaca. Klaster analiza se koristi
+  za grupisanje potrosaca za dalju analizu.
+
+**Klasterovanje radi korisnosti**
+
+Klasterovanje predstavlja abstrakciju individualne instance podataka
+kao klaster kome ta instanca pripada. Takodje, klaster analiza
+se koristi i za pronalazenje reprezentativnog klaster prototipa.
+
+* **Sumarizacija**. Mnoge tehnike za analizu podataka, kao sto je
+  regresija ili PCA, imaju kvadratnu vremensku ili prostornu
+  kompleksnost, pa nisu prikladi za velike skupove podataka.
+  Medjutim, umesto primenjivanja algoritma na celokupan skup
+  podataka, mozemo ga primeniti na redukovani skup podataka 
+  koji sadrzi samo klaster prototipe.
+* **Kompresija**. Klaster prototipi se mogu koristiti za kompresiju
+  podataka. Pravi se tabela koja sadrzi samo prototipe za svaki
+  klaster, tj. svakom prototipu se dodeljuje celobrojna vrednost
+  koja predstavlja indeks u tabeli. Svaki objekat je predstavljen
+  kao indeks prototipa kojem je pridruzen klaster. Ovaj tip
+  kompresije se zove **vektorska kvantizacija** i obicno se koristi
+  za slike, zvuk, video, gde su (1) mnogi objekti podataka slicni
+  jedni drugima, (2) gubitak informacija je prihvatljv, i (3)
+  smanjenje velicine podataka je pozeljno.
+* **Efikanso pronalazenje najblizeg suseda**. Umesto da racunamo 
+  udaljenost izmedju svakake dve tacke, koristimo klaster analizu 
+  za pronalazenje njihovih prototipa. Ako su dva klaster prototipa 
+  jako udaljena jedan od drugog, nema potreba racunati udaljenost
+  objekata unutar odgovarajucih klastera kako oni sigurno nece biti
+  najblizi susedi.
+
+## Pregled
+
+### Sta je Klaster Analiza?
+
+Klaster analiza grupise objekte na osnovu informacija pronadjenim
+u podacima koji opisuju objekte i njihove relacije. Cilj klaster
+analize je da su objekti unutar jedne grupe slicni (ili povezani)
+jedan drugome i razliciti (ili nepovezani) objektima drugih grupa.
+
+Pojam klaster nije dobro definisan. Za bolje razumevanje sta 
+predstavlja jedan klaster razmotrimo primer u kome mozemo grupisati
+podatke na 2, 4, i 6 grupa. Zbog toga definicija klastera zavisi
+od samog skupa podataka.
+
+Klasifikacija spada u **nadgledano ucenje**, tj. novim, 
+neklasifikovanim objektima dodeljujemo klasne promenljive, na osnovu
+objekata cije klase znamo. Iz tog razloga, klaster analiza spada
+u **nenadgledano ucenje**.
+
+Termini kao sto su **segmentacija** i **particionisanje** se
+nekada koriste kao sinonimi za klastorovanje, ali su van 
+tradicionalnih tehnika klaster analize.
+
+### Razni Tipovi Klasterovanja
+
+**Parcijalno klasterovanje** podrazumeva podelu skupa podataka
+na disjunktne podskupove (klastere) tako da svaki objekat skupa
+podataka pripada tacno jednom podskupu.
+
+**Hijerarhijski klasterovanje** je skup ugnjezdenih klastera koji
+mogu da se urede kao drvo. Svaki cvor (klaster) u drvetu
+(osim listova) je unija svoje dece (podklastera), i cvor drveta je
+klaster koji sadrzi sve objekte.
+
+**Ekskluzivno klasterovanje** podrazumeva da se svakom objektu 
+podataka dodeljuje jedan klaster. 
+
+**Neekskluzivno klasterovanje** se koristi kada neki objekat moze
+*istovremeno* da pripada u vise od jedne grupe (klase).
+
+**Rasplanato klasterovanje** svakom objektu dodeljuje svaki klaster
+sa tezinom pripadnosti izmedju 0 (apsolutno nepripada) i 1
+(apsolutno pripada). Drugim recima, klasteri se tretiraju kao
+rasplanati skupovi. 
+
+**Kompletno klasterovanje** dodeljuje svakom objektu klaster,
+dok **parcijalno klasterovanje** ne. Motivacija za parcijalno
+klasterovanje lezi u tome da neki objekti nemaju dobro definisanu
+grupu kojoj pripadaju. Mnogo puta takvi objekti predstavljaju
+sum, ili outlajere.
+
+### Razni Tipovi Klastera
+
+**Dobro-Razdvojeni**
+
+Klaster je skup objekata, gde su svi objekti blizu (ili
+slicniji) svim drugim objektima unutar tog klastera nego bilo kog 
+drugog. Nekada se koristi granica koja ogranicava sve objekte unutar jedne klase. Ovako idealna definicija klastera zadovoljiva 
+je samo kada podaci imaju prirodne klastere koji su deleko jedni
+od drugih.
+
+**Klasteri Zasnovani na Prototipu**
+
+Klaster je skup objekata u kome je svaki objekta blizi (ili 
+slicniji) prototipu koji jedinise taj klaster nego protptipu
+bili kog drugog klastera. Za podatke sa neprekidnim atributima,
+prototip klastera je obicno centroid, tj. sredina svkih tacaka
+u klasteru. Za podatke sa kategorickim atributima, prototip je
+obicno medoid, tj. najvise zastupljena tacka klastera. Cesto se
+za ovakvde klastere kaze jos i da su **zasnovani na centru**.
+
+**Klasteri Zasnovani na Grafu**
+
+Ako su podaci predstavljeni kao graf, gde su cvorovi objekti, a
+grane predstavljaju veze imezju njih, onda klaster definisemo kao
+**komponentu povezanosti**, tj. grupa objekata koji su medjusobno
+povezani, ali nemaju granu sa objektima izvan grupe. Jedan
+vazan primer klastera zasnovanog na grafu je **klaster zasnovan
+na susedstvu**, gde su dva objekta povezana samo ako su unutar
+odredjene udaljenosti jedni od drugih. Ovo znaci da je svaki objekat
+unutar klastera blizi svim objektima unutar klastera, nego bilo kom
+objektu van klastera.
+
+**Klasteri Zasnovani na Gustini**
+
+Klaster je gusti region objekata koji je okruzen sa regionim
+sa malom gustinom.
+
+**Zajednicke-Osobine (Konceptualni Klasteri)**
+
+Klaster je skup objekata koji dele neku osobinu.
+
+## K-sredina
+
+Klasterovanje zasnovana na prototipu pravi jedno particionisanje
+objekata podataka. Tehnike za resavanje ovog problema su K-sredina
+i K-medoida. K-sredina definise prototip u terminima centroida,
+sto je obicno sredina grupe tacaka, i tipicno se primenjuje na 
+objekte u neprekidnom $n$-dimenzionalnom prostoru. K-medoid 
+definise prototpip u terminima medoida, sto je najreprezentativnija
+tacka unutar neke grupe tacaka, i moze se primeniti na oblasti 
+koje zahtevaju samo aproksimacionu meru parova objekata. Centroid
+ne mora biti ni jedna tacka podataka, dok medoid po definiciji mora.
+
+### Osnovni Algoritam K-sredina
+
+```{python}
+def k_means(X, K):
+    centroids = sample(X, K) # biramo K inicijalni centroida
+    new_centroids = []
+    while new_centroids != centroids:
+        clasters = form_clasters(centroids, X)
+        new_centroids = recompute_centroids(clasters)
+    return centroids
+```
+
+Za neku kombinaciju meru blizina i tipova centroida, K-sredina
+uvek konvergira, tj. K-sredina dostize stanje u kome se ni jedna
+tacka ne prebacuje iz jednog klastera u drugi, samim tim centroidi
+ostaju nepromenjeni.
+
+**Dedeljivanje Tacaka Najblizem Centroidu**
+
+Da bi dodeli tacku najblizem centroidu, potrebna nam je mera blizine
+koja moze da kvantifikuje `najblizem centroidu'. Euklidsko ($L_2$)
+rastojanje se obicno koristi za podatke u Euklidskom prostoru, dok
+se kosinusna slicnost koristi za dokumente. Mozemo koristiti i Manhetn ($L_1$) rastojanje za Euklidske podatke, i Jakardovu meru
+za dokumente.
+
+**Podaci u Euklidskom Prostoru**
+
+Razmotrimo podatke cija je mera blizine Euklidsko rastojanje. Za
+meru kvaliteta klasterovanja mozemo koristiti **sumu kvadratnih
+gresaka** (**SSE**):
+$$
+SSE = \sum_{i=1}^K \sum_{\mathbf{x} \in C_i} dist(\mathbf{c_i}, \mathbf{x})^2
+$$
+
+Pod ovim predpostavkama, moze se pokazati da je centroid koji 
+minimizuje $SSE$ sredina klastera. Pa se centroid $i$-tog
+klastera definise kao:
+$$
+\mathbf{c_i} = \frac{1}{m_i} \sum_{\mathbf{x} \in C_i} \mathbf{x}
+$$
+
+Na primer, centroid za tacke $(1, 1)$, $(2, 3)$, i $(6, 2)$, je
+$((1 + 2 + 6) / 3, (1 + 3 + 2) / 3) = (3, 2)$.
+
+**Dokumenta**
+
+Razmotrimo dokumenta sa kosinusnom merom slicnosti. Hocemo da
+maksimizujemo slicnosti dokemenata unutar jednog klastera
+sa centroidom tog klastera. Ovo se naziva **kohezija** klastera.
+$$
+\mbox{Totalna Kohezija } = \sum_{i=1}^K \sum_{\mathbf{x} \in C_i} cos(\mathbf{x}, \mathbf{c_i})
+$$
+
+**Globalni slucaj**
+
+| Funkcija Blizine              | Centroid   | Ciljna funkcija                                                                  |
+|:-----------------------------:|:----------:|:--------------------------------------------------------------------------------:|
+| Manhetn ($L_1$)               | medijana   | minimizovati sumu $L_1$ rastojanja od objekta do njegovog klaster centroida      |
+| Kvadratni Euklid ($L_2^2$)    | sredina    | minimizovati sumu $L_2$ rastojanja od objekta do njegovog klaster centroida      |
+| Cosinus                       | sredina    | maksimizovati sumu kosinusne slicnosti objekta sa njegovim klaster centroidom    |
+| Bergmanova divergencija       | sredina    | minimizovati sumu Bergmanove divergencije objekta sa njegovim klaster centroidom |
+
+**Biranje inicijalnih centroida**
+
+Kada nasumicno izaberemo centroide, svako pokretanje k_sredina
+tipicno pravi razlicite $SSE$e. Zbog tofa biranje inicijalnih
+centroida je kljucan korak u osnovnoj proceduri K-sredina.
+
+**Primer (Losi inicijalni centroidi)**. Ako odaberemo lose 
+inicijalne centroide zaglavljujemo se lako u nekom od lokalnog 
+minimuma ciljne funkcije $SSE$.
+
+**Primer (Granice nasumicne inicijalizacije)**. Jedna tehnika
+koja se cesto koristi za problem inicijalnih centroida je
+da se procedura K-sredina ponovi nekoliko puta sa razlicitim
+inicijalnim centroidima. Na osnovu dobijenih vrednosti za 
+svaki od multiskupa centroida biramo onaj skup centroide ciji 
+klasteri proizvode najmanje $SSE$. Ovaj pristup iako zvuci dobro
+u praksi se ne pokazuje dobro sa svaku strukturu skupa podataka.
+
+Jos jedan pristup inicijalizacije centroida je uzorkovanje tacaka
+koje klasterujemo pomocu neke hijerarhijske tehnike klasterovanja.
+K klastera izdvajamo iz hijerarhijskog klasterovanja, i centroidi
+tih klastera koristimo kao inicijalne centroide. Ovaj pristup radi
+samo ako vazi (1) uzorak je ralativno mali, i (2) K je ralativno
+malo u odnosu na velicinu uzorka.
+
+Jos jedan pristup inicijalizacije centroida je korak-po-korak, tj.
+inicijalizujemo pocetni centroid nasumicno ili kao centroid svih
+tacaka. Onda svaki sledeci centroid biramo kao njegovu
+najudaljeniju tacku. Ovaj metod imam mana ako podaci imaju 
+autlajere, koje ne zelimo da predstavljamo kao poseban klaster.
+
+**Vremenska i Prostorna Slozenost**
+
+Prostorna kompleksnost nije toliko zahtevna zato sto cuvamo
+samo objekte i centroide. Tacnije, potreban prostor nije vece od
+$O((m + K)*n)$, gde je $m$ broj objekata, $K$ broj klastera i 
+$n$ broj atributa. Vreme potrebno za K-sredina je linearno po
+broju objekata. Tacnije, vreme potrebno je $O(I*K*m*n)$, gde je
+$I$ broj iteracija potrebnih za konvergenciju (vrednost $I$ je
+obicno malo i moze se sigurno ograniciti).
+
+### K-sredina: Dodatni Problemi
+
+**Obradjivanje Praznih Klastera**
+
+Jedan problem sa osnovnim K-sredina algoritmom je dobijanje praznih
+klastera. Zbog toga je potrebna strategija za zamenu centroida,
+kako ce $SSE$ biti veca nego sto je potrebno. Jedan pristup da
+se uzme najdalja tacka od svih trenutnih centroida. Dok je drugi
+pristup uzimanje centroida sa najvecim $SSE$, sto ce ga podeliti
+na dva dela. U oba slucaja garantujemo smanjenje $SSE$.
+
+**Autlajeri**
+
+Autjaleri ne pripadaju ni jednom klasteru pa ce biti udaljeniji od
+svih klastera sto proizvodi vekili $SSE$. Zbog ovoga, korisno je
+otkriti i eliminisati sve autlajere pre pozivanja procedure 
+K-sredina.
+
+**Smanjenje SSE sa Postprocesiranjem**
+
+Jedno od ociglednih resenja za smanjivanje $SSE$ je pronalazenje
+vise klastera, tj. koristimo vecu vrednost hiperparametra $K$. 
+Medjutim, u mnogim slucajevima, zelimo da unapredimo $SSE$, ali
+ne zelimo da povecamo broj klastera. 
+
+Postoje dve strategije za smanjenje ukupnog $SSE$ povecavanjem
+broja klastera:
+
+* **Razdvajanje klastera**: Klaster sa najvecim $SSE$ je obicno 
+  izabran za razdvajanje, ali moze biti i neki klaster sa najvecim
+  standardnim odstupanjem.
+* **Uvodjenje novog klaster centroida**: Obicno tacka koja je
+  najdalja od svih klastera je izabrana za novi centroid. Mozemo
+  je lako odrediti kako ona utice najvise na $SSE$. Drugi pristup
+  je odabrati nasumicnu tacku.
+
+Postoje dve strategije za smanjenje broja klastera, koje istovremeno
+pokusavaju da minimizuju povecanje ukupnog $SSE$:
+
+* **Odpustanje klastera**: Biramo centroid koji odpusta dati 
+  klaster, dok sve tacke koje su pripadale tom klasteru dodeljujemo
+  odgovarajucim klasterima. Idealno, klaster koji odpustamo 
+  treba najmanje da doprinosi ukupno $SSE$.
+
+* **Spajanje dva klastera**: Spajamo klastere ciju su centroidi
+  najblizi, ili ona dva klastera koja spajanjem najmanje doprinose
+  ukupnom $SSE$.
+
+**Azuriranje Centroida Inkrementalno**: 
+
+Umesto da azuriramo klaster centroida nakon sto svim tackama
+dodelimo klaster, centroidi se mogu azurirati inkrementalno, 
+nakom svake dodele tacke klasteru. Inkrementalna strategija
+garantuje da necemo dobiti prazni klaster kako svi kasteri
+pocinju sa jednom tackom, i ako svaki klaster ima samo jednu tacku,
+onda ce tacka uvek biti ponovo dodeljena istom klasteru.
+
+Kod inkrementalnog azuriranja, relativne tezine tacaka se mogu
+menjati, tj. tezina tacke se obicno smanju pri odvijanju 
+klasterovanja. Ovo moze dovesti do bolje tacnosti, ali je tesko
+odabrati dobre relativne tezine.
+
+Takodje, ako koristimo proizvoljnu ciljnu funkciju, koja nije
+`minimizuj SSE', mozemo dobiti bolje rezultate. U svakoj 
+inkrementaciji mozemo izbrati onaj korak koji najbolje optimizuje
+ciljnu funkicju.
+
+Negativna strana koriscenja inkrementalne tehnike je vaznost
+reda kojim inkrementalno azuriramo klastere.
+
+### Bisekcija K-sredina
+
+Bisekcija K-sredina se bazira na jednoj jednostavnoj ideji: Da bi
+dobili $K$ klastera, podelio skup svih tacaka na dva klastera, 
+odaberima jedan od njih za dalje deljenje. Ponavljamo proces
+sve dok ne dobijemo $K$ klastera. 
+
+```{python}
+def bisecting_k_means(X, K, num_trials):
+    clasters = [X]
+    while len(clasters) < K:
+        current_claster = claster.drop(1)
+        claster1, claster2 = None
+
+        for i in range(num_trials):
+            [c1, c2] = k_means(current_claster, 2)
+            if SSE(c1) + SSE(c2) < SSE(claster1) + SSE(claster2):
+                claster1, claster2 = c1, c2
+
+        clasters.append(claster1)
+        clasters.append(claster2)
+
+    return clasters
+```
+
+Nakon primene ove procedure dobijene centroide koristimo kao
+inicijalne centroide za osnovni algoritam K-sredina. Razlog toga 
+lezi u tome da Bisekcija K-sredina koristi lokalno algoritam 
+K-sredina pa zbog toga ne pronalazi lokalni minimum funkcije $SSE$.
+Ponovno pogretanje K-sredina sa inicijalnim centroidima procedure
+Bisekcija K-sredina garantuje pronalazenje lokalnog minimuma 
+funkcije $SSE$.
+
+### K-sredina i Drugaciji Tipovi Klastera
+
+K-sredina ima mnoge probleme pri nalazenju drugacijih tipova 
+klastera. K-sredina ima poteskoce da pronadje `prirodne' klastera,
+tj. kada klasteri imaju drugacije oblike od sfernih ili drugacije
+su velicine ili gustine.
+
+Poteskoca u ovim slucajevima lezi u tome da se ciljna funkcija
+ne poklapa sa tim tipovima klastera. Ovo mozemo resite ako povecamo
+broj klastera. Tako dobijamo prirodno klasterovanje koje kasnije
+mozemo spojiti u postprocesiranju.
+
+### Prednosti i Mane
+
+K-sredina je jedan jednostavan i efikasan algoritam cak i kada se
+primenjuje vise puta, a jos je efikasniji ako se koristi
+Bisekcija K-sredina, koja eliminise inicijalne probleme.
+
+K-sredina ne moze da se nosi sa svim tipovima klastera. Takodje,
+lose rezultate daje kada podaci sadrze autlajere (tada moramo
+koristiti neke tehnike detekcije i otklanjanja autlajera). K-sredina
+je ogranicen na podatke za koje postoji smisao centra (centroid).
+
+### K-sredina kao Optimizacioni Problem
+
+Za datu ciljnu funkciju kao sto je minimizacija $SSE$, klasterovanje
+moze da se smatra kao optimizacioni problem. Jedan dancin da se ovaj
+problem resi (nadje globalni optimum) je da se probaju svi moguci
+nacini tacaka i klastera, i da se od njih izabere najbolji, tj. onaj
+koji minimizuje ukupnu $SSE$. Ovaj problem je u praksi nemoguce
+resiti na ovaj nacin, pa se zbog toga koriste neke sufisticiranije 
+metode. Jedna takva tehnika je **gradijentni spust**, koji
+na osnovu inicijalnog resenja pokusava da azurira resenje tako da
+u svakom koraku ima bolje resenje od prethodnog sve dok je to 
+moguce.
+
+Za dalji tekst predpostavimo da su podaci jednodimenzioni, tj.
+da vazi $dist(x, y) = (x - y)^2$.
+
+**Izvodjenje K-sredina kao Algoritma za Minimizaciju SSE**
+
+Pokazimo kako centroid za K-sredina mozemo matematicki izvesti
+kada je funkcija blizine Euklidsko rastojanje, a ciljna funkcija
+minimizacija $SSE$. Tacnije, istrazujemo kako najbolje azurirati
+centroid klastera tako da klaster $SSE$ bude minimalni. 
+Matematicki hocemo da minimizujemo sledecu funkciju:
+$$
+SSE = \sum_{i=1}^K \sum_{x \in C_i} (c_i - x)^2, 
+$$
+gde je $C_i$ $i$-ti klaster, $x$ tacka u $C_i$, $c_i$ sredina
+$i$-tog klastera.
+
+Nadjimo $k$-ti centroid $c_k$, koji minimizuje funkciju $SSE$, tako
+sto nalazimo parcijalni izvod od $SSE$ i izjednacavamo ga sa nulom:
+$$
+\begin{aligned}
+\frac{\partial}{\partial c_k} SEE 
+&= \frac{\partial}{\partial c_k} \sum_{i=1}^k \sum_{x \in C_i} (c_i - x)^2\\
+&= \sum_{x \in C_k} \frac{\partial}{\partial c_k} (c_k - x)^2\\
+&= \sum_{c \in C_k}^k 2 * (c_k - x) = 0
+\end{aligned}
+$$
+$$
+\begin{aligned}
+\implies &m_k c_k = \sum_{x \in C_k} x \\
+\implies &c_k = \frac{1}{m_k} \sum_{c \in C_k} x
+\end{aligned}
+$$
+
+Kao sto smo prethodno pretpostavili najbolji centroid koji 
+minimizuje $SSE$ klastera je sredina svih tacaka tog klastera.
+
+## Hijerarhijsko Klasterovanje
+
+Postoje dva pristupa hijerarhijskog klasterovanja:
+
+* **Sakupljajuce Klasterovanje**: Pocinje sa tackama kao 
+  individualnim klasterima, na svakom koraku, spaja dva najbliza
+  para klastera. Potrebno je definisati blizinu klastera.
+* **Razdvajajuce Klasterovanje**: Pocinje sa jednim klasterom
+  koji obuhvata sve tacke, na svakom koraku, deli se klaster sve
+  dok ne dobijemo pojedinacne klastere. U ovom slucaju, treba
+  odluciti koji klaster razdvojiti u kom trenutku i kako izvrsiti
+  razdvajanje.
+
+Hijerarhijsko klasterovanje se predstavlja grafikci drvolikim
+dijagramom koji se zove **dendrogram**, koji prikazuje relaciju
+klaster-podklaster, i redosled u kome se klasteri spajaju ili
+razdvajaju. Za dvodimenzione tacke, hijerarhijsko klasterovanje
+se moze predstaviti udnjezdenim klaster dijagramima.
+
+```
+                       |
+                       |
+                 ---------------
+                 |             |
+                 |             |
+                 |         ---------
+                 |         |       |
+                 |         |       |
+                 |     ---------   |
+                 |     |       |   |
+                 |     |       |   |
+                 p1    p2      p3  p4
+```
+
+### Osnovni Algoritam Sakupljajuceg Klasterovanja
+
+```{python}
+def agglomerative_hierarchical_clustering(X):
+    
+    # pocetne klastere inicijalizujemo tako da 
+    # svaki sadrzi tacno jednu tacku
+    clusters = X  
+    proximity_matrix = proximity(clusters)
+
+    while len(clusters) != 1:
+        clasters = merge_best(clasters, proximity_matrix)
+        proximity_matrix = update_priximity(clasters)
+```
+
+**Definisanje Blizine izmedju Klastera**
+
+Definisanje blizine izmedju klastera zavise od odredjenog tipa
+klastera. **MIN** definiske blizinu izmedju dva klastera kao 
+blizinu izmedju dva para najblizih tacaka.
+Alternativno, **MAX** uzima za blizinu izmejdu dva klastera 
+blizinu izmedju dva para najudaljenijih tacaka.
+Za grafovske klastere ili klastere ciji objekti predstavljaju
+tacke u Euklidskom prostoru MIN i MAX su intuitivna imena.
+Za slicnost kao meru blizine, gde vece vrednosti pokazuju na
+blize tacke, imena se cine obrnuto (iz tog razloga koristimo
+termine **pojedinacna veza**, i **kompletna veza**). 
+**Grupna sredina** definise blizinu klastera kao prosek blizine 
+parova tacaka.
+
+Ako koristimo klastere bazirane na prototipu, definisanje 
+blizine klastera je prirodno. Ako su to centroidi, blizina
+klastera se definisa kao blizina izmedju centroidi klastera.
+Jedna alternativna tehnika, **Vardova metoda**, definise meru
+blizine izmedju dva klastera u terminima povecanja $SSE$ koje
+nastaje spajanjem ta dva klastera.
+
+**Vremenska i Prostorna Slozenost**
+
+Osnovni algoritam sakupljajuceg klasterovanja prati
+matricu blizina i klastere. Matrica blizina zahteva 
+$\frac{1}{2}m^2$ (vrednost) blizina pod predpostavkom da je matrica 
+blizina simetricna, gde je $m$ broj tacaka. Za pracenje klastera
+dovoljno je imati broj klastera koji je najvise $m - 1$.
+Ukupna vremenska slozenost je onda $O(m^2)$
+
+Vreme za racunanje inicijalne matrice blizina je $O(m^2)$. Nakon 
+toga imamo $m - 1$ iteracija. Tokom $i$-te iteracija potrebno je 
+$O((m - i + 1)^2)$ za spajanje dva dva najbolja klastera. Dok je 
+potrebno samo $O(m - i + 1)$ za azuriranje matrice blizine, nakon
+spajanja dva klastera. Ovakav pristup daje ukupnu vremensku 
+slozenost $O(m^3)$. Moguce je cuvati udaljenost za svaki par
+klastera u sortiranoj listi (ili hipu), pa je moguce smanjiti 
+slozenost pronalazenja dva najbolja na $O(m - i + 1)$. Medjutim
+dobijamo na kompleksnoti odrzavanja sortirane listi (ili hipa),
+pa je ukupna slozenost algoritma $O(m^2 \log m)$.
+
+### Specificne Tehnike
+
+**Jednostavni Podaci**
+
+| Tacke |   x   |   y   |
+|:-----:|:-----:|:-----:|
+| p1    | 0.40  | 0.53  |
+| p2    | 0.22  | 0.38  |
+| p3    | 0.35  | 0.32  |
+| p4    | 0.26  | 0.19  |
+| p5    | 0.08  | 0.41  |
+| p6    | 0.45  | 0.30  |
+
+| Dist  | p1    | p2    | p3    | p4    | p5    | p6    |
+|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| p1    | 0.00  | 0.24  | 0.22  | 0.37  | 0.34  | 0.23  |
+| p2    | 0.24  | 0.00  | 0.15  | 0.20  | 0.14  | 0.25  |
+| p3    | 0.22  | 0.15  | 0.00  | 0.15  | 0.28  | 0.11  |
+| p4    | 0.37  | 0.20  | 0.15  | 0.00  | 0.29  | 0.22  |
+| p5    | 0.34  | 0.14  | 0.28  | 0.29  | 0.00  | 0.39  |
+| p6    | 0.23  | 0.25  | 0.11  | 0.22  | 0.39  | 0.00  |
+
+**Pojedinacna Veza ili MIN**
+
+Blizinu izmedju dva klastera definisemo kao minimalnu udaljenost
+(maksimalnu slicnosti) izmedju bili koje dve tacke iz dva razlicita
+klastera. 
+
+```{r, echo=FALSE}
+library(calibrate)
+
+x <- c(0.40, 0.22, 0.35, 0.26, 0.08, 0.45)
+y <- c(0.53, 0.38, 0.32, 0.19, 0.41, 0.30)
+
+data = as.data.frame(x)
+data['y'] = y
+
+par(pty="s")
+plot(x, y)
+textxy(x, y, 1:6)
+
+dist_mat <- dist(data, method='euclidean')
+
+hclust_min <- hclust(dist_mat, method='single')
+
+par(pty="s")
+plot(hclust_min, hang=-1)
+```
+
+**Komplentna Veza ili MAX**
+
+Blizinu izmedju dva klastera definisemo kao maksimalnu udaljenost
+(minimalnu slicnost) izmedju bili koje dve tacke iz dva razlicit
+klastera.
+
+```{r, echo=FALSE}
+x <- c(0.40, 0.22, 0.35, 0.26, 0.08, 0.45)
+y <- c(0.53, 0.38, 0.32, 0.19, 0.41, 0.30)
+
+data = as.data.frame(x)
+data['y'] = y
+
+par(pty="s")
+plot(x, y)
+textxy(x, y, 1:6)
+
+dist_mat <- dist(data, method='euclidean')
+
+hclust_min <- hclust(dist_mat, method='complete')
+
+par(pty="s")
+plot(hclust_min, hang=-1)
+```
+
+**Prosek Grupa**
+
+Blizinu izmeju dva klastera definisemo kao prosecnu blizinu
+svih parova tacaka iz ta da klastera, tj. vazli sledece
+$$
+blizina(C_i, C_j) = \frac{\sum_{\mathbf{x} \in C_i, \mathbf{y} \in C_j} blizina(\mathbf{x}, \mathbf{y})}{m_i m_j}
+$$
+
+```{r, echo=FALSE}
+x <- c(0.40, 0.22, 0.35, 0.26, 0.08, 0.45)
+y <- c(0.53, 0.38, 0.32, 0.19, 0.41, 0.30)
+
+data = as.data.frame(x)
+data['y'] = y
+
+par(pty="s")
+plot(x, y)
+textxy(x, y, 1:6)
+
+dist_mat <- dist(data, method='euclidean')
+
+hclust_min <- hclust(dist_mat, method='average')
+
+par(pty="s")
+plot(hclust_min, hang=-1)
+```
+
+**Vardov Metod i Metod Centroida**
+
+Za Vardov metod blizina izmedju dva klastera se definise kao
+povecanje u $SSE$ koje nastaje kada se ta dva klastera spoje.
+Ovaj metod koristi istu ciljne funkciju kao K-sredina.
+
+Centroid metod racuna blizinu izmedju dva klastera kao
+udaljenost izmedju cetroida ta dva klastera. Metod centroida
+ima jednu losu karakteristiku: mogucnost **inverzija**. Dva klastera
+koja su spojena mogu biti vise slicnija (manje rezlicita) od
+para klastera koji su spojeni u prethodnom koraku. Za druge metode
+udaljenost izmedju klastera monotono opada (ili u najgorem slucaju
+ostaje nepromenjena).
+
+```{r, echo=FALSE}
+x <- c(0.40, 0.22, 0.35, 0.26, 0.08, 0.45)
+y <- c(0.53, 0.38, 0.32, 0.19, 0.41, 0.30)
+
+data = as.data.frame(x)
+data['y'] = y
+
+par(pty="s")
+plot(x, y)
+textxy(x, y, 1:6)
+
+dist_mat <- dist(data, method='euclidean')
+
+hclust_min <- hclust(dist_mat, method='ward.D')
+
+par(pty="s")
+plot(hclust_min, hang=-1)
+```
+
+```{r, echo=FALSE}
+x <- c(0.40, 0.22, 0.35, 0.26, 0.08, 0.45)
+y <- c(0.53, 0.38, 0.32, 0.19, 0.41, 0.30)
+
+data = as.data.frame(x)
+data['y'] = y
+
+par(pty="s")
+plot(x, y)
+textxy(x, y, 1:6)
+
+dist_mat <- dist(data, method='euclidean')
+
+hclust_min <- hclust(dist_mat, method='centroid')
+
+par(pty="s")
+plot(hclust_min, hang=-1)
+```
+
+### Lens-Vilijams Formula za Klaster Blizine
+
+Svaka od klaster blizina moze se uzeti kao parametar 
+(u Lens-Vilijams formuli) za blizinu izmedju dva klastera
+$Q$ i $R$, gde se $R$ formira spajanjem klastera $A$ i $B$.
+$$
+p(R, Q) = \alpha_A p(A, Q) + \alpha_B p(B, Q) + \beta p (A, B) +
+\gamma |P(A, Q) - p(B, Q)|,
+$$
+gde je $p$ funkcija blizine, $m_A$, $m_B$, i $m_Q$ su brojevi tacaka
+u klasterima $A$, $B$, i $Q$
+
+| Metod Klasterovanja   | $\alpha_A$    | $\alpha_B$    | $\beta$   | $\gamma$  |
+|:---------------------:|:-------------:|:-------------:|:---------:|:---------:|
+| Pojedinacna veza      | $1/2$         | $1/2$         | 0         | $-1/2$    |
+| Komplenta veza        | $1/2$         | $1/2$         | 0         | $1/2$     |
+| Prosek grupa          | $\frac{m_A}{m_A + m_B}$               | $\frac{m_B}{m_A + m_B}$               | 0                                 | 0         |
+| Centroid              | $\frac{m_A}{m_A + m_B}$               | $\frac{m_B}{m_A + m_B}$               | $\frac{- m_A m_B}{(m_A + m_B)^2}$ | 0         |
+| Centroid              | $\frac{m_A + m_Q}{m_A + m_B + m_Q}$   | $\frac{m_B + m_Q}{m_A + m_B + m_Q}$   | $\frac{-m_Q}{m_A + m_B + m_Q}$    | 0         |
+
+### Kljucni Problemi u Hijerarhijskom Klasterovanju
+
+**Nedostatak Globalne Ciljne Funkcije**
+
+Sakupljajuce hijerarhijsko klasterovanje odlucuje lokalno, tj. u 
+svakom koraku odlucuju koje klastere treba spojiti (ili razdvojiti 
+za razdvojivi pristup).
+
+**Tretiranje Velicina Klastera**
+
+Postoje dva pristupa: (1) **tezinsko**, tretira sve klastere kao 
+jednake, (2) **netezinsko**, uzima u obzir broj tacaka u svakom
+klasteru. Ovi termini se odnose na tacke, a ne na klastere, tj.
+kod nejednakih velicina klastera drugacije tezine dodeljuju se
+tacaka u zavisnosti od klastera kome pripadaju, dok ako se uzima 
+velicina klastera tacke imaju istu tezinu bez obzira u kom se
+klasteru nalaze.
+
+**Odluke o Spajanju su Konacne**
+
+Jednom napravljena odluka o spajanju dva klastera se ne moze
+promeniti u buducim iteracijama. 
+
+## DBSCAN
+
+Klasterovanje bazirano na gustine otkriva regione sa velikom 
+gustinom koji su odvojeni jedni od drugih regionima sa malom 
+gustinom. DBSCAN je jednostavan i efektivan algoritam za 
+klasterovanje bazirano na gustini.
+
+### Tradicionalne Tehnike: Pristup Baziran na Centru
+
+Kod pristupa baziranog na centru, gustina za neku tacku se odredjuje
+kao broj tacaka unutar nekog radiusa, $Eps$, te tacke. Brajanje
+ukljucuje i samu tacku od koje se povlaci radius. Gustina veoma
+zavisi od velicine radiusa. Na primer, za veoma veliki radius 
+gustina svake tacke ce biti $m$ broj primeraka u skupu podataka, dok
+ce za veoma mali radius gustina svake tacke biti $1$.
+
+**Klasifikacija Tacaka Prime Gustini Baziranoj na Centru**
+
+Tacku mozemo klasifikovati na tri nacina: (1) unutrasnjost gustog
+regiona (tacke jezgra), (2) na granici gustog regiona (granicna 
+tacka), (3) unutar nekog drugog regiona (sum ili pozadinska tacka).
+
+### Algoritam: DBSCAN
+
+Ideja: Bilo koje dve tacke jezgra koje su unutar radiusa daleko 
+jedna od druge mogu se staviti u isti klaster. Bilo koja granicna 
+tacka koja je doboljno blizu tacke jezgra moze se staviti u isti 
+klaster kao i tacka jezgra.
+
+```
+1. Oznaci sve tacke kao tacke jezgra, granice, ili suma.
+2. Eliminise sve tacke suma.
+3. Postavi granicu izmedju svih tacaka koje su unutar radiusa
+4. jedne izmedju drugih.
+5. Neka svaka grupa povezanih tacaka bude jedan klaster.
+6. Dodeli sve granicne tacke jednom od odgovarajucih klastera.
+```
+
+**Vremenska i Prostorna Slozenost**
+
+Vremenska slozenost DBSCAN algoritma je $O(m \times t)$, gde je $t$
+vreme nalazenja tacaka u $Eps$-okolini, i $m$ broj tacaka.
+U najgorem slucaju kompleksnost je $O(m^2)$. Ali u praksi je to
+$O(m \log m)$. Prostorna slozenost DBSCAN je $O(m)$, kako se jedino
+cuva mali podataka za svaku tacku, tj. oznake klastera i identitet
+svake tacke (jezgra, granica, ili sum).
+
+**Odabir Parametara za DBSCAN**
+
+Kako odrediti parametre $Eps$ i $MinPts$?
+Osnovni pristup je posmatrati ponasanje udaljenosti tacke do
+njenih $k$ najblizih suseda, koje nazivamo $k$-udaljenost.
+Za tacke koje pripadaju istom klasteru, vrednost $k$-udaljenost
+ce biti mala ako $k$ nije vece od velicine klastera. Medjutim,
+za tacke koje nisu u klasteru, kao sto su tacke suma,
+$k$-udaljenost ce biti relativno velika. Ako bismo racunali 
+$k$-udaljenost za sve tacke podataka za neko $k$, i sortirali ih
+u rastucem poretku, nakon njihovog plotovanja dobili bi smo nagli
+porast (lakat). Ako uzmemo $k$-udaljenost za $Eps$ parametar i
+ako uzmemo vrednost $k$ kao $MinPts$ parametar, onda ce tacke
+za koje je $k$-udaljenost manja od $Eps$ biti oznacene kao tacke
+jezgra, dok ce ostale biti oznacene kao sum ili granicne tacke.
+
+Originalan DBSCAN algoritam koristi vrednost $k=4$, sto je dosta
+razumna vrednost za mnoge dvodimenzionalne podatke.
+
+**Klasteri Promenljive Gustine**
+
+DBSCAN ima problem sa gustinama ako se gustine klastera medjusobno
+drasticno razlikuju. 
+
+### Prednosti i Mane
+
+DBSCAN je otporan na sum i moze se nositi sa klasterima proizvoljnog
+oblika i velicine. Ali ima problem sa medjusobno razlicitim 
+gustinama klastera. Takodje sa visedimenzione podatke gustinu je 
+teze definisati. 
+
+
+## Evaluacija Klastera
+
+# Pravila Pridruzivanja: Osnovni Koncepti i Algoritmi
+
+Skup podataka kao sto su **transakcije** ili **potrosacka korpa**
+su veoma ceste pri prikupljanju podataka potrosaca i njihove 
+kupovine. Svaki red u tabeli odgovara jednoj transakciji, koja 
+ima jedinstvenu identifikacioni broj $TID$ i skup proizvoda koje je
+kupio potrosac.
+
+| $TID$ | Proizvodi                     |
+|:-----:|:-----------------------------:|
+|   1   | {Hleb, Mleko}                 |
+|   2   | {Hleb, Pelene, Pivo, Jaja}    |
+|   3   | {Mleko, Pelene, Pivo, Kola}   |
+|   4   | {Hleb, Mleko, Pelene, Pivo}   |
+|   5   | {Hleb, Mleko, Pelene, Kola}   |
+
+**Analiza pridruzivanja** se korisna pri otkrivanju interesantnih
+skrivenih veza unutar veliking skupova podataka. Neotkrivene veze
+se mogu predstaviti kao **pravila pridruzivanja** ili skupovi
+frekventnih proizvoda. Na prime, sledece pravilo se moze izvesti
+iz gornje tabele:
+$$
+\{\mbox{Pelene}\} \rightarrow \{\mbox{Pivo}\}.
+$$
+
+Ovo sugerise na veliku relacju koja postoji izmedju prodaje Pelena
+i Piva u smislu da potrosaci koji kupju Pelene takodje kupuju i 
+Pivo. 
+
+Analiza pridruzivanja se koristi i u drugim oblastima kao sto su 
+bioinformatika, medicina, pretraga veba, naucna istrazivanja. 
+
+Dva kljucna problema pri analizi potrosacke korpe: (1) Pronalazenje
+sablona iz velikog skupa transakcija moze biti racunski skupo, (2)
+Neki od pronadjenih sablona su potencijalno nevazeci kako se mogu
+stvariti slucajno.
+
+## Problem Definicije
+
+**Binarna Reprezentacija**: Potrosacka korpa se moze predstaviti u
+binarnom formatu, gde svaki red odgovara jednoj transakciji i
+svaka kolona odgovara jednoj stavki. Stavka se tretira kao
+binarna promenljiva cija je vrednos 1 ako je *ima* u transakciji 
+ili 0 ako je *nema* u transakciji. Bitnije je da se stavka 
+nalazi u transakciji pa je stavka **asimetricna** binarna 
+promenljiva.
+
+| $TID$ | Hleb  | Mleko | Pelene | Pivo | Jaja  | Kola  |
+|:-----:|:-----:|:-----:|:------:|:----:|:-----:|:-----:|
+|   1   |   1   |   1   |   0    |   0  |   0   |   0   |
+|   2   |   1   |   0   |   1    |   1  |   1   |   0   |
+|   3   |   0   |   1   |   1    |   1  |   0   |   1   |
+|   4   |   1   |   1   |   1    |   1  |   0   |   0   |
+|   5   |   1   |   1   |   1    |   0  |   0   |   1   |
+
+**Skup Stavki i Pomocni Brojac**: Neka je 
+$I = \{i_1, i_2, \ldots, i_d\}$ skup svih stavki i 
+$T = \{t_1, t_2, \ldots, t_N\}$ skup svih transakcija. Svaka
+transakcija $t_i$ sadrzi podskup skupa svih stavki $I$. Kolekcija
+nula ili vise stavki se naziva skup stavki. Ako skup stavki 
+ima $k$ proizvoda, onda se naziva $k$-skup stavki. *Sirina 
+transkacij* se definise kao broj stavki unutar jedne transakcije. 
+Transkacija $t_j$ *sadrzi* skup stavki $X$ ako je $X$ podskup od 
+$t_j$. *Pomocni borjac*, $\sigma(X)$, za skup stavki $X$ definise 
+se kao broj transakcija koje sadrze $X$, tj. vazi:
+$$
+\sigma(X) = |\{t_i | X \subseteq t_i, t_i \in T\}|
+$$
+
+**Pravilo Pridruzivanja**: *Pravilo predruzivanja* je implicitan 
+izraz $X \rightarrow Y$, gde su $X$ i $Y$ diskunktni skupovi stavki.
+Jacina pravila pridruzivanja se moze meriti u terminima **cvrstine**
+(koliko se puta pravilo pojavljuje u skupu podataka) i 
+**pouzdanosti** (koliko se frekventno stavku u $Y$ pojavljuju
+u transakcijama koje sadrze $X$):
+$$
+\begin{aligned}
+\mbox{Cvrstina: } s(X \leftarrow Y) &= \frac{\sigma(X \cup Y)}{N};\\
+\mbox{Pouzdanost: } c(X \leftarrow Y) &= \frac{\sigma(X \cup Y)}{\sigma(X)}.
+\end{aligned}
+$$
+
+**Primer**: Razmotrimo pravilo 
+$\{\mbox{Mleko, Pelene}\} \rightarrow \{\mbox{Pivo}\}$. Kako je
+$\sigma(\{\mbox{Mleko, Pelene, Pivo}\}) = 2$, $N = 5$, i 
+$\sigma(\{\mbox{Mleko, Pelene}\}) = 3$, imamo da je crvrstina 
+$s(\{\mbox{Mleko, Pelene}\} \rightarrow \{\mbox{Pivo}\})=2/5=0.4$, 
+i pouzdanost 
+$s(\{\mbox{Mleko, Pelene}\} \rightarrow \{\mbox{Pivo}\})=2/3=0.67$
+
+**Zasto Koristiti Cvrstinu i Pouzdanost?** Cvrstina je bitna jer
+pravilo koje ima malu cvrstinu moze nastati slucajno. Takodje
+mala cvrstina ne ostvaruje veliku dobit jer je pravilo 
+neinteresantno. Zbog ovih razloga, podrska se koristi za 
+eliminisanje neinteresantnih pravila. Pouzdanost meri visku
+uzracnost pravila. Za dato pravilo $X \leftarrow Y$, sa velikom
+pouzdanosti, vazi da je vise verovatno da se $Y$ javi u 
+transakcijama koje sadrze $X$. Pruza proske ulovne verovatnoce od
+$Y$ za dato $X$.
+
+**Definicja (Odredjivanje Pravila Pridruzivanja)**. Za dati skup
+transakcija $T$, nadji sva pravila pridruzivanja $X \rightarrow Y$ 
+za koja vazi $s(X \rightarrow Y) \geq minsup$ i 
+$c(X \rightarrow Y) \geq minconf$, gde su $minsup$ i $minconf$
+najmanje granice za cvrstinu i pouzdanost respektivno.
+
+Iscrpna pretraka za odredjivanje pravila pridruzivanja se zasniva
+na racunanju cvrstine i pouzdanosti za svako moguce pravilo
+pridruzivanja. Ukupan broj mogucih pravila, izdvojenih iz skupa 
+podataka koji sadrzi $d$ stavki je
+$$
+R = 3^d - 2^{d+1} + 1.
+$$
+Cak i za male vrednost parametra $d$ imamo veliki broj pravila:
+$3^6 - 2^7 + 1 = 602$. Vise od $80\%$ pravila ce biti odbaceno
+nakon primene $minsup = 20\%$ i $minconf=50\%$, pa nema smisla
+generisati sva moguca pravila pridruzivanja. Zvog toga je od 
+kljucnog znacaja koristiti tehnike odsecanja pretrage.
+
+Primetimo da pravilo pridruzivanja $X \rightarrow Y$ zavisi samo
+od cvrstine njegovog odgovarajuceg skupa stavki, $X \cup Y$.
+Na primer, razmotrimo sldeci skup stavki 
+$\{\mbox{Pivo, Pelene, Mleko}\}$ koji moze da generise sledeca
+pravila pridruzivanja:
+$$
+\begin{aligned}
+\{\mbox{Pivo, Pelene}\} &\rightarrow \{\mbox{Mleko}\}; \\
+\{\mbox{Pivo, Mleko}\} &\rightarrow \{\mbox{Pelene}\}; \\
+\{\mbox{Peleno, Mleko}\} &\rightarrow \{\mbox{Pivo}\}; \\
+\{\mbox{Pivo}\} &\rightarrow \{\mbox{Pelene, Mleko}\}; \\
+\{\mbox{Mleko}\} &\rightarrow \{\mbox{Pelene, Pivo}\}; \\
+\{\mbox{Pelene}\} &\rightarrow \{\mbox{Mleko, Pivo}\}.
+\end{aligned}
+$$
+Ako je skup pravila $\{\mbox{Pivo, Pelene, Mleko}\}$ nefrekventan,
+tj. njegova cvrstina nije velika, onda svih sest kandidata za 
+pravila mozemo odseci u pretrazi.
+
+Mnogo algoritmi istrazivanja pravila pridruzivanja se mogu 
+dekompovati u dva velika podzadatka:
+
+1. **Generisanje frekventnih skupova stavki**, tj. generisanje
+   svih onih skupova stavki za koje vazi da cvrstiji od donje
+   granice $minsup$. Oni se nazivaju frekventnim skupovima stavki.
+2. **Generisanje pravili**, tj. generisati sva pravilia od
+   frekventnih skupova stavki sa velikom pouzdanoscu. Ova pravila
+   se nazivaju jaka pravila.
+
+## Generisanje Frekventnih Skupova Stavki
+
+Struktura resetke se moze koristiti za prebrojavanja svih mogucih
+skupova stavki. Skup podataka od $k$ stavki moze generisati
+i do $2^k - 1$ frekventnih skupova stavki. Zbog toga dobijamo
+eksponencijalnu slozenost prostora pretrage.
+
+Gruba sila nalazenje frekventnih skupova stavki podrazumeva 
+racnanje cvrstine za svaki **kandidat skup stavki** u strukturi
+resetke. Uporedjujemo svaki kandidat skup stavki sa svim 
+transakcijama. Ako se kandidat nalazi u transakciji, onda
+povecavamo brojac cvrstine. Ovakav pristup je veoma skup i
+zahteva $O(NMw)$ uporedjivanja, gde je $N$ broj transakacija,
+$M = 2^k - 1$, i $w$ maksimalna duzina transakcije.
+
+Postoje nekoliko nacina za smanjivanje slozenosti 
+nalazenje fekventnih skupova stavki:
+
+1. **Smanjenje broja kandidata skupa stavki ($M$)**.
+   **Apriori** princip, je efektivan nacin da se eliminise
+   kandidati bez racunanja njihove cvrstine.
+2. **Smanjenje broja poredjenja**. Umesto da se poredi svaki
+   kandidat sa svakom transakcije, mozemo smanjiti broj poredjenja
+   tako sto koristimo slozeniju strukturu podataka, za cuvanje
+   kandidata ili kompresovanje transakcija.
+
+### Aprirori Princip
+
+**Teorema (Apriori Princip)**. *Ako je skup stavki frekventan,
+onda su svi njegovi podskupovi moraju biti frekventi.*
+
+Neka je data resetka pomocu sledecih stavki $I = \{a, b, c, d, e\}$.
+Pretpostavimo da je $\{c, d, e\}$ frekventni skup staviki.
+Jasno je da svaka transakcija koja sadrzi $\{c, d, e\}$ mora
+takodje da sadrzi $\{c, d\}$, $\{c, e\}$, $\{d, e\}$, $\{c\}$,
+$\{d\}$, i $\{e\}$. Kao rezultat, ako je $\{c, d, e\}$ frekventno,
+onda svi njegovi podskupovi takodje moraju biti frekventni.
+
+Obratno, ako je skup stavki kao sto je $\{a, b\}$ nefrekventan,
+onda njegovi nadskupi moraju takodje biti nefrekventni. Zbog
+toga kada pronadjemo da je $\{a, b\}$ nefrekventno, celokupni
+podgraf, ciji cvorovi sadrze $\{a, b\}$ moze biti odsecen.
+Ova strategija se naziva **odsecanje na osnovu cvrstine**.
+Ovo je moguce zbog osobine mere cvrstine, tacnije, cvrstina
+skupa stavki nikada ne premasuje cvrstinu njgovih podskupova
+(**anti-monotonost**).
+
+**Definicija (Osobina Mnonotonosti)**. Neka je $I$ skup svih stavki,
+i $J=2^I$ partitivni skup od $I$. Mera $f$ je monotona ako
+$$
+\forall X, Y \in J; (X \subseteq Y) \rightarrow f(X) \leq f(Y),
+$$
+sto znaci da ako je $X$ podskup od $Y$, onda $f(X)$ ne sme premasiti
+$f(Y)$. Sa druge strane, $f$ je anti-monotona ako
+$$
+\forall X, Y \in J; (X \subseteq Y) \rightarrow f(Y) \leq f(X),
+$$
+sto znaci da ako je $X$ podskup od $Y$, onda $f(Y)$ ne sme premasiti
+$f(X)$.
+
+### Generisanje Frekventnih Skupova Stavki i Apriori Algoritam
+
+*Apriori* je prvi algoritam otkrivanja pravila predruzivanja
+koji koristi strategiju odsecanja baziranu na cvrstini.
+```
+Stavka  | Brojac    2-Skup stavki   | Brojac    3-Skup stavki           | Brojac
+----------------    ------------------------    --------------------------------
+Pivo    | 3         {Pivo, Hleb}    | 2   x     {Pivo, Pelene, Mleko}   | 3
+Hleb    | 4         {Pivo, Pelene}  | 3
+Kola    | 2   x     {Pivo, Mleko}   | 2   x
+Pelene  | 4         {Hleb, Pelene}  | 3
+Mleko   | 4         {Hleb, Mleko}   | 3
+Jaja    | 1   x     {Pelene, Mleko} | 3
+
+```
+
+Svaka stavka se smatra kao 1-skup stavki. Nakon sto izbrojimo
+njigovu cvrstinu, kandidate $\{\mbox{Kola}\}$ i $\{\mbox{Jaja}\}$
+uklanjamo zato sto se pojavljuju u manje od tri transakcije. 
+U sledecoj iteraciji, kandidate 2-skup stavke generisemo tako
+sto koristimo frekvente 1-skup stavke, jer *apriror* princip
+garantuje da nefrekventne 1-skup stakve generisu nefrekventne
+2-skup stavke. Nastavljamo postupak dok je moguce.
+
+Efektivnost *Apriori* strategije odsecanja se moze pokazati
+brojanje kandidata koji se generisu. Kod iscrpne pretrage
+imamo:
+$$
+\binom{6}{1} + \binom{6}{2} \binom{6,3} = 6 + 15 + 20 = 41,
+$$
+dok sa *Aprirori* principom taj broj smanjujemo na:
+$$
+\binom{6}{1} + \binom{4}{2} + 1 = 6 + 6 + 1 = 13.
+$$
+
+```{python}
+def apriori_algorithm(I, T, sigma, minsup, minconf):
+    k = 1
+    # Nalazimo sve frekventne 1-skup stavke
+    F[k] = [i for i in I if sigma[i] >= N * minsup]
+    while not F[k].empty():
+        k = k + 1
+        # Generise sledece kandidate
+        C[k] = apriori_gen(F[k - 1]) 
+        for t in T:
+            # Identifikuj sve kandidate koji pripadaju 
+            # transakciji t
+            C[t] = subset(C[k], t)
+            for c in C[t]:
+                # Inkrementiraj brojac
+                sigma[c] = sigma[c] + 1
+        # Izdvoji sve frekventne k-skup stavke
+        F[k] = [c for c in C[k] if sigma[c] >= N * minsup]
+
+    return F
+```
+
+### Generisanje Kandidata i Odsecanje
+
+`apriori_gen` funkcija generise kandidate u dva koraka:
+
+1. **Generisanje kandidata**. Ova operacija generise nove kandidate
+   $k$-skup stavke od frekventnih $(k-1)$-skupa stavki pronadjene
+   u pretrhodnoj iteraciji.
+2. **Odsecanje kandidata**. Ova operacija eliminise neke kandidate
+   $k$-skup stavke koriscenjem strategije odsecanja bazirane na 
+   cvrstini.
+
+Razmotrimo $k$-skup stavki kandidate, $X=\{i_1,i_2,\ldots,i_k\}$.
+Algoritam mora odrediti da li su svi pravi podskupovi 
+$X - \{i_j\}$, frekventni. Ako jedan od njih nije frekventan, onda
+se $X$ odmah odseca. 
+
+Metodi za generisanje kandidata:
+
+* **Iscrpna pretraga**. Razmatra svaki $k$-skup stavki kao 
+  potencijalnog kandidata i onda primenjuje potresivanje za
+  eliminisanje nepotrebnih kandidata. Slozenost ovog pristupa je 
+  $O(\sum_{k=1}^d k \times \binom{d}{k}) = O(d \times 2^{d-1})$.
+* **$F_{k-1} \times F_{1}$ Metod**. Ovaj metod podrazumeva siranje
+  svakog od $(k-1)$-skupa stavki sa drugim frekventnim stavkama.
+  Slozenost ovog algoritma je 
+  $O(\sum_k k\times |F_{k-1}|\times |F_1|)$. Mana ovog metoda je to
+  sto se moze desiti da generise vise puta iste kandidate, pa
+  se njihova kasnija eliminacija mora uzeti u obzir.
+* **$F_{k-1} \times F_{k-1}$ Metod**. Ova procedura spaja dva para
+  $(k-1)$-skupa stavki samo ako su njihove prve $k-2$ stavke
+  identicne. Neka su $A=\{a_1, a_2, \ldots, a_{k-1}\}$ i 
+  $B = \{b_1, b_2, \ldots, b_{k-1}\}$ parovi $(k-1)$-skupova stavki.
+  $A$ i $B$ se spajaju ako zadovoljavaju sledeci uslov:
+  $$
+  a_i = b_i, \mbox{ za } i=1,2,\ldots,k-2, \mbox{ i } a_{k-1} \neq b_{k-1}.
+  $$
+  Pri generisanju novih kandidata dobro je cuvati $(k-1)$-skupove
+  stavki u leksikografskom poretku kako bi izbegli generisanje 
+  duplikata.
+
+### Brojanje Cvrstine
+
+Jedan prstup za brojanja cvrstina je uporedjivanje svake
+transakcije sa svakim kandidatom i inkrementiranje brojaca
+cvrstine ako se kandidat sadrzi u transakciji. Ovaj pristup
+je racunski zahtevan, pogotovo kada su broj transakcija i broj
+kandidata veliki.
+
+**Brojanje Cvrstine Koriscenjem Hes Drveta**
+
+*Apriori* algoritam particionise kandidate korpe i smesta ih u 
+hes drvo. Tokom brojanja skupovi stavki koji se sadrze u svim
+transakcijama se takodje hesiraju u njihove odgovarajuce korpe.
+Tako je dovoljno uparedjivati svaku transakciju sa korpam.
+
+Svi unutrasnji cvorovi drveta imaju sledecu hes funkicju 
+$h(p)=p \mod 3$ za odredjivanje sledece grane.
+
+## Generisanje Pravila
+
+Svake frekventni $k$-skup stavki, $Y$, moze proizvesti $2^k - 2$
+pravila pridruzivanje. Pravilo pridruzivanja mozemo dobiti
+particionisanjem skupa stavki $Y$ u dva ne prazna podskupa,
+$X$ i $Y-X$, tako da $X \rightarrow Y - X$ zadovoljava
+granicu pouzdanja. 
+
+**Primer:** Neka je $X = \{1, 2, 3\}$ frekventni skup stavki.
+Postoji sest kandidata za pravilo pridruzivanja koja se mogu
+generisati od $X$: 
+$\{1, 2\} \rightarrow \{3\}$,
+$\{1, 3\} \rightarrow \{2\}$,
+$\{2, 3\} \rightarrow \{1\}$,
+$\{1\} \rightarrow \{2, 3\}$,
+$\{2\} \rightarrow \{1, 3\}$,
+$\{3\} \rightarrow \{1, 2\}$.
+
+Ponovno prolazenje kroz transakcije da bi izracunali pouzdanost 
+pravila pridruzivanje nije potrebno. Posmatramo pravilo
+$\{1, 2\} \rightarrow \{3\}$, koje je generisano od frekventnih
+skupova podataka $X = \{1, 2, 3\}$. Pouzdanost za ovo pravilo je
+$\sigma(\{1, 2, 3\}) / \sigma(\{1, 2\})$. Zato sto je $\{1, 2, 3\}$
+frekventno, osobina anit-monotonosti tvrdi da $\{1, 2\}$ mora biti
+takodje frekventno. Obe vrednosti su vec nadjene pa nije potrebno
+ponovno prolaziti kroz skup podataka.
+
+### Potkresivanje na Osnovu Pouzdanosti
+
+**Teorema.** *Ako pravilo* $X \rightarrow Y - X$ *ne zadovoljava
+granicu pouzdanosti onda bilo koje pravilo* 
+$X' \rightarrow Y - X'$*, gde je* $X' \subset X$*, sigurno ne
+zadovoljava granicu pouzdanosti.*
+
+### Generisanje Pravila u Apriori Algoritmu
+
+
+
+   
+
+
+
 
 

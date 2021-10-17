@@ -657,3 +657,69 @@ True
 ```
 
 ### Funktor tipovska klasa
+
+* `Functor` je tipska klasa koja implementira funkciju `fmap`, i 
+koristi se za stvari koje mogu da se mapiraju.
+
+```haskell
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+
+instance Functor [] where
+    fmap = map
+
+instance Functor Maybe where
+    fmap f (Just x) = Just (f x)
+    fmap f Nothing  = Nothing
+
+instance Functor Drvo where
+    fmap f PraznoDrvo = PraznoDrvo 
+    fmap f (Cvor x levo desno) = Cvor (f x) (fmap f levo) (fmap f desno)
+
+instance Functor (Either a) where
+    fmap f (Right x) = Right (f x)
+    fmap f (Left x)  = Left x
+```
+
+* Primetimo da pri instanciranju Functora ne korisi konkretne tipove 
+`[a]` ili `Maybe a`, vec konstruktore za te tipove `[]` i `Maybe`.
+  * U slucaju za `Maybe` potpis funkcije `fmap` je sledeci:
+    `fmap :: (a -> b) -> Maybe a -> Maybe b` sto ima smisla.
+* U slucaju da hocemo da napravimo `Either a b` kao funktor moramo
+  da fiksiramo jedan tipski parametar a drugi da ostane slobodoan. 
+  Sto nam daje mogucnost da definisemo `fmap` nad desnom stranom.
+  * Potpis funkcije `fmap` je 
+    `fmap :: (b -> c) -> (Either a) b -> (Either a) c`
+* Postoje zakoni funktora, na primer u slucaju drveta, nakon
+  primene funkcije `f` na cvorove drveta, moguce je dobiti drvo
+  za koje vazi da za neki cvor sve u levom poddrvetu manje od njega
+  a u desnom poddrvetu vece od njega.
+
+### Kinds
+
+## IO
+
+### Zdravo, Svete!
+
+```hasekll
+main :: IO ()
+main = putStrLn "Zdravo, Svete!"
+```
+
+```haskell
+Prelude> :t putStrLn
+putStrLn :: String -> IO ()
+```
+
+```hasekll
+main :: IO ()
+main = do
+    putStrLn "Zdravo!\nKako ti je ime?"
+    ime <- getLine
+    putStrLn "Kako ti je prezime?"
+    prezime <- getLine
+    let imeVeliko = map toUpper ime
+        prezimeVelikko = map toUpper prezime
+        imePrezime = imeVeliko ++ " " ++ prezimeVelikko
+    putStrLn $ "Drago mi je, " ++ imePrezime ++ "!"
+```

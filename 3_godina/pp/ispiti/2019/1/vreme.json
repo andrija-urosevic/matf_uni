@@ -1,0 +1,6 @@
+[
+    { "grad": "Rim", "temp": 13, "vlaznost": 49},
+    { "grad": "Berlin", "temp": 10, "vlaznost": 86},
+    { "grad": "Pariz", "temp": 10, "vlaznost": 83},
+    { "grad": "Moskva", "temp": 7, "vlaznost": 81}
+]

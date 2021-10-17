@@ -1,0 +1,42 @@
+---
+title: Random Walk On Line
+author: Andrija Urosevic
+output: pdf_document
+---
+
+# Problem: Random Walk
+
+Person is walking on line, starting from $x=0$. With probability $p$ person
+stepes to the right $(+1)$, and with probability $1-p$ person steps to the 
+left $(-1)$. This expermiment is repeted $k$ times. Find $EX$ for different
+values of $k$, and plot $EX$ for different $p$.
+
+# Code
+
+```{r}
+ps <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+sum(ps)
+
+EXps <- c(0.0)
+print(typeof(EXps))
+for (j in 1:length(ps)) {
+    p <- ps[j]
+    print(paste("p =", p))
+    EXs <- c(0.0)
+    for (k in 1:100) {
+        Xs <- c(0.0)
+        for (i in 1:k) {
+            if (p > runif(1)) { # go right
+                Xs[[i]] = 1
+            } else { # go left
+                Xs[[i]] = -1
+            }
+        }
+        EXs[[k]] <- sum(Xs) / length(Xs)
+    }
+    print(EXs)
+    EXps[[j]] <- sum(EXs) / length(Xs)
+}
+
+plot(EXps, ps, type="l")
+```

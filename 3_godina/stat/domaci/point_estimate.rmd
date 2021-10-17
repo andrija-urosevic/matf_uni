@@ -1,0 +1,79 @@
+---
+title: Point Estimate
+author: Andrija Urosevic
+output: pdf_document
+---
+
+
+# Problem
+
+One research group thought that their random number generator 
+make mistakes when its tries to generate numbers from Uniform 
+distribution $\mathcal{U}[0,1]$. They think that its generating 
+numbers from distribution with function 
+$F(x) = x^\theta,\ x\in[0,1], \theta > 1$.
+They did get following results: 
+0.97, 0.61, 0.29, 0.66, 0.91, 0.49, 0.66, 0.62,
+0.79, 0.76, 0.59, 0.66, 0.95, 0.81, 0.78, 0.88, 
+0.85, 0.76, 0.93, 0.88.
+Try to help them solve their suspicion, by finding
+point estimate for parameter $\theta$.
+
+# Solution
+
+## Log-Likelihood Method
+
+Lets first find point estimate for 
+$F(x) = x^\theta,\ x\in[0,1], \theta > 1$.
+Since probability density function is $f(x)=\theta x^{\theta - 1}$
+we get that likelihood function is:
+$$
+L(x_1,x_2,\ldots,x_n;\theta)
+=\prod_{k=1}^n \theta x_k^{\theta - 1}
+=\theta^n \prod_{k=1}^n x_k^{\theta - 1}.
+$$
+From this we find that log-likelihood function is:
+$$
+\begin{aligned}
+l(x_1,x_2,\ldots,x_n;\theta)
+&=\log L(x_1,x_2,\ldots,x_n;\theta) \\
+&=\log \left[\theta^n \prod_{k=1}^n x_k^{\theta - 1}\right] \\
+&=n \log\theta + (\theta - 1)\sum_{k=1}^n \log x_k \\
+\end{aligned}
+$$
+
+Let's find first and second partial derivative with respect to
+$\theta$ from
+$l(x_1,x_2,\ldots,x_n;\theta)$ in order to find maximum of
+$l(x_1,x_2,\ldots,x_n;\theta)$.
+
+$$
+\begin{aligned}
+\frac{\partial l}{\partial \theta}(x_1,x_2,\ldots,x_n;\theta) 
+= \frac{n}{\theta} + \sum_{k=1}^n \log x_k = 0 \\
+\frac{\partial^2 l}{\partial \theta^2}(x_1,x_2,\ldots,x_n;\theta) 
+= -\frac{n}{\theta^2} < 0.
+\end{aligned}
+$$
+
+Finely we get that point estimate for parameter $\theta$ is:
+$$
+\hat\theta = -\frac{n}{\sum_{k=1}^n \log x_k}
+$$
+
+## Modeling Solution in R
+
+```{r}
+data = c(0.97, 0.61, 0.29, 0.66, 0.91, 0.49, 0.66, 0.62, 0.79, 0.76, 0.59, 0.66, 0.95, 0.81, 0.78, 0.88, 0.85, 0.76, 0.93, 0.88)
+
+n = length(data)
+theta.hat = -n / sum(log(data))
+theta.hat.prime = -n / sum(log(runif(n)))
+
+print(theta.hat)
+print(theta.hat.prime)
+```
+
+We see that we don't get 1 as we should as it where uniform 
+distribution.
+

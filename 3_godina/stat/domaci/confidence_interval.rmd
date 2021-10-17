@@ -1,0 +1,316 @@
+---
+title: Confidence Interval
+author: Andrija Urosevic
+output: pdf_document
+---
+
+# Confidence Interval for Normal Distribution
+
+Let's find $\beta\%$ confidence interval for parameter $m$ from sample size 
+$n$, which is in normal $\mathcal{N}(m,\sigma^2)$.
+
+## Confidence Interval for Parameter $m$ Where $\sigma^2$ Is Known
+
+We use following statistics:
+$$
+\frac{\overline{X_n} - m}{\sigma}\sqrt{n} \in \mathcal{N}(0, 1)
+$$
+
+Since we are finding $\beta\%$ confidence interval and parity of density 
+function for normal distribution, we have that
+$$
+\begin{aligned}
+P\left\{-c \leq \frac{\overline{X_n} - m}{\sigma}\sqrt{n} \leq c\right\} = \beta, \\
+\Phi(c) - \Phi(-c) = \beta
+\end{aligned}
+$$
+
+Solving this system of equations we find that:
+$$
+P\left\{\overline{X_n} - \frac{\sigma}{\sqrt{n}}c \leq m \leq \overline{X_n} + \frac{\sigma}{\sqrt{n}}c\right\} = \beta,\
+c = \Phi^{-1}\left(\frac{1 + \beta}{2}\right)
+$$
+
+This finaly yield us confidence interval for parameter $m$:
+$$
+I_m = \left(\overline{X_n} - \frac{\sigma}{\sqrt{n}} \Phi^{-1}\left(\frac{1 + \beta}{2}\right), \overline{X_n} + \frac{\sigma}{\sqrt{n}} \Phi^{-1}\left(\frac{1 + \beta}{2}\right)\right)
+$$
+
+```{r}
+confidence_interval <- function(n, m, sigma, beta) {
+    x = rnorm(n, m, sigma)
+    c <- qnorm((1 + beta) / 2)
+    L <- mean(x) - sigma / sqrt(n) * c
+    U <- mean(x) + sigma / sqrt(n) * c
+    return (c(L, U))
+}
+
+set.seed(42)
+N = 10000
+n = 10
+m = 0
+sigma = 1
+beta = 0.95
+
+count = 0
+for (i in 1:N) {
+    I.m = confidence_interval(n, m, sigma, beta)
+    if (I.m[1] < m && I.m[2] > m) count = count + 1
+}
+
+beta.prime = count / N
+beta.prime
+```
+
+## Confidence Interval for Parameter $m$ Where $\sigma^2$ Is Unknown
+
+We use following statistics:
+$$
+\frac{\overline{X_n} - m}{\overline{S_n}}\sqrt{n - 1} \in t_{n-1}
+$$
+
+Since we are finding $\beta\%$ confidence interval, we have that
+$$
+\begin{aligned}
+P\left\{-c \leq \frac{\overline{X_n} - m}{\overline{S_n}}\sqrt{n - 1} \leq c\right\} = \beta, \\
+F_{t_{n-1}}(c) - F_{t_{n-1}}(-c) = \beta
+\end{aligned}
+$$
+
+Solving this system of equations we find that:
+$$
+P\left\{\overline{X_n} - \frac{\overline{S_n}}{\sqrt{n - 1}}c \leq m \leq \overline{X_n} + \frac{\overline{S_n}}{\sqrt{n - 1}}c\right\} = \beta,\
+c = F_{t_{n-1}}^{-1}\left(\frac{1 + \beta}{2}\right)
+$$
+
+This finaly yield us confidence interval for parameter $m$:
+$$
+I_m = \left(\overline{X_n} - \frac{\overline{S_n}}{\sqrt{n - 1}} F_{t_{n-1}}^{-1}\left(\frac{1 + \beta}{2}\right), \overline{X_n} + \frac{\overline{S_n}}{\sqrt{n - 1}} F_{t_{n-1}}^{-1}\left(\frac{1 + \beta}{2}\right)\right)
+$$
+
+```{r}
+confidence_interval <- function(n, m, sigma, beta) {
+    x = rnorm(n, m, sigma)
+    c <- qt((1 + beta) / 2, df = n - 1)
+    L <- mean(x) - sd(x) / sqrt(n) * c
+    U <- mean(x) + sd(x) / sqrt(n) * c
+    return (c(L, U))
+}
+
+set.seed(42)
+N = 10000
+n = 10
+m = 0
+sigma = 1
+beta = 0.95
+
+count = 0
+for (i in 1:N) {
+    I.m = confidence_interval(n, m, sigma, beta)
+    if (I.m[1] < m && I.m[2] > m) count = count + 1
+}
+
+beta.prime = count / N
+beta.prime
+```
+
+## Confidence Interval for Parameter $\sigma^2$
+
+We use following statistics:
+$$
+\frac{n\overline{S_n^2}}{\sigma^2} \in \chi_{n-1}^2
+$$
+
+
+### Double sided case
+Like before, we find that:
+$$
+I_{\sigma^2} = \left(\frac{n\overline{S_n^2}}{F_{\chi_{n-1}}^{-1}(\frac{1-\beta}{2})}, \frac{n\overline{S_n^2}}{F_{\chi_{n-1}}^{-1}(\frac{1+\beta}{2})}\right)
+$$
+
+```{r}
+confidence_interval = function(n, m, sigma, beta) {
+    x = rnorm(n, m, sigma)
+    L <- (n - 1) * var(x) / qchisq((1 + beta) / 2, df = n - 1)
+    U <- (n - 1) * var(x) / qchisq((1 - beta) / 2, df = n - 1)
+    return (c(L, U))
+}
+
+set.seed(42)
+N = 10000
+n = 10
+m = 0
+sigma = 1
+beta = 0.95
+
+count = 0
+for (i in 1:N) {
+    I.m = confidence_interval(n, m, sigma, beta)
+    if (I.m[1] < sigma && I.m[2] > sigma) count = count + 1
+}
+
+beta.prime = count / N
+beta.prime
+```
+
+### One sided case
+
+Here, we have limit on one left and right side, such that
+$$
+\begin{aligned}
+P\left\{\frac{(n - 1)\overline{S_n^2}}{\sigma^2} \leq d \right\} &= \beta,\\
+P\left\{\frac{(n - 1)\overline{S_n^2}}{\sigma^2} \geq f \right\} &= \beta
+\end{aligned}
+$$
+
+Solving this yields following confidence intervals:
+$$
+\begin{aligned}
+I_{\mbox{upper}, \sigma^2} &= \left(\frac{n\overline{S_n^2}}{F_{\chi_{n-1}^2}^{-1}(\beta)}, +\infty \right), \\
+I_{\mbox{lower}, \sigma^2} &= \left(0, \frac{n\overline{S_n^2}}{F_{\chi_{n-1}^2}^{-1}(1 - \beta)}\right),
+\end{aligned}
+$$
+
+```{r}
+confidence_interval_upper = function(n, m, sigma, beta) {
+    x = rnorm(n, m, sigma)
+    L <- (n - 1) * var(x) / qchisq(beta, df = n - 1)
+    return (c(L, +Inf))
+}
+
+confidence_interval_lower = function(n, m, sigma, beta) {
+    x = rnorm(n, m, sigma)
+    U <- (n - 1) * var(x) / qchisq(1 - beta, df = n - 1)
+    return (c(0, U))
+}
+
+set.seed(42)
+N = 10000
+n = 10
+m = 0
+sigma = 1
+beta = 0.95
+
+count.u = 0
+count.l = 0
+for (i in 1:N) {
+    I.m.u = confidence_interval_upper(n, m, sigma, beta)
+    I.m.l = confidence_interval_lower(n, m, sigma, beta)
+    if (I.m.u[1] < sigma && I.m.u[2] > sigma) count.u = count.u + 1
+    if (I.m.l[1] < sigma && I.m.l[2] > sigma) count.l = count.l + 1
+}
+
+beta.u.prime = count.u / N
+beta.l.prime = count.l / N
+print(paste(beta.u.prime, ", ", beta.l.prime))
+
+```
+
+## Confidence Interval for $m_1 - m_2$
+
+Let $X_1, X_2, \ldots, X_n \in \mathcal{N}(m_1, \sigma_1^2)$ and 
+$Y_1, Y_2, \ldots, Y_k \in \mathcal{N}(m_2, \sigma_2^2)$ be non-dependent
+samples. Let's find confidence interval for $m_1 - m_2$:
+
+### Case 1: Known $\sigma_1^2, \sigma_2^2$
+
+We use following statistic:
+$$
+\frac{\overline{X_n} - \overline{Y_k} - (m_1 - m_2)}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{k}}} \in \mathcal{N}(0, 1)
+$$
+We find confidence interval for $m_1 - m_2$ to be:
+$$
+I_{m_1 - m_2} = \left(\overline{X_n} - \overline{Y_k} - \Phi^{-1}\left(\frac{1+\beta}{2}\right)\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{k}}, \overline{X_n} - \overline{Y_k} + \Phi^{-1}\left(\frac{1+\beta}{2}\right)\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{k}} \right)
+$$
+
+### Case 2: $\sigma^2=\sigma_1^2=\sigma_2^2$ But Uknown $\sigma^2$
+
+We use following statistic:
+$$
+\frac{\overline{X_n} - \overline{Y_k} - (m_1 - m_2)}{\sqrt{n\overline{S_n^2}(X) + k\overline{S_k^2}(Y)}} \sqrt{\frac{nk}{n+k}(n + k - 2)} \in t_{n+k-2}
+$$
+We find confidence interval for $m_1 - m_2$ to be:
+$$
+I_{m_1 - m_2} = \left(\overline{X_n} - \overline{Y_k} - t_{n+k-2}^{-1}\left(\frac{1+\beta}{2}\right)\sqrt{\frac{n\overline{S_n^2}(X) + k\overline{S_k^2}(Y)}{\frac{nk}{n+k}(n + k - 2)}}, \overline{X_n} - \overline{Y_k} + t_{n+k-2}^{-1}\left(\frac{1+\beta}{2}\right)\sqrt{\frac{n\overline{S_n^2}(X) + k\overline{S_k^2}(Y)}{\frac{nk}{n+k}(n + k - 2)}} \right)
+$$
+
+### Case 3: $\sigma_1^2 \neq \sigma_2^2$
+
+We use following statistic:
+$$
+\frac{\overline{X_n} - \overline{Y_k} - (m_1 - m_2)}{\sqrt{\frac{\overline{S_n^2}(X)}{n} + \frac{\overline{S_k^2}(Y)}{k}}} \in t_A,
+$$
+where
+$$
+A = \frac{\left(\frac{\overline{S_n^2}(X)}{n} + \frac{\overline{S_k^2}(Y)}{k}\right)^2}{
+\frac{\left(\frac{\overline{S_n^2}(X)}{n}\right)^2}{n - 1} + 
+\frac{\left(\frac{\overline{S_k^2}(Y)}{k}\right)^2}{k - 1}}
+$$
+
+## Confidence Interval for $\frac{\sigma_1^2}{\sigma_2^2}$
+
+Like before, let $X_1, X_2, \ldots, X_n \in \mathcal{N}(m_1, \sigma_1^2)$ and 
+$Y_1, Y_2, \ldots, Y_k \in \mathcal{N}(m_2, \sigma_2^2)$ be non-dependent
+samples. Let's find confidence interval for $\frac{\sigma_1^2}{\sigma_2^2}$, by using following statistic:
+$$
+\frac{\frac{\chi_{n-1}^2}{n-1}}{\frac{\chi_{k-1}^2}{k-1}} = 
+\frac{\frac{n\overline{S_n^2}(X)}{(n-1)\sigma_1^2}}{\frac{k\overline{S_k^2}(Y)}{(k-1)\sigma_2^2}} = 
+\frac{n(k-1)\sigma_2^2 \overline{S_n^2}(X)}{k(n-1)\sigma_1^2 \overline{S_k^2}(Y)} =
+\frac{\sigma_2^2\tilde{S_n^2}(X)}{\sigma_1^2\tilde{S_k^2}(Y)} \in F_{n-1,k-1}
+$$
+
+We get confidence interval for $\frac{\sigma_2^2}{\sigma_1^2}$:
+$$
+I_{\frac{\sigma_2^2}{\sigma_1^2}} =\left(
+F_{n-1,k-1}^{-1}\left(\frac{1-\beta}{2}\right)\frac{\tilde{S_k^2}(Y)}{\tilde{S_n^2}(X)},
+F_{n-1,k-1}^{-1}\left(\frac{1+\beta}{2}\right)\frac{\tilde{S_k^2}(Y)}{\tilde{S_n^2}(X)}
+\right)
+$$
+
+# Confidence Interval for Any Type of Parameter in R
+
+```{r}
+confidence_interval = function(x, y, dist="norm", mean=1, vareq=T, var=1, beta=.95) {
+    n = length(x)
+    k = length(y)
+
+    if (dist == "norm") {
+        if (mean == 1) { # m1 - m2
+            if (vareq == T) { # sigma_1^2 = sigma_2^2 = sigma^2
+                c = qt((1 + beta) / 2, n + k - 2)
+                return (c(mean(x) - mean(y) - c * sqrt((n * var(x) + k * var(y)) / (n * k / (n + k) * (n + k - 2))), 
+                          mean(x) - mean(y) + c * sqrt((n * var(x) + k * var(y)) / (n * k / (n + k) * (n + k - 2)))))
+            } else { # sigma_1^2 != sigma_2^2
+                A = (var(x) / n + var(y) / k)^2 / ((var(x) / n)^2 / (n - 1) + (var(y) / k)^2 / (k - 1))
+                c = qt((1 + beta) / 2, A)
+                return (c(mean(x) - mean(y) - c * sqrt(var(x) / n + var(y) / k), 
+                          mean(x) - mean(y) + c * sqrt(var(x) / n + var(y) / k)))
+            }
+        } else { # sigma_2^2/sigma_1^2
+            c1 = qf((1 - beta) / 2, n - 1, k - 1)
+            c2 = qf((1 + beta) / 2, n - 1, k - 1)
+            return (c(c1 * var(y) / var(x), c2 * var(y) / var(x)))
+        }
+    }
+
+    return (c(NULL, NULL))
+}
+
+set.seed(42)
+n = 10000
+k = 11000
+m1 = 0.03
+m2 = 0.0314
+sigma1 = 12.97
+sigma2 = 10.12
+
+x = rnorm(n, m1, sigma1)
+y = rnorm(k, m2, sigma2)
+I.m = confidence_interval(x, y, vareq=T, beta=0.9)
+
+I.m
+
+```
+
+
+
