@@ -12,12 +12,31 @@ int* p3=(int*)1000;
 
 2. У каквом су односу дужине низова s1 и s2 у примеру:
 
-```{c++}
+```{cpp}
 char s1[] = "C++";
 char s2[] = { 'C', '+', '+' };
 ```
 
-**Odgovor**: 1:1
+**Odgovor**: 4:3
+
+3. Шта ће исписати овај програм?
+
+```{cpp}
+int a = 1;
+int* b=&a;
+auto main(void) -> int
+{
+    *b = a + 1;
+    *b = a + 1;
+    std::cout << a << std::endl;
+
+    return 0;
+}
+```
+
+**Odgovor**: 3
+
+
 
 
 
