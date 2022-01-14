@@ -189,3 +189,214 @@ unutar deklaracije klase. Pisu se tako sto im se doda kljucna rec
 `inline` u deklaraciji (ekspicitno) ili tako sto se se pored
 deklaracije odmah i definisu (implicitno).
 
+20. Која су основна мерила неуспеха при развоју софтвера? Објаснити 
+    свако укратко.
+
+**Odgovor**:
+
+* Ulozena sredstva: Koliko je novca potroseno.
+* Izgubljeno vremo: Koliko je vremena potroseno.
+* Posledice po citav poslovni sistem: Koliko ce poslovni sistem 
+  izgubiti zbog neuspeha pri razvoju softvera.
+
+21. Које су основне врсте неуспеха при развоју софтвера? Објаснити 
+    сваку укратко.
+
+**Odgovor**:
+
+* Prekoracenje troskova: Planirano je x\$, potrebno je (x + y)\$
+* Prekoracenje vremenskih rokova: Povlaci vece troskove
+* Rezultat nije upotrebljiv: Neispravno funkcionise ili je 
+  neupotrebljiv u realnim problemima 
+* Odustajanje od projekta: Nastaje zbog nekog od prethodnih razloga
+* Katastrofale greske: Bagovi koji ne mogu da se otklone.
+
+22. Шта је неупотребљив резултат? Који су аспекти неупотребљивости?
+Објаснити.
+
+**Odgovor**: Neupotrebljiv rezultat predstavlja softver koji ne 
+funkcionise ili ne zadovoljava realne probleme. Aspekti 
+neupotrebljivosti: (1) Neupotrebljiv korisnicki interfejs, 
+(2) Procedura koriscenja nije ostvarena/dobra u realnim uslovima.
+
+23. Који су најчешћи узроци неупотребљивости резултата развоја 
+    софтвера? Објаснити укратко.
+
+**Odgovor**: 
+
+* Problem na strani klijenta: Klijent ne zna sta hoce, ime nerealne 
+  uslove, manjak sredstava...
+* Problem na strani razvijalaca: Slabo vodjenje projekta, losa
+  procena potrebnih resursa, nove tehnologije...
+* Visestrani problemi: Losa komunikacije, lose definisani zahtevi.
+
+24. На којим странама се налазе проблеми при развоју софтвера? 
+    Објаснити укратко и навести по један пример.
+
+**Odgovor**: Odgovoreno gore.
+
+25. Који су најчешћи проблеми на страни заинтересованих лица    
+    (улагача) при развоју софтвера?
+    Објаснити укратко.
+
+**Odgovor**: Odgovoreno gore.
+
+26. Који су најчешћи проблеми на страни развијаоца при развоју    
+    софтвера? Објаснити укратко.
+
+**Odgovor**: Odgovoreno gore.
+
+27. Који су најчешћи проблеми који се односе на обе стране у развоју 
+    софтвера (улагачи и развојаоци)? Објаснити укратко.
+
+**Odgovor**: Odgovoreno gore.
+
+28. Објаснити како приступи планирању могу довести до проблема.
+
+**Odgovor**: Moze docei do nedovoljnog planiranja ili do preteranog
+planiranja.
+
+29. Шта је управљање ризицима?
+
+**Odgovor**: Proces preoznavanja, pocenjivanja i kontrolisanja svega
+sto moze da krene naopako pri razvoju softvera.
+
+30. Који су основни узроци ризика у развоју софтвера? Навести бар 7.
+
+**Odgovor**: 
+* manjak osoblja
+* nerealni rokovi i budzet
+* razvoj potrebnih funkcija
+* razvoj pogresnog interfejsa
+* preterivanje
+* neprikidni niz izmena u zahtevima
+* slabnosti eksterno realizovanih poslova
+* slabosti u eksterno nabavljenim komponentama
+* slabe performanse u realnom radu
+* rad na granicama racunarskih nauka
+
+31. Који су најважнији савремени концепти развоја који су настали из 
+    потребе за смањивањем ризика у развојном процесу?
+
+**Odgovor**:
+
+* Inkrementalni razvoj
+* Odredjivanje koraka prema rokovima
+* Pojacanje komunikacija medju subjektima
+* Davanje prednosti objektima u odnosu na proces
+* Prevljenje prototipova
+
+32. Објаснити концепт инкременталног развоја?
+
+**Odgovor**: Veliki i slozeni posao delima na male i jednostavne 
+celine koje nadogradjujemo kroz inkrementalne faze.
+
+33. Објаснити концепт одређивања корака према роковима?
+
+**Odgovor**: Za svaki korak se odredi budzet i rokovi, te se onda
+oni ispunjavaju.
+
+34. Објаснити концепт појачане комуникације међу субјектима?
+
+**Odgovor**: U planiranju se razmatraju sve vreste subjekata u sto
+vecem broju.
+
+35. Објаснити концепт давања предности објектима у односу на процесе?
+
+**Odgovor**: U sredini paznje se pri razvoju stavljaju objekti, a
+ne procesi.
+
+36. Објаснити концепт прављења прототипова?
+
+**Odgovor**: U okviru analize problema se pravi prototip koji odrazava nacin funkcionisanja i upotrebe softvera.
+
+37. У којим околностима су настале објектно оријентисане развојне 
+    методологије?
+
+**Odgovor**: 
+
+* Postojanje metodologija koje striktno pripisuje analizu i 
+  opisivanje procesa
+* Potreba za strktuiranim opisivanjem podataka
+* Potreba za opisivanjem entiteta koji menja stanja.
+* Podizanje nivoa apstraksicje
+* Programiranje upravljano dogadjajima
+* Graficki korisnicki interfejs
+* Modularnost softvera
+* Skracivanje razvojnog ciklusa
+* Visestruka upotrebljivost softvera
+
+38. Објаснити основне концепте приступања објектно оријентисаних 
+    развојних методологија проблему развоја.
+
+**Odgovor**: 
+
+* Srediste paznje se stavlja na objekte, a ne na proces.
+* Skracivanjem trajanja razvojnog ciklusa.
+* Pojacana komunikacija medju subjektima u svim fazama razvoja.
+
+39. Шта је објекат? Објаснити својим речима и навести једну од познатих дефиниција.
+
+**Odgovor**: Objekat je primerak neke klase. Svaki objekat moze da
+sadrzi svoje stanje i ponasanje, koje se definise u klasi.
+
+40. Шта је класа? Атрибут? Метод?
+
+**Odgovor**: *Klasa* je skup svih objekata koji imaju zajednicka
+(1) atribute i (2) metode. *Atribut* je odgovarajuce polje koje ima 
+ime i tip. *Metod* je odgovarajuce ponasaljen koje ima ime, 
+argumente i povratnu vrednost.
+
+41. Који су основни концепти на којима почивају технике објектно оријентисаних методологија?
+
+**Odgovor**:
+
+* Enkapsulacije
+* Interfejs
+* Poliomrfizam
+* Nasledjivanje i odgovarajuci odnosu
+
+42. Објаснити концепт енкапсулације.
+
+**Odgovor**: Enkapsulacija je ideja da je strukturu objekta zanima
+samo taj objekat.
+
+43. Објаснити концепт интерфејса.
+
+**Odgovor**: Interfejs je ideja da klasa spoljasnjim korisnicima
+omogucava samo odredjeni skup ponasanja i tako komunicira sa 
+objektom.
+
+44. Објаснити концепт полиморфизма.
+
+**Odgovor**: Polimorfizam je ideja da jednom napisan kod moze da
+se koristi vise razlicitih vrsta objekata.
+
+45. Објаснити концепт наслеђивања и одговарајуће односе.
+
+**Odgovor**: Nasledjivanje klase je ekvivalentno relaciji `jeste`
+koja se definise kao: (1) Klasa `A` `jeste` klasa `B` akko svaki 
+objekat klasa `A` ima sve osobine koji imaju i objekti klase `B`.
+
+46. Кроз које фазе је прошао развој ОО методологија?
+
+**Odgovor**:
+
+* Pocetni koraci
+* Oblikovanje UML-a
+* Post-UML koraci
+
+47. Које су карактериситике прве фазе развоја ОО методологија?
+
+**Odgovor**: Veliki broj razlicitih notacija i metodologija.
+Previse siroka i nije bilo kompletana.
+
+48. Које су карактериситике друге фазе развоја ОО методологија?
+
+**Odgovor**: Pokusaj ujednacenja notacije, akcenat na notaciji.
+
+49. Које су карактериситике треће фазе развоја ОО методологија?
+
+**Odgovor**: Ujednacena notacija, siroko shvatanje procesa razvoja,
+agilne metodologije, potpuno posvecivanje metodologijama...
+
