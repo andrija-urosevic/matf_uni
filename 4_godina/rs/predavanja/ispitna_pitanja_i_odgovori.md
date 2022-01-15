@@ -400,3 +400,133 @@ Previse siroka i nije bilo kompletana.
 **Odgovor**: Ujednacena notacija, siroko shvatanje procesa razvoja,
 agilne metodologije, potpuno posvecivanje metodologijama...
 
+50. Шта је УМЛ?
+
+**Odgovor**: UML je ujedinjeni jezik za modelovanje.
+
+51. Које (три) врсте дијаграма постоје у УМЛ-у? Објаснити.
+
+**Odgovor**: 
+
+* *Dijagram ponasanja*: dinamickom prirodom softverskog sistema;
+* *Dijagram interakcije*: iterakcija izmedju razlicitih modela; 
+* *Strukturni dijagram*: struktura softverskog sistema.
+
+52. Навести структурне дијаграме УМЛ-а.
+
+**Odgovor**: 
+
+* Dijagram klasa
+* Dijagram komponenti
+* Dijagram objekata
+* Dijagram profila
+* Dijagram slozene strukture
+* Dijagram isporucivanja
+* Dijagram paketa
+
+53. Која је улога и шта су основни елементи дијаграма класа?
+
+**Odgovor**: Ilustruje strukturu modela, kao sto su klase, njigov
+sadrzaj i medjusobnu povezanost. Sadrzi: naziv klasa, atribute klasa,
+metode klasa, specijalizaciju i generalizaciju, odnose.
+
+54. Како се представљају односи између класа на дијаграму класа? 
+    Који односи постоје?
+
+**Odgovor**: Asocijacija, Agregacija i Kompozicija koji se 
+predstavljaju povezanim vrstama strelicama
+
+55. Објаснити кардиналности односа на дијаграму класа – шта    
+    представљају и како се означавају?
+
+**Odgovor**: Kardinalnost odnosa predstavlja koliko instanci
+asocijativne klase moze da sadrzi.
+
+56. Које су врсте дијаграма класа и по чему се разликују?
+
+**Odgovor**: *Dijagram modela domena* se bavi strukturom objekata,
+dok se *dijagram interfejsa klase* se bavi ponasanjem objekata.
+
+57. Која је улога и шта су основни елементи дијаграма компоненти?
+
+**Odgovor**: Funkcionalna i fizicka komponenta softvera.
+
+58. Која је улога и шта су основни елементи дијаграма објеката?
+
+**Odgovor**: Naziv klase, naziv objekata, imena i vrednosti atributa
+i odnose medju objektima u jednom trenutku vremena.
+
+59. Која је улога и шта су основни елементи дијаграма испоручивања?
+
+**Odgovor**: Fizicka arhitektura softverskog sistema.
+
+60. Која је улога и шта су основни елементи дијаграма пакета?
+
+**Odgovor**: Logicka dekompozicija u pakete. (`namespaces`)
+
+61. Навести дијаграме понашања УМЛ-а.
+
+**Odgovor**:
+
+* Dijagram slucajeva upotrebe
+* Dijagram aktivnosti
+* Dijagram stanja
+* Dijagram interakcije
+
+62. Која је улога и шта су основни елементи дијаграма активности?
+
+**Odgovor**: Poslovni procesi viseg nivoa, tokovi podatak, i slozene
+logicke elemente sistema.
+
+63. Која је улога и шта су основни елементи дијаграма стања?
+
+**Odgovor**: Opisuje kako se stanje jednog objekta menja u zavisnosti
+od interakcija u koje objekat ulazi.
+
+64. Која је улога и шта су основни елементи дијаграма случајева 
+    употребе?
+
+**Odgovor**: Dijagram slucajeva upotrebe opisuje jednu funkcionalnu
+celinu sistema. Osnovni elementi: *slucajevi upotrebe*, *akteri*, 
+*njigovi medjusobni odnosi*.
+
+65. Објаснити односе између случајева употребе на дијаграмима 
+    случајева употребе.
+
+**Odgovor**: 
+
+* *include*: slucaj obuhvata citav slucaj prema kome ide strelica.
+* *extends*: slucaj od koga ide strelica predstavlja opciono 
+prosirenje drugog slucaja.
+
+66. Шта обухвата опис једног случаја употребе?
+
+**Odgovor**: Naziv, akteri, kratak opis, preduslovi, postpuslovi,
+opis toka slucaja upotrebe, opis posebnih slucajeva, druge uml 
+dijagrame.
+
+67. Навести дијаграме интеракција УМЛ-а.
+
+**Odgovor**: 
+
+* Dijagram sekvence
+* Dijagram komunikacije
+* Dijagram vremena
+* Dijagram interakcija
+
+68. Која је улога и шта су основни елементи дијаграма комуникације?
+
+**Odgovor**: Ilustruje objekte, njihove, medjusobne odnose i poruke 
+koji rezmenjuju.
+
+69. Која је улога и шта су основни елементи дијаграма интеракције?
+
+**Odgovor**: Varijanta dijagrama aktivnosti, gde je akcenat na 
+upravljanju procesima ili sistemom.
+
+70. Која је улога и шта су основни елементи дијаграма секвенце?
+
+**Odgovor**: Precizno opisuje tok odvijanja slucajeva upotrebe,
+i jasno prepoznaje odgovornosti subjekta i objekta za pojedinacne
+korake.
+
