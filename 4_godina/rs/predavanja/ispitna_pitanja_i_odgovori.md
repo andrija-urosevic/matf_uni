@@ -530,3 +530,291 @@ upravljanju procesima ili sistemom.
 i jasno prepoznaje odgovornosti subjekta i objekta za pojedinacne
 korake.
 
+
+126. Шта је образац за пројектовање? Чему служи?
+
+**Odgovor**: Obrazac za projektovanje predstavlja konceptualno resenje
+neke klase problema, koje ide sa pratecom dokumentacijom. Sluzi za
+resavanje nekog konkretnog problema, tako sto se pocetni problem apstrakuje
+i iskoristi znanje iz konceptualnog resenja.
+
+127. Који су основни елементи образаца за пројектовање? Објаснити их.
+
+**Odgovor**:
+
+* Ime
+* Problem
+* Resenje
+* Posledice
+
+128. Објаснити име, као елемент обрасца за пројектовање?
+
+**Odogovor**: Ime obrasca za projektovanje sluzi da bi se u sto kracim 
+terminima opisao problem, resenje i posledice. Koristi se za kataloge
+obrazaca za projektovanje.
+
+129. Објаснити проблем, као елемент обрасца за пројектовање?
+
+**Odogovor**: Problem predstavlja opis apstrakcije neke klase problema.
+Omogucava lako propoznavanje sa odredjenim problemom.
+
+
+130. Објаснити решење, као елемент обрасца за пројектовање?
+
+**Odogovor**: Resenje predstavlja detaljan apstraktni opis resenja problema.
+Resenje ne sme biti konkretno vec mora biti sto je apstraktnije moguce, kako
+bi moglo da se primeni u konkretnim problemima.
+
+131. Објаснити последице, као елемент обрасца за пројектовање?
+
+**Odogovor**: Posledice predstavljaju rezultate resenja. Sluze kao mera
+pogodnosti odreddjenog obrasca za odredjeni problem.
+
+132. Навести шта све обухвата опис једног обрасца за пројектовање? 
+
+**Odgovor**: 
+
+* Ime
+* Alternativna imena
+* Klasifikacija
+* Namena
+* Motivacija
+* Primenjivost 
+* Preduslov za primenu
+* Logicka struktura resenja (UML dijagrami)
+* Entiteti resenja (klase i objekti)
+* Saradnja (dijagram sekvenci)
+* Implementacija
+* Primer koriscenja
+* Primer koda
+* Srodni obrasci
+
+133. Како су класификовани обрасци за пројектовање? Навести по један пример од сваке врсте образаца.
+
+**Odgovor**:
+
+* Gradivni obrasci (Creational Patterns) (Factory Method)
+* Strukturni obrasci (Structural Patterns) (Composite)
+* Obrasci ponasanja (Behavioural Patterns) (Observer)
+
+134. Објаснити намену градивних образаца за пројектовање.
+
+**Odgovor**: Osnovan cilj gradivnih obrazaca je da olaksaju pravljenje novih
+objekata. Oni apstrakuju proces pravljenja novih objekata iz interfejsa.
+
+135. Навести бар четири градивна образаца за пројектовање.
+
+**Odgovor**:
+
+* Singleton
+* Factory Method
+* Abstract Factory
+* Builder
+* Prototype
+
+136. Објаснити намену структурних образаца за пројектовање.
+
+**Odgovor**: Osnovni cilj strukturnih obrazaca je da olaksaju ogranizaciju 
+klasa i objekta u vece funkcionalne celine. Koriste nasledjivanje i 
+hijerarhije klasa za povezivanje objekata i klasa.
+
+137. Навести бар пет структурних образаца за пројектовање.
+
+**Odgovor**::
+
+* Composite
+* Decorater
+* Flyweight
+* Facade
+* Adapter
+* Bridge
+* Proxy
+
+138. Објаснити намену образаца понашања.
+
+**Odgovor**: Osnovni cilj obrazaca ponasanje je da olaksaju komunikaciju
+izmedju objekata. 
+
+139. Навести бар седам образаца понашања.
+
+**Odgovor**: 
+
+* Visitor
+* Mediator
+* Observer
+* Template Method
+* Strategy
+* State
+* Iterator
+* Chain of Responsibility
+* Command
+* Memonto
+
+140. Објаснити када се и како примењује образац Производни метод (Factory Method).
+
+**Odgovor**: Pruza interfejs za pravljenje odredjenog objekta, ali prepusta
+podklasi da odluci kada ce i kako napraviti taj objekat.
+ 
+141. Скицирати дијаграм класа обрасца за пројектовање Производни метод (Factory Method).
+
+**Odgovor**:
+
+```
+<<interface>>           Creator
+   Product         + factoryMethod()
+      ^            + operation()
+      |                    ^
+      |                    |
+   AProduct <---------- ACreator
+                   + factoryMetgod
+
+```
+
+142. Објаснити када се и како примењује образац Стратегија.
+
+**Odgovor**: Definise okviran postupak nekog algoritma. Dok konkretni
+koraci se prepustaju se konkretnim instancama
+
+143. Скицирати дијаграм класа обрасца за пројектовање Стратегија.
+
+**Odgovor**:
+
+```
+               <<interface>>
+Context <>------ Strategy
+                 +execute()
+                  ^      ^
+                  |      |
+           StrategyA   StrategyB
+           +execute()  +execute()
+```
+144. Објаснити када се и како примењује образац Декоратер.
+
+**Odgovor**: Omogucavaju da se odredjene osobine i ponasanja definisu van
+klase, tako da se odredjena komponenta dekorise njima. Smanjuju 
+kombinatornu eksploziju u hijerarhiji.
+
+145. Скицирати дијаграм класа обрасца за пројектовање Декоратер.
+
+**Odgovor**:
+
+```
+<<interface>>
+  Component   <----- AComponent
+ +operation()   |   +operation()
+      |         |
+      |         ---  Decorator
+      -----------<> +operation()
+                        ^
+                        |
+                    ADecorator
+                    -State
+                    +operation()
+                    +behavior()
+```
+
+146. Објаснити када се и како примењује образац Сложени објекат (Састав, Composite).
+
+**Odgovor**: Povezuje vise objekata iste hijerarhije u jedan slozeni objekat.
+Vodi racuna u njihovom pravljenju i brisanju.
+
+147. Скицирати дијаграм класа обрасца за пројектовање Сложени објекат (Састав, Composite).
+
+**Odgovor**:
+
+```
+    <<interface>>
+      Component
+    +operation()
+    +add(c : Composite)    ---
+    +remove(c : Composite)   |
+    +get(i : int)            |
+     ^        ^              ^
+     |        |              v
+    Leaf      |       Composite
++operation()  |     +operation()
+              ----- +add(c : Composite)
+                    +remove(c : Composite)
+                    +get(i : int)
+```
+
+148. Објаснити када се и како примењује образац Уникат (Singleton).
+
+**Odgovor**: Koristi se kada hocemo da imamo samo jedan jedini primerak 
+neke klase.
+
+149. Скицирати дијаграм класа обрасца за пројектовање Уникат (Singleton).
+
+**Odgovor**:
+
+```
+        Singleton
+    -static instance
+    -data
+    +static getInstance()
+    +operation()
+```
+
+150. Објаснити када се и како примењује образац Посетилац (Visitor).
+
+**Odgovor**: Razdvaja operacije nad nekim elementima od same implementacije
+tih elemenata.
+
+151. Скицирати дијаграм класа обрасца за пројектовање Посетилац (Visitor).
+
+**Odgovor**:
+
+```
+          <<interface>>                     <<interface>>
+            IVisitior                         IElement
+    +visitElementA(a : ElementA)          +accept(v : Visitor)
+    +visitElementB(b : ElementB)            ^               ^
+                ^                           |               |
+                |                      ElementA         ElementB
+            Visitior              +accept(v : Visitor) +accept(v : Visitor)
+    +visitElementA(a : ElementA)
+    +visitElementB(b : ElementB)
+
+```
+
+
+152. Објаснити када се и како примењује образац Посматрач (Observer).
+
+**Odgovor**: Posmatrac se primenjuje kada hocemo da pozovemo odgovarajuce
+objekte koji posmatraju na neki dogadjaj posmatranog objekta. 
+
+153. Скицирати дијаграм класа обрасца за пројектовање Посматрач (Observer).
+
+**Odgovor**:
+```
+      <<interface>>               <<interface>>
+        ISubject          notify   IObserver
+    +attach(o : Observer) -------> +update()
+    +detach(o : Observer)              ^
+    +notify()                          |
+            ^                          | 
+            |        observe        Observer
+        Subject <------------------ -state
+        -state                      +update()
+```
+
+154. Објаснити када се и како примењује образац Апстрактна фабрика (Abstract Factory).
+
+**Odgovor**: Primenjuje sa kada je potrebno napraviti familiju nekih objekata
+u zavisnosti od platforme na kojoj se koristi program.
+
+155. Скицирати дијаграм класа обрасца за пројектовање Апстрактна фабрика (Abstract Factory).
+
+**Odgovor**:
+```
+      <<interface>>               <<interface>>
+    IAbstractFactory                IProduct
+    +createProductA()                  ^
+    +createProductB()                  | 
+            ^                          |
+            |                          |
+    AbstractFactory                 Product
+    +createProductA()
+    +createProductB()
+
+```
