@@ -1,0 +1,7 @@
+ring r = 0, (tx, ty, bx, cx, cy), lp;
+poly f = cy * ((bx + cx)/2 - tx) / 2 - (cy/2 - ty) * (bx + cx) / 2;
+poly g = - cy * (bx/2 - tx) + ty * (bx/2 - cx);
+ideal I = f, g;
+ideal G = groebner(I);
+poly h = cy * (cx/2 - tx) / 2 - (cy/2 - ty) * (cx/2 - bx);
+reduce(h, G);

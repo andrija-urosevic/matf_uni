@@ -1,0 +1,6 @@
+ring r = 0, (x, y), lp;
+poly f = x2 + xy + 2x3;
+poly f1 = xy - x3;
+poly f2 = x + y2;
+ideal I = f1, f2;
+reduce(f, I);

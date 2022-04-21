@@ -1,0 +1,15 @@
+ring r1 = 0, (x, y, z), lp;
+poly f = 2x2y8 - 3x5yz4 + xyz3 - xy4;
+f;
+leadexp(f);
+leadcoef(f);
+leadmonom(f);
+lead(f);
+
+ring r2 = 0, (x, y, z), dp;
+poly g = 2x2y8 - 35yz4 + xyz3 - xy4;
+g;
+leadexp(g);
+leadcoef(g);
+leadmonom(g);
+lead(g);

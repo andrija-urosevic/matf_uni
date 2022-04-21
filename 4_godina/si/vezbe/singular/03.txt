@@ -1,0 +1,4 @@
+ring r = 0, (x, y, z), lp;
+poly f = x2 + 7x + 6;
+poly g = x2 - 5x - 6;
+gcd(f, g);

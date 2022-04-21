@@ -1,0 +1,7 @@
+ring A = 0, (x, y, z), Dp;
+poly f = 2x4 - 4x2y3 + 5x2y2z - 4z4;
+f;
+leadexp(f);
+leadcoef(f);
+leadmonom(f);
+lead(f);

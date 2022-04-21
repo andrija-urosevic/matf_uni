@@ -1,0 +1,16 @@
+ring A1 = 0, (x, y, z), lp;
+poly f = 4xy2z + 4z2 - 5x3 + 7x2z2;
+f;
+
+ring A2 = 0, (x, y, z), Dp;
+poly g = 4xy2z + 4z2 - 5x3 + 7x2z2;
+g;
+
+ring A3 = 0, (x, y, z), dp;
+poly h = 4xy2z + 4z2 - 5x3 + 7x2z2;
+h;
+
+ring A4 = 0, (x, y, z), Wp(5, 3, 2);
+poly u = 4xy2z + 4z2 - 5x3 + 7x2z2;
+u;
+
