@@ -1,0 +1,43 @@
+Ranik(*id, ime, prezime, telefon, adresa)
+
+Autobus(*reg_broj, tip, godina_nabavke, aktivan)
+
+Linija(*sifra, polazna_stanica, krajnja_stanica, trajanje_voznje)
+
+ServisnaUsluga(*id, naziv, koliko, kolicina_rez_delova)
+
+RezervniDeo(*id, naziv, jedinica_mere, trenutne_zalihe, minimalne_zalihe)
+
+Autemehanicar(*^id_radnika, strucna_sprema)
+    Autemehanicar[id_radnika] < Ranik[id]
+
+Vozac(*^id_radnika, kategorija_dozvole, zdravstveno_stanje)
+    Vozac[id_radnika] < Ranik[id]
+
+Saobracava(*^reg_broj_autobusa, ^sifra_linije, datum_rasporedjivanja)
+    Saobracava[reg_broj_autobusa] < Autobus[reg_broj]
+    Saobracava[sifra_linije] < Linija[sifra]
+
+Rasporedjen(*^id_vozaca, ^reg_broj_autobusa, datum_rasporedjivanja)
+    Rasporedjen[id_vozaca] < Vozac[id_radnika]
+    Rasporedjen[reg_broj_autobusa] < Autobus[reg_broj]
+
+Izvrsenje(^*id_sevisa, *^reg_broj_autobusa, datum)
+    Izvrsenje[id_sevisa] < ServisnaUsluga[id]
+    Izvrsenje[reg_broj_autobusa] < Autobus[reg_broj]
+
+Potreban(*^id_dela, *^id_sevisa, kolicina)
+    Potreban[id_dela] < RezervniDeo[id]
+    Potreban[id_sevisa] < ServisnaUsluga[id]
+
+Zamena(*^id_prvi, *^id_drugi, uslov)
+    Zamena[id_prvi] < RezervniDeo[id]
+    Zamena[id_drugi] < RezervniDeo[id]
+
+Potrosen(*^id_dela, *^id_sevisa, *^reg_broj_autobusa, kolicina)
+    Potrosen[id_dela] < Potreban[id_dela]
+    Potrosen[id_sevisa] < Potreban[id_sevisa]
+    Potreban[id_sevisa] < Izvrsenje[id_sevisa]
+    Potrosen[reg_broj_autobusa] < Izvrsenje[reg_broj_autobusa]
+
+

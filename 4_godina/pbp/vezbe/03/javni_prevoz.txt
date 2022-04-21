@@ -1,0 +1,44 @@
+K1 --- Nezavisni entiteti.
+
+Zaposleni(JMBG*, ime, prezime, adresa, telefon)
+Autobus(reg_broj*, tip, aktivan, godina_nabavke)
+Linija(sifra*, polazna_stanica, krajnja_stanica, trajanje)
+ServisnaUsluga(sifra*, naziv, koliko_puta)
+RezervniDeo(sifra*, naziv, jedinica_mere, trenutne_zalihe, min_dozvoljene_zalihe)
+
+K2 --- Zavisni entiteti i specijalizacije.
+
+Vozac(JMBG^*, kat_voz_doz, zdrav_stanje)
+Vozac[JMBG] < Zaposleni[JMBG]
+
+Automehanicar(JMBG^*, strucna_sprema)
+Automehanicar[JMBG] < Zaposleni[JMBG]
+
+K3 --- Relacije.
+
+Rasporedjen(JMBG_vozaca^*, reg_broj_autobusa^)
+Rasporedjen[JMBG_vozaca] < Vozac[JMBG]
+Rasporedjen[reg_broj_autobusa] < Autobus[reg_broj]
+
+Saobraca(reg_broj_autobusa^*, sifra_linije^)
+Saobraca[reg_broj_autobusa] < Autobus[reg_broj]
+Saobraca[sifra_linije] < Linija[sifra]
+
+Izvrsava(reg_broj_autobusa^*, sifra_usluge^*, JMBG_automehanicara^, datum)
+Izvrsava(reg_broj_autobusa) < Autobus(reg_broj)
+Izvrsava(sifra_usluge) < ServisnaUsluga(sifra)
+Izvrsava[JMBG_automehanicara] < Automehanicar[JMBG]
+
+Potrebni(sifra_usluge^*, sifra_rez_dela^*, kolicina)
+Potrebni[sifra_usluge] < ServisnaUsluga[sifra]
+Potrebni[sifra_rez_dela] < RezervniDeo[sifra]
+
+Zamena(sifra_rez_dela_1^*, sifra_rez_dela_2^*)
+Zamena[sifra_rez_dela_1] < RezervniDeo[sifra]
+Zamena[sifra_rez_dela_2] < RezervniDeo[sifra]
+
+Koriscen(reg_broj_autobusa^*, sifra_usluge^*, sifra_rez_dela^*, kolicina)
+Koriscen[reg_broj_autobusa, sifra_usluge] < Izvrsava[reg_broj_autobusa, sifra_usluge]
+Koriscen[sifra_usluge, sifra_rez_dela] < Potrebni[sifra_usluge, sifra_rez_dela]
+
+

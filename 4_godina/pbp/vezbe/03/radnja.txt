@@ -1,0 +1,41 @@
+K1 - Nezavisni entiteti
+
+Zaposleni(JMBG*, ime, prezime, telefon, adresa, naziv, datum)
+
+Kupac(sifra*, JMBG_prodavca^, naziv, adresa, telefon)
+    Kupac[JMBG_prodavca] < Prodavac[JMBG]
+
+Narudzbenica(sifra*, sifra_kupca^, datum, status)
+    Narudzbenica[sifra_kupca] < Kupac[sifra]
+
+Faktura(ID*, rok_uplate, ukupan_iznos)
+
+Uplatnica(ID*, ID_fakture^, datum, nacin_placanja)
+    Uplatnica[ID_fakture] < Faktura[ID]
+
+Dobavljac(sifra*, naziv, adresa, telefon)
+
+Artikal(sifra*, naziv, rabat, jedinica_mere, cena, min_zalihe, trenutne_zalihe)
+
+K2 - Zavisni entiteti i specijalizacije.
+
+Prodavac(JMBG^*, provizija)
+    Prodava[JMBG] < Zavisni[JMBG]
+
+Otpremnica(sifra_narudzbenice^*, ID_fakture^, JMBG_zaposlenog^, datum)
+    Otpremnica[sifra_narudzbenice] < Narudzbenica[sifra]
+    Otpremnica[ID_fakture] < Faktura[ID]
+    Otpremnica[JMBG_zaposlenog] < Zavisni[JMBG]
+
+Nabavka(sifra_dobavljaca^*, datum, iznos)
+    Nabavka[sifra_dobavljaca] < Dobavljac[sifra]
+
+K3 - Relacije.
+
+Dobavlja(sifra_dobavljaca^*, sifra_artikla^*)
+    Dobavlja[sifra_dobavljaca] < Dobavljac[sifra]
+    Dobavljac[sifra_artikla] < Artikal[sifra]
+
+Sadrzi(sifra_narudzbenice^*, sifra_artikla^*, cena, kolicina)
+    Sadrzi[sifra_narudzbenice] < Narudzbenica[sifra]
+    Sadrzi[sifra_artikla] < Artikal[sifra]

@@ -1,0 +1,38 @@
+Radnik(*JMBG, ime, prezime, staz, struka)
+
+Izdavac(*maticni_broj, naziv, adresa, telefon, fax)
+
+Distributer(*id, naziv, telefon)
+
+Publikacija(*ISBN, naziv, tiraz, jezik)
+
+Kolumna(*id, naziv, ^id_autora)
+    Kolumna[id_autora] < Autor[id]
+
+Autor(*id, ime, prezime, telefon, email)
+
+DnevnaNovina(*^ISBN, izdanje)
+    DnevnaNovina[ISBN] < Publikacija[ISBN]
+
+Nedeljnik(*^ISBN)
+    Nedeljnik[ISBN] < Publikacija[ISBN]
+
+PeriodnicnoIzdanje(*^ISBN, tema)
+    PeriodnicnoIzdanje[ISBN] < Publikacija[ISBN]
+
+Radi(*^JMBG_radnika, ^maticni_broj_izdavaca)
+    Radi[JMBG_radnika] < Radnik[JMBG]
+    Radnik[maticni_broj_izdavaca] < Izdavac[maticni_broj]
+
+Vozi(*^JMBG_radnika, ^id_distributera)
+    Vozi[JMBG_radnika] < Radnik[JMBG]
+    Vozi[id_distributera] < Distributer[id]
+
+Objavio(*^maticni_broj_izdavaca, *^ISBN_publikacije)
+    Objavio[maticni_broj_izdavaca] < Izdavac(maticni_broj)
+    Objavio[ISBN_publikacije] < Publikacija[ISBN]
+
+Sadrzi(^ISBN_nedeljnika, *^id_kolumne)
+    Sadrzi[ISBN_nedeljnika] < Nedeljnik[ISBN]
+    Sadrzi[id_kolumne] < Kolumna[id]
+
