@@ -1,0 +1,56 @@
+theory Formule
+  imports Main
+
+begin
+
+term "length x"
+term "3"
+term "3::nat"
+term "a \<union> b"
+term "f x"
+
+term "A \<and> B"
+term "P x \<and> Q x"
+term "(\<and>)"
+
+lemma "A \<and> A \<longrightarrow> A \<and> A"
+  by auto
+
+lemma "A \<and> B \<longrightarrow> B \<and> A"
+  by auto
+
+lemma "A \<longrightarrow> A \<or> B \<or> C \<or> D"
+  by auto
+
+lemma "A \<longrightarrow> A"
+  by auto
+
+lemma "((\<forall>x. Laze x \<longrightarrow> Krade x) \<and> (\<exists>x. Laze x)) \<longrightarrow> (\<exists>x. Krade x)"
+  by auto
+
+lemma 
+"
+(
+(\<forall>x. Radi x \<longrightarrow> Ima x \<or> Trosi x) \<and> 
+(\<forall>x. Ima x \<longrightarrow> Peva x) \<and> 
+(\<forall>x. Trosi x \<longrightarrow> Peva x)
+) 
+\<longrightarrow>
+(\<forall>x. Radi x \<longrightarrow> Peva x)
+"
+  by auto
+
+lemma 
+"
+(\<forall>X.\<forall>Y. Prijatelj X Y \<longrightarrow> Prijatelj Y X)
+\<and>
+(\<forall>X.\<forall>Y. Prijatelj X Y \<longrightarrow> Voli X Y)
+\<and>
+(\<not>(\<exists>X.\<exists>Y. Voli X Y \<and> Povredio X Y))
+\<and>
+(\<exists>X.\<exists>Y. Povredio Y X \<and> Prijatelj Y X)
+\<longrightarrow> False
+"
+  by auto
+
+end

@@ -1,0 +1,31 @@
+theory MathLogic
+  imports Main
+
+begin
+
+lemma 
+  assumes "\<exists> x. P x"
+  assumes "\<forall> x. P x \<longrightarrow> Q x"
+  shows "\<exists> x. Q x"
+proof -
+  from \<open>\<exists> x. P x\<close> obtain x where 1:"P x" by (erule exE)
+  from \<open>\<forall> x. P x \<longrightarrow> Q x\<close> have 2:"P x \<longrightarrow> Q x" by (erule_tac x="x" in allE)
+  from 1 2 have "Q x" by simp
+  then show "\<exists> x. Q x" by (rule_tac x="x" in exI)
+qed
+
+lemma 
+  assumes "\<forall> c. covek c \<longrightarrow> smrtan c"
+  assumes "\<forall> g. grk g \<longrightarrow> covek g"
+  shows "\<forall> a. grk a \<longrightarrow> smrtan a"
+proof
+  fix Jorgos
+  show "grk Jorgos \<longrightarrow> smrtan Jorgos"
+  proof
+    assume "grk Jorgos"
+    show "smrtan Jorgos"
+  qed
+qed
+  
+
+end
