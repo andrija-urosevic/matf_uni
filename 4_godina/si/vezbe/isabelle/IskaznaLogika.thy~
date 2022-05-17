@@ -1,0 +1,29 @@
+theory IskaznaLogika
+  imports Main
+
+begin
+
+datatype prop_form = 
+    TOP
+  | BOT
+  | VAR nat
+  | AND prop_form prop_form (infixl "AND" 104)
+  | OR prop_form prop_form (infixl "OR" 103)
+  | IMP prop_form prop_form (infixl "IMP" 102)
+  | EQ prop_form prop_form (infixl "EQ" 101)
+
+term "TOP AND BOT EQ TOP"
+
+type_synonym valuation = "nat \<Rightarrow> bool"
+
+primrec Iv :: "valuation \<Rightarrow> prop_form \<Rightarrow> bool"
+  where
+    "Iv v TOP = True"
+  | "Iv v BOT = False"
+  | "Iv v (VAR x) = v x"
+  | "Iv v (NOT f) = (\<not> (Iv v f))"
+  | "Iv v ((VAR x) AND (VAR y)) = True"
+
+
+
+end

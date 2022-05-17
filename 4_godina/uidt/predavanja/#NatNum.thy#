@@ -1,0 +1,173 @@
+theory NatNum
+  imports Main
+
+begin
+
+(* 1 + 2 + 3 + ... + n = n * (n + 1) div 2 *)
+lemma "sum_list [0..<n+1] = n * (n + 1) div 2"
+  by (induction n) auto
+
+value "sum_list [0..<4]"
+
+(*
+0   0
+1   1
+2   3
+3   6
+
+.
+..
+...
+....
+*)
+
+primrec trougaoni :: "nat \<Rightarrow> nat" 
+  where
+    "trougaoni 0 = 0"
+  | "trougaoni (Suc n) = trougaoni n + Suc n"
+
+value "trougaoni 3"
+
+lemma "trougaoni n = n * (n + 1) div 2"
+  by (induction n) auto
+
+primrec fact :: "nat \<Rightarrow> nat"
+  where
+    "fact 0 = 1"
+  | "fact (Suc n) = fact n * Suc n"
+
+value "fact 5"
+
+datatype prirodni = nula ("\<zero>")
+                  | Sled prirodni
+
+abbreviation jedan :: "prirodni"
+  where
+    "jedan \<equiv> Sled \<zero>"
+
+abbreviation dva :: "prirodni"
+  where
+    "dva \<equiv> Sled jedan"
+
+
+term "Sled (jedan)"
+
+primrec saberi :: "prirodni \<Rightarrow> prirodni \<Rightarrow> prirodni" (infixl "\<oplus>" 100)
+  where
+    "\<zero> \<oplus> b = b"
+  | "(Sled a) \<oplus> b = Sled (a \<oplus> b)"
+
+value "saberi jedan jedan"
+
+lemma saberi_asoc:
+  shows "a \<oplus> (b \<oplus> c) = (a \<oplus> b) \<oplus> c"
+  by (induction a) auto
+
+lemma saberi_nula_desno [simp]:
+  shows "a \<oplus> \<zero> = a"
+  by (induction a) auto
+
+lemma saberi_Sled_desno [simp]:
+  shows "a \<oplus> Sled b = Sled (a \<oplus> b)"
+  by (induction a) auto
+
+lemma saberi_kom:
+  shows "a \<oplus> b = b \<oplus> a"
+proof (induction a)
+  case nula
+  have "\<zero> \<oplus> b = b"
+    by (rule saberi.simps(1))
+  also have "b = b \<oplus> \<zero>"
+    by (rule saberi_nula_desno[symmetric])
+  finally show ?case .
+next
+  case (Sled a)
+  have "Sled a \<oplus> b = Sled (a \<oplus> b)"
+    by (rule saberi.simps(2))
+  also have "... = Sled (b \<oplus> a)"
+    by (subst Sled, rule refl)
+  also have "... = b \<oplus> Sled a"
+    by (rule saberi_Sled_desno[symmetric])
+  finally show ?case .
+qed
+
+primrec pomnozi :: "prirodni \<Rightarrow> prirodni \<Rightarrow> prirodni" (infixl "\<otimes>" 101)
+  where
+    "\<zero> \<otimes> b = \<zero>"
+  | "(Sled a) \<otimes> b = a \<otimes> b \<oplus> b"
+
+value "pomnozi dva (Sled dva)"
+
+lemma pomnozi_nula_desno[simp]:
+  shows "a \<otimes> \<zero> = \<zero>"
+  by (induction a) auto
+
+lemma pomnozi_Sled_desno[simp]:
+  shows "a \<otimes> Sled b = a \<oplus> a \<otimes> b"
+  by (induction a) (auto simp add: saberi_asoc)
+
+lemma pomnozi_kom:
+  shows "a \<otimes> b = b \<otimes> a"
+  by (induction a) (auto simp add: saberi_kom)
+
+lemma pomnozi_saberi_distrib_desno:
+  shows "(a \<oplus> b) \<otimes> c = a \<otimes> c \<oplus> b \<otimes> c"
+  by (induction a) (auto simp add: pomnozi_kom saberi_asoc)
+
+lemma pomnozi_asoc:
+  shows "(a \<otimes> b) \<otimes> c = a \<otimes> (b \<otimes> c)"
+  by (induction a) (auto simp add: pomnozi_saberi_distrib_desno)
+
+primrec stepenuj :: "prirodni \<Rightarrow> prirodni \<Rightarrow> prirodni" (infixl "\<triangle>" 102)
+  where
+    "a \<triangle> \<zero> = jedan"
+  | "a \<triangle> (Sled b) = a \<triangle> b \<otimes> a"
+
+value "stepenuj dva (Sled dva)"
+
+lemma 
+  shows "a \<triangle> jedan = a"
+  by auto
+
+lemma stepenuj_jedan:
+  shows "jedan \<triangle> a = jedan"
+  by (induction a) auto
+
+lemma stepenuj_na_zbir:
+  shows "a \<triangle> (b \<oplus> c) = a \<triangle> b \<otimes> a \<triangle> c"
+proof (induction b)
+  case nula
+  then show ?case
+    by simp
+next
+  case (Sled b)
+  then show ?case 
+    using pomnozi_asoc pomnozi_kom 
+    by auto
+qed
+
+lemma stepenuj_proizvod:
+  shows "(a \<otimes> b) \<triangle> c = a \<triangle> c \<otimes> b \<triangle> c"
+proof (induction c)
+  case nula
+  then show ?case 
+    by simp
+next
+  case (Sled c)
+  then show ?case 
+    by (metis pomnozi_asoc pomnozi_kom stepenuj.simps(2))
+qed
+
+lemma stepenuj_na_proizvod:
+  shows "a \<triangle> (b \<otimes> c) = (a \<triangle> b) \<triangle> c"
+proof (induction b)
+  case nula
+  then show ?case 
+    by (auto simp add: stepenuj_jedan)
+next
+  case (Sled b)
+  then show ?case 
+    by (auto simp add: stepenuj_na_zbir stepenuj_proizvod)
+qed
+
+end
