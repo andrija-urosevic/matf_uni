@@ -1,0 +1,111 @@
+theory Indukcija
+  imports Main
+
+
+begin
+
+(*
+1. 
+0 + 1 + 2 + 3 + ... + (n - 1) = n * (n - 1) / 2 
+
+n   s
+0 : 0
+1 : 0
+2 : 1
+3 : 3
+4 : 6
+
+*)
+
+primrec trougaoni :: "nat \<Rightarrow> nat"
+  where
+  "trougaoni 0 = 0"
+| "trougaoni (Suc n) = (Suc n) + trougaoni n"
+
+value "trougaoni 3"
+
+lemma "trougaoni n = n * (n + 1) div 2"
+proof (induction n)
+  case 0
+  then show ?case by simp
+next
+  case (Suc n)
+  have "trougaoni (Suc n) = (Suc n) + trougaoni n" by simp
+  also have "... = (Suc n) + n * (n + 1) div 2" using Suc by simp
+  also have "... = n + 1 + n * (n + 1) div 2" by simp
+  also have "... = 2 * (n + 1) div 2 + n * (n + 1) div 2" by simp
+  also have "... = (2 + n) * (n + 1) div 2" by simp
+  also have "... = (1 + Suc n) * (Suc n) div 2" by simp 
+  also have "... = Suc n * (Suc n + 1) div 2" by simp
+  finally show ?case by simp
+qed
+
+(*
+2.
+
+1 + 3 + 5 + . . . + (2 \<^emph> n − 1) = n \<^emph> n 
+1   2   3                n
+
+2*(n+1) - 1 = 2*n + 1
+*)
+
+primrec zbir_neparnih :: "nat \<Rightarrow> nat"
+  where
+    "zbir_neparnih 0 = 0"
+  | "zbir_neparnih (Suc n) = 2*n + 1 + zbir_neparnih n"
+
+lemma "zbir_neparnih n = n * n"
+proof (induction n)
+  case 0
+  then show ?case
+    by (simp only: zbir_neparnih.simps(1))
+next
+  case (Suc n)
+  then show ?case
+  proof -
+    have "zbir_neparnih (Suc n) = 2*n + 1 + zbir_neparnih n"
+      by (simp only: zbir_neparnih.simps(2))
+    also have "... = 2*n + 1 + n*n" by (simp only: Suc)
+    also have "... = (n + 2) * n + 1" by simp
+    also have "... = (n + 1 + 1) * n + 1" by simp
+    also have "... = (n + 1)*n + n + 1" by simp
+    also have "... = (n + 1)*(n + 1)" by simp
+    finally show ?thesis by simp
+  qed
+qed
+
+(*
+3.
+-1+3-5+. . .+(-1)^n\<^emph>(2\<^emph>n-1) = (-1)^n\<^emph>n
+ 1 2 3            n        
+*)
+
+primrec alternirajuci :: "nat \<Rightarrow> int"
+  where
+    "alternirajuci 0 = 0"
+  | "alternirajuci (Suc n) = (-1)^(Suc n)*((2*(int(Suc n)) - 1)) + alternirajuci n"
+
+lemma "alternirajuci n = (-1)^n * int(n)"
+proof (induction n)
+  case 0
+  then show ?case
+    by (simp only: alternirajuci.simps(1))
+next
+  case (Suc n)
+  then show ?case 
+  proof -
+    have "alternirajuci (Suc n) = (-1)^(Suc n)*((2*(int(Suc n)) - 1)) + alternirajuci n" 
+      by (simp only: alternirajuci.simps(2))
+    also have "... = (-1)^(Suc n)*(2*(int(Suc n)) - 1) + (-1) ^ n * int n"
+      using Suc by simp
+    also have "... = (-1)^(n + 1) * int (2 * n + 1) + (-1)^n * int n" by simp
+    also have "... = (-1)^(n + 1) * int (2 * n + 1) + (-1)^(n + 1) * (-1) * int n" by simp
+    also have "... = (-1)^(n + 1) * (int (2 * n + 1) + (-1) * (int n))"
+      by (simp add: distrib_left)
+    also have "... = (-1)^(n + 1) * int (n + 1)" by simp
+    finally show ?thesis by simp
+  qed
+qed
+
+
+end

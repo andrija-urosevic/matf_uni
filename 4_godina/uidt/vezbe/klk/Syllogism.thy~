@@ -1,0 +1,19 @@
+theory Syllogism
+  imports Main
+
+begin
+
+lemma 
+  assumes "k \<longleftrightarrow> (k \<longrightarrow> g)"
+  shows "g \<and> k"
+proof (cases k)
+  case True
+  with assms have "k \<longrightarrow> g" by simp
+  with 
+  then show ?thesis sorry
+next
+  case False
+  then show ?thesis sorry
+qed
+
+end

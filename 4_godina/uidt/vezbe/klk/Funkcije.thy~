@@ -1,0 +1,35 @@
+theory Funkcije
+  imports Main
+
+begin
+
+lemma "f ` (A \<union> B) = f ` A \<union> f ` B"
+proof
+  show "f ` (A \<union> B) \<subseteq> f ` A \<union> f ` B"
+  proof
+    fix y
+    assume "y \<in> f ` (A \<union> B)"
+    then have "\<exists> x. x \<in> A \<union> B \<and> f x = y" by auto
+    then obtain x where "x \<in> A \<union> B" "f x = y" by auto
+    then have "f x \<in> f ` (A \<union> B)" by auto
+    with \<open>f x = y\<close> show "y \<in> f ` A \<union> f ` B" by auto
+  qed
+next
+  show "f ` A \<union> f ` B \<subseteq> f ` (A \<union> B)"
+  proof
+    fix y
+    assume "y \<in> f ` A \<union> f ` B"
+    then have "y \<in> f ` A \<or> y \<in> f ` B" by simp
+    show "y \<in> f ` (A \<union> B)"
+    proof
+      assume "y \<in> f ` A"
+      then have "\<exists> x. x \<in> A \<and> f x = y" by auto
+      then obtain x where "x \<in> A" "f x = y" by auto
+      then have "x \<in> A \<union> B" by auto
+      then have "f x \<in> f ` (A \<union> B)" by auto
+      with \<open>f x = y\<close> show "y \<in> f `(A \<union> B)" by auto
+    qed
+  qed
+qed
+
+end
