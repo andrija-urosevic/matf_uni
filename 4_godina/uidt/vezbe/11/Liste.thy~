@@ -205,18 +205,88 @@ primrec iter_rev :: "'a list \<Rightarrow> 'a list \<Rightarrow> 'a list"
     "iter_rev [] acc = acc"
   | "iter_rev (x # xs) acc = iter_rev xs (x # acc)"
 
-lemma inter_append_rev:
-  shows "iter_rev xs [aa, a] = rev xs @ [aa, a]"
-  apply (induction xs)
-   apply auto
-
 lemma iter_rev_append:
   shows "iter_rev xs ys = rev xs @ ys"
   by (induction xs arbitrary: ys) auto 
 
 lemma iter_rev_rev:
   shows "iter_rev xs [] = rev xs"
-  apply (induction xs)
-  apply auto
+  by (induction xs) (auto simp add: iter_rev_append)
+
+term map
+value "map (\<lambda> x. x ^ 2) [1::nat, 2, 3, 4]"
+
+primrec preslikaj :: "('a \<Rightarrow> 'b) \<Rightarrow> 'a list \<Rightarrow> 'b list"
+  where
+    "preslikaj f [] = []"
+  | "preslikaj f (x # xs) = f x # preslikaj f xs"
+
+lemma preslikaj_map:
+  shows "preslikaj f xs = map f xs"
+  by (induction xs) auto
+
+primrec intersparse :: "'a \<Rightarrow> 'a list \<Rightarrow> 'a list"
+  where
+    "intersparse y [] = [y]"
+  | "intersparse y (x # xs) = x # y # intersparse y xs"
+
+value "intersparse (1::nat) (2 # 3 # 4 # [])"
+value "intersparse (1::nat) []"
+value "intersparse (1::nat) (2 # [])"
+
+lemma map_intersparse:
+  shows "map f (intersparse a xs) = intersparse (f a) (map f xs)"
+  by (induction xs) auto
+
+lemma map_intersparse_isar:
+  shows "map f (intersparse a xs) = intersparse (f a) (map f xs)"
+proof (induction xs)
+  case Nil
+  then show ?case by simp
+next
+  case (Cons x xs)
+  have "map f (intersparse a (x # xs)) = map f (x # a # intersparse a xs)" by simp
+  also have "... = f x # map f (a # intersparse a xs)" by simp
+  also have "... = f x # f a # map f (intersparse a xs)" by simp
+  also have "... = f x # f a # intersparse (f a) (map f xs)" using Cons by simp
+  also have "... = intersparse (f a) (map f (x # xs))" by simp
+  finally show ?case .
+qed
+
+primrec intersparse_inside :: "'a \<Rightarrow> 'a list \<Rightarrow> 'a list"
+  where
+    "intersparse_inside a [] = []"
+  | "intersparse_inside a (x # xs) = (if xs = [] then [x] else x # a # intersparse_inside a xs)"
+
+value "intersparse_inside (1::nat) (2 # 3 # 4 # 5 # [])"
+value "intersparse_inside (1::nat) []"
+value "intersparse_inside (1::nat) (2 # [])"
+
+lemma preslikaj_u_praznu:
+  shows "preslikaj x xs = [] \<longrightarrow> xs = []"
+  by (induction xs) auto
+
+lemma map_intersparse_inside:
+  shows "map f (intersparse_inside x xs) = intersparse_inside (f x) (preslikaj f xs)"
+  by (induction xs) (auto simp add: preslikaj_u_praznu)
+
+lemma map_intersparse_inside_isar:
+  shows "map f (intersparse_inside x xs) = intersparse_inside (f x) (preslikaj f xs)"
+proof (induction xs)
+  case Nil
+  then show ?case by simp
+next
+  case (Cons x1 xs)
+  show ?case
+  proof (cases "xs = []")
+    case True
+    then show ?thesis by simp
+  next
+    case False
+    have "map f (intersparse_inside x (x1 # xs)) = map f (x1 # x # intersparse_inside x xs)" by simp
+    then show ?thesis sorry
+  qed
+qed
+
 
 end

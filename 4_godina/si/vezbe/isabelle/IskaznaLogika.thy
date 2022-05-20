@@ -29,11 +29,25 @@ primrec Iv :: "valuation \<Rightarrow> prop_form \<Rightarrow> bool"
   | "Iv v (f1 EQ f2) = (Iv v f1 \<longleftrightarrow> Iv v f2)"
 
 lemma 
-  shows "Iv v (f1 AND f2) \<longleftrightarrow> (if Iv v f1 \<and> Iv v f2 then True else False)"
+  shows "Iv v (f1 AND f2) \<longleftrightarrow> (if Iv v f1 = True \<and> Iv v f2 = True then True else False)"
+  by auto
+lemma
+  shows "Iv v (f1 IMP f2) \<longleftrightarrow> (if Iv v f1 = False \<or> Iv v f2 = True then True else False)"
   by auto
 
 definition satisfies :: "valuation \<Rightarrow> prop_form \<Rightarrow> bool" (infix "|=" 50) where
   "satisfies v f \<longleftrightarrow> Iv v f = True"
+
+lemma satisfies [simp]:
+  "v |= TOP"
+  "\<not> (v |= BOT)"
+  "v |= VAR n \<longleftrightarrow> v n"
+  "v |= NOT f \<longleftrightarrow> \<not> v |= f"
+  "v |= f1 AND f2 \<longleftrightarrow> v |= f1 \<and> v |= f2"
+  "v |= f1 OR f2 \<longleftrightarrow> v |= f1 \<or> v |= f2"
+  "v |= f1 IMP f2 \<longleftrightarrow> v |= f1 \<longrightarrow> v |= f2"
+  "v |= f1 EQ f2 \<longleftrightarrow> (v |= f1 \<longleftrightarrow> v |= f2)"
+  by (auto simp add: satisfies_def)
 
 definition tautology :: "prop_form \<Rightarrow> bool" where
   "tautology f \<longleftrightarrow> (\<forall> v. v |= f)"
@@ -54,6 +68,16 @@ primrec vars :: "prop_form \<Rightarrow> nat set" where
 | "vars (f1 OR f2) = vars f1 \<union> vars f2"
 | "vars (f1 IMP f2) = vars f1 \<union> vars f2"
 | "vars (f1 EQ f2) = vars f1 \<union> vars f2"
+
+lemma finite_vars:
+  shows "finite (vars f)"
+  by (induction f) auto
+
+lemma relevant_vars:
+  assumes "\<forall> n \<in> vars f. v1 n = v2 n"
+  shows "Iv v1 f = Iv v2 f"
+  using assms
+  by (induction f) auto
 
 value "vars (VAR 1 AND VAR 2 EQ TOP)"
 
@@ -136,7 +160,8 @@ value "let p = VAR 0;
            f = (p AND q) IMP (p OR q)
        in subst 0 TOP f"
 
-lemma "vars (subst p f f') = (if p \<in> vars f' then vars f' - {p} \<union> vars f else vars f')"
+lemma vars_subst:
+  shows "vars (subst p f f') = (if p \<in> vars f' then vars f' - {p} \<union> vars f else vars f')"
   by (induction f') auto
 
 lemma subst_TOP:
@@ -157,6 +182,113 @@ lemma "satisfiable f \<longleftrightarrow> satisfiable (subst p TOP f) \<or> sat
   by (metis fun_upd_idem_iff fun_upd_upd)
 
 lemma "tautology f \<longleftrightarrow> tautology (subst p TOP f) \<and> tautology (subst p BOT f)"
+  using tautology_def
+  using subst_TOP subst_BOT
+  by (metis fun_upd_idem_iff fun_upd_upd)
+
+fun simplify_const_NOT :: "prop_form \<Rightarrow> prop_form"
+  where
+    "simplify_const_NOT (NOT f) = (if f = TOP then BOT else if f = BOT then TOP else NOT f)"
+  | "simplify_const_NOT f = f"
+
+lemma [simp]:
+  "simplify_const_NOT (NOT TOP) = BOT"
+  "simplify_const_NOT (NOT BOT) = TOP"
+  by auto
+
+lemma simplify_const_NOT [simp]:
+  shows "v |= (simplify_const_NOT f) \<longleftrightarrow> v |= f"
+  by (induction f rule: simplify_const_NOT.induct) auto
+
+lemma simplify_const_NOT_equiv:
+  shows "(simplify_const_NOT f) \<equiv>\<^sub>e f"
+  using equiv_def satisfies_def simplify_const_NOT 
+  by auto
+
+fun simplify_const_AND :: "prop_form \<Rightarrow> prop_form"
+  where
+    "simplify_const_AND (f1 AND f2) = 
+      (if f1 = TOP then f2
+       else if f2 = BOT then BOT
+       else if f2 = TOP then f1
+       else if f1 = BOT then BOT
+       else (f1 AND f2))"
+  | "simplify_const_AND f = f"
+
+fun simplify_const_OR :: "prop_form \<Rightarrow> prop_form"
+  where
+    "simplify_const_OR (f1 OR f2) =
+      (if f2 = TOP then TOP
+       else if f2 = BOT then f1
+       else if f1 = TOP then TOP
+       else if f1 = BOT then f2
+       else (f1 OR f2))"
+  | "simplify_const_OR f = f"
+
+fun simplify_const_IMP :: "prop_form \<Rightarrow> prop_form"
+  where
+    "simplify_const_IMP (f1 IMP f2) =
+      (if f1 = BOT then TOP
+       else if f1 = TOP then f2
+       else if f2 = TOP then TOP
+       else if f2 = BOT then simplify_const_NOT (NOT f1)
+       else (f1 IMP f2))"
+  | "simplify_const_IMP f = f"
+
+fun simplify_const_EQ :: "prop_form \<Rightarrow> prop_form"
+  where
+    "simplify_const_EQ (f1 EQ f2) =
+      (if f1 = TOP then f2
+       else if f2 = TOP then f1
+       else if f1 = BOT then simplify_const_NOT (NOT f2)
+       else if f2 = BOT then simplify_const_NOT (NOT f1)
+       else (f1 EQ f2))"
+  | "simplify_const_EQ f = f"
+
+primrec simplify_const :: "prop_form \<Rightarrow> prop_form"
+  where
+    "simplify_const TOP = TOP"
+  | "simplify_const BOT = BOT"
+  | "simplify_const (VAR n) = VAR n"
+  | "simplify_const (NOT f) = simplify_const_NOT (NOT (simplify_const f))"
+  | "simplify_const (f1 AND f2) = simplify_const_AND ((simplify_const f1) AND (simplify_const f2))"
+  | "simplify_const (f1 OR f2) = simplify_const_OR ((simplify_const f1) OR (simplify_const f2))"
+  | "simplify_const (f1 IMP f2) = simplify_const_IMP ((simplify_const f1) IMP (simplify_const f2))"
+  | "simplify_const (f1 EQ f2) = simplify_const_EQ ((simplify_const f1) EQ (simplify_const f2))"
+
+
+lemma simplify_const [simp]:
+  shows "v |= simplify_const f \<longleftrightarrow> v |= f"
   sorry
+
+lemma simplify_const_equiv:
+  shows "simplify_const f \<equiv>\<^sub>e f"
+  sorry
+
+lemma simplify_const_satisfiable [simp]:
+  shows "satisfiable (simplify_const f) \<longleftrightarrow> satisfiable f"
+  sorry
+
+lemma simplify_const_tautology [simp]:
+  shows "tautology (simplify_const f) \<longleftrightarrow> tautology f"
+  sorry
+
+lemma vars_simp_const [simp]:
+  shows "vars (simplify_const f) \<subseteq> vars f"
+  sorry
+
+lemma card_vars_simp_const [simp]:
+  shows "card (vars (simplify_const f)) \<le> card (vars f)"
+  by (simp add: card_mono finite_vars)
+
+lemma vars_simp_const_nonempty:
+  assumes "(simplify_const f) \<noteq> TOP" "(simplify_const f) \<noteq> BOT"
+  shows "vars (simplify_const f) \<noteq> {}"
+  using assms
+  apply (induction f)
+         apply auto
+     apply presburger+
+  done
+
 
 end
