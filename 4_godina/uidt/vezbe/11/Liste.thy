@@ -213,4 +213,169 @@ lemma iter_rev_rev:
   shows "iter_rev xs [] = rev xs"
   by (induction xs) (auto simp add: iter_rev_append)
 
+term map
+value "map (\<lambda> x. x ^ 2) [1::nat, 2, 3, 4]"
+
+primrec preslikaj :: "('a \<Rightarrow> 'b) \<Rightarrow> 'a list \<Rightarrow> 'b list"
+  where
+    "preslikaj f [] = []"
+  | "preslikaj f (x # xs) = f x # preslikaj f xs"
+
+lemma preslikaj_map:
+  shows "preslikaj f xs = map f xs"
+  by (induction xs) auto
+
+primrec intersparse :: "'a \<Rightarrow> 'a list \<Rightarrow> 'a list"
+  where
+    "intersparse y [] = [y]"
+  | "intersparse y (x # xs) = x # y # intersparse y xs"
+
+value "intersparse (1::nat) (2 # 3 # 4 # [])"
+value "intersparse (1::nat) []"
+value "intersparse (1::nat) (2 # [])"
+
+lemma map_intersparse:
+  shows "map f (intersparse a xs) = intersparse (f a) (map f xs)"
+  by (induction xs) auto
+
+lemma map_intersparse_isar:
+  shows "map f (intersparse a xs) = intersparse (f a) (map f xs)"
+proof (induction xs)
+  case Nil
+  then show ?case by simp
+next
+  case (Cons x xs)
+  have "map f (intersparse a (x # xs)) = map f (x # a # intersparse a xs)" by simp
+  also have "... = f x # map f (a # intersparse a xs)" by simp
+  also have "... = f x # f a # map f (intersparse a xs)" by simp
+  also have "... = f x # f a # intersparse (f a) (map f xs)" using Cons by simp
+  also have "... = intersparse (f a) (map f (x # xs))" by simp
+  finally show ?case .
+qed
+
+primrec intersparse_inside :: "'a \<Rightarrow> 'a list \<Rightarrow> 'a list"
+  where
+    "intersparse_inside a [] = []"
+  | "intersparse_inside a (x # xs) = (if xs = [] then [x] else x # a # intersparse_inside a xs)"
+
+value "intersparse_inside (1::nat) (2 # 3 # 4 # 5 # [])"
+value "intersparse_inside (1::nat) []"
+value "intersparse_inside (1::nat) (2 # [])"
+
+lemma preslikaj_u_praznu:
+  shows "preslikaj x xs = [] \<longrightarrow> xs = []"
+  by (induction xs) auto
+
+lemma map_intersparse_inside:
+  shows "map f (intersparse_inside x xs) = intersparse_inside (f x) (preslikaj f xs)"
+  by (induction xs) (auto simp add: preslikaj_u_praznu)
+
+lemma map_intersparse_inside_isar:
+  shows "map f (intersparse_inside x xs) = intersparse_inside (f x) (map f xs)"
+proof (induction xs)
+  case Nil
+  then show ?case by simp
+next
+  case (Cons a xs)
+  show ?case
+  proof (cases "xs = []")
+    case True
+    then show ?thesis by simp
+  next
+    case False
+    then have "map f (intersparse_inside x (a # xs)) = map f (a # x # intersparse_inside x xs)" by simp
+    also have "... = f a # (map f (x # intersparse_inside x xs))" by simp
+    also have "... = f a # f x # map f (intersparse_inside x xs)" by simp
+    also have "... = f a # f x # intersparse_inside (f x) (map f xs)" using Cons by simp
+    also have "... = intersparse_inside (f x) (f a # (map f xs))" using False by simp
+    also have "... = intersparse_inside (f x) (map f (a # xs))" by simp
+    finally show ?thesis .
+  qed
+qed
+
+term filter
+value "filter (\<lambda> x. x > 0) [-3::int, 4, 2, 0, -1, 2]"
+
+primrec izdvoj :: "('a \<Rightarrow> bool) \<Rightarrow> 'a list \<Rightarrow> 'a list" 
+  where
+    "izdvoj P [] = []"
+  | "izdvoj P (x # xs) = (if P x then x # izdvoj P xs else izdvoj P xs)"
+
+lemma izdvoj_filter:
+  shows "izdvoj P xs = filter P xs"
+  by (induction xs) auto
+
+lemma izdvoj_filter_isar:
+  shows "izdvoj P xs = filter P xs"
+proof (induction xs)
+  case Nil
+  then show ?case by simp
+next
+  case (Cons a xs)
+  then show ?case
+  proof (cases "P a")
+    case True
+    have "izdvoj P (a # xs) = a # izdvoj P xs" using True by simp
+    also have "... = a # filter P xs" using Cons by simp
+    also have "... = filter P (a # xs)" using True by simp
+    finally show ?thesis .
+  next
+    case False
+    have "izdvoj P (a # xs) = izdvoj P xs" using False by simp
+    also have "... = filter P xs" using Cons by simp
+    also have "... = filter P (a # xs)" using False by simp
+    finally show ?thesis .
+  qed
+qed
+
+definition delioci :: "nat \<Rightarrow> nat list"
+  where
+    "delioci n = filter (\<lambda> d. d dvd n) [1 ..< n + 1]"
+
+value "delioci 12345"
+
+lemma delioci_dvd:
+  assumes "n > 0"
+  shows "set (delioci n) = {d. d dvd n}"
+  unfolding delioci_def
+  using assms
+  using dvd_pos_nat[of n] dvd_imp_le[of n]
+  by force
+
+term fold
+value "fold (+) [1, 2, 3::nat] 0"
+
+term foldl
+value "foldl (+) 0 [1, 2, 3::nat]"
+
+term foldr
+value "fold (+) [1, 2, 3::nat] 0"
+
+primrec agregiraj :: "('a \<Rightarrow> 'b \<Rightarrow> 'b) \<Rightarrow> 'a list \<Rightarrow> 'b \<Rightarrow> 'b" 
+  where
+    "agregiraj f [] b = b"
+  | "agregiraj f (x # xs) b = agregiraj f xs (f x b)"
+
+lemma agregiraj_fold:
+  shows "agregiraj f xs b = fold f xs b"
+  by (induction xs arbitrary: b) auto
+
+primrec agregirajl :: "('a \<Rightarrow> 'b \<Rightarrow> 'a) \<Rightarrow> 'a \<Rightarrow> 'b list \<Rightarrow> 'a"
+  where
+    "agregirajl f a [] = a"
+  | "agregirajl f a (x # xs) = agregirajl f (f a x) xs"
+
+lemma agregirajl_foldl:
+  shows "agregirajl f a xs = foldl f a xs"
+  by (induction xs arbitrary: a) auto
+
+primrec agregirajr :: "('a \<Rightarrow> 'b \<Rightarrow> 'b) \<Rightarrow> 'a list \<Rightarrow> 'b \<Rightarrow> 'b"
+  where
+    "agregirajr f [] b = b"
+  | "agregirajr f (x # xs) b = f x (agregirajr f xs b)"
+
+lemma agregirajr_foldr:
+  shows "agregirajr f xs b = foldr f xs b"
+  by (induction xs) auto
+
 end
