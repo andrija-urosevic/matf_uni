@@ -236,7 +236,142 @@ $$ \min_x \|Ax - y\|^2 + \lambda(\sum_{i=1}^M \sum_{j=1}^{N-1}(x_{i,j} - x_{i,j+
 
 ## Furijeova transformacija
 
+- Trigonometrijski Furijeov red se zasniva na sistemu različitih frekvencija $\cos(kx)$ i $\sin(kx)$ za $k=0,1,\ldots$.
+- Furijeovi koeficijenti omogućavaju analizu signala u odnosu na frekvencije koje su u njemu zastupljene, odnosno *spektar signala*. ???
+- *Furijeova transformacije* prevodi reprezentaciju funkcije iz vremenskog domena u frekvencijski domen.
+  - *Inverzna Furijeova transformacija* radi obrnuto.
+  - Neke vrste Furijeovih transformacija: *razvoj u Furijeov red, neprekidna Furijeova transformacija* i *diskretna Furijeova transformacija*.
+- Neka je funkcija $f$ periodnična i integrabilna na intervalu $[a, b]$. Tada se može razviti u Furijeov red:
+$$f(t) = \frac{a_0}{2} + \sum_{k=1}^\infty\left(a_k \cos \left( \frac{2 \pi k t}{b - a}\right) + b_k \sin \left(\frac{2 \pi k t}{b - a}\right)\right),$$
+$$a_k = \frac{2}{b - a} \int_a^b f(t) \cos \left(\frac{2 \pi k t}{b - a}\right) dt, \quad k=0,1,2,\ldots$$
+$$b_k = \frac{2}{b - a} \int_a^b f(t) \sin \left(\frac{2 \pi k t}{b - a}\right) dt, \quad k=1,2,3,\ldots$$
+
+- *Primer*: $f(t) = 5\cos(2t) + 3\sin(8t)$ je periodična na intervalu $[0, \pi]$. Odatle svi Furijeovim koeficijenti su 0 sem $a_1 = 5$ i $b_4 = 3$.
+- Komleksna reprezentacije Furijeovog reda:
+$$f(t) = \sum_{k=-\infty}^\infty \hat{f}_k e^{\frac{-2 \pi i k t}{b - a}}$$
+$$\hat{f}_k = \frac{1}{b-a} \int_a^b f(t) e^{\frac{2 \pi i k t}{b - a}} dt$$
+- Odnos između realne i kompleksne reprezentacije su u tesnoj vezi:
+$$a_0 = 2 \hat{f}_0$$
+$$a_k = \hat{f}_k + \hat{f}_{-k}$$
+$$b_k = i \hat{f}_{-k} - \hat{f}_k$$
+- Za koeficijente važi $\overline{\hat{f}_k} = \hat{f}_{-k}$:
+$$\begin{aligned}
+\overline{\hat{f}_k} &= \overline{\frac{1}{b-a} \int_a^b f(t) e^{\frac{2 \pi i k t}{b - a}} dt}\\
+                     &= \frac{1}{b-a} \int_a^b \overline{f(t) e^{\frac{2 \pi i k t}{b - a}}} dt\\
+                     &= \frac{1}{b-a} \int_a^b f(t) e^{\frac{-2 \pi i k t}{b - a}} dt\\
+                     &= \hat{f}_k
+\end{aligned}$$
+- Promenljiva $t$ predstavlja vreme, dok Furijeovi koeficijenti $\hat{f}_k$ predstavljaju intenzitet odgovarajućih frekvencija u signalu. 
+  - U razvoju u Furijeov red vremenski domen je neprekidno, ali je frekvencijski domen diskretan, tj. periodična funkcija se može predstaviti preko beskonačno mnogo broja sinusa i kosinusa, ali sa diskretnim frekvencijama. 
+  - Ovaj problem se prevazilazi prelaskom sa reda na intergral (Furijeova transformacija i inverzna Furijeova transformacija):
+$$\hat{f}(u) = \int_{-\infty}^{+\infty} f(t) e^{2 \pi i u t} dt$$
+$$f(t) = \int_{-\infty}^{+\infty} \hat{f}(u) e^{-2 \pi i u t} du$$
+  - Mana ovih metoda je što je funkcija $f$ obično poznata samo na konačnom skupu tačaka.
+  - Neka su vrednosti funkcije $f_j = f(t_j)$, gde je $t_j = t_0 + jh$, za $j=0,1,\ldots,n-1$ i $h>0$. Tada:
+$$\hat{f}_k = \frac{1}{n}\sum_{j=0}^{n-1} f_j e^{\frac{k2 \pi i  j}{n}} \quad k=0,1,\ldots,n-1$$
+$$f_k = \frac{1}{n}\sum_{k=0}^{n-1} \hat{f}_k e^{-\frac{2 \pi i k j}{n}} \quad j=0,1,\ldots,n-1$$
+- *Primer* uklanjanje šuma: Signal $-$(FFT)$\rightarrow$ Frekvencije $-$(clamp)$\rightarrow$ Frekvencije (bez viskokih) $-$(IFFT)$\rightarrow$ Signal (bez šuma).
+- Furijeova transformacija u dve dimenzije:
+  - Nekprekidna:
+  $$\hat{f}(u,v) = \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} f(x,y) e^{2 \pi i (xu + yv)} dx dy$$
+  $$f(x,y) = \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} \hat{f}(u,v) e^{- 2 \pi i (xu + yv)} du dv$$
+  - Diskretna:
+  $$\hat{f}_{lm} = \frac{1}{PQ} \sum_{j=0}^{P-1} \sum_{k=0}^{Q-1} f_{jk} e^{2 \pi i \left(\frac{jl}{P} + \frac{km}{Q}\right)}$$
+  $$f_{jk} = \sum_{l=0}^{P-1} \sum_{m=0}^{Q-1} \hat{f}_{lm} e^{-2 \pi i \left(\frac{jl}{P} + \frac{km}{Q}\right)}$$
+- Koeficijenti Furijeove transformacije su, kao kompleksni brojevi, određeni modulom ili *amplitudom* i argumentom ili *fazom*.
+  - Amplituda predstavlja jačinu nekog signala.
+  - Faza predstavlja pomeraj frekvencije duž vremenske ose.
+- *Dirakova delta funkcija* i $f(x,y)=\delta(x,y)=\delta(x)\delta(y)$
+- *Odsecanje dela spektra*:
+    - Odsecanje viših frekvencija omogućava grub prikaz slike (uklanja ivice)
+    - Odsecanje nižih frekvencija omogućava prepoznavanje ivica (istače ivice)
+    - Uklanjanjem prepoznatljivih maksimuma uklanjaju se poreiodične strukture na slici.
+
+### Brza Furijeova transformacija
+
+- DFT (Diskretna Furijeova transformacija) ima složenost $\Theta(n^2)$.
+- FFT (Brza Furijeova transformacija) ima složenost $\Theta(n\log n)$.
+- Uvodimo $n$-ti koren jedinice $w = e^{\frac{2 \pi i}{n}}$, 
+  - Važi $w^n=1$:
+    $$w^n = e^{\frac{2 \pi i}{n}n} = e^{2 \pi i} = 1$$
+  - Važi $w^{k + \frac{n}{2}} = - w^k$:
+    $$w^{k + \frac{n}{2}} = e^{\frac{2 \pi i}{n}(k + \frac{n}{2})} = e^{\frac{2 \pi i k}{n} + \pi i} = e^{\pi i} e^{\frac{2\pi i k}{n}} = - w^k$$
+- Diskretna Furijeovra transformacija postaje:
+  $$\hat{f}_k = \frac{1}{n}\sum_{j=0}^{n-1}f_j w^{kj} \quad k=0,1,2,\ldots,n-1$$
+  - Važi $\hat{f}_{k + n} = \hat{f}_k$:
+  $$\hat{f}_{k + n} = \frac{1}{n}\sum_{j=0}^{n-1}f_j w^{(k+n)j} = \frac{1}{n}\sum_{j=0}^{n-1}f_j w^{kj} = \hat{f}_k$$
+  - Keoficijenti se mogu izračunati preko parnih i neparnih elementa:
+  $$\hat{f}_k = \frac{1}{n}\sum_{j=0}^{n-1}f_j w^{kj} = \frac{1}{n}\sum_{j=0}^{n/2-1}f_{2j} w^{2jk} + \frac{1}{n}\sum_{j=0}^{n/2-1}f_{2j+1} w^{(2j+1)k} = $$ 
+  $$ = \frac{1}{2}\frac{1}{n/2}\sum_{j=0}^{n/2-1}f_{2j} w^{2jk} + \frac{1}{2}w^k\frac{1}{n/2}\sum_{j=0}^{n/2-1}f_{2j+1} w^{(2j+1)k} = \frac{1}{2}(E_k + w^k O_k)$$
+  - Takođe, važi:
+  $$E_{k + n/2} = E_k$$
+  $$O_{k + n/2} = O_k$$
+  - Dobijamo:
+  $$\hat{f}_k = \begin{cases}\frac{1}{2}(E_k + w^k O_k) & 0 \leq k < \frac{n}{2} \\ \frac{1}{2}(E_{k - \frac{n}{2}} + w^k O_{k - \frac{n}{2}}) & \frac{n}{2} \leq k < n\end{cases}$$
+  - Konačno:
+  $$\hat{f}_k = \frac{1}{2}(E_k + w^k O_k)$$
+  $$\hat{f}_{k + \frac{n}{2}} = \frac{1}{2}(E_k - w^k O_k)$$
+- Algoritam FFT se može koristiti i kao algoritam za inverzni FFT, tako što se pre primene algoritma FFT, ulaz konjuguje, a nakon primene algoritma FFT, izlaz konjuguje.
+
+### Konvolucija
+
+- Da li postoji neka aritmetička veza između operacija nad signalima i nekih operacija nad njihovim Furijeovim transformacijama?
+  - Važi:
+  $$\begin{aligned}
+  \widehat{f + g}(u) &= \int_{-\infty}^{+\infty} (f + g)(t) e^{2 \pi i u t} dt \\
+                 &= \int_{-\infty}^{+\infty} (f(t) + g(t)) e^{2 \pi i u t} dt \\
+                 &= \int_{-\infty}^{+\infty} f(t) e^{2 \pi i u t} dt + \int_{-\infty}^{+\infty} f(t) e^{2 \pi i u t} dt \\
+                 &= \hat{f}(u) + \hat{g}(u)
+  \end{aligned}$$
+  - Takođe, 
+  $$\begin{aligned}
+  \hat{f}(u)\hat{g}(u) &= \int_{-\infty}^{+\infty} f(x) e^{2 \pi i u x} dx \int_{-\infty}^{+\infty} g(y) e^{2 \pi i u y} dy \\
+                       &= \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} f(x) g(y) e^{2 \pi i (x+y) u} dx dy \\
+                       &= \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} f(x) g(v - x) e^{2 \pi i v u} dx dv \\
+                       &= \int_{-\infty}^{+\infty} (\int_{-\infty}^{+\infty} f(x) g(v - x) dx) e^{2 \pi i v u} dv \\
+                       &= \int_{-\infty}^{+\infty} (f * g)(v) e^{2 \pi i v u} dv 
+  \end{aligned}$$
+  $$(f*g)(v) = \int_{-\infty}^{+\infty} f(x) g(v - x) dx$$
+  - Operacija $*$ se naziva operacijom *konvolucije*.
+
+**Teorema 5 (o konvoluciji)**:
+    $$\widehat{f * g} = \hat{f}\hat{g}$$
+    $$\widehat{f g} = \hat{f} * \hat{g}$$
+    $$f * g = g * f$$
+    $$(f * g) * h = f * (g * h)$$
+    $$f * (g + h) = f * g + f * h$$
+    $$f * \delta = f$$
+
+- Konvolucija u diskretnom smislu:
+$$(f*g)_i = \sum_{j=0}^{n-1}f_j g_{i-j} \quad i=0,1,\ldots,n-1$$
+- Konvolucija u dve dimenzije:
+$$(f*g)(u,v) = \int_{-\infty}^{+\infty} f(x,y)g(u-x, v-y) dx dy$$
+$$(f*g)_{i,j} = \sum_{k=0}^{m-1} \sum_{l=0}^{n-1} f_{k,l} g_{i-k,j-l}$$
+- Po definiciji konvolucija dva signala ima vremensku složenost $\Theta(n^2)$. Ali primenom FFT algoritma, konvoluciju možemo izračunati u $\Theta(n \log n)$ (zbog teoreme o konvoluciji $(\widehat{f*g}) = \hat{f}\hat{g}$).
+  - $f$ i $g$ $-$(FFT)$\rightarrow$ $\hat{f}$ i $\hat{g}$ $-$(množenje)$\rightarrow$ $\hat{f}\hat{g}$ $-$(teorema o konvoluciji)$\rightarrow$ $\widehat{f*g}$ $-$(IFFT)$\rightarrow$ $f*g$
+- *Primer*: Množenje polinoma je konvolucija
+$$f(x) = \sum_{i=1}^m f_i x^i \quad g(x)=\sum_{i=1}^n g_i x^i$$
+  - Proizvod je veličine $m + n + 1$, te ulazne podatke proširujemo $(f_1, f_2, \ldots, f_m, 0,\ldots,0)$ i $(g_1, g_2, \ldots, g_n, 0,\ldots,0)$.
+  - Množenje polinoma ima složenost $\Theta((n + m)\log (n + m))$.
+- Konvolucija se koristi tako što je jedna funkcija signal, a druga funkcija predstavlja neku jednostavnu funkciju kojom transformišemo signal. Tu funkciju zovemo *filter*.
+- Filter Gausovog zamućivanja.
+  - Gausovo zvono: $\frac{1}{2 \pi \sigma^2} e^{- \frac{x^2 + y^2}{2 \sigma^2}}$
+  - Uprošćeni filter zamućivanja:
+  $$\frac{1}{9}\begin{pmatrix}1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1\end{pmatrix}$$
+- Filteri za otkrivanje ivica:
+  - Sobel-Feildmonove vertikalne i horizontalne ivice:
+  $$G_x = \begin{pmatrix}1 & 0 & -1 \\ 2 & 0 & -2 \\ 1 & 0 & -1 \end{pmatrix} * A \quad G_y = \begin{pmatrix}1 & 2 & 1 \\ 0 & 0 & 0 \\ -1 & -2 & -1 \end{pmatrix} * A $$
+  - Aproksimacija intenziteta gradijenta je onda
+  $G = \sqrt{G_x^2 + G_y^2}$
+- Brzo pronalaženje uzorka slike $g$ u drugoj slici $f$.
+
 ## Osnovni koncept obrade signala
+
+### Uzorkovanje
+
+### Curenje spektra
+
+### Filtriranje signala
 
 ## Talasići
 
