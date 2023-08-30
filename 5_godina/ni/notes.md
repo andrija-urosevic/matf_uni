@@ -369,11 +369,89 @@ $$f(x) = \sum_{i=1}^m f_i x^i \quad g(x)=\sum_{i=1}^n g_i x^i$$
 
 ### Uzorkovanje
 
+- Zbog prirode operisanja računara signal se opisuje diskretnim reprezentacijama.
+  - Procedura uzorkovanja signala se radi tako što se odaberu vremenski trenuci u kojima će se meriti jačina zvuka, a kvantizaija odabir numeričke skale za predstavljanje izmerenih vrednosti.
+  - Ako se na svakih $T$ sekundi vrši uzorkovanje signala, govori se o uzorkovanju signala sa frekvencijama uzorkovanja $f_s$.
+  - Veza između učestalosti uzorkovanja i frekvencije uzorkovanja:
+    $$f_s = \frac{1}{T};$$
+    $$w_s = \frac{2\pi}{T}=2 \pi f_s.$$
+- Ukoliko postoji neka frekvencija $f_b$ za koju važi $f_b > f$ onda je frekvencija $f$ ograničena frekvencijom $f_b$ koju još i nazivamo granična frekvenija.
+- *Najkvistov teorema*: Signal se može verodostojno reprodukovati samo ako je frekvencija uzorkovanja više od dva puta veća od graničke frekvencije.
+  - Kako ljutsko uvo čuje do oko $22KHz$, najčešće se vrši uzorkovanje od $44.1KHz$.
+  - Kod video zapisa uzorkovanje se mora vršiti i više od dva puta učestalije, jer može pokazivati statična kretanja, pa čak i kretanja unazad.
+
 ### Curenje spektra
+
+- Razvoj u Furijeov red i diskretna Furijeova transformacija pretpostavljaju periodičnost signala i diskretan frekvencijski domen, što u realnosti obično nije slučaj.
+  - Čak iako je signal periodičan to nam ne garantuje da će njegovo uzorkovanje biti periodično. 
+    - To stvara skokove u vremenskom domenu i odgovarajuće visoke frekvencije u frekvencijskom domenu.
+  - Ako kalibrišemo softver za analizu sprektra tako da izražava frekvencije u celobrojnim Herima, onda: 
+    - Signal frekvencije $3Hz$ prilikom Furijeove transformacije daje vrlo jasan pik na frekvencije $3Hz$;
+    - Signal frekvencije $2.8Hz$ prilikom Furijeove transformacije će se predstaviti u celom frekvencijskom spektru. Ovaj fenomen se naziva *curenje spektra*.
+- Problem se ublažuje pomoću *przorskih funkcije*, tako što se signal u vremenskom domenu množi nekom prozorskom funkcijom. 
+  - Osobine prozorskih funkcija:
+    - svuda izvan intervala su nula;
+    - na krajevima intervala teže nuli;
+    - maksimum dostižu na sredini intervala.
+- Neke prozorske fnkcije:
+  - Blekmenova
+  - Hanova
+  - Hamingova funkcija
+  - Kasijerova funkcija
 
 ### Filtriranje signala
 
+- Filtriranje signala obično se koristi kao prvi korak u selekciji informacija koje signal nosi.
+  - Prvi način: FFT $\rightarrow$ modifikacija signala $\rightarrow$ IFFT
+  - Drugi način: Konvolucija gde je jedan signal polazni signal, a drugi je filter.
+  - Zašto je drugi pristup brži? Jer filteri obično vrlo malo ne nula vrednosti.
+- *Linearni vremenski invarijantni sistemi* koji za linearne kombinaije ulaznih signala generišu linearne kombinacije izlaznih signala i čije ponašanje se ne menja u zavisnosti od vremena.
+  - Linearno invarijentni sistem $H$ koji preslikava signal $x(t)$ u $y(t)$ opisuje se kao:
+    - $H(a x(t)) = a H(x(t))$
+    - $H((x_1 + x_2)(t)) = H(x_1(t)) + H(x_2(t))$
+  - $y(t) = tx(t)$ nije vremenski invarijantan
+  - $y(t) = 2x(t)$ jesete vremenski invarijantan
+- *Impulsni odgovor sistema* predstavlja kratkotrajni signal u vremenskom domenu, koji je najčešće diskretna Dirakova $\delta$ funkcija.
+  - Formalno, ako je ulaz sistema signal $x[n] = \delta[n]$, impulsni odgovor sistema je signal $h[n] = H(\delta[n])$.
+- Diskretni signali zajedno sa odgovarajućim izlazima se mogu zapisati 
+$$x[n] = \sum_k x[k]\delta[n-k]$$
+$$y[n] = H(x[n]) = \sum_k x[k]h[n-k]$$
+- Podela filtera:
+    - Po prirodi signala: analogni ili digitalni
+    - Po dužini impulsnog odgovora: *filteri sa konačnim trajanjem impulsnog odgovora* (*FIR* filteri) i *filteri sa beskonačnom dužinom impulsnog odgovora* (*IIR* filteri)
+- FIR filteri se mogu predstaviti kao konačne težinske sume prethodnih, trenutnih, ili budućih ulaza:
+$$y[n] = \sum_{i=-M_1}^{M_2} b_i x[n-i]$$
+  - Primer: $y[n] = \frac{1}{3}(x[n] + x[n-1] + x[n-2])$
+- Frekvencijski odgovor sistema oslikava kako sistem reaguje na ulaze (harmonike)
+$$x[n] = e^{i \omega n}$$
+$$y[n] = \sum_{k=0}^M b_k x[n-k] = \sum_{k=0}^M b_k e^{i \omega (n-k)} = e^{i \omega n} \sum_{k=0}^M b_k e^{-i \omega k}.$$
+- Frekvencijski odgovor filtera, podrazumeva:
+$$H(\omega) = \sum_{k=0}^M b_k e^{-i \omega k}$$
+- Kako se signali mogu razložiti na harmonike, dovoljno je poznavati frekvencijski odgovor filtera da bi filter bio definisan. 
+   - Ukoliko je amplituda frekvencijskog odgovora filtera za harmonik neke frekvencije jednaka nuli, to znači da taj filter eliminiše tu frekvenciju iz signala.
+- Zamućenje prostim uprosečavanjem, Gausovo zamućenje i Sobel-Feldmanovi filteri predstavljaju FIR filtere.
+- IIR filteri zavse od tekućih ulaza, prethodnih ulaza, i prethodnih izlaza:
+$$y[n] = \sum_{l=1}^N a_l y[n-l] + \sum_{k=0}^M b_k x[n-k]$$
+  - Primer: $y[n] = a_1 y[n-1] + b_0 x[n]$
+    - Impulsni odgovor određujemo zamenom $x[n] = \delta[n]$.
+    - Pretpostavljamo da važi $x[0] = 0$ i $y[0] = 0$.
+    - Rekurentno stižemo do rešenja:
+    $$y[n] = a_1^n b_0 x[0]$$
+- Impulni odgovor jednog IIR filtera može biti:
+  - Low-pass, Hight-pass, Band-pass, Band-stop
+
 ## Talasići
+
+- Sistem trigonometrijskih funkcije nije uvek najbolji izbor.
+  - Nije pogodan za funkcije koje nisu periodične.
+  - Ne dozvoljava lokalizaciju: Ako je u nekom frekvencija prisutna u signalu, biće prisutra takom celog trajanja signala (u intervalima u kojima nije izražena biće poništena drugim frekvencijama).
+  - Nije pogodan za funkcije koje nisu glatke.
+- Definiše se funkcija koja ne mora biti glatka, pa čak ni neprekidna koju nazivamo *talasićem*. Ona generiše sistem talasića translacijama i skaliranjem.
+- Primer osnovnog talasića je Harova funkcija:
+$$\phi(x) = \begin{cases}1 & x \in [0,\frac{1}{2}) \\ -1 & x \in [\frac{1}{2}, 1) \\ 0 & x \notin [0, 1)\end{cases}$$
+- Ortonormirani sistem kojim se mogu proizvoljno dobo aproksimirati funkcije prostora $L^2(\mathbb{R})$ su definisani kao:
+$$\phi_{ij} = 2^{i/2}\phi(2^i x - j) \quad i,j \in \mathbb{Z}$$
+- Mogu se koristiti i drugi osnovni talasići, ali je bitno od njih konstruisati ortonormirani sistem.
 
 # Numerička linearna algebra
 
@@ -389,8 +467,148 @@ $$f(x) = \sum_{i=1}^m f_i x^i \quad g(x)=\sum_{i=1}^n g_i x^i$$
 
 # Matematička optimizacija
 
+Opšti *problem optimizacije* je oblika:
+$$\min_{x \in \mathcal{D}} f(x)$$
+$$\text{t.d.} g_i(x) \leq 0 \quad i=1,\ldots,M$$
+gde je $f$ *funkcija cilja*, skup $\mathcal{D}$ *domen*, i $M$ *funkcija ograničenja* $g_i$. Objekat iz domena $x \in \mathcal{D}$ se naziva *dopustivo rešenje*. Potrebno je među svim dopustivim rešenjima naći ono za koje je vrednost ciljne funkcije najmanja.
+
+- Pronalaženje maksimuma funkcije $f$ se može svesti na pronalaženje minimuma funkcije $- f$.
+- Ograničenje $g(x) = 0$ se može predstaviti pomoću dva ograničenja:
+$g(x) \leq 0$ i $- g(x) \leq 0$.
+- Problemi: raspoređivanje, transport, komunikacija, problemi mašinskog učenja, metode automatskog dizajna hardvera, računarske vizije, robotika, odlučivanja, ekonomije i finansije, biologije, građevine, goe nauka, arheologije,...
+- Podela metoda za rešavanje problema optimizacije po osobinama problema:
+  - **Lokalnost**
+    - Lokalni ili globalni minimumi?
+    - Lokalne optimizacije su obično egzaktne
+    - Globalne optimizacije nemaju egzaktne metode, već se rešavaju heuristikama
+  - **Neprekidnost**
+    - U zavisnosti od toga da li je domen diskretan ili neprekidan skup?
+    - Kod diskretnih optimizacija se javlja kombinatorna eksplozija pa se optimizacione metode zasnivaju često na heuristikama.
+    - Neprekidne optimizacije je obično lako rešiti matematičkom analizom, i obično su te metode efikasne.
+  - **Diferencijabilnost**
+    - Da li su funkcija cilja i ograničenja diferencijabilni?
+    - Ako su neprekidne, koriste gradijent, a ako su još i glatke koriste hesijan kao dodatne informacije o pronalaženju minimuma.
+  - **Konveksnost**
+    - Da li su funkcija cilja i graničenja konveksni?
+    - Tada imamo jedinstveni optimum, pa se pronalaženje globalnog optimuma svodi na pronalaženje lokalnog optimuma.
+  - **Prisustvo ograničenja**
+    - Ako nemamo ograničenja, probleme je moguće rešiti dosta jednostavnijim metodama.
+
 ## Primeri praktičnih problema neprekidne matematičke optimizacije
 
 ## Neprekidna optimizacija
 
+- U ovom delu se govori o neprekidnoj optimizaciji, tj. domen je neprekidan skup.
+
+### Uslovi optimalnosti
+
+- Pretpostavimo da su funkcije cilja i ograničenja diferencijabilne.
+- *Gradijent* funkcije $f$ u tački $x$:
+$$\nabla f(x) = \left(\frac{\partial f(x)}{\partial x_1}, \frac{\partial f(x)}{\partial x_1}, \ldots, \frac{\partial f(x)}{\partial x_n} \right)$$
+- Gradijent opisuje pravac u kojem funkcija najbrže raste u toj tački.
+- U nekoj tački $x^*$ optimuma, gradijent je nula, tj.
+$$\nabla f(x^*) = 0$$
+- Tada je tangentna površ je horizontalna.
+- Ako je za tačku $x^*$ važi $\nabla f(x^*) = 0$, onda ona ne mora biti tačka optimuma, i takve tačke se nazivaju *stacionarnim*.
+- Dva puta diferencijalne funkcije imaju svoj *hesijan*:
+  $$\nabla^2 f(x) = \left[\frac{\partial^2 f(x)}{\partial x_i \partial x_j}\right]$$
+- Da bi stacionarna tačka zaista bila optimum, hesijan u datoj tački mora biti pozitivno ili negativno definitna matrica, tj. mora da važi:
+$$h^T \nabla^2 f(x^*)  h > 0\text{, gde } h \neq 0$$
+- U slučaju optimizacionih problema sa ograničenjma postoje uslovi optimalnosti *KKT uslovi*:
+  - Neka je dat problem
+  $$\min_{x \in \mathbb{R}^n} f(x)$$
+  $$\begin{aligned}\text{t.d. } g_i(x) &\leq 0 \quad i=1,\ldots,M \\ h_j(x) &= 0 \quad j=1,\ldots,L\end{aligned}$$
+- Neka je $x^*$ optimalno rešenje i neka su sve funkcije diferencijabilne u $x^*$. Ako važe *uslovi regularnosti*, postoje konstante $\mu_i^*$ i $\lambda_j^*$ takve da važi:
+$$g_i(x^*) \leq 0$$
+$$h_j(x^*) = 0$$
+$$- \nabla f(x^*) = \sum_{i=1}^M \mu_i^* \nabla g_i (x^*) + \sum_{j=1}^L \lambda_j^* \nabla h_j (x^*)$$
+$$\mu_i^* \geq 0$$
+$$\mu_i^* g_i (x^*) = 0$$
+- Jedan od gornjih uslova možemo posmatrati kao da je $(x^*, \mu^*, \lambda^*)$ stacionarna tačka *lagranžijana*:
+$$L(x, \mu, \lambda) = f(x^*) + \sum_{i=1}^M \mu_i g_i (x) + \sum_{j=1}^L \lambda_j h_j (x)$$
+- Uslova regularnosti:
+  - Sva ograničenja su afine funkcije
+  - Gradijenti aktivnih ograničenja i jednakosnih ograničenja u tački $x^*$ su linearno nezavisni
+  - Sve funkcije u problemu su konveksne i postoji tačka $x$ takva da je $h_j(x) = 0$ za sve $j$ i $g_i(x) < 0$ za sve $i$.
+- Dovoljan uslov optimalnosti se može sada definisati preko hesijana: Za svako $h$ koje zadovoljava $h^T \nabla g_i(x) = 0$ za svako nejednakosno ograničenje $g_i$ treba da važi:
+$$h^T \nabla_{xx}^2 L(x^*, \lambda^*, \mu^*) h > 0$$
+
+### Metode lokalne optimizacije prvog reda bez ograničenja
+
+### Metode lokalne optimizacije drugog reda bez ograničenja
+
+### Linijska pretraga
+
+### Metode lokalne optimizacije sa ograničenjima
+
 ## Diskretna optimizacija
+
+- Diskretna optimizacija podrzumeva diskretnost nekog od elemenata optimizacionog problema (domena, funkcije cilja).
+- Metode se posmatraju kao algoritmi pretrage na prostoru potencijalnih rešenja.
+- Egzaktna pretraga garantuje pronalaženje optimuma.
+- Heuristička pretraga ne pruža nikakvu garanciju.
+
+### Egzaktne metode
+
+- Problemi koje rešavaju egzaktne metode su vrlo često $NP$-teški.
+- Zbog toga ove metode imaju eksponencijalne ili veće vremenske složenosti.
+- *Grananje i ograničavanje* (Branch and bound)
+  - Prostor rešenja se može deliti na dva ili više delova koji u uniji čine ceo prostor.
+  - Iscrpna pretraga, ali ako je moguće uštedu u vremenu treba izvršiti odsecanjem podstabla pretrage.
+  - Zasniva se na brzom određivanju donjih granica vrednosti funkcije cilja: kada je donja granica nekof od potprostora veća od najniže vrednosti pronađene u toko pretrage, celo podstablo koje odgovara tom potprostoru se može zanemariti.
+
+Algoritam:
+- Nekom heuristikom odrediti početno dopustivo rešenje $x$, 
+- Neka je $B = f(x)$, $s = x$ i $Q = [P]$.
+- Ponavljati dok $Q \neq \emptyset$
+  - Uzeti instancu $I$ iz reda $Q$
+  - Ukoliko važi $signle(I)$ i ako je $x$ jedino rešenje instance $I$ i važi $f(x) < B$, onda dodeliti $B = f(x)$ i $s = x$ i preskočiti ostatak iteracije.
+  - Neka je $[I_1, \ldots, I_n] = branch(I)$
+  - Svaku instancu $I_j$ za koju važi $bound(I_i) < B$ staviti u red
+- Vratiti (s, B)
+
+### Heurističke metode
+
+- Heurističke metode ne garantuju optimalnost.
+- *Metaheuristike* su šabloni po kojima se kreiraju *heuristike* za konkretan problem.
+- *Populacione* metaheuristike se zasnivaju na održavanju populacije dopustivih rešenja koja se paralelno menjaju, popravljaju, kobinuju, interaguju i slično. (genetski algoritmi, kolonija mrava, roj čestica,...)
+- Druge predstavljaju održanje jednog dopusivog rešenja. (simulirano kaljenje, tabu pretraga, metod promenljivih okolina).
+- Mehanizam intenzifikacije popravlja tekuće rešenje ili tekuća rešenje.
+- Mehanizam diverzifikacije pokušava da se izvuče iz lokalno minimuma.
+- *Metod promenljivih okolina* (VNS --- variable neighbourhood search) 
+  - Održava jedno rešenje
+  - Koristi metod pronalaženja lokalnog optimuma (metod intenzifikacije)
+  - Koristi *razmrdavanje* (shaking) (metod diverzifikacije)
+- $\mathcal(N)_i(x)$, za $i=1,\ldots,K$ za svako dopustivo rešenje $x \in D$. 
+
+Redukovana metoda promenljivih okolina:
+
+- Inicijalizovati dopustivo rešenje $x$
+- Ponavljati naredne korake sve dok nije ispunjen kriterijum zaustavljanja:
+  - Neka je $k=1$.
+  - Ponavljati dok važi $k < K$
+    - Razmrdavanje: nasumice generisati tačku $x' \in \mathcal{N}_k (x)$
+    - Kretanje: ukoliko je $f(x') < f(x)$, neka je $x=x'$ i $k=1$, a u suprotnom, neka je $k=k+1$
+
+Metoda promenljivih okolina:
+
+- Inicijalizovati dopustivo rešenje $x$
+- Ponavljati naredne korake sve dok nije ispunjen kriterijum zaustavljanja:
+  - Neka je $k=1$.
+  - Ponavljati dok važi $k < K$
+    - Razmrdavanje: nasumice generisati tačku $x' \in \mathcal{N}_k (x)$
+    - Lokalna pretraga: primeniti neki metod lokalne optimizacije počevši od $x'$ i označiti rezultat sa $x''$
+    - Kretanje: ukoliko je $f(x'') < f(x)$, neka je $x=x''$ i $k=1$, a u suprotnom, neka je $k=k+1$
+
+Opšta metoda promenljivih okolina se dobija kada se za mehanizam lokalne pretrage uzme *spust sa promenljivih okolinama* (variable neighbourhood descent):
+
+- Neka je $l=1$
+- Ponavljati dok važi $l < L$
+  - Pretraga: naći najbolje $x' \in N_l(x)$
+  - Kretanje: ukoliko je $f(x') < f(x)$, neka je $x=x'$ i $l=1$, a u suprotnom, neka je $l=l+1$
+
+- Okoline $\mathcal{N}$ i $N$ se ne moraju podudarati.
+
+ 
+
+
