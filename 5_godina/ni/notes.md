@@ -535,11 +535,142 @@ $$h^T \nabla_{xx}^2 L(x^*, \lambda^*, \mu^*) h > 0$$
 
 ### Metode lokalne optimizacije prvog reda bez ograničenja
 
+- Metode optimizacije prvog reda pordrazumevaju sve metode koje kao jedine informacije o funkciji koriste njene vrednosit i vrednosti njenog gradijenta u proizvoljnim tačkama.
+- Neka je $X \subset \mathbb{R}^n$. Funkcija $f : X \mapsto \mathbb{R}$ je *Lipšic neprekidna*, ukoliko postoji konstanta $L$, takvda da za sve $x, y \in X$ važi
+$$|f(x) - f(y)| \leq L \|x - y\|$$
+- Difrencijabilna funkcija $f : X \mapsto \mathbb{R}$ je *konveksna*, ako za svako $x, y \in X$ važi:
+$$f(x) \geq f(y) + \nabla f(y)^T (x - y)$$
+- Funckija $f$ je *konkavna* ukoliko je funkcija $-f$ konveksna.
+- Funkcija $f$ je *jako konveksna*, ukoliko postoji $m > 0$ i za svako $x, y \in X$ važi:
+$$f(x) \geq f(y) + \nabla f(y)^T (x - y) + \frac{m}{2} \|x - y\|^2$$
+  - Neformalno, jako konveksna funkcija je konvaksna bar koliko i kvadratna funkcija.
+- Svojstva konveksnih funkcija:
+  - Ako su $f_1, \ldots, f_m$ konveksne funkcija i važi $w_1 \geq 0, \ldots, w_m \geq 0$, onda je i sledeća funkcija konveksna:
+  $$w_1 f_1(x) + \ldots + w_m f_m(x)$$
+  - Ako je $f$ konveksna funkcija, $A$ matrica i $b$ vektori odgovarajućih dimenzija, onda je i $f(Ax + b)$ konveksna funkcija.
+  - Ako su $f_1, \ldots, f_m$ konveksne funkcije, onda je i sledeća funkcija konveksne:
+  $$\max\{f_1(x), \ldots, f_m(x)\}$$
+    - Isto važi i za supremum nad beskonačnim skupom konveksnih funkcija.
+  - Kompozicija $f \circ g$ je konveksna funkcija ako je funkcija $f$ konveksna i neopadajuća po svim argumentima, a funkcija $g$ konveksna ili ako je funkcija $f$ konveksna i nerastuća po svim argumentima, a $g$ konkavna.
+- *Gradijentni spust* je metoda optimizacije prvog reda za difrencijabilna funkcije.
+  - Počinjemo od nasumične tačke $x_0$
+  - Svako sledeću tačku računamo na osnovu prethodne: $x_{k+1} = x_k - \alpha_k \nabla f(x_k)$
+  - Kako izabrati parametre $\alpha_k$?
+    - Konstantne vrednosti: $\alpha_k = \alpha$, za svako $k$.
+    - Izbor mora da zadovoljava Robins-Monroove uslove:
+    $$\sum_{i=0}^\infty \alpha_k = \infty \quad \sum_{i=1}^\infty \alpha_k^2 < \infty$$
+    - Jedan izbor može biti $\alpha_k = \frac{1}{k}$.
+  - Kriterijum zaustavljanja:
+    - Određeni broj iteracija;
+    - $\|x_{k+1} - x_k\| < \varepsilon$;
+    - $|f(x_{k+1}) - f(x_k)| < \varepsilon$;
+    - $\frac{|f(x_{k+1}) - f(x_k)|}{|f(x_0)|} < \varepsilon$;
+- Za konveksne funkcije sa Lipšic neprekidnim gradijentom, pod Robins-Monroovim uslovima greška $\|x_k - x^*\|$, gde je $x^*$ tačka minimuma, je reda $O(\frac{1}{k})$. Ovo implicira da metod konvergira.
+- Za jako konveksne funkcije sa Lipšic neprekidnim gradijentom, greška je reda $O(c^k)$ za neko $0 < c < 1$.
+- Ostale neprekidne funkije koje nisu konveksne, gradijentni spust konvergira, ali navedene brzine konvergencija ne važe.
+- Na izduženim konturama gradijentni spust pravi zig-zag putanju, kako gradijent ne mora biti pravac najbržeg kretanja ka minimumu.
+- Prednost metode gradijentnog spusta su njena jednostavnost i široki uslovi promenjivosti.
+- Mane su spora konvergencija, to što je izabran pravac samo lokalno optimalan.
+- *Stohastički gradijentni spust* je modifikacija gradijentnog spusta tako što se umesto gradijenta koristi neki slučajni vektor čije je očekivanje kolinearno sa gradijentom i istog je smera.
+  - Ima smisla koristiti je kada se funkcija koja se optimizuje može predstaviti kao presek drugih funkcije:
+  $$f(x) = \frac{1}{n}\sum_{i=1}^N f_i(x)$$
+  - Korak se onda računa, za nasumično izaberano $i$, kao:
+  $$x_{k+1} = x_k - \alpha_k \nabla f_i (x_k)$$
+  - Novo $i$ može da se bira: $i = (k \mod N) + 1$
+  - Još jedan pristup da se za novo rešenje $x_{k+1}$ uključuje presek nekog podskupa funkcije $f_i$ (minibatch).
+- Za konveksne funkcije sa Lipšic neprekidnim gradijentom greška je $O(\frac{1}{\sqrt{k}})$
+- Za jako konveksne funkcije sa Lipšic neprekidnim gradijentom greška je rede $O(\frac{1}{k})$.
+- Nekada se gredijent skup za izračunavanje, pa se kod stohastičkog gradijentnog spusta on jeftino aproksimira.
+- *Metod inercije* se zasniva na ideji akumuliranje prethodnog gradijenta, pri čemu je značaj starijih gradijenata manji, a novijih veći:
+    $$d_0 = 0$$
+    $$d_{k+1} = \beta_k d_k + \alpha_k \nabla f(x_k)$$
+    $$x_{k+1} = x_k - d_{k+1}$$
+- *Nestorovljev ubrzani gradijentni spust* je modifikacija metoda inercije, koja predstavlja asimptotski optimalan algoritam prvog reda za konveksne funkcije:
+    $$d_0 = 0$$
+    $$d_{k+1} = \beta_k d_k + \alpha_k \nabla f(x_k - \beta_k d_k)$$
+    $$x_{k+1} = x_k - d_{k+1}$$
+- Za konveksne funkcije sa Lipšic neprekidnim gradijentom, greška je reda $O(\frac{1}{k^2})$.
+
 ### Metode lokalne optimizacije drugog reda bez ograničenja
+
+- Metode optimizacije drugog reda pored vrednosti funkcija i gradijenta, koriste hesijan. 
+- Kako gradijent pruža informaciju o brzini promene funkcije duž različitih koordinatnih pravaca, tako hesijan pruža informaciju o brzini promene gradijenta duž različitih koordinatnih pravaca.
+- *Njutnov metod*:
+$$x_{k+1} = x_k - \frac{f'(x_k)}{f''(x_k)}$$
+$$x_{k+1} = x_k - \nabla^2 f(x_k) ^{-1} \nabla f(x_k)$$
+- Za jako konveksne funkcije sa Lipšic neprekidnim hesijanom, greška je reda $O(c^{2^k})$, za neko $0 < c < 1$, što je neuporedivo brže od metoda provog reda.
+- Neka je funkcije koja se minimizuje kvadratna:
+$$f(x) = \frac{1}{2} x^T A x + b^T x + c$$
+  - Odgovarajući gradijent: $\nabla f(x) = b + Ax$
+  - Odgovarajući hesijana: $\nabla^2 f(x) + A$
+- Korak Njutnove metode:
+$$x_1 = x_0 - A^{-1}(b + Ax) = -A^{-1}b$$
+$$\nabla f(x_1) = \nabla f(-A^{-1}b) = b + A(-A^{-1}b) = 0$$
+  - Iz prethodnog razmatranja imamo da je gradijent nula, pa je smo dobili stacionarnu tačku. 
+  - Ako je $f$ konveksna funkcija, tj. matrica $A$ je pozitivno semidefinitna, sigurno se radi o minimumu.
+  - Ako je $f$ kokkavna funkcija, tj. matrica $A$ je negativno semidefinitna, sigurno se radi o maksimumu.
+  - U svim ostalim slučajevima radi se o sedlenim tačkama.
+- Njutnova metoda traži nulu gradijenta, a ne minimum funkcije.
+  - Kasnijim razmatranjem to će biti ili minimum ili maksimum ili sedlena tačka.
+- Njutnovom metodom se vrši niz uzastopnih minimizacija lokalnih kvadratnih aproksimacija funkcije.
+- Prednost Njutnove metode je brza konvergencija
+- Mana je memorijski zahtevno skladištenje hesijana, i zahtev za strogu konveksnost funkcije.
+- *Kvazi-Njutnove metode* se zasnivaju na aproksimaciju inverza hesijana na osnovu gradijenata.
+- *BFGS* (Brojden-Flečer-Goldfarb-Šano):
+$$x_{k+1} = x_k - H_k^{-1}\nabla f(x_k)$$
+- $H_k^{-1}$ aproksimirana simetrična matrica.
+- BFGS pretpostavlja i slaganje gradijenata funkcije $f$ i njene kvadratne aproksimacije $\overline{f}_k$:
+$$\overline{f}_k (x) = f(x_k) + \nabla f(x_k)^T (x - x_k) + \frac{1}{2} (x - x_k)^T H_k (x - x_k)$$
+$$\nabla \overline{f}_k (x) = \nabla f(x_k) + H_k (x - x_k)$$
+- Gradijenti se slažu u tački $x_k$.
+$$\nabla f(x_k) + H_k (x_{k-1} - x_k) = \nabla f(x_{k-1})$$
+- Ovaj uslov se oslanja na matricu $H_k$, što je nepoželjno, pošto je aproksimirana $H_k^{-1}$, pa se uslov transformiše u ekvivalentan:
+$$H_k^{-1}(\nabla f(x_k) - \nabla f(x_{k-1})) = x_k - x_{k-1}$$
+- Dodatno se zahteva da $H_k^{-1}$ predstavlja rešenje narednog optimizacionog problema:
+$$\min_{H^{-1}} \|H^{-1} - H_{k-1}^{-1}\|_2^2$$
+$$\begin{aligned}\text{t.d. } & H^{-1}(\nabla f(x_k) - \nabla f(x_{k-1})) = x_k - x_{k-1} \\ & {H^{-1}}^T = H^{-1} \end{aligned}$$
+- Ispostavlja se da ovaj problem ima rešenje u zatorenoj formi, koje se brzo izračunava.
+- BFGS ima red greške između $O(c^k)$ i $O(c^{2^k})$. Može se očekivati da ova metoda bude sportija od Njutnove, ali brža od metoda prvog reda.
+- Ne rešava problem memorije, to radi LBFGS (low memory BFGS).
 
 ### Linijska pretraga
 
+- Linijska pretraga se zasniva na izboru dužine koraka. Pretražuje odabranu duž pravca za najboljom ili maka povoljnom dužinom koraka.
+- Pretpostavimo da je izbor pravca spusta, tj. da važi $\nabla f(x)^T d < 0$, gde je $d$ pravac.
+- Egzaktna linijska pretraga u tački $x_k$:
+$$\min_{\alpha \geq 0} f(x_k + \alpha d)$$
+  - Da li se ovaj problem može rešiti analitički ili ne?
+  - U praksi se retko koristi.
+- Kako izabrati odgovarajuću vrednosti $\alpha$?
+  - Neka je $\alpha_k = \alpha_0 \beta^k$ za $k > 0$, $\alpha_0 > 0$ i $\beta \in (0,1)$. Linijska pretraga se bira najmanje $k$, odnosno najveće $\alpha_k$ za koje važe Armihov uslov:
+$$f(x + \alpha_k d) \leq f(x) + \alpha_k \nabla f(x)^T d.$$
+- Da je ovaj postupak izbora vrednosti $\alpha$ završava u konačnom vremenu?
+  - Za dovoljno malo $\alpha$ važi:
+  $$f(x + \alpha d) \approx f(x) + \alpha \nabla f(x)^T d$$
+  - Kako $\alpha_k$ eksponencijalno opada, za dovoljno veliko $k$ važi $\alpha_k < \alpha$.
+  - Kako je $d$ pravac spusta, važi:
+  $$f(x) + \alpha \nabla f(x)^T d < f(x) + \alpha^* \nabla f(x)^T d$$
+  - Za dovoljno malo $\alpha$ važi:
+  $$f(x + \alpha f) < f(x) + \alpha^* \nabla f(x)^T d$$
+
 ### Metode lokalne optimizacije sa ograničenjima
+
+- Uz prisustvo ograničenja minimum funkcije ne mora biti jednak pravom minimumu funkcije.
+- Takođe, ukoliko ne postoji minimum funkcije bez ograničenja, on može postojata ukoliko su ograničenja pristna.
+- Najjednostavnije klasa problema sa ograničenjima su linearni problemi, odnosno problemi *linearnog programiranja*.
+- Najpoznatiji metod rešavanja problema linearnog programiranja je *simpleks algoritam*.
+  - Ima eksponencijalnu složenost, ali u praksi je često efikasan.
+  - Postoji i algoritmi sa polinomijalnom složenošću.
+- U slučaju konveksnog skupa dopustivih rešenja, moguće je primeniti mehanizam *projektovanog gradijenta*.
+$$\min_{u \in U} \|x - u\|_2 = P_U(x)$$
+$$x_{k+1} = P_U(x_k - \alpha_k \nabla f(x_k))$$
+- Kako rešiti problem projektovanja?
+  - Optimizacijom? Ne pokazuje se toliko efikasno
+  - Metodi zasnova na *kaznenim funkcijama* (alogitam *logaritamska barijera*)
+- Opšti problem minimizacije rešavamo iterativno tako što se u $k$-toj iteraciji rešava problem (za početnu tačku uzima se rešenje prethodne iteracije):
+$$\min_x f(x) + \frac{1}{\mu_k} \sum_{i=1}^L -\log (-g_i(x))$$
+- Kada je $g_i(x)$ blisko nuli, vrednost kaznene funkcije $-\log (-g_i(x))$ je veliki pozitivan broj. 
+- Povećavanjem parametra $\mu$ se omogućava smanjenje uticaja kaznene funkcije.
 
 ## Diskretna optimizacija
 
@@ -558,6 +689,7 @@ $$h^T \nabla_{xx}^2 L(x^*, \lambda^*, \mu^*) h > 0$$
   - Zasniva se na brzom određivanju donjih granica vrednosti funkcije cilja: kada je donja granica nekof od potprostora veća od najniže vrednosti pronađene u toko pretrage, celo podstablo koje odgovara tom potprostoru se može zanemariti.
 
 Algoritam:
+
 - Nekom heuristikom odrediti početno dopustivo rešenje $x$, 
 - Neka je $B = f(x)$, $s = x$ i $Q = [P]$.
 - Ponavljati dok $Q \neq \emptyset$
@@ -608,7 +740,4 @@ Opšta metoda promenljivih okolina se dobija kada se za mehanizam lokalne pretra
   - Kretanje: ukoliko je $f(x') < f(x)$, neka je $x=x'$ i $l=1$, a u suprotnom, neka je $l=l+1$
 
 - Okoline $\mathcal{N}$ i $N$ se ne moraju podudarati.
-
- 
-
 
