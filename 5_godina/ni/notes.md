@@ -455,15 +455,316 @@ $$\phi_{ij} = 2^{i/2}\phi(2^i x - j) \quad i,j \in \mathbb{Z}$$
 
 # Numerička linearna algebra
 
+- Problemi rešavanja sistema jednačina, inverzija matrica, dokompozicija matrica, izračunavanje sopstevnih vektora i sopstvenih vrednosti matrica.
+
 ## Primeri problema numeričke linearne algebre
+
+- Problem rangiranja stranica na internetu (*PageRank* algoritam).
+- Internet se modeluje usmerenim grafom.
+- Skup čvorova $S$ je skup strana, $|S|=N$. Neka je $K$ skup strana bez veza ka drugim stranama.
+- Verovatnoća pristupa nekoj stranici $s \in S$:
+$$P(s) = \sum_{r \in N(s)} \frac{P(r)}{n_r} + \sum_{r \in K} v_s P(r)$$
+- $N(s)$ je skup strana koje pokazuju na stranu $s$.
+- $n_r$ broj strana na koje se pokazuje sa strane $r$.
+- $v = (v_1, \ldots, v_s, \ldots, v_N)$ vektor preference korisnika u posećivanju određene stranice.
+- $p = (p_1, \ldots, p_s, \ldots, p_N)$ vektor verovatnoće posete svih stranica.
+- $A$ matrica takva da $A_{ij} = \frac{1}{n_j}$ ukoliko postoji veza sa strane $j$ ka strani $i$, a 0 u suprotnom.
+- $k = (k_1, \ldots, k_s, \ldots, k_N)$ vektor indikator da li čvor $i$ nema naslednika.
+$$p = (A + v k^T)p$$
+- $p$ je sopstveni vektor matrice $A + v k^T$, pa se problem svodi na pronalaženje sostvenog vrektora matrice.
+  - Matrica $A + v k^T$ je stohastička, pa je njena najveća sopstvena vrednost jednaka $1$, što znači da će sopstveni vektor imati odgovarajuću supstvenu vrednost $1$. 
+    - Ovo ne znači da postoji samo jedan sostveni vektor koji ima sopstvenu vrednost $1$.
+- Korisnik ne bira uvek samo stranice dostupne sa tekuće strane već nekada bira narednu stranu nezavisno od tekuće:
+$$p = \alpha (A + v k^T)p + (1 - \alpha) v = (\alpha (A + v k^T) + (1 - \alpha) v e^T)p$$
+- $e$ vektor čiji su svi elementi jednaki $1$, pri čemu poslednja jednakost važi zahvaljujući tome što važi $e^T p = \sum_{i=1}^n p_i = 1$.
+- $p$ je sopstveni vrednost google matrice:
+$$G = \alpha (A + v k^T) + (1 - \alpha) v e^T$$
+- $p$ je sopstveni vektor koji odgovara najvećoj sopstvenoj vrednost matrice $G$, ona koja je jednaka 1.
+- *Norma* je funkcija $\|\cdot\| : X \mapsto \mathbb{R}$ takva da za svako $\alpha \in \mathbb{R}$ i $x, y \in X$ važi:
+  - $\|\alpha x\| = |\alpha|\|x\|$
+  - $\|x + y\| = \|x\| + \|y\|$
+  - Ako važi $\|x\| = 0$, onda važi $x = 0$.
+- $p$-norme nad vektorima iz $\mathbb{R}^n$:
+$$\|x\|_p = \sqrt[p]{\sum_{i=1}^n x_i^p}$$
+- *Ekvivalentnost* $p$-normi: Za svake dve $p$-norme $\| \cdot \|_a$ i $\| \cdot \|_b$ postoje konstane $0 < c_1 \leq c_2$, takve da za svako $x \in X$ važi:
+$$c_1 \|x\|_b \leq \|x\|_a \leq c_2 \|x\|_b$$
+  - Konvergencija u jednoj $p$-normi povlači konvergenciju u drugoj $p$-normi.
+- $p$-norma nad matricama:
+$$\|A\|_p = \max_{x \neq 0} \frac{\|Ax\|_p}{\|x\|_p}$$
+- Frobenijusova norma:
+$$\|A\|_F^2 = \sum_{i=1}^m \sum_{j=1}^n a_{ij}^2$$
 
 ## Dekompozicija matrica
 
+- LU, Čoleski, QR i SVD dekompozicije
+
+### LU dekompozicija
+
+- LU dekompozicija podrazumeva predstavljanje matrice u vidu poizvoda $L$ donjetrougaone ja jedinicama na dijagonali, i $U$ gornjetrougaone.
+$$A = LU$$
+- Koristimo za rešavanje sistema: $Ax = b$
+$$Ax = (LU)x = L(Ux) = b$$
+  - Prvo rešimo: $Ly = b$
+  - Drugo rešimo: $Ux = y$
+- LU dekompozicija zahteva $\frac{1}{3} n^3$ množenja, dok Gaus-Žordanova metoda zahteva $n^3$ množenja.
+- Rešavanje sistema: $Ax=b_1, \ldots, Ax=b_n$ je značajno ubrzano.
+- Inverzna matrica $A^{-1}$:
+  - Prvo rešimo: $Ly = I_i$
+  - Drugo rešimo: $Ux = y$
+- Pod čvrstim uslovima moguće je dobiti LU dokompiziciju matrice
+  - Ako to nije moguće uvek je moguće razmeniti njene redove i dobiti odgovarajuću dekompoziciju.
+- Ako je poznata LU dekompozicija, lako je izračunati determinantu matrice (proizvod dijagonalnih elemenata matrice $U$).
+  - Treba voditi rečuna o broju permutacija, i tako odrediti znak determinante.
+
+### Čoleski dekompozicija
+
+- Matrica je pozitivno definitna ukoliko za sve vektore $x$ odgovarajuće dimenzije, različite od nule, važi $x^T A x > 0$.
+- Čoleski dekompoziciju kvadratne matrice $A$ je moguće izvršiti pod uslovima da je ona simetrična i pozitivno definitna ($L$ je donje trougaona matrica sa strogo pozitivnim dijagonalnim elementima):
+$$A = L L^T$$
+- Matricu $L$ računamo narednim formulama:
+$$l_{ii} = \left(a_{ii} - \sum_{k=1}^{i-1} l_{ik} \right) \quad i=1,\ldots,n$$
+$$l_{ji} = \frac{1}{l_{ii}}\left(a_{ij} - \sum_{k=1}^{i-1} l_{ik} l_{jk} \right) \quad i=1,\ldots,n-1, j=i+1,\ldots,n$$
+- Izračunavanje Čoleski dekompozicije zahteva $\frac{1}{6}n^3$ množenja, što je duplo bolje od $LU$ dekompozicije.
+- Pozitivna definitnost implicira ivertabilnost, pa je stabilost izračunavanja veća.
+- Ako je poznata Čoleski dekompozicija matrice $A$ rešavanje sistema $Ax=b$ se vrši tako što se redom reše sistemi:
+$$Ly=b$$
+$$L^T x=y$$
+- Determinantu je moguće izračunati na sledeći način:
+$$\det(A) = \det(L) \cdot \det(L^T) = (\det(L))^2$$
+  - $\det(L)$ je proizvod njenih dijagonalnih elemenata.
+- Postojanje Čoleski dekompozicije matrice implicira da je ta matrica simetrična i pozitivno definitna.
+  - Simetrija je očigledna
+  - Pozitivno semidefinitna: $x^T A x = x^T L L^T x = (L^T x)^T (L^T x) = \|L^T x\|^2 \geq 0$
+  - Pozitivno definitna: $x^T A x = 0$ akko $x=0$.
+- Sprovođenjem Čoleski dekompozicije možemo utvrditi da li je matrica pozitivno definitna.
+
+### QR dekompozicija
+
+- Za kvadratnu matricu $Q$ se kaže da je ortogonalna, ukoliko za nju važi $Q^T Q = Q Q^T = I$
+  - Nije potrebno nalaziti inverz ovakvih matrica.
+  - Cuvaju euklidsku normu vektora pri množenju:
+  $$\|Q x\|_2^2 = (Qx)^T Qx = x^T Q^T Q x = x^T x = \|x\|_2^2$$
+- Uslovljenost matrice se definiše kao maksimum uslovljenosti sistema jednačin $Ax=b$:
+$$\max_{x, \Delta b} \frac{\|Q^{-1}\Delta b\|}{\|\Delta b\|} \cdot \frac{\|Q x\|}{\|x\|} = \max_{x, \Delta b} \frac{\|Q^T \Delta b\|}{\|\Delta b\|} \cdot \frac{\|Q x\|}{\|x\|} = 1$$
+  - Ortogonalne matrije imaju minimalnu moguću uslovljenost $Cond(Q) = 1$
+- Proizvoljna matrica $A$, dimenzije $m \times n$ se može predstaviti pomoću ortogonalne matrice $Q$ dimenziyje $m \times m$ i matrice $R$ dimenzije $m \times n$ u obliku
+$$A = QR$$
+- Matrice $R$ je oblika $R = \begin{pmatrix} R' \\ 0 \end{pmatrix}$, gde je $R'$ gornjetrougaona matrica dimenzija $n \times n$. Matrica $R$ ima formu
+$$R = \begin{pmatrix} r_{11} & r_{12} & \ldots & r_{1n} \\
+                      0      & r_{22} & \ldots & r_{2n} \\
+                      \vdots & \vdots & \ddots & \vdots \\
+                      0      & 0      & \ldots & r_{nn} \\
+                      0      & 0      & \ldots & 0      \\
+                      \vdots & \vdots & \ddots & \vdots \\
+                      0      & 0      & \ldots & 0      \\
+                      \end{pmatrix}$$
+  - Zbog nula u matrici $R$ moguće je čuvati samo njenu redukovanu formu $R'$ i odgovarajuću redukovanu formu $Q'$. 
+- Ako je matrica $A$ kvadratna, sistem jednačina $Ax=b$ se može rešiti kao ($Q^{-1} = Q^T$):
+$$Rx = Q^T b$$
+- QR dekompozicija zahteva više operacija nego izračunavanje LU dekompozicije.
+- Matrica $R$ je gornjetrougaona, a matrica $Q$ ortogonalna, pa QR dekompozicija može voditi boljoj numeričkoj stabilnost
+- Posebno je intersesantno koristi QR dekompoziciji kada matrica $A$ nije kvadtana, što prethodne dve dekompozicije zahtevaju da je matrica $A$ kvadratna.
+- Neka je $A=QR$, prostor kolona matrica $A$ je prostor kolona matrice $Q$, tj.
+$$\begin{aligned} 
+u \in C(A) &\iff u = Ax \text{ za neko } x \\
+           &\iff u = QRx  \\
+           &\iff u = Qy \text{ za } y = Rx \text{ (matrica Q je ortogonalna pa je A invertabilna)} \\
+           &\iff u \in C(Q) 
+\end{aligned}$$
+- Algoritam koji se koristi za računanje QR dekompozicije je Haushelderov algoritam, koji je numerički stabilan, zahvaljujući tome što počina na upotrebi ortogonalnih matrica, a zahteva oko $2mn^2 - \frac{2}{3} n^3$ operacija.
+  - Koristi niz matrica: $Q_1, \ldots, Q_n \in \mathbb{R}^{m \times m}$ da bi dobio gornjetrougaonu matricu, tj.
+  $$Q_n \cdots Q_2 Q_1 A = R$$
+  - Množenje $i$-tom matricom anuliraju svi elementi $i$-te kolone ispod glavne dijagonale.
+  - Ovim postupkom QR dekompozicija matrice $A$ jednaka je:
+  $$A = Q_1^T Q_2^T \cdot Q_n^T R$$
+  - Svaka od matrica $Q_i$ ima formu:
+  $$Q_i = \begin{pmatrix} I & 0 \\ 0 & F \end{pmatrix}$$
+  - $I$ kvadtana jedinična matrica dimenzije $i-1$.
+  - $F$ ortogonalna kvadratna Haushelderova metrica refleksije dimenzije $m-i+1$.
+  - Ideja konstrukcije matrice $F$ je da treba da realizuje refleksiju vektora tako da mu svi elementi osim prvog budu 0.
+  $$F x = \begin{pmatrix}\|x\|_2 \\ 0 \\ \vdots \\ 0 \end{pmatrix}$$
+  - Projekcija na podprostor $H$:
+  $$P_H = I - \frac{v v^T}{v^T v}$$
+  - Kako transformacija $F$ treba da pomeri $x$ dvaput dalje nego projekcija, željena matrica je (za koju se lako pokazuje da je ortogonalna):
+  $$F = I - 2 \frac{v v^T}{v^T v}$$
+  - Za vektor $v$ uzimamo:
+  $$v = sgn(x_1)\|x\|_2 e_1 + x$$
+
+Haushelderov algoritam
+
+- for $i=1$ to $n$ do
+  - $x = a_{i:m, i}$
+  - $v_i = sng(x_1) \|x\|_2 e_1 + x$
+  - $v_i = v_i / \|v_i\|_2$
+  - $a_{i:m, i:n} = a_{i:m, i:n} - 2 v_k (v^T a_{i:m, i:n})$
+
+Algoritam za množenje vektor $x$ matricom $Q$ kada je poznat niz vektora $v_1, \ldots, v_n$.
+
+- for $i=n$ to 1 do
+  - $x_{i:m} = x_{i:m} - 2 v_i (v_i^T x_{i:m})
+
+### Singularna dekompozicija
+
+- Matrice blizu singularnim su loše uslovljene, pa SVD pruža smisleno baratanje ovakvim matricama.
+- Neka je $A$ matrica dimenzije $m \times n$, pri čemu je $m \geq n$.
+- Postoji ortogonalna matrica $U$ dimenzije $m \times m$, dijagonalna matrica $\Sigma$ dimenzije $m \times n$ i ortogonalna matrica $V$ dimenzije $n \times n$, takva da važi:
+$$A = U \Sigma V^T$$
+- Matrica $\Sigma$ ima $m-n$ vrsta koje se sastoje isključivo od nula pa se mogu zanemariti, uz to uklanjamo i $m-n$ poslednjih kolona matrice $U$, pa dobijamo:
+$$A = U'\Sigma'V^T$$
+- Dijagonalni elementi matrice $\Sigma$, $sigma_i$ za $i=1,2,\ldots,n$, nazivaju se singularnim vrednostima matrice $A$.
+- Važe sledeća svojstva singularne dekompozicije:
+  - Singularne vrednosti matrice $A$ su sve nenegativne i predstavljaju kvadratne korene sopstvenih vrednosti matrice $A A^T$ i $A^T A$.
+  - Rang matrice $A$ jednak je broju singularnih vrednosti koje nisu jednake nuli.
+  - Kolone matrice $U$ su sopstveni vektori matrice $A A^T$ i nazivaju se *levim singularnim vektorima* matrice $A$.
+  - Kolone matrice $V$ predstavljaju sopstvene vektore matrice $A^T A$ i nazivaju se *desnim singularnim vektorima* matrice $A$.
+  - Kolone matrice $V$ koje odgovaraju nultim singularnim vrednostima predstavljaju ortonormiranu bazu jezgra matrice $A$, odnosno prostora svih vektora $x$, takvih da važi $Ax=0$.
+  - Kolone matrice $V$ koje odgovaraju nenultim singularnim vrednostima predstavljaju ortonormiranu bazu prostora vrsta matrice $A$.
+  - Kolone matrice $U$ koje odgovaraju nenultim singularnim vrednostima predstavljaju ortonormiranu bazu prostora kolona matrice $A$.
+  - Kolone matrice $U$ koje odgovaraju nenultim singularnim vrednostima predstavljaju ortonormiranu bazu levog jezgra matrice $A$, odnosno prostora svih vektora $x$, takvih da važi $x^T A = 0$.
+  - $\|A\|_2 = \sigma_1$
+  - $\|A\|_F = \sqrt{\sum_{i=1}^n sigma_i^2}$
+  - $Cond(A) = \frac{\sigma_1}{sigma_n}$
+- Za računanje singularne dekompozicije potrebno je $\Theta(m n^2)$ operacija, sa nepovoljnim konstantnim faktorom. Izračunavanje singularne dekompozicije je numerički vrlo stabilno.
+- Pomoću singularne dekompozicije može se izvesti ortogonalizacija skupa vektora: Odradimo singularnu dekompoziciju nad matricom čije kolone čine dati vektori, dobijamo ortonormiranu bazu koju čine kolone matrice $U$.
+- Ako su $U_i$ kolone matrice $U$, a $V_i$ kolone matrice $V$, onda:
+$$A = \sum_{i=1}^n \sigma_i U_i V_i^T$$
+- Inverz kvadratne matrice pomoću singularne dekompozicije (svaka od singularnih vrednosti $\sigma_i$, zamenjena vrednošću $\frac{1}{\sigma_i}$):
+$$A^{-1} = V \Sigma^{-1} U^T$$
+  - U slučaju da $\Sigma^{-1}$ nije inverz matrice $\Sigma$, to znači da je sama matrica $A$ loše uslovljena.
+- Rešavanje sistema $Ax=b$ (neka je $x' = V \Sigma^{-1} U^T b$):
+$$A x' = A V \Sigma^{-1} U^T b = U \Sigma V^T V \Sigma^{-1} U^T b =  U \Sigma \Sigma^{-1} U^T b$$
+  - Proizvod $\Sigma \Sigma^{-1}$ ima nule van dijagonale, jedinice na dijagonali na pozicijama singularnih vrednosti koje nisu nula i nule na ostalim pozicijama.
+  - $Ax'$ će biti jednak vektoru $b$ na pozicijama nultih singularnih vrednosti.
+
 ## Sopstveni vektori matrica
+
+- Kvadratna matrica $A$ ima *sopstveni vektor* i sopstvenu vrednost $\lambda$, ukoliko važi:
+$$Ax=\lambda x \quad x \neq 0$$
+  - Matrica $A$ ne menja pravac sopstvenog vektora.
+  - Različitim sopstvenim vrednostima odgovaraju linearno nezavisni vektori.
+  - Sopstvene vrednosti jednake su nulama karakterističnog polinoma
+  $$\det (A - \lambda I).$$
+  - Svakoj sopstvenoj vrednosti $\lambda_i$ odgovara sopstveni potprostor $V_i$.
+    - Neka je $D$ dijagonalna matrica sopstvenih vrednosti u kojoj se svaka $\lambda_i$ ponavlja $dim(V_i)$ puta, i $X$ matrica čije su kolone odgovarajući sopstveni vektori, tada važi
+    $$AX = XD \quad A = X D X^{-1} \quad D = X^{-1} A X$$
+    - Ako je matrica $V_i$ simetrična, uvek je moguće konstruisati dijagonalnu matricu $D$.
+- Potpune metode pronalaze sve sopstvene vektore date matrice.
+- Delimične metode pronalaze neke sopstvene vektore date matrice.
+
+### Potpune metode
+
+- Pronalazimo nule karakterističnog polinoma $\det(A - \lambda I)$ i potom rešavamo sistem jednačina $(A - \lambda I) x = 0$.
+- Jakobijeva metoda zasnovana na primeni matrica rotacije kako bi se anulirali vandijagonalni elementi.
+- QR metoda se zasniva na opažanju da:
+$$A_1 = A$$
+$$A_{i+1} = R_i Q_i$$
+  - Zbog ortogonalnosti matrica važi:
+  $$A_{i+1} = R_i Q_i = Q_i^T Q_i R_i Q_i = Q_i^T A_i Q_i$$
+  - Pod određenim uslovima niz matrica $R_i$ konvergira matrici koja na dijagonali ima spostvene vrednosti, a matrica sopstvenih vektor $X$ se dobija kao proizvod $Q_i Q_2 \cdots$.
+
+### Delimične metode
+
+- Delimične metode omogućavaju traženje samo nekih sopstvenih vektora, po pravili dominantnog sopstvenog vektora - onog koji odgovara po modulu najvećoj sopstvenoj vrednosti.
+- *Metoda stepenovanja* (power method).
+  - Neka su $x_1, \ldots, x_n$ sopstveni vektori matrice $A \in \mathbb{R}^{n \times n}$. Neka je $v_0$ proizvoljan vektor. Sopstveni vektori čine bazu prostora pa važi
+  $$v_0 = \alpha_1 x_1 + \ldots + \alpha_n x_n$$
+  - Neka je $v_k = A^k v_0$, onda
+  $$v_k = \lambda_1^k \alpha_1 x_1 + \ldots + \lambda_n^k \alpha_n x_n$$
+  - Ako važi $|\lambda_1| > |\lambda_2| \geq |\lambda_3| \geq \ldots \geq |\lambda_n|$ i $\alpha_1 \neq 0$, onda važi:
+  $$\lambda_2^k \alpha_2 x_2 + \ldots + \lambda_n^k \alpha_n x_n = o(\lambda_1^k \alpha_1 x_1)$$
+    - Vektor $v_k$ konvergira ka sopstvenom vektoru kolinearnom sa $x_1$.
+  - Odgovarajuća sopstvena vrednost je aproksimirana izrazom
+  $$\frac{v_k^T A v_k}{v_k^T v_k}$$
+- Algoritam PageRank se zasniva na metodi stepenovanja.
+- Kako izračunati ostale sopstvene vektore?
+  - Neka je $|\lambda_1| > |\lambda_2| > \ldots > |\lambda_n|$ i neka su $y_1, \ldots, y_n$ sopstveni vektori matrice $A^T$, skalirani tako da važi $x_i \cdot y_j = \delta_{ij}$. Neka je
+  $$A_1 = A$$
+  $$A_{i+1} = A_i - \lambda_i x_i y_i^T \quad i=2,\ldots,n$$
+  - Sopstveni vektori i vrednosti se dobijaju primenom metoda stepenovanja na matrice $A_i$ i $A_i^T$, za $i=1,\ldots,n$.
+  - Ova metoda se naziva *metodom iscrpljivanja*.
+
+### Analiza glavnih komponenti
+
+- Podaci su predstavljeni u visokodimenzionom prostoru.
+- Često glavne informacije leže u niskodimenzionim podprostorima.
+- Redukcija dimenzionalnosti, radi skladištenja podataka i bržeg izračunavanja mašinskih algoritama.
+- Često postoje korelacije i linearne zavisnosti među podacima, pa je eleminasanje redidandnosti jedan o bitnih, a i teških zadatak.
+- Racionalan pristup je naći skup vektora duž kojih je varijacija podataka najmanja. 
+- Kako bi konstruisani vektori bili nekorelisani, oni moraju biti ortogonalni, oni se nazivaju *glavne komponente*.
+- Konstruišemo glavne komponente redom, tako da prvi vektor opisuje najvišu varijansu u podacima.
+- Prva glavna komponenta se dobija kao rešenje problema
+$$\max_{\|v\|=1} \sum_{i=1}^N (x_i \cdot v)^2 = \max_{\|v\|=1} \|Xv\|_2^2 = \max_v \frac{\|Xv\|_2^2}{\|v\|_2^2} = \max_v \frac{\|Xv\|_2}{\|v\|_2}$$
+- Prema definicija matričnih $p$ normi, maksimalna vrednost veličine koja se maksimizuje je $\|X\|_2$, što je takođe najveća singularna vrednosti $\sigma_1$ matrice $X$, što je koren po modulu najveće sopstvene vrednosti $\lambda_1$ matrice $X^T X$.
+$$\frac{\|Xv\|_2}{\|v\|_2} = (\frac{v^T X^T X v}{v^T v})^{1/2} = (\lambda_1 \frac{v^T v}{v^T v})^{1/2} = \sqrt{\lambda_1} $$
+  - Maksimalna vrednost se dostiže kada je $v$ dominantan sopstveni vektor matrice $X^T X$.
+  - Sledeću glavnu komponentu dobijamo kada postupak primenimo na $X_1^T X$, itd...
+- Neka su $v_1, v_2, \ldots, v_n$ glavne komponente, svaki podatak $x$ se može predstaviti pomoću koordinata $(x \cdot v_1, \ldots, x \cdot v_n)$, odnosno matrica $X$ se može zameniti matricom $X V$.
+- Svakoj komponenti se može pridružiti udeo varijanse koju opisuje:
+$$\frac{\sigma_i^2}{\sum_{j=1}^n \sigma_j^2}$$
+- Udeo varijanse dobijen pomoću prvih $k$ komponenti je
+$$\sum_{i=1}^k \frac{\sigma_i^2}{\sum_{j=1}^n \sigma_j^2}$$
+- $X^T X$ predstavlja matricu kovarijanse kolona polazne matrice podataka.
+- Podatke možemo standardizovati, tada $X^T X$, predstavlja matricu korelacije kolona polazne matrice podataka.
+- Da li izvršiti standardizaciju ili ne?
+  - Ako su merene na istoj skali, i ne razlikuju se za red veličine standardizacijom gubimo informacije.
+  - Inače, treba raditi standardizaciju.
 
 ## Retki sistemi linearnih jednačina
 
+- *Retke matrice* se karakterišu malim brojem nenula elemenata.
+- Omogućava efikasno skladištenje matrice, kao i efikasno izračunavanje.
+- Trivijalan primer rekte matrice je dijagonalna matrice.
+  - Za njeno čuvanje je potrebno $\Theta(n)$, a rešavamnje sistema je $\Theta(n)$ operacija.
+- Slično važi i za matrice oblika:
+$$\begin{pmatrix} 
+b_1 & c_1 & 0   & 0   & \ldots & 0 & 0 & 0 \\
+a_2 & b_2 & c_2 & 0   & \ldots & 0 & 0 & 0 \\
+0   & a_3 & b_3 & c_3 & \ldots & 0 & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+0   &  0  & 0   & 0 & \ldots & b_{n-2} & c_{n-2} & 0 \\
+0   &  0  & 0   & 0 & \ldots & a_{n-1} & b_{n-1} & c_{n-1} \\
+0   &  0  & 0   & 0 & \ldots & 0 & a_n & b_n
+\end{pmatrix}$$
+- Blok-dijagonalne matrice:
+$$\begin{pmatrix}
+A_1 & 0 & \ldots & 0 \\
+0 & A_2 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & A_m 
+\end{pmatrix}$$
+  - Sistem $Ax = b$ rešavamo tako što rešimo pojedinačne podsisteme po blokovima:
+$$A_1 x_1 = b_1$$
+$$A_2 x_2 = b_2$$
+$$\vdots$$
+$$A_m x_m = b_m$$
+  - Složenost rešavanja ovakvog sistema je: $m \Theta((n/m)^3) = \Theta (n^3) / m^2$.
+- Ostale retke matrice:
+  - *Trakasta, blok-trougaona, blog-trodijagonalna, blok-dijagonalna sa ivicom, blok-dijagonalna sa dve ivice, blok trougaona sa ivicom, trakasto-trougaona sa ivicom, trakasta sa ivicom, trakasta sa dve ivice*...
+
 ## Inkrementalni pristup rešavaju problema linearne algebre
+
+- Da li je moguće, u slučaju malih promene u matrici, efikasno ažurirati dekompoziciju ili inverz?
+- *Šerman-Morison-Vudburijeva formula* u slučaju medifikacija niskog ragna:
+$$(A + U V^T)^{-1} = A^{-1} - A^{-1} U (I + V^T A^{-1} U)^{-1} V^T A^{-1}$$
+- Pri rešavanju sistema $(A + U V^T)x = b$ važi
+$$\begin{aligned} 
+x &= (A + U V^T)^{-1} b \\
+  &= (A^{-1} - A^{-1} U (I + V^T A^{-1} U)^{-1} V^T A^{-1}) b \\
+  &= A^{-1} b - A^{-1} U (I + V^T A^{-1} U)^{-1} V^T A^{-1} b \\
+  &= y - Z H^{-1} V^T y \\
+  \end{aligned}$$
+  - Pri tome $y = A^{-1} b$, $Z = A^{-1} U$, $H = I + V^T A^{-1} U$, $y = A^{-1} b$
+- $y$ je rešenje sistema $Ay=b$, koje može da se izračuna metodom dekompozicije za retke matrice.
+- $Z$ može da se izračuna kao rešenje $p$ retkih sistema
+$$A z_1 = U_1$$
+$$A z_2 = U_2$$
+$$\vdots$$
+$$A z_p = U_p$$
+- Vektor $H^{-1}V^Ty$ može da se izračuna reštavanjem sistema:
+$$H w = V^T y$$
+- Inkrementalno gradimo sistem dodavanjem podataka u primeni metode najmanjih kvadtana.
+- Pored primene za lako ažuriranje inverza pomoću prethodnih formula moguće je izvesti i efikasno ažuriranje dekompozicija matrica.
+  - Sistem za preporučivanje je jedan idealan primer.
 
 # Matematička optimizacija
 
