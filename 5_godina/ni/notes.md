@@ -1,5 +1,5 @@
 ---
-title: Naučno izračunavanje --- Belekške
+title: Naučno izračunavanje --- Beleške
 author: Andrija Urošević
 output: pdf_document
 ---
@@ -72,7 +72,7 @@ output: pdf_document
 ## Stabilnost, uslovljenost i regularizacija
 
 - Algoritam je *nestabilan* ukoliko se njegova greška akumilira tokom njegovog izvršavanja, u suprotom algoritam je *stabilan*.
-- *Poništavanje* je slučaj kada je relativna greška mala usled oduzimanja realnih vrednosti koje nose grešku.
+- *Poništavanje* je slučaj kada je relativna greška velika usled oduzimanja bliskih vrednosti koje nose grešku.
 - Problem je *loše uslovljen* ako za malo različite podatke na ulozu daje drastično različita rešenja.
 - Neka su $\alpha$ ulazi podaci, i $x(\alpha)$ rešenja problema $P$. Tada *uslovljenost* problem $P$ definišemo kao 
 $$Cond(P) = \frac{R(x(\alpha), x(\alpha'))}{R(\alpha, \alpha')} = \frac{|x(\alpha) - x(\alpha')|/|x(\alpha)|}{|\alpha - \alpha'|/|\alpha|}.$$
